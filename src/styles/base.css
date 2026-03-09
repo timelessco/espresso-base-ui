@@ -1,4 +1,9 @@
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
   * {
     @apply border-border outline-ring/50;
     letter-spacing: var(--tracking-4);
@@ -6,7 +11,8 @@
     outline-color: var(--ring);
   }
   body {
-    @apply bg-background text-foreground  font-sans;
+    @apply bg-background text-foreground font-sans;
+    font-weight: var(--font-sans-weight);
   }
 
   svg {

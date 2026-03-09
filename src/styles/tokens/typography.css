@@ -1,10 +1,10 @@
 @font-face {
   font-family: "Inter-V";
   font-weight: 100 900;
-  font-display: block;
+  font-display: swap;
   font-style: normal;
-  font-named-instance: "Regular";
-  src: url(../../../public/fonts/Inter-V.woff2) format("woff2");
+
+  src: url(/fonts/Inter-V.woff2) format("woff2");
 }
 
 @theme inline {
@@ -13,7 +13,7 @@
   --font-sans: "Inter-V", sans-serif;
 
   /* Variations Fonts */
-  --font-sans--font-variation-settings: "opsz" 24, "wght" 420;
+  --font-sans--font-variation-settings: "opsz" 24;
 
   /* Fonts Weight */
   --font-sans-weight: 420;
