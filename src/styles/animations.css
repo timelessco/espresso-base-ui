@@ -1,0 +1,61 @@
+@keyframes scroll-shadow-mask {
+  0% {
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 32px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 32px),
+      transparent 100%
+    );
+  }
+
+  1%,
+  99% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 32px,
+      black calc(100% - 32px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 32px,
+      black calc(100% - 32px),
+      transparent 100%
+    );
+  }
+
+  100% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 32px,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 32px,
+      black 100%
+    );
+  }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

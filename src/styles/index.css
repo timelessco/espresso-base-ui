@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+/* @import "shadcn/tailwind.css"; */
+
+@custom-variant dark (&:is(.dark *));
+
+/* Tokens */
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/radius.css";
+@import "./tokens/shadows.css";
+
+/* Themes */
+@import "./themes/light.css";
+@import "./themes/dark.css";
+
+/* Core styles */
+@import "./base.css";
+@import "./utilities.css";
+@import "./animations.css";
+
+/* Semantic tokens */
+@import "./tokens/semantic.css";

@@ -1,0 +1,81 @@
+@font-face {
+  font-family: "Inter-V";
+  font-weight: 100 900;
+  font-display: block;
+  font-style: normal;
+  font-named-instance: "Regular";
+  src: url(../../../public/fonts/Inter-V.woff2) format("woff2");
+}
+
+@theme inline {
+  --tw-leading: 1rem;
+  /* Fonts */
+  --font-sans: "Inter-V", sans-serif;
+
+  /* Variations Fonts */
+  --font-sans--font-variation-settings: "opsz" 24, "wght" 420;
+
+  /* Fonts Weight */
+  --font-sans-weight: 420;
+
+  /* Font Weights */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  /* Font Variation Settings */
+  --font-variation-420: "wght" 420;
+
+  /* Font Size */
+  --text-2xs: 0.6875rem; /*11px*/
+  --text-xs: 0.75rem; /*12px*/
+  --text-sm: 0.8125rem; /*13px*/
+  --text-base: 0.875rem; /*14px*/
+  --text-lg: 1rem; /*16px*/
+  --text-xl: 1.125rem; /*18px*/
+  --text-2xl: 1.25rem; /*20px*/
+  --text-3xl: 1.5rem; /*24px*/
+  --text-4xl: 1.625rem; /*26px*/
+  --text-5xl: 1.75rem; /*28px*/
+  --text-6xl: 2rem; /*32px*/
+  --text-7xl: 2.5rem; /*40px*/
+  --text-8xl: 2.75rem; /*44px*/
+  --text-9xl: 3rem; /*48px*/
+  --text-10xl: 3.25rem; /*52px*/
+  --text-11xl: 3.5rem; /*56px*/
+  --text-12xl: 4rem; /*64px*/
+  --text-13xl: 4.5rem; /*72px*/
+  --text-14xl: 5rem; /*80px*/
+  --text-15xl: 5.5rem; /*88px*/
+
+  /* Line Height */
+  --leading-tight: 1.15; /*115%*/
+  --leading-normal: 1.5; /*150%*/
+
+  /* Letter Spacing */
+  --tracking-0: 0em;
+  --tracking-tight: 0.005em;
+  --tracking-1: 0.01em;
+  --tracking-2: 0.015em;
+  --tracking-3: 0.0175em;
+  --tracking-4: 0.02em;
+  --tracking-5: 0.03em;
+  --tracking-6: 0.04em;
+  --tracking-7: 0.05em;
+  --tracking-8: 0.06em;
+  --tracking-9: 0.07em;
+  --tracking-10: 0.08em;
+  --tracking-11: 0.09em;
+  --tracking-12: 0.1em;
+  --tracking-13: 0.11em;
+  --tracking-14: 0.12em;
+  --tracking-15: 0.14em;
+  --tracking-16: 0.16em;
+  --tracking-17: 0.2em;
+  --tracking-18: 0.2375em;
+  --tracking-19: 0.26em;
+}

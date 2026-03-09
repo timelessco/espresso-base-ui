@@ -1,0 +1,140 @@
+:root {
+  --autofill: var(--color-light-orange-50);
+  --border: var(--color-light-gray-200);
+  --background: var(--color-white);
+  --foreground: var(--color-light-gray-900);
+  --primary: var(--color-light-gray-900);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-light-gray-100);
+  --secondary-foreground: var(--color-light-gray-700);
+  --destructive: var(--color-light-red-600);
+  --destructive-foreground: var(--color-light-red-500);
+  --accent: var(--color-light-gray-200);
+  --accent-foreground: var(--color-light-gray-800);
+  --muted: var(--color-light-gray-100);
+  --muted-foreground: var(--color-light-gray-600);
+  --input: var(--color-light-gray-300);
+  --ring: var(--color-ring-color);
+  --card: var(--color-light-gray-50);
+  --card-foreground: var(--color-light-gray-900);
+  --popover: var(--color-white);
+  --popover-foreground: var(--color-light-gray-800);
+  --sidebar: var(--color-light-gray-50);
+  --sidebar-foreground: var(--color-light-gray-700);
+  --sidebar-primary: var(--color-white);
+  --sidebar-primary-foreground: var(--color-light-gray-900);
+  --sidebar-accent: var(--color-light-gray-200);
+  --sidebar-accent-foreground: var(--color-light-gray-900);
+  --sidebar-border: var(--color-light-gray-200);
+  --sidebar-ring: var(--color-ring-color);
+  --chart-1: var(--color-light-blue-400);
+  --chart-2: var(--color-light-blue-500);
+  --chart-3: var(--color-light-blue-600);
+  --chart-4: var(--color-light-blue-700);
+  --chart-5: var(--color-light-blue-800);
+
+  /* Badge Styles - primary */
+  --default-border-hover: var(--color-light-gray-400);
+  --default-border-active: var(--color-light-gray-400);
+
+  /* Badge Styles - Blue */
+  --blue-primary: var(--color-light-blue-600);
+  --blue-primary-hover: var(--color-light-blue-700);
+  --blue-primary-active: var(--color-light-blue-800);
+  --blue-primary-foreground: var(--color-light-blue-50);
+  --blue-secondary: var(--color-light-blue-100);
+  --blue-secondary-hover: var(--color-light-blue-200);
+  --blue-secondary-active: var(--color-light-blue-300);
+  --blue-secondary-foreground: var(--color-light-blue-700);
+  --blue-border: var(--color-light-blue-300);
+  --blue-border-hover: var(--color-light-blue-400);
+  --blue-border-active: var(--color-light-blue-500);
+  --blue-disabled: var(--color-light-blue-100);
+  --blue-disabled-foreground: var(--color-light-blue-400);
+
+  /* Badge Styles - Green */
+  --green-primary: var(--color-light-green-600);
+  --green-primary-foreground: var(--color-light-green-50);
+  --green-secondary: var(--color-light-green-100);
+  --green-secondary-foreground: var(--color-light-green-700);
+  --green-border: var(--color-light-green-300);
+
+  /* Badge Styles - Amber */
+  --amber-primary: var(--color-light-amber-600);
+  --amber-primary-foreground: var(--color-light-amber-50);
+  --amber-secondary: var(--color-light-amber-100);
+  --amber-secondary-foreground: var(--color-light-amber-700);
+  --amber-border: var(--color-light-amber-300);
+
+  /* Badge Styles - Red */
+  --red-primary: var(--color-light-red-600);
+  --red-primary-foreground: var(--color-light-red-50);
+  --red-secondary: var(--color-light-red-100);
+  --red-secondary-foreground: var(--color-light-red-700);
+  --red-border: var(--color-light-red-300);
+
+  /* Badge Styles - Violet */
+  --violet-primary: var(--color-light-violet-600);
+  --violet-primary-foreground: var(--color-light-violet-50);
+  --violet-secondary: var(--color-light-violet-100);
+  --violet-secondary-foreground: var(--color-light-violet-700);
+  --violet-border: var(--color-light-violet-300);
+
+  /* State */
+  --success: var(--color-light-green-100);
+  --success-border: var(--color-light-green-400);
+  --success-foreground: var(--color-light-green-500);
+  --warning: var(--color-light-amber-100);
+  --warning-border: var(--color-light-amber-400);
+  --warning-foreground: var(--color-light-amber-700);
+  --error: var(--color-light-red-100);
+  --error-border: var(--color-light-red-400);
+  --error-foreground: var(--color-light-red-700);
+  --autofill: var(--color-light-orange-100);
+  --autofill-border: var(--color-light-orange-400);
+
+  /* Spinner Border Color */
+  --track-gray: var(--color-light-gray-200);
+  --track-blue: var(--color-light-blue-200);
+  --track-green: var(--color-light-green-200);
+  --track-amber: var(--color-light-amber-200);
+  --track-red: var(--color-light-red-200);
+
+  /* Gradient Color */
+  --spinner-gray: conic-gradient(
+    from 90deg,
+    rgba(56, 56, 56, 0.0018) 0deg,
+    rgba(56, 56, 56, 1) 260.571deg,
+    rgba(56, 56, 56, 0) 359.525deg,
+    rgba(56, 56, 56, 0.0018) 360deg
+  );
+
+  --spinner-blue: conic-gradient(
+    from 90deg,
+    rgba(0, 109, 219, 0.0018) 0deg,
+    rgba(0, 109, 219, 1) 260.571deg,
+    rgba(0, 109, 219, 0) 359.525deg,
+    rgba(0, 109, 219, 0.0018) 360deg
+  );
+  --spinner-green: conic-gradient(
+    from 90deg,
+    rgba(23, 117, 75, 0.0018) 0deg,
+    rgba(23, 117, 75, 1) 260.571deg,
+    rgba(23, 117, 75, 0) 359.525deg,
+    rgba(23, 117, 75, 0.0018) 360deg
+  );
+  --spinner-amber: conic-gradient(
+    from 90deg,
+    rgba(231, 153, 19, 0.7133) 0deg,
+    rgba(231, 153, 19, 1) 77.4deg,
+    rgba(231, 153, 19, 0.7133) 167.4deg,
+    rgba(231, 153, 19, 0) 360deg
+  );
+  --spinner-red: conic-gradient(
+    from 90deg,
+    rgba(205, 40, 40, 0.0018) 0deg,
+    rgba(205, 40, 40, 1) 260.571deg,
+    rgba(205, 40, 40, 0) 359.525deg,
+    rgba(205, 40, 40, 0.0018) 360deg
+  );
+}

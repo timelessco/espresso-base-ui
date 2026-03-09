@@ -1,0 +1,117 @@
+@theme inline {
+  /* Theme colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-active: var(--accent-active);
+  --color-border: var(--border);
+
+  /* Input */
+  --color-input: var(--input);
+
+  /* Tabs */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Input Focus */
+  --color-ring: var(--ring);
+
+  /* Card */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Char */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Popover */
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Badge Styles - Blue */
+  --color-blue-primary: var(--blue-primary);
+  --color-blue-primary-hover: var(--blue-primary-hover);
+  --color-blue-primary-active: var(--blue-primary-active);
+  --color-blue-primary-foreground: var(--blue-primary-foreground);
+  --color-blue-secondary: var(--blue-secondary);
+  --color-blue-secondary-hover: var(--blue-secondary-hover);
+  --color-blue-secondary-active: var(--blue-secondary-active);
+  --color-blue-secondary-foreground: var(--blue-secondary-foreground);
+  --color-blue-border: var(--blue-border);
+  --color-blue-border-hover: var(--blue-border-hover);
+  --color-blue-border-active: var(--blue-border-hover);
+  --color-blue-ring: var(--blue-ring);
+  --color-blue-disabled: var(--blue-disabled);
+  --color-blue-disabled-foreground: var(--blue-disabled-foreground);
+
+  --color-default-border-hover: var(--default-border-hover);
+  --color-default-border-active: var(--default-border-active);
+
+  /* Badge Styles - Green */
+  --color-green-primary: var(--green-primary);
+  --color-green-primary-foreground: var(--green-primary-foreground);
+  --color-green-secondary: var(--green-secondary);
+  --color-green-secondary-foreground: var(--green-secondary-foreground);
+  --color-green-border: var(--green-border);
+
+  /* Badge Styles - Amber */
+  --color-amber-primary: var(--amber-primary);
+  --color-amber-primary-foreground: var(--amber-primary-foreground);
+  --color-amber-secondary: var(--amber-secondary);
+  --color-amber-secondary-foreground: var(--amber-secondary-foreground);
+  --color-amber-border: var(--amber-border);
+
+  /* Badge Styles - RED */
+  --color-red-primary: var(--red-primary);
+  --color-red-primary-foreground: var(--red-primary-foreground);
+  --color-red-secondary: var(--red-secondary);
+  --color-red-secondary-foreground: var(--red-secondary-foreground);
+  --color-red-border: var(--red-border);
+
+  /* Badge Styles - Violet */
+  --color-violet-primary: var(--violet-primary);
+  --color-violet-primary-foreground: var(--violet-primary-foreground);
+  --color-violet-secondary: var(--violet-secondary);
+  --color-violet-secondary-foreground: var(--violet-secondary-foreground);
+  --color-violet-border: var(--violet-border);
+
+  /* Spinner Track Color */
+  --color-spinner-gray: var(--track-gray);
+  --color-spinner-blue: var(--track-blue);
+  --color-spinner-green: var(--track-green);
+  --color-spinner-amber: var(--track-amber);
+  --color-spinner-red: var(--track-red);
+
+  /* State Color */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+  --color-success-border: var(--success-border);
+  --color-warning-border: var(--warning-border);
+  --color-error-border: var(--error-border);
+  --color-autofill: var(--autofill);
+  --color-autofill-border: var(--autofill-border);
+}
