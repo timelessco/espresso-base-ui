@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-// import SplashScreen from "./components/splash-screen";
+import SplashScreen from "./components/splash-screen";
 
 export const metadata: Metadata = {
   title: "Base UI Espresso",
@@ -22,9 +22,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {/* <SplashScreen> */}
-        {children}
-        {/* </SplashScreen> */}
+        <SplashScreen>{children}</SplashScreen>
       </body>
     </html>
   );

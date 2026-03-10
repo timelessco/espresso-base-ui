@@ -65,7 +65,7 @@ function Button({
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, iconOnly, className }))}
-      {...props}
+      {...(props as React.ComponentPropsWithoutRef<typeof ButtonPrimitive>)}
     />
   );
 }
