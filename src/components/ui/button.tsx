@@ -54,20 +54,20 @@ type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
     iconOnly?: boolean;
   };
 
-function Button({
+const Button: React.FC<ButtonProps> = ({
   className,
   variant = "primary",
   size = "md",
   iconOnly = false,
   ...props
-}: ButtonProps) {
+}) => {
   return (
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, iconOnly, className }))}
-      {...(props as React.ComponentPropsWithoutRef<typeof ButtonPrimitive>)}
+      {...(props as any)}
     />
   );
-}
+};
 
 export { Button, buttonVariants, type ButtonProps };
