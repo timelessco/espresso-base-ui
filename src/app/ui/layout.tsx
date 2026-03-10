@@ -66,7 +66,8 @@ export default function UILayout({
           <div className="flex justify-end">
             <Button
               variant="ghost"
-              size="icon"
+              size="md"
+              iconOnly
               onClick={() => setDark(!dark)}
             >
               <Sun className="size-4 hidden dark:block" />
