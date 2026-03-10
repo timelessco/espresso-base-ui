@@ -49,7 +49,7 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonProps = React.ComponentProps<typeof ButtonPrimitive> &
+type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
   VariantProps<typeof buttonVariants> & {
     iconOnly?: boolean;
   };
