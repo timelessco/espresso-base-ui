@@ -49,7 +49,7 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
+type ButtonProps = Omit<React.ComponentPropsWithoutRef<"button">, "size"> &
   VariantProps<typeof buttonVariants> & {
     iconOnly?: boolean;
   };
@@ -65,7 +65,7 @@ const Button: React.FC<ButtonProps> = ({
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, iconOnly, className }))}
-      {...(props as any)}
+      {...props}
     />
   );
 };
