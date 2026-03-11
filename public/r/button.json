@@ -7,7 +7,9 @@
     "@base-ui/react",
     "class-variance-authority"
   ],
-  "registryDependencies": [],
+  "registryDependencies": [
+    "utils"
+  ],
   "files": [
     {
       "path": "registry/ui/button.tsx",
