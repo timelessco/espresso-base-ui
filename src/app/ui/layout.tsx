@@ -21,13 +21,10 @@ import { Button } from "@/components/ui/button";
 
 const components = [
   { name: "Button", href: "/ui/button" },
+  { name: "Avatar", href: "/ui/avatar" },
 ];
 
-export default function UILayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function UILayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [dark, setDark] = useState(false);
 
@@ -70,8 +67,8 @@ export default function UILayout({
               iconOnly
               onClick={() => setDark(!dark)}
             >
-              <Sun className="size-4 hidden dark:block" />
-              <Moon className="size-4 block dark:hidden" />
+              <Sun className="hidden size-4 dark:block" />
+              <Moon className="block size-4 dark:hidden" />
             </Button>
           </div>
         </SidebarFooter>
