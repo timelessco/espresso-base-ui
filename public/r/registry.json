@@ -39,6 +39,26 @@
           "target": "components/ui/button.tsx"
         }
       ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "An avatar component with circular and square variants, multiple sizes, fallback text/icon, badge, and group support.",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "utils"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/avatar.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/avatar.tsx"
+        }
+      ]
     }
   ]
 }
