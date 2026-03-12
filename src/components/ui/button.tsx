@@ -22,12 +22,12 @@ const buttonVariants = cva(
           "bg-destructive text-white/90 hover:bg-destructive/80 active:bg-destructive/90 focus-visible:ring-destructive/50 disabled:bg-destructive/25 disabled:text-destructive/50 outline-none",
       },
       size: {
-        sm: "gap-2 h-7 rounded-lg px-2 text-base font-normal [&_svg:not([class*='size-'])]:size-4",
-        md: "gap-2 h-8 rounded-lg px-2.5 text-base font-medium [&_svg:not([class*='size-'])]:size-[18px]",
-        lg: "gap-2 h-10 rounded-xl px-3 text-lg font-medium [&_svg:not([class*='size-'])]:size-5",
-        xl: "gap-2 h-[46px] rounded-2xl px-3.5 text-xl font-medium [&_svg:not([class*='size-'])]:size-6",
+        sm: "gap-2 h-7 rounded-lg px-2 text-base font-normal [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-w-4 [&_svg:not([class*='size-'])]:max-h-4",
+        md: "gap-2 h-8 rounded-lg px-2.5 text-base font-medium [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-w-4.5 [&_svg:not([class*='size-'])]:max-h-4.5",
+        lg: "gap-2 h-10 rounded-xl px-3 text-lg font-medium [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-w-5 [&_svg:not([class*='size-'])]:max-h-5",
+        xl: "gap-2 h-[46px] rounded-2xl px-3.5 text-xl font-medium [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-w-6 [&_svg:not([class*='size-'])]:max-h-6",
         "2xl":
-          "gap-2 h-13 rounded-3xl px-4 text-2xl font-medium [&_svg:not([class*='size-'])]:size-6",
+          "gap-2 h-13 rounded-3xl px-4 text-2xl font-medium [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-w-6 [&_svg:not([class*='size-'])]:max-h-6",
       },
       iconOnly: {
         true: "",
