@@ -63,8 +63,7 @@ export default function UILayout({ children }: { children: React.ReactNode }) {
           <div className="flex justify-end">
             <Button
               variant="ghost"
-              size="md"
-              iconOnly
+              size="icon"
               onClick={() => setDark(!dark)}
             >
               <Sun className="hidden size-4 dark:block" />
