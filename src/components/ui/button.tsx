@@ -13,13 +13,13 @@ const buttonVariants = cva(
         primary:
           "bg-primary text-primary-foreground hover:bg-primary/86 active:bg-primary/75 disabled:bg-primary/5 disabled:text-primary/62",
         secondary:
-          "bg-secondary text-accent-foreground hover:bg-border active:bg-input disabled:text-accent-foreground/51",
+          "bg-secondary text-accent-foreground hover:bg-accent active:bg-input focus:bg-secondary disabled:text-accent-foreground/51",
         outline:
-          "border border-input text-accent-foreground hover:borer-input active:bg-primary/12 active:outline-primary/15 disabled:bg-secondary disabled:text-primary/42",
+          "border border-input text-accent-foreground hover:border-primary/25 active:bg-accent disabled:bg-secondary disabled:text-primary/42",
         ghost:
-          "bg-transparent text-accent-foreground hover:bg-muted hover:text-foreground active:bg-primary/12 aria-expanded:bg-muted aria-expanded:text-foreground disabled:bg-transparent disabled:text-primary/42",
+          "bg-transparent text-accent-foreground hover:bg-accent hover:text-foreground active:bg-input aria-expanded:bg-muted disabled:text-primary/42",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/85 active:bg-destructive/90 focus-visible:ring-destructive/50 disabled:bg-destructive/25 disabled:text-destructive/50 outline-none",
+          "bg-destructive text-white/90 hover:bg-destructive/80 active:bg-destructive/90 focus-visible:ring-destructive/50 disabled:bg-destructive/25 disabled:text-destructive/50 outline-none",
       },
       size: {
         sm: "gap-2 h-7 rounded-lg px-2 text-base font-normal [&_svg:not([class*='size-'])]:size-4",

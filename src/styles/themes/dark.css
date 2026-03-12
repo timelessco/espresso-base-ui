@@ -11,12 +11,9 @@
   --destructive-foreground: var(--color-dark-red-600);
   --accent: var(--color-dark-gray-400);
   --accent-foreground: var(--color-dark-gray-900);
-  --accent-active: var(
-    --color-dark-gray-500
-  ); /* this color missing in light theme */
   --muted: var(--color-dark-gray-300);
   --muted-foreground: var(--color-dark-gray-700);
-  --input: var(--color-dark-gray-400);
+  --input: var(--color-dark-gray-500); /* changed this into 400 to 500 */
   --ring: var(--color-ring-color);
   --card: var(--color-dark-gray-200);
   --card-foreground: var(--color-dark-gray-950);
