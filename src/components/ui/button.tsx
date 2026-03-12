@@ -6,52 +6,63 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap tracking-base leading-base transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 focus-visible:ring-offset-background disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
-        outline:
-          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+        primary:
+          "bg-primary text-primary-foreground hover:bg-primary/86 active:bg-primary/75 disabled:bg-primary/5 disabled:text-primary/62",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-accent-foreground hover:bg-border active:bg-input disabled:text-accent-foreground/51",
+        outline:
+          "border border-input text-accent-foreground hover:borer-input active:bg-primary/12 active:outline-primary/15 disabled:bg-secondary disabled:text-primary/42",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+          "bg-transparent text-accent-foreground hover:bg-muted hover:text-foreground active:bg-primary/12 aria-expanded:bg-muted aria-expanded:text-foreground disabled:bg-transparent disabled:text-primary/42",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-destructive text-white hover:bg-destructive/85 active:bg-destructive/90 focus-visible:ring-destructive/50 disabled:bg-destructive/25 disabled:text-destructive/50 outline-none",
       },
       size: {
-        default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        icon: "size-8",
-        "icon-xs":
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+        sm: "gap-2 h-7 rounded-lg px-2 text-base font-normal [&_svg:not([class*='size-'])]:size-4",
+        md: "gap-2 h-8 rounded-lg px-2.5 text-base font-medium [&_svg:not([class*='size-'])]:size-[18px]",
+        lg: "gap-2 h-10 rounded-xl px-3 text-lg font-medium [&_svg:not([class*='size-'])]:size-5",
+        xl: "gap-2 h-[46px] rounded-2xl px-3.5 text-xl font-medium [&_svg:not([class*='size-'])]:size-6",
+        "2xl":
+          "gap-2 h-13 rounded-3xl px-4 text-2xl font-medium [&_svg:not([class*='size-'])]:size-6",
+      },
+      iconOnly: {
+        true: "",
+        false: "",
       },
     },
+    compoundVariants: [
+      { iconOnly: true, size: "sm", className: "px-1.5" },
+      { iconOnly: true, size: "md", className: "px-2" },
+      { iconOnly: true, size: "lg", className: "px-2.5" },
+      { iconOnly: true, size: "xl", className: "px-3" },
+      { iconOnly: true, size: "2xl", className: "px-3.5" },
+    ],
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: "primary",
+      size: "md",
+      iconOnly: false,
     },
   },
 );
 
 function Button({
   className,
-  variant = "default",
-  size = "default",
+  variant = "primary",
+  size = "md",
+  iconOnly = false,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props &
+  VariantProps<typeof buttonVariants> & {
+    iconOnly?: boolean;
+  }) {
   return (
     <ButtonPrimitive
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, iconOnly, className }))}
       {...props}
     />
   );

@@ -28,6 +28,7 @@
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
   --font-weight-black: 900;
+
   /* Font Variation Settings */
   --font-variation-420: "wght" 420;
 
@@ -54,8 +55,7 @@
   --text-15xl: 5.5rem; /*88px*/
 
   /* Line Height */
-  --leading-tight: 1.143; /*115%*/
-  --leading-normal: 1.5; /*150%*/
+  --leading-base: 1.15; /*115%*/
 
   /* Letter Spacing */
   /* --tracking-0: 0em;
@@ -81,6 +81,7 @@
   --tracking-19: 0.26em; */
 
   /*updated Letter Spacing */
+  --tracking-base: 0.02em;
   --tracking-1: 0.011em;
   --tracking-2: 0.0125em;
   --tracking-3: 0.013em;
