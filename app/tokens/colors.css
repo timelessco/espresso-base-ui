@@ -262,6 +262,9 @@
     0.9128 0.0001 263.28
   ); /* #e2e2e2 */ /* custom variable */
   --color-gray-400: oklch(0.8297 0.0001 263.28); /* #c7c7c7 */
+  --color-gray-450: oklch(
+    0.7564 0.0001 263.28
+  ); /* #b0b0b0 */ /* custom variable */
   --color-gray-500: oklch(0.683 0.0001 263.28); /* #999999 */
   --color-gray-600: oklch(
     0.5863 0.0001 263.28
@@ -312,6 +315,7 @@
   --color-gray-alpha-200: oklch(0 0 0 / 0.0706); /* #00000012 */
   --color-gray-alpha-300: oklch(0 0 0 / 0.1216); /* #0000001f */
   --color-gray-alpha-400: oklch(0 0 0 / 0.2196); /* #00000038 */
+  --color-gray-alpha-450: oklch(0 0 0 / 0.3098); /* #0000004f */
   --color-gray-alpha-500: oklch(0 0 0 / 0.4); /* #00000066 */
   --color-gray-alpha-550: oklch(0 0 0 / 0.451); /* #00000073 */
   --color-gray-alpha-600: oklch(0 0 0 / 0.5098); /* #00000082 */
@@ -638,6 +642,7 @@
   --color-gray-alpha-400: oklch(0.5208 0 263.28); /* #696969 */
   --color-gray-alpha-450: oklch(0.4202 0 263.28); /* #4d4d4d */
   --color-gray-alpha-500: oklch(0.3329 0 263.28); /* #363636 */
+  --color-gray-alpha-550: oklch(0.3007 0 263.28); /* #2e2e2e */
   --color-gray-alpha-600: oklch(0.2686 0 263.28); /* #262626 */
   --color-gray-alpha-700: oklch(0.2393 0 263.28); /* #1f1f1f */
   --color-gray-alpha-800: oklch(0.1913 0 263.28); /* #141414 */
