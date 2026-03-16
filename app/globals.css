@@ -47,6 +47,8 @@
   --selection: lab(2.75381% 0 0);
   --selection-foreground: lab(100% 0 0);
 
+  --spacing: 0.25rem; /* 4px */
+
   --radius: 0.625rem; /* 10px */
 
   /* font weights */
@@ -128,6 +130,16 @@
   --leading-normal: 1.5;
   --leading-relaxed: 1.625;
   --leading-loose: 2;
+
+  /* border-radius */
+  --radius-xs: 0.125rem; /* 2px */
+  --radius-sm: calc(var(--radius) * 0.6); /* 6px */
+  --radius-md: calc(var(--radius) * 0.8); /* 8px  */
+  --radius-lg: var(--radius); /* 10px */
+  --radius-xl: calc(var(--radius) * 1.2); /* 12px */
+  --radius-2xl: calc(var(--radius) * 1.6); /* 16px */
+  --radius-3xl: calc(var(--radius) * 2); /* 20px */
+  --radius-4xl: calc(var(--radius) * 2.4); /* 24px */
 }
 
 .dark {
