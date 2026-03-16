@@ -41,7 +41,63 @@
   --sidebar-border: oklch(0.9461 0.0001 263.28); /* #ededed */
   --sidebar-ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
 
+  --surface: lab(97.68% -0.0000298023 0.0000119209);
+  --code-highlight: lab(95.36% 0 0);
+  --code-number: lab(48.96% 0 0);
+  --selection: lab(2.75381% 0 0);
+  --selection-foreground: lab(100% 0 0);
+
   --radius: 0.625rem; /* 10px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 420;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --text-tiny: 0.6875rem; /* 11px */
+  --text-tiny--line-height: 0;
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-2xs--line-height: 1.1818;
+  --text-xs: 0.75rem; /* 12px */
+  --text-xs--line-height: 1.1667;
+  --text-sm: 0.8125rem; /* 13px */
+  --text-sm--line-height: 1.1538;
+  --text-base: 0.875rem; /* 14px */
+  --text-base--line-height: 1.1429;
+  --text-lg: 1rem; /* 16px */
+  --text-lg--line-height: 1.125;
+  --text-xl: 1.125rem; /* 18px */
+  --text-xl--line-height: 1.1667;
+  --text-2xl: 1.25rem; /* 20px */
+  --text-2xl--line-height: 1.15;
+  --text-3xl: 1.5rem; /* 24px */
+  --text-3xl--line-height: 1.1667;
+  --text-4xl: 1.625rem; /* 26px */
+  --text-4xl--line-height: 1.6154;
+  --text-5xl: 1.75rem; /* 28px */
+  --text-5xl--line-height: 1.6071;
+  --text-6xl: 2rem; /* 32px */
+  --text-6xl--line-height: 1.5938;
+  --text-7xl: 2.5rem; /* 40px */
+  --text-7xl--line-height: 1.4;
+  --text-8xl: 2.75rem; /* 44px */
+  --text-8xl--line-height: 1.4091;
+  --text-9xl: 3rem; /* 48px */
+  --text-9xl--line-height: 1.3958;
+  --text-10xl: 3.25rem; /* 52px */
+  --text-10xl--line-height: 1.4038;
+  --text-11xl: 3.5rem; /* 56px */
+  --text-11xl--line-height: 1.3929;
+  --text-12xl: 4rem; /* 64px */
+  --text-12xl--line-height: 1.2969;
+  --text-13xl: 4.5rem; /* 72px */
+  --text-13xl--line-height: 1.2778;
+  --text-14xl: 5rem; /* 80px */
+  --text-14xl--line-height: 1.2;
+  --text-15xl: 5.5rem; /* 88px */
+  --text-15xl--line-height: 1.2045;
 }
 
 .dark {
@@ -79,6 +135,12 @@
   --sidebar-accent-foreground: oklch(0.754 0.0001 263.28); /* #afafaf */
   --sidebar-border: oklch(0.2562 0 263.28); /* #232323 */
   --sidebar-ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
+
+  --surface: lab(97.68% -0.0000298023 0.0000119209);
+  --code-highlight: lab(95.36% 0 0);
+  --code-number: lab(48.96% 0 0);
+  --selection: lab(2.75381% 0 0);
+  --selection-foreground: lab(100% 0 0);
 }
 
 @theme inline {
@@ -362,6 +424,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-weight: 420;
+    font-variation-settings: "wght" 420;
   }
   html {
     @apply font-sans;
