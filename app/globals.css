@@ -49,6 +49,7 @@
 
   --radius: 0.625rem; /* 10px */
 
+  /* font weights */
   --font-weight-light: 300;
   --font-weight-normal: 420;
   --font-weight-medium: 500;
@@ -56,6 +57,7 @@
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
 
+  /* font sizes */
   --text-tiny: 0.6875rem; /* 11px */
   --text-tiny--line-height: 0;
   --text-2xs: 0.6875rem; /* 11px */
@@ -98,6 +100,34 @@
   --text-14xl--line-height: 1.2;
   --text-15xl: 5.5rem; /* 88px */
   --text-15xl--line-height: 1.2045;
+
+  /* line heights */
+  --leading-tiny: 0;
+  --leading-2xs: 1.18;
+  --leading-xs: 1.17;
+  --leading-sm: 1.15;
+  --leading-base: 1.14;
+  --leading-lg: 1.13;
+  --leading-xl: 1.17;
+  --leading-2xl: 1.15;
+  --leading-3xl: 1.17;
+  --leading-4xl: 1.62;
+  --leading-5xl: 1.61;
+  --leading-6xl: 1.59;
+  --leading-7xl: 1.4;
+  --leading-8xl: 1.41;
+  --leading-9xl: 1.4;
+  --leading-10xl: 1.4;
+  --leading-11xl: 1.39;
+  --leading-12xl: 1.3;
+  --leading-13xl: 1.28;
+  --leading-14xl: 1.2;
+  --leading-15xl: 1.2;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
 }
 
 .dark {
