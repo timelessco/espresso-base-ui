@@ -47,6 +47,13 @@
   --selection: lab(2.75381% 0 0);
   --selection-foreground: lab(100% 0 0);
 
+  /* start custom variables */
+  --destructive-hover: oklch(0.4906 0.1801 27.06); /* #B52A2A */
+  --destructive-active: oklch(0.3998 0.1474 27.42); /* #941F1F */
+  --destructive-disabled: oklch(0.9351 0.0268 17.5); /* #FFE7E7 */
+  --destructive-disabled-foreground: oklch(0.7468 0.0856 18.72); /* #F79596 */
+  /* end custom variables */
+
   --spacing: 0.25rem; /* 4px */
 
   --radius: 0.625rem; /* 10px */
@@ -137,9 +144,10 @@
   --radius-md: calc(var(--radius) * 0.8); /* 8px  */
   --radius-lg: var(--radius); /* 10px */
   --radius-xl: calc(var(--radius) * 1.2); /* 12px */
-  --radius-2xl: calc(var(--radius) * 1.6); /* 16px */
-  --radius-3xl: calc(var(--radius) * 2); /* 20px */
-  --radius-4xl: calc(var(--radius) * 2.4); /* 24px */
+  --radius-2xl: calc(var(--radius) * 1.4); /* 14px */
+  --radius-3xl: calc(var(--radius) * 1.6); /* 16px */
+  --radius-4xl: calc(var(--radius) * 2); /* 20px */
+  --radius-5xl: calc(var(--radius) * 2.4); /* 24px */
 
   /* letter spacing */
   --tracking-tighter: -0.05em;
@@ -164,9 +172,16 @@
   --accent: oklch(0.325 0 0); /* #343434 */
   --accent-foreground: oklch(0.754 0 0); /* #AFAFAF */
   --destructive: oklch(0.4906 0.1801 27.06); /* #B01F1F */
+  /* start custom variables */
+  --destructive-hover: oklch(0.5803 0.2085 26.5); /* #D73232 */
+  --destructive-active: oklch(0.3798 0.1398 27.5); /* #862020 */
+  --destructive-disabled: oklch(0.2568 0.0612 17.85); /* #3C1316 */
+  --destructive-disabled-foreground: oklch(0.3698 0.1198 22.5); /* #661717 */
+  /* end custom variables */
   --destructive-foreground: oklch(1 0.0001 263.28); /* #ffffff */
   --border: oklch(0.325 0 0); /* #343434 */
-  --input: oklch(0.325 0 0); /* #343434 */
+  /* --input: oklch(0.325 0 0); */ /* #343434 */
+  --input: oklch(0.3554 0 0); /* #424242 */
 
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
@@ -194,7 +209,7 @@
 @theme inline {
   --font-sans: var(--font-sans);
   /* Variations Fonts */
-  --font-sans--font-variation-settings: "opsz" 24, "wght" 420;
+  --font-sans--font-variation-settings: "opsz" 24;
 
   /* Fonts Weight */
   --font-sans-weight: 420;
@@ -215,6 +230,10 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-active: var(--destructive-active);
+  --color-destructive-disabled: var(--destructive-disabled);
+  --color-destructive-disabled-foreground: var(--destructive-disabled-foreground);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
@@ -238,6 +257,35 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* line heights */
+  --leading-tiny: var(--leading-tiny);
+  --leading-2xs: var(--leading-2xs);
+  --leading-xs: var(--leading-xs);
+  --leading-sm: var(--leading-sm);
+  --leading-base: var(--leading-base);
+  --leading-lg: var(--leading-lg);
+  --leading-xl: var(--leading-xl);
+  --leading-2xl: var(--leading-2xl);
+  --leading-3xl: var(--leading-3xl);
+  --leading-4xl: var(--leading-4xl);
+  --leading-5xl: var(--leading-5xl);
+  --leading-6xl: var(--leading-6xl);
+  --leading-7xl: var(--leading-7xl);
+  --leading-8xl: var(--leading-8xl);
+  --leading-9xl: var(--leading-9xl);
+  --leading-10xl: var(--leading-10xl);
+  --leading-11xl: var(--leading-11xl);
+  --leading-12xl: var(--leading-12xl);
+  --leading-13xl: var(--leading-13xl);
+  --leading-14xl: var(--leading-14xl);
+  --leading-15xl: var(--leading-15xl);
+
+  /* letter spacing */
+  --tracking-tighter: var(--tracking-tighter);
+  --tracking-tight: var(--tracking-tight);
+  --tracking-widest: var(--tracking-widest);
+  --tracking-base: var(--tracking-base);
 
   /* colors */
   --color-red-50: var(--color-red-50);
@@ -478,7 +526,6 @@
   body {
     @apply bg-background text-foreground;
     font-weight: 420;
-    font-variation-settings: "wght" 420;
   }
   html {
     @apply font-sans;
