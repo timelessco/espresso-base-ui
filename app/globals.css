@@ -108,7 +108,7 @@
   --leading-2xs: 1.18;
   --leading-xs: 1.17;
   --leading-sm: 1.15;
-  --leading-base: 1.14;
+  --leading-base: 1.15;
   --leading-lg: 1.13;
   --leading-xl: 1.17;
   --leading-2xl: 1.15;
@@ -140,6 +140,12 @@
   --radius-2xl: calc(var(--radius) * 1.6); /* 16px */
   --radius-3xl: calc(var(--radius) * 2); /* 20px */
   --radius-4xl: calc(var(--radius) * 2.4); /* 24px */
+
+  /* letter spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-widest: 0.1em;
+  --tracking-base: 0.02em;
 }
 
 .dark {
@@ -187,6 +193,11 @@
 
 @theme inline {
   --font-sans: var(--font-sans);
+  /* Variations Fonts */
+  --font-sans--font-variation-settings: "opsz" 24, "wght" 420;
+
+  /* Fonts Weight */
+  --font-sans-weight: 420;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
