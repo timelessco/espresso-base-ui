@@ -121,110 +121,103 @@ export default function PlaygroundPage() {
   const br = borderRadii[radiusIdx]
 
   return (
-    <div className="flex min-h-svh bg-background">
-      {/* Sidebar */}
-      <aside className="sticky top-0 flex h-svh w-72 shrink-0 flex-col border-r border-border bg-card">
-        <div className="border-b border-border px-5 py-4">
-          <h1 className="text-sm font-semibold text-foreground">Playground</h1>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">
-            Adjust design tokens to preview changes
-          </p>
+    <div className="flex flex-col bg-background p-10">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+        {/* Controls */}
+        <div className="flex flex-col gap-4 rounded-lg border border-border bg-card p-5">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-sm font-semibold text-foreground">Playground</h1>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">
+                Adjust design tokens to preview changes
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setFontSizeIdx(4)
+                setLineHeightIdx(4)
+                setFontWeightIdx(1)
+                setRadiusIdx(3)
+              }}
+              className="rounded-lg bg-muted px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              Reset defaults
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+            <ControlGroup
+              label="Font Size"
+              selectedLabel={fs.label}
+              selectedDetail={fs.detail}
+              variableName={`--text-${fs.label}`}
+            >
+              <input
+                type="range"
+                min={0}
+                max={fontSizes.length - 1}
+                step={1}
+                value={fontSizeIdx}
+                onChange={(e) => setFontSizeIdx(Number(e.target.value))}
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+              />
+            </ControlGroup>
+
+            <ControlGroup
+              label="Line Height"
+              selectedLabel={lh.label}
+              selectedDetail={lh.detail}
+              variableName={`--leading-${lh.label}`}
+            >
+              <input
+                type="range"
+                min={0}
+                max={lineHeights.length - 1}
+                step={1}
+                value={lineHeightIdx}
+                onChange={(e) => setLineHeightIdx(Number(e.target.value))}
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+              />
+            </ControlGroup>
+
+            <ControlGroup
+              label="Font Weight"
+              selectedLabel={fw.label}
+              selectedDetail={fw.detail}
+              variableName={`--font-weight-${fw.label}`}
+            >
+              <input
+                type="range"
+                min={0}
+                max={fontWeights.length - 1}
+                step={1}
+                value={fontWeightIdx}
+                onChange={(e) => setFontWeightIdx(Number(e.target.value))}
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+              />
+            </ControlGroup>
+
+            <ControlGroup
+              label="Border Radius"
+              selectedLabel={br.label}
+              selectedDetail={br.detail}
+              variableName={`--radius-${br.label}`}
+            >
+              <input
+                type="range"
+                min={0}
+                max={borderRadii.length - 1}
+                step={1}
+                value={radiusIdx}
+                onChange={(e) => setRadiusIdx(Number(e.target.value))}
+                className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
+              />
+            </ControlGroup>
+          </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-5">
-          <ControlGroup
-            label="Font Size"
-            selectedLabel={fs.label}
-            selectedDetail={fs.detail}
-            variableName={`--text-${fs.label}`}
-          >
-            <input
-              type="range"
-              min={0}
-              max={fontSizes.length - 1}
-              step={1}
-              value={fontSizeIdx}
-              onChange={(e) => setFontSizeIdx(Number(e.target.value))}
-              className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-            />
-          </ControlGroup>
-
-          <div className="h-px bg-border" />
-
-          <ControlGroup
-            label="Line Height"
-            selectedLabel={lh.label}
-            selectedDetail={lh.detail}
-            variableName={`--leading-${lh.label}`}
-          >
-            <input
-              type="range"
-              min={0}
-              max={lineHeights.length - 1}
-              step={1}
-              value={lineHeightIdx}
-              onChange={(e) => setLineHeightIdx(Number(e.target.value))}
-              className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-            />
-          </ControlGroup>
-
-          <div className="h-px bg-border" />
-
-          <ControlGroup
-            label="Font Weight"
-            selectedLabel={fw.label}
-            selectedDetail={fw.detail}
-            variableName={`--font-weight-${fw.label}`}
-          >
-            <input
-              type="range"
-              min={0}
-              max={fontWeights.length - 1}
-              step={1}
-              value={fontWeightIdx}
-              onChange={(e) => setFontWeightIdx(Number(e.target.value))}
-              className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-            />
-          </ControlGroup>
-
-          <div className="h-px bg-border" />
-
-          <ControlGroup
-            label="Border Radius"
-            selectedLabel={br.label}
-            selectedDetail={br.detail}
-            variableName={`--radius-${br.label}`}
-          >
-            <input
-              type="range"
-              min={0}
-              max={borderRadii.length - 1}
-              step={1}
-              value={radiusIdx}
-              onChange={(e) => setRadiusIdx(Number(e.target.value))}
-              className="h-1 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-            />
-          </ControlGroup>
-        </div>
-
-        <div className="border-t border-border px-5 py-4">
-          <button
-            onClick={() => {
-              setFontSizeIdx(4)
-              setLineHeightIdx(4)
-              setFontWeightIdx(1)
-              setRadiusIdx(3)
-            }}
-            className="w-full rounded-lg bg-muted px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-          >
-            Reset defaults
-          </button>
-        </div>
-      </aside>
-
-      {/* Main content */}
-      <main className="flex flex-1 items-center justify-center p-10">
-        <div className="flex w-full max-w-2xl flex-col gap-6">
+        {/* Preview */}
+        <div className="flex w-full flex-col gap-6">
           {/* CSS output bar */}
           <div className="flex items-center gap-2 overflow-x-auto rounded-lg bg-muted/50 px-4 py-2.5">
             <span className="shrink-0 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -380,7 +373,7 @@ export default function PlaygroundPage() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }
