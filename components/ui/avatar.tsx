@@ -154,31 +154,49 @@ export {
 }
 
 /**
- * Changelog
+ * Changelog — compared to shadcn base-ui avatar (npx shadcn@latest add avatar)
  *
- * Size prop:
- *   Before: "sm" | "default" | "lg"
- *   After:  "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"
- *
- *   Added xs (16px), xl (32px), 2xl (40px), 3xl (46px) sizes.
- *   Changed sm from 24px to 20px, default from 32px to 24px, lg from 40px to 28px.
- *
- * Variant prop:
- *   Before: Not available. All avatars were circular (rounded-full).
- *   After:  "circle" (default) | "square".
- *           When variant="square", border-radius is set per size using design token variables:
- *             xs      → --radius-2xs (4px)
- *             sm      → --radius-xs  (5px)
- *             default → --radius-xs  (5px)
- *             lg      → --radius-sm  (6px)
- *             xl      → --radius-sm  (6px)
- *             2xl     → --radius-md  (8px)
- *             3xl     → --radius-lg  (10px)
- *
- * CVA refactor:
- *   Before: Manual conditional classes with data attributes and squaredRadiusClasses map.
- *   After:  Uses class-variance-authority (CVA) with avatarVariants.
- *           variant and size are managed via CVA variants.
- *           Square border-radius per size handled via compoundVariants.
+ * Architecture:
+ *   Before: Manual className strings with data-attribute selectors.
+ *   After:  Uses class-variance-authority (CVA) with avatarVariants for variant/size management.
  *           Exported avatarVariants for external use.
+ *
+ * Avatar (Root):
+ *   Before: size: "sm" (24px) | "default" (32px) | "lg" (40px). Always rounded-full.
+ *           Had after: pseudo-element border and dark: mix-blend classes.
+ *   After:  size: "xs" (16px) | "sm" (20px) | "default" (24px) | "lg" (28px) | "xl" (32px) | "2xl" (40px) | "3xl" (46px).
+ *           Added variant: "circle" (default) | "square".
+ *           Square variant uses compoundVariants with design token border-radius per size.
+ *           Removed after: pseudo-element border and dark: classes.
+ *           Added items-center/justify-center for direct icon children.
+ *           Added [&>svg] sizing per size for icon avatars.
+ *           Added --overlap CSS variable per size for AvatarGroup spacing.
+ *           Added bg-secondary background.
+ *
+ * AvatarImage:
+ *   Before: rounded-full, object-cover.
+ *   After:  rounded-[inherit] (inherits from parent for square support), object-cover.
+ *
+ * AvatarFallback:
+ *   Before: rounded-full, bg-muted, text-sm, text-muted-foreground. Only sm text override.
+ *   After:  rounded-[inherit], bg-secondary, text-secondary-foreground.
+ *           Font size per size: xs=text-2xs, sm=text-sm, default=text-base, lg=text-base,
+ *           xl=text-lg, 2xl=text-xl, 3xl=text-2xl.
+ *           Added leading-base, font-medium, tracking-base.
+ *           Added [&_svg] sizing per size for fallback icons.
+ *
+ * AvatarBadge:
+ *   Before: bg-primary, 3 sizes (sm/default/lg).
+ *   After:  bg-green-500, 7 sizes (xs through 3xl) with per-size badge and icon dimensions.
+ *           Added position offsets for square variant per size.
+ *
+ * AvatarGroup:
+ *   Before: flex -space-x-2, ring-2 ring-background on children.
+ *   After:  Uses --overlap CSS variable for per-size negative margin via [&>*+*]:ml-[var(--overlap)].
+ *           Added descending z-index stacking (first avatar on top).
+ *
+ * AvatarGroupCount:
+ *   Before: size-8, bg-muted, text-sm. Only sm/lg size overrides.
+ *   After:  bg-secondary, text-secondary-foreground. All 7 size overrides with matching font sizes.
+ *           Added --overlap CSS variable for consistent group spacing.
  */
