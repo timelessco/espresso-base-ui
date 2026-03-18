@@ -532,6 +532,9 @@
   html {
     @apply font-sans;
   }
+  svg {
+    stroke-width: 1.5;
+  }
 }
 
 /* Newly added */
