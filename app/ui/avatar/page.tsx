@@ -18,7 +18,7 @@ const sizes = ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"] as const
 
 export default function AvatarPage() {
   return (
-    <div className="flex flex-col gap-20 p-10">
+    <div className="flex flex-col gap-20 p-8">
       <div className="flex">
         <div className="flex w-1/3 flex-col gap-20">
           {/* With Image */}
