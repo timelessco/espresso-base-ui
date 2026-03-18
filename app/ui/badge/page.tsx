@@ -16,7 +16,7 @@ const variants = [
 
 export default function BadgePage() {
   return (
-    <div className="flex flex-col gap-12 p-10">
+    <div className="flex flex-col gap-12 p-8">
       {/* All Variants */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Variants</SectionTitle>

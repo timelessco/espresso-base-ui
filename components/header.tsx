@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
+import { Sun, Moon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
@@ -12,11 +14,17 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname()
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <header className="flex h-12 items-center justify-between border-b border-border px-4">
+    <header className="flex h-12 shrink-0 items-center justify-between rounded-2xl">
       <Link href="/">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 150" width="100" height="38">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 400 150"
+          width="100"
+          height="38"
+        >
           <text
             x="50%"
             y="55%"
@@ -32,19 +40,30 @@ export function Header() {
           </text>
         </svg>
       </Link>
-      <nav className="flex items-center gap-1">
-        {navItems.map((item) => (
-          <Button
-            key={item.href}
-            variant={pathname.startsWith(item.href) ? "secondary" : "ghost"}
-            size="sm"
-            nativeButton={false}
-            render={<Link href={item.href} />}
-          >
-            {item.label}
-          </Button>
-        ))}
-      </nav>
+      <div className="flex items-center gap-5">
+        <nav className="flex items-center gap-5">
+          {navItems.map((item) => (
+            <Button
+              key={item.href}
+              className="font-medium"
+              variant={pathname.startsWith(item.href) ? "secondary" : "ghost"}
+              size="sm"
+              nativeButton={false}
+              render={<Link href={item.href} />}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </nav>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+        >
+          <Sun className="absolute scale-0 dark:scale-100" />
+          <Moon className="scale-100 dark:scale-0" />
+        </Button>
+      </div>
     </header>
   )
 }
