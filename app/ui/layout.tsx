@@ -7,6 +7,7 @@ import { Header } from "@/components/header"
 
 const sidebarItems = [
   { label: "Avatar", href: "/ui/avatar" },
+  { label: "Badge", href: "/ui/badge" },
   { label: "Button", href: "/ui/button" },
 ]
 
