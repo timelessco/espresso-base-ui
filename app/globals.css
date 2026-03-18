@@ -62,6 +62,7 @@
   --font-weight-light: 300;
   --font-weight-normal: 420;
   --font-weight-medium: 500;
+  --font-weight-medium-plus: 530;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
@@ -139,7 +140,9 @@
   --leading-loose: 2;
 
   /* border-radius */
-  --radius-xs: 0.125rem; /* 2px */
+  --radius-3xs: 0.125rem; /* 2px */
+  --radius-2xs: calc(var(--radius) * 0.4); /* 4px */
+  --radius-xs: calc(var(--radius) * 0.5); /* 5px */
   --radius-sm: calc(var(--radius) * 0.6); /* 6px */
   --radius-md: calc(var(--radius) * 0.8); /* 8px  */
   --radius-lg: var(--radius); /* 10px */
@@ -213,6 +216,13 @@
 
   /* Fonts Weight */
   --font-sans-weight: 420;
+  --font-weight-light: var(--font-weight-light);
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-medium-plus: var(--font-weight-medium-plus);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+  --font-weight-extrabold: var(--font-weight-extrabold);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -252,6 +262,9 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
 
+  --radius-3xs: 0.125rem;
+  --radius-2xs: calc(var(--radius) * 0.4);
+  --radius-xs: calc(var(--radius) * 0.5);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -259,6 +272,51 @@
   --radius-2xl: calc(var(--radius) * 1.4);
   --radius-3xl: calc(var(--radius) * 1.6);
   --radius-4xl: calc(var(--radius) * 2);
+  --radius-5xl: calc(var(--radius) * 2.4);
+
+  /* font sizes */
+  --text-tiny: var(--text-tiny);
+  --text-tiny--line-height: var(--text-tiny--line-height);
+  --text-2xs: var(--text-2xs);
+  --text-2xs--line-height: var(--text-2xs--line-height);
+  --text-xs: var(--text-xs);
+  --text-xs--line-height: var(--text-xs--line-height);
+  --text-sm: var(--text-sm);
+  --text-sm--line-height: var(--text-sm--line-height);
+  --text-base: var(--text-base);
+  --text-base--line-height: var(--text-base--line-height);
+  --text-lg: var(--text-lg);
+  --text-lg--line-height: var(--text-lg--line-height);
+  --text-xl: var(--text-xl);
+  --text-xl--line-height: var(--text-xl--line-height);
+  --text-2xl: var(--text-2xl);
+  --text-2xl--line-height: var(--text-2xl--line-height);
+  --text-3xl: var(--text-3xl);
+  --text-3xl--line-height: var(--text-3xl--line-height);
+  --text-4xl: var(--text-4xl);
+  --text-4xl--line-height: var(--text-4xl--line-height);
+  --text-5xl: var(--text-5xl);
+  --text-5xl--line-height: var(--text-5xl--line-height);
+  --text-6xl: var(--text-6xl);
+  --text-6xl--line-height: var(--text-6xl--line-height);
+  --text-7xl: var(--text-7xl);
+  --text-7xl--line-height: var(--text-7xl--line-height);
+  --text-8xl: var(--text-8xl);
+  --text-8xl--line-height: var(--text-8xl--line-height);
+  --text-9xl: var(--text-9xl);
+  --text-9xl--line-height: var(--text-9xl--line-height);
+  --text-10xl: var(--text-10xl);
+  --text-10xl--line-height: var(--text-10xl--line-height);
+  --text-11xl: var(--text-11xl);
+  --text-11xl--line-height: var(--text-11xl--line-height);
+  --text-12xl: var(--text-12xl);
+  --text-12xl--line-height: var(--text-12xl--line-height);
+  --text-13xl: var(--text-13xl);
+  --text-13xl--line-height: var(--text-13xl--line-height);
+  --text-14xl: var(--text-14xl);
+  --text-14xl--line-height: var(--text-14xl--line-height);
+  --text-15xl: var(--text-15xl);
+  --text-15xl--line-height: var(--text-15xl--line-height);
 
   /* line heights */
   --leading-tiny: var(--leading-tiny);
@@ -531,6 +589,9 @@
   }
   html {
     @apply font-sans;
+  }
+  svg {
+    stroke-width: 1.5;
   }
 }
 

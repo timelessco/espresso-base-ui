@@ -5,7 +5,10 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Header } from "@/components/header"
 
-const sidebarItems = [{ label: "Button", href: "/ui/button" }]
+const sidebarItems = [
+  { label: "Avatar", href: "/ui/avatar" },
+  { label: "Button", href: "/ui/button" },
+]
 
 function Sidebar() {
   const pathname = usePathname()
