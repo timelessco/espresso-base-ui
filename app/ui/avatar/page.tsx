@@ -108,7 +108,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - With Image</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <AvatarImage src={avatarSrc} alt="User" />
                   <AvatarFallback>N</AvatarFallback>
                 </Avatar>
@@ -121,7 +121,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - Fallback</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <AvatarFallback>N</AvatarFallback>
                 </Avatar>
               ))}
@@ -133,7 +133,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - Icon</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <User className="text-muted-foreground" />
                 </Avatar>
               ))}
@@ -145,7 +145,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - With Badge</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <AvatarImage src={avatarSrc} alt="User" />
                   <AvatarFallback>N</AvatarFallback>
                   <AvatarBadge />
@@ -159,7 +159,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - Badge with Icon</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <AvatarImage src={avatarSrc} alt="User" />
                   <AvatarFallback>N</AvatarFallback>
                   <AvatarBadge className="bg-blue-500">
@@ -175,7 +175,7 @@ export default function AvatarPage() {
             <SectionTitle>Squared - Icon with Badge</SectionTitle>
             <div className="flex flex-wrap items-center gap-4">
               {sizes.map((size) => (
-                <Avatar key={size} size={size} squared>
+                <Avatar key={size} size={size} variant="square">
                   <User className="text-muted-foreground" />
                   <AvatarBadge />
                 </Avatar>
@@ -314,7 +314,7 @@ export default function AvatarPage() {
                 </td>
                 {sizes.map((size) => (
                   <td key={size} className="px-4 py-3">
-                    <Avatar size={size} squared>
+                    <Avatar size={size} variant="square">
                       <AvatarImage src={avatarSrc} alt="User" />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
@@ -327,7 +327,7 @@ export default function AvatarPage() {
                 </td>
                 {sizes.map((size) => (
                   <td key={size} className="px-4 py-3">
-                    <Avatar size={size} squared>
+                    <Avatar size={size} variant="square">
                       <AvatarFallback>N</AvatarFallback>
                     </Avatar>
                   </td>
@@ -339,7 +339,7 @@ export default function AvatarPage() {
                 </td>
                 {sizes.map((size) => (
                   <td key={size} className="px-4 py-3">
-                    <Avatar size={size} squared>
+                    <Avatar size={size} variant="square">
                       <AvatarFallback>
                         <User className="text-muted-foreground" />
                       </AvatarFallback>
@@ -353,7 +353,7 @@ export default function AvatarPage() {
                 </td>
                 {sizes.map((size) => (
                   <td key={size} className="px-4 py-3">
-                    <Avatar size={size} squared>
+                    <Avatar size={size} variant="square">
                       <AvatarImage src={avatarSrc} alt="User" />
                       <AvatarFallback>CN</AvatarFallback>
                       <AvatarBadge />

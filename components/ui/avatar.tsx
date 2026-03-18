@@ -18,21 +18,22 @@ const squaredRadiusClasses: Record<string, string> = {
 function Avatar({
   className,
   size = "default",
-  squared = false,
+  variant = "circle",
   ...props
 }: AvatarPrimitive.Root.Props & {
   size?: "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"
-  squared?: boolean
+  variant?: "circle" | "square"
 }) {
+  const isSquare = variant === "square"
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
       data-size={size}
-      data-squared={squared || undefined}
+      data-variant={variant}
       className={cn(
         "group/avatar relative flex size-6 shrink-0 items-center justify-center bg-secondary select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4 [--overlap:-4px] data-[size=xs]:[--overlap:-2px] data-[size=lg]:[--overlap:-5px] data-[size=2xl]:[--overlap:-6px] data-[size=3xl]:[--overlap:-8px]",
         "[&>svg]:size-3.5 data-[size=2xl]:[&>svg]:size-5 data-[size=3xl]:[&>svg]:size-5 data-[size=lg]:[&>svg]:size-4 data-[size=sm]:[&>svg]:size-3 data-[size=xl]:[&>svg]:size-4 data-[size=xs]:[&>svg]:size-2.5",
-        squared ? squaredRadiusClasses[size] : "rounded-full",
+        isSquare ? squaredRadiusClasses[size] : "rounded-full",
         className
       )}
       {...props}
@@ -76,13 +77,13 @@ function AvatarBadge({ className, ...props }: React.ComponentProps<"span">) {
       data-slot="avatar-badge"
       className={cn(
         "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-green-500 text-primary-foreground bg-blend-color ring-2 ring-background select-none",
-        "group-data-[squared]/avatar:group-data-[size=xs]/avatar:-right-px group-data-[squared]/avatar:group-data-[size=xs]/avatar:-bottom-px",
-        "group-data-[squared]/avatar:group-data-[size=sm]/avatar:-right-px group-data-[squared]/avatar:group-data-[size=sm]/avatar:-bottom-px",
-        "group-data-[squared]/avatar:group-data-[size=default]/avatar:-right-0.5 group-data-[squared]/avatar:group-data-[size=default]/avatar:-bottom-0.5",
-        "group-data-[squared]/avatar:group-data-[size=lg]/avatar:-right-0.5 group-data-[squared]/avatar:group-data-[size=lg]/avatar:-bottom-0.5",
-        "group-data-[squared]/avatar:group-data-[size=xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=xl]/avatar:-bottom-1",
-        "group-data-[squared]/avatar:group-data-[size=2xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=2xl]/avatar:-bottom-1",
-        "group-data-[squared]/avatar:group-data-[size=3xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=3xl]/avatar:-bottom-1",
+        "group-data-[variant=square]/avatar:group-data-[size=xs]/avatar:-right-px group-data-[variant=square]/avatar:group-data-[size=xs]/avatar:-bottom-px",
+        "group-data-[variant=square]/avatar:group-data-[size=sm]/avatar:-right-px group-data-[variant=square]/avatar:group-data-[size=sm]/avatar:-bottom-px",
+        "group-data-[variant=square]/avatar:group-data-[size=default]/avatar:-right-0.5 group-data-[variant=square]/avatar:group-data-[size=default]/avatar:-bottom-0.5",
+        "group-data-[variant=square]/avatar:group-data-[size=lg]/avatar:-right-0.5 group-data-[variant=square]/avatar:group-data-[size=lg]/avatar:-bottom-0.5",
+        "group-data-[variant=square]/avatar:group-data-[size=xl]/avatar:-right-1 group-data-[variant=square]/avatar:group-data-[size=xl]/avatar:-bottom-1",
+        "group-data-[variant=square]/avatar:group-data-[size=2xl]/avatar:-right-1 group-data-[variant=square]/avatar:group-data-[size=2xl]/avatar:-bottom-1",
+        "group-data-[variant=square]/avatar:group-data-[size=3xl]/avatar:-right-1 group-data-[variant=square]/avatar:group-data-[size=3xl]/avatar:-bottom-1",
         "group-data-[size=xs]/avatar:size-1 group-data-[size=xs]/avatar:[&>svg]:size-0.75",
         "group-data-[size=sm]/avatar:size-1.25 group-data-[size=sm]/avatar:[&>svg]:size-1",
         "group-data-[size=default]/avatar:size-1.75 group-data-[size=default]/avatar:[&>svg]:size-1.5",
@@ -145,10 +146,10 @@ export {
  *   Added xs (16px), xl (32px), 2xl (40px), 3xl (46px) sizes.
  *   Changed sm from 24px to 20px, default from 32px to 24px, lg from 40px to 28px.
  *
- * Squared prop:
+ * Variant prop:
  *   Before: Not available. All avatars were circular (rounded-full).
- *   After:  Optional `squared` boolean prop added.
- *           When squared=true, border-radius is set per size using design token variables:
+ *   After:  Optional `variant` prop added: "circle" (default) | "square".
+ *           When variant="square", border-radius is set per size using design token variables:
  *             xs      → --radius-2xs (4px)
  *             sm      → --radius-xs  (5px)
  *             default → --radius-xs  (5px)
