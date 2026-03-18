@@ -30,7 +30,8 @@ function Avatar({
       data-size={size}
       data-squared={squared || undefined}
       className={cn(
-        "group/avatar relative flex size-6 shrink-0 select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4",
+        "group/avatar relative flex size-6 shrink-0 items-center justify-center bg-secondary select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4",
+        "[&>svg]:size-3.5 data-[size=xs]:[&>svg]:size-2.5 data-[size=sm]:[&>svg]:size-3 data-[size=lg]:[&>svg]:size-4 data-[size=xl]:[&>svg]:size-4 data-[size=2xl]:[&>svg]:size-5 data-[size=3xl]:[&>svg]:size-5",
         squared ? squaredRadiusClasses[size] : "rounded-full",
         className
       )}
@@ -61,6 +62,7 @@ function AvatarFallback({
       data-slot="avatar-fallback"
       className={cn(
         "flex size-full items-center justify-center rounded-[inherit] bg-secondary text-base leading-base font-medium tracking-base text-secondary-foreground group-data-[size=2xl]/avatar:text-xl group-data-[size=3xl]/avatar:text-2xl group-data-[size=lg]/avatar:text-base group-data-[size=sm]/avatar:text-sm group-data-[size=xl]/avatar:text-lg group-data-[size=xs]/avatar:text-2xs group-data-[size=xs]/avatar:font-medium-plus",
+        "group-data-[size=xs]/avatar:[&_svg]:size-2.5 group-data-[size=sm]/avatar:[&_svg]:size-3 group-data-[size=default]/avatar:[&_svg]:size-3.5 group-data-[size=lg]/avatar:[&_svg]:size-4 group-data-[size=xl]/avatar:[&_svg]:size-4 group-data-[size=2xl]/avatar:[&_svg]:size-5 group-data-[size=3xl]/avatar:[&_svg]:size-5",
         className
       )}
       {...props}
@@ -74,6 +76,13 @@ function AvatarBadge({ className, ...props }: React.ComponentProps<"span">) {
       data-slot="avatar-badge"
       className={cn(
         "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-green-500 text-primary-foreground bg-blend-color ring-2 ring-background select-none",
+        "group-data-[squared]/avatar:group-data-[size=xs]/avatar:-right-px group-data-[squared]/avatar:group-data-[size=xs]/avatar:-bottom-px",
+        "group-data-[squared]/avatar:group-data-[size=sm]/avatar:-right-px group-data-[squared]/avatar:group-data-[size=sm]/avatar:-bottom-px",
+        "group-data-[squared]/avatar:group-data-[size=default]/avatar:-right-0.5 group-data-[squared]/avatar:group-data-[size=default]/avatar:-bottom-0.5",
+        "group-data-[squared]/avatar:group-data-[size=lg]/avatar:-right-0.5 group-data-[squared]/avatar:group-data-[size=lg]/avatar:-bottom-0.5",
+        "group-data-[squared]/avatar:group-data-[size=xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=xl]/avatar:-bottom-1",
+        "group-data-[squared]/avatar:group-data-[size=2xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=2xl]/avatar:-bottom-1",
+        "group-data-[squared]/avatar:group-data-[size=3xl]/avatar:-right-1 group-data-[squared]/avatar:group-data-[size=3xl]/avatar:-bottom-1",
         "group-data-[size=xs]/avatar:size-1 group-data-[size=xs]/avatar:[&>svg]:size-0.75",
         "group-data-[size=sm]/avatar:size-1.25 group-data-[size=sm]/avatar:[&>svg]:size-1",
         "group-data-[size=default]/avatar:size-1.75 group-data-[size=default]/avatar:[&>svg]:size-1.5",
@@ -109,7 +118,7 @@ function AvatarGroupCount({
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs text-muted-foreground ring-2 ring-background group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xs]/avatar-group:size-4",
+        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-base leading-base font-medium tracking-base text-muted-foreground ring-2 ring-background group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=2xl]/avatar-group:text-xl group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=3xl]/avatar-group:text-2xl group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=sm]/avatar-group:text-sm group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xl]/avatar-group:text-lg group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-2xs",
         className
       )}
       {...props}
