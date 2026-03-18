@@ -30,8 +30,8 @@ function Avatar({
       data-size={size}
       data-squared={squared || undefined}
       className={cn(
-        "group/avatar relative flex size-6 shrink-0 items-center justify-center bg-secondary select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4",
-        "[&>svg]:size-3.5 data-[size=xs]:[&>svg]:size-2.5 data-[size=sm]:[&>svg]:size-3 data-[size=lg]:[&>svg]:size-4 data-[size=xl]:[&>svg]:size-4 data-[size=2xl]:[&>svg]:size-5 data-[size=3xl]:[&>svg]:size-5",
+        "group/avatar relative flex size-6 shrink-0 items-center justify-center bg-secondary select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4 [--overlap:-4px] data-[size=xs]:[--overlap:-2px] data-[size=lg]:[--overlap:-5px] data-[size=2xl]:[--overlap:-6px] data-[size=3xl]:[--overlap:-8px]",
+        "[&>svg]:size-3.5 data-[size=2xl]:[&>svg]:size-5 data-[size=3xl]:[&>svg]:size-5 data-[size=lg]:[&>svg]:size-4 data-[size=sm]:[&>svg]:size-3 data-[size=xl]:[&>svg]:size-4 data-[size=xs]:[&>svg]:size-2.5",
         squared ? squaredRadiusClasses[size] : "rounded-full",
         className
       )}
@@ -62,7 +62,7 @@ function AvatarFallback({
       data-slot="avatar-fallback"
       className={cn(
         "flex size-full items-center justify-center rounded-[inherit] bg-secondary text-base leading-base font-medium tracking-base text-secondary-foreground group-data-[size=2xl]/avatar:text-xl group-data-[size=3xl]/avatar:text-2xl group-data-[size=lg]/avatar:text-base group-data-[size=sm]/avatar:text-sm group-data-[size=xl]/avatar:text-lg group-data-[size=xs]/avatar:text-2xs group-data-[size=xs]/avatar:font-medium-plus",
-        "group-data-[size=xs]/avatar:[&_svg]:size-2.5 group-data-[size=sm]/avatar:[&_svg]:size-3 group-data-[size=default]/avatar:[&_svg]:size-3.5 group-data-[size=lg]/avatar:[&_svg]:size-4 group-data-[size=xl]/avatar:[&_svg]:size-4 group-data-[size=2xl]/avatar:[&_svg]:size-5 group-data-[size=3xl]/avatar:[&_svg]:size-5",
+        "group-data-[size=2xl]/avatar:[&_svg]:size-5 group-data-[size=3xl]/avatar:[&_svg]:size-5 group-data-[size=default]/avatar:[&_svg]:size-3.5 group-data-[size=lg]/avatar:[&_svg]:size-4 group-data-[size=sm]/avatar:[&_svg]:size-3 group-data-[size=xl]/avatar:[&_svg]:size-4 group-data-[size=xs]/avatar:[&_svg]:size-2.5",
         className
       )}
       {...props}
@@ -102,7 +102,7 @@ function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="avatar-group"
       className={cn(
-        "group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
+        "group/avatar-group flex [&>*+*]:ml-[var(--overlap)] *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background [&>*]:z-[var(--stack-index)] [&>*]:[--stack-index:0] [&>*:nth-child(1)]:[--stack-index:10] [&>*:nth-child(2)]:[--stack-index:9] [&>*:nth-child(3)]:[--stack-index:8] [&>*:nth-child(4)]:[--stack-index:7] [&>*:nth-child(5)]:[--stack-index:6] [&>*:nth-child(6)]:[--stack-index:5] [&>*:nth-child(7)]:[--stack-index:4] [&>*:nth-child(8)]:[--stack-index:3]",
         className
       )}
       {...props}
@@ -118,7 +118,7 @@ function AvatarGroupCount({
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-base leading-base font-medium tracking-base text-muted-foreground ring-2 ring-background group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=2xl]/avatar-group:text-xl group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=3xl]/avatar-group:text-2xl group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=sm]/avatar-group:text-sm group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xl]/avatar-group:text-lg group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-2xs",
+        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-base leading-base font-medium tracking-base text-muted-foreground ring-2 ring-background [--overlap:-4px] group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-2xs group-has-data-[size=xs]/avatar-group:[--overlap:-2px] group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=sm]/avatar-group:text-sm group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=lg]/avatar-group:[--overlap:-5px] group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xl]/avatar-group:text-lg group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=2xl]/avatar-group:text-xl group-has-data-[size=2xl]/avatar-group:[--overlap:-6px] group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=3xl]/avatar-group:text-2xl group-has-data-[size=3xl]/avatar-group:[--overlap:-8px]",
         className
       )}
       {...props}

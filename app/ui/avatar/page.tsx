@@ -184,25 +184,50 @@ export default function AvatarPage() {
           </div>
         </div>
 
-        {/* Avatar Group */}
-        <div className="flex w-1/3 flex-col gap-4">
-          <SectionTitle>Avatar Group</SectionTitle>
-          <div className="flex flex-col gap-6">
-            {sizes.map((size) => (
-              <AvatarGroup key={size}>
-                <Avatar size={size}>
-                  <AvatarImage src={avatarSrc} alt="User" />
-                  <AvatarFallback>N</AvatarFallback>
-                </Avatar>
-                <Avatar size={size}>
-                  <AvatarFallback>N</AvatarFallback>
-                </Avatar>
-                <Avatar size={size}>
-                  <AvatarFallback>N</AvatarFallback>
-                </Avatar>
-                <AvatarGroupCount>3</AvatarGroupCount>
-              </AvatarGroup>
-            ))}
+        <div className="flex w-1/3 flex-col gap-20">
+          {/* Avatar Group - Images */}
+          <div className="flex flex-col gap-4">
+            <SectionTitle>Avatar Group - Images</SectionTitle>
+            <div className="flex flex-col gap-6">
+              {sizes.map((size) => (
+                <AvatarGroup key={size}>
+                  <Avatar size={size}>
+                    <AvatarImage src={avatarSrc} alt="User" />
+                    <AvatarFallback>N</AvatarFallback>
+                  </Avatar>
+                  <Avatar size={size}>
+                    <AvatarImage src={avatarSrc} alt="User" />
+                    <AvatarFallback>N</AvatarFallback>
+                  </Avatar>
+                  <Avatar size={size}>
+                    <AvatarImage src={avatarSrc} alt="User" />
+                    <AvatarFallback>N</AvatarFallback>
+                  </Avatar>
+                  <AvatarGroupCount>3</AvatarGroupCount>
+                </AvatarGroup>
+              ))}
+            </div>
+          </div>
+
+          {/* Avatar Group - Icons */}
+          <div className="flex flex-col gap-4">
+            <SectionTitle>Avatar Group - Icons</SectionTitle>
+            <div className="flex flex-col gap-6">
+              {sizes.map((size) => (
+                <AvatarGroup key={size}>
+                  <Avatar size={size}>
+                    <User className="text-muted-foreground" />
+                  </Avatar>
+                  <Avatar size={size}>
+                    <User className="text-muted-foreground" />
+                  </Avatar>
+                  <Avatar size={size}>
+                    <User className="text-muted-foreground" />
+                  </Avatar>
+                  <AvatarGroupCount>3</AvatarGroupCount>
+                </AvatarGroup>
+              ))}
+            </div>
           </div>
         </div>
       </div>
