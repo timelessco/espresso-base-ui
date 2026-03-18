@@ -3,39 +3,55 @@
 import * as React from "react"
 import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar"
 
+import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-const squaredRadiusClasses: Record<string, string> = {
-  xs: "rounded-2xs",
-  sm: "rounded-xs",
-  default: "rounded-xs",
-  lg: "rounded-sm",
-  xl: "rounded-sm",
-  "2xl": "rounded-md",
-  "3xl": "rounded-lg",
-}
+const avatarVariants = cva(
+  "group/avatar relative flex shrink-0 items-center justify-center bg-secondary select-none [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  {
+    variants: {
+      variant: {
+        circle: "rounded-full",
+        square: "",
+      },
+      size: {
+        xs: "size-4 [--overlap:-2px] [&>svg]:size-2.5",
+        sm: "size-5 [--overlap:-4px] [&>svg]:size-3",
+        default: "size-6 [--overlap:-4px] [&>svg]:size-3.5",
+        lg: "size-7 [--overlap:-5px] [&>svg]:size-4",
+        xl: "size-8 [--overlap:-4px] [&>svg]:size-4",
+        "2xl": "size-10 [--overlap:-6px] [&>svg]:size-5",
+        "3xl": "size-[46px] [--overlap:-8px] [&>svg]:size-5",
+      },
+    },
+    compoundVariants: [
+      { variant: "square", size: "xs", className: "rounded-2xs" },
+      { variant: "square", size: "sm", className: "rounded-xs" },
+      { variant: "square", size: "default", className: "rounded-xs" },
+      { variant: "square", size: "lg", className: "rounded-sm" },
+      { variant: "square", size: "xl", className: "rounded-sm" },
+      { variant: "square", size: "2xl", className: "rounded-md" },
+      { variant: "square", size: "3xl", className: "rounded-lg" },
+    ],
+    defaultVariants: {
+      variant: "circle",
+      size: "default",
+    },
+  }
+)
 
 function Avatar({
   className,
   size = "default",
   variant = "circle",
   ...props
-}: AvatarPrimitive.Root.Props & {
-  size?: "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"
-  variant?: "circle" | "square"
-}) {
-  const isSquare = variant === "square"
+}: AvatarPrimitive.Root.Props & VariantProps<typeof avatarVariants>) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
       data-size={size}
       data-variant={variant}
-      className={cn(
-        "group/avatar relative flex size-6 shrink-0 items-center justify-center bg-secondary select-none data-[size=2xl]:size-10 data-[size=3xl]:size-[46px] data-[size=lg]:size-7 data-[size=sm]:size-5 data-[size=xl]:size-8 data-[size=xs]:size-4 [--overlap:-4px] data-[size=xs]:[--overlap:-2px] data-[size=lg]:[--overlap:-5px] data-[size=2xl]:[--overlap:-6px] data-[size=3xl]:[--overlap:-8px]",
-        "[&>svg]:size-3.5 data-[size=2xl]:[&>svg]:size-5 data-[size=3xl]:[&>svg]:size-5 data-[size=lg]:[&>svg]:size-4 data-[size=sm]:[&>svg]:size-3 data-[size=xl]:[&>svg]:size-4 data-[size=xs]:[&>svg]:size-2.5",
-        isSquare ? squaredRadiusClasses[size] : "rounded-full",
-        className
-      )}
+      className={cn(avatarVariants({ variant, size, className }))}
       {...props}
     />
   )
@@ -129,6 +145,7 @@ function AvatarGroupCount({
 
 export {
   Avatar,
+  avatarVariants,
   AvatarImage,
   AvatarFallback,
   AvatarGroup,
@@ -148,7 +165,7 @@ export {
  *
  * Variant prop:
  *   Before: Not available. All avatars were circular (rounded-full).
- *   After:  Optional `variant` prop added: "circle" (default) | "square".
+ *   After:  "circle" (default) | "square".
  *           When variant="square", border-radius is set per size using design token variables:
  *             xs      → --radius-2xs (4px)
  *             sm      → --radius-xs  (5px)
@@ -157,4 +174,11 @@ export {
  *             xl      → --radius-sm  (6px)
  *             2xl     → --radius-md  (8px)
  *             3xl     → --radius-lg  (10px)
+ *
+ * CVA refactor:
+ *   Before: Manual conditional classes with data attributes and squaredRadiusClasses map.
+ *   After:  Uses class-variance-authority (CVA) with avatarVariants.
+ *           variant and size are managed via CVA variants.
+ *           Square border-radius per size handled via compoundVariants.
+ *           Exported avatarVariants for external use.
  */
