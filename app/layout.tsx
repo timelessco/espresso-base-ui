@@ -32,7 +32,7 @@ export default function RootLayout({
         inter.variable
       )}
     >
-      <body>
+      <body className="overflow-hidden">
         <ThemeProvider>
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
