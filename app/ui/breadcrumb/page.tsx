@@ -17,10 +17,30 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 export default function BreadcrumbPage_() {
   return (
     <div className="flex flex-col gap-12 p-8">
-      {/* Default */}
+      {/* Default (sm) */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Default</SectionTitle>
-        <Breadcrumb>
+        <SectionTitle>Default (sm)</SectionTitle>
+        <Breadcrumb size="sm">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#">Components</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
+      {/* Medium (md) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Medium (md)</SectionTitle>
+        <Breadcrumb size="md">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#">Home</BreadcrumbLink>

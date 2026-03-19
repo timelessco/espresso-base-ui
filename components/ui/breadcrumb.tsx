@@ -5,12 +5,19 @@ import { useRender } from "@base-ui/react/use-render"
 import { cn } from "@/lib/utils"
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
-function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
+function Breadcrumb({
+  className,
+  size = "sm",
+  ...props
+}: React.ComponentProps<"nav"> & {
+  size?: "sm" | "md"
+}) {
   return (
     <nav
       aria-label="breadcrumb"
       data-slot="breadcrumb"
-      className={cn(className)}
+      data-size={size}
+      className={cn("group/breadcrumb", className)}
       {...props}
     />
   )
@@ -21,7 +28,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground",
+        "flex flex-wrap items-center gap-2 text-base wrap-break-word text-muted-foreground group-data-[size=md]/breadcrumb:text-lg",
         className
       )}
       {...props}
@@ -82,7 +89,7 @@ function BreadcrumbSeparator({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn("[&>svg]:size-3.5", className)}
+      className={cn("[&>svg]:size-3 group-data-[size=md]/breadcrumb:[&>svg]:size-4", className)}
       {...props}
     >
       {children ?? (
@@ -102,7 +109,7 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex size-5 items-center justify-center [&>svg]:size-4",
+        "flex items-center justify-center [&>svg]:size-3 group-data-[size=md]/breadcrumb:[&>svg]:size-4",
         className
       )}
       {...props}
