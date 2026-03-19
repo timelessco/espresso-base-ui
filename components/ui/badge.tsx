@@ -10,11 +10,11 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground",
-        secondary: "bg-secondary text-accent-foreground",
+        secondary: "bg-secondary text-muted-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-border bg-background text-accent-foreground",
-        ghost: "text-accent-foreground",
-        link: "overflow-visible text-accent-foreground underline-offset-4 hover:underline",
+        outline: "border border-border bg-background text-muted-foreground",
+        ghost: "text-muted-foreground",
+        link: "overflow-visible text-muted-foreground underline-offset-4 hover:underline",
       },
       size: {
         default:
@@ -81,5 +81,5 @@ export { Badge, badgeVariants }
  *   Before: destructive used bg-destructive/10 with text-destructive.
  *   After:  destructive uses bg-destructive with text-destructive-foreground.
  *   Before: secondary used text-secondary-foreground.
- *   After:  secondary uses text-accent-foreground.
+ *   After:  secondary uses text-muted-foreground.
  */
