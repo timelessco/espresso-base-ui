@@ -1,4 +1,4 @@
-import { X, Circle, ArrowRight } from "lucide-react"
+import { Diamond } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -12,6 +12,21 @@ const variants = [
   "outline",
   "ghost",
   "link",
+] as const
+
+const sizes = ["default", "md", "lg"] as const
+
+const sizeLabels: Record<string, string> = {
+  default: "default",
+  md: "medium",
+  lg: "large",
+}
+
+const colorBadges = [
+  { label: "Blue", bg: "bg-blue-600", text: "text-blue-100" },
+  { label: "Green", bg: "bg-green-600", text: "text-green-100" },
+  { label: "Amber", bg: "bg-amber-600", text: "text-amber-100" },
+  { label: "Violet", bg: "bg-violet-600", text: "text-violet-100" },
 ] as const
 
 export default function BadgePage() {
@@ -29,15 +44,53 @@ export default function BadgePage() {
         </div>
       </div>
 
+      {/* Sizes */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes</SectionTitle>
+        <div className="flex flex-wrap items-center gap-4">
+          {sizes.map((size) => (
+            <Badge key={size} size={size}>
+              {sizeLabels[size]}
+            </Badge>
+          ))}
+        </div>
+      </div>
+
+      {/* Sizes x Variants */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes x Variants</SectionTitle>
+        <div className="flex flex-col gap-6">
+          {sizes.map((size) => (
+            <div key={size} className="flex flex-col gap-2">
+              <span className="text-xs text-muted-foreground">{size}</span>
+              <div className="flex flex-wrap items-center gap-4">
+                {variants.map((variant) => (
+                  <Badge key={variant} variant={variant} size={size}>
+                    {variant}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* With Icon Start */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Icon Start</SectionTitle>
-        <div className="flex flex-wrap items-center gap-4">
-          {variants.map((variant) => (
-            <Badge key={variant} variant={variant}>
-              <Circle data-icon="inline-start" />
-              {variant}
-            </Badge>
+        <div className="flex flex-col gap-6">
+          {sizes.map((size) => (
+            <div key={size} className="flex flex-col gap-2">
+              <span className="text-xs text-muted-foreground">{size}</span>
+              <div className="flex flex-wrap items-center gap-4">
+                {variants.map((variant) => (
+                  <Badge key={variant} variant={variant} size={size}>
+                    <Diamond data-icon="inline-start" />
+                    {variant}
+                  </Badge>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -45,25 +98,19 @@ export default function BadgePage() {
       {/* With Icon End */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Icon End</SectionTitle>
-        <div className="flex flex-wrap items-center gap-4">
-          {variants.map((variant) => (
-            <Badge key={variant} variant={variant}>
-              {variant}
-              <ArrowRight data-icon="inline-end" />
-            </Badge>
-          ))}
-        </div>
-      </div>
-
-      {/* With Close Icon */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>With Close Icon</SectionTitle>
-        <div className="flex flex-wrap items-center gap-4">
-          {variants.map((variant) => (
-            <Badge key={variant} variant={variant}>
-              {variant}
-              <X data-icon="inline-end" />
-            </Badge>
+        <div className="flex flex-col gap-6">
+          {sizes.map((size) => (
+            <div key={size} className="flex flex-col gap-2">
+              <span className="text-xs text-muted-foreground">{size}</span>
+              <div className="flex flex-wrap items-center gap-4">
+                {variants.map((variant) => (
+                  <Badge key={variant} variant={variant} size={size}>
+                    {variant}
+                    <Diamond data-icon="inline-end" />
+                  </Badge>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -76,6 +123,41 @@ export default function BadgePage() {
             <Badge key={variant} variant={variant} render={<a href="#" />}>
               {variant}
             </Badge>
+          ))}
+        </div>
+      </div>
+
+      {/* Color Badges */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Color Badges</SectionTitle>
+        <div className="flex gap-12">
+          {sizes.map((size) => (
+            <div key={size} className="flex flex-col gap-3">
+              <span className="text-xs text-muted-foreground">{size}</span>
+              {colorBadges.map((color) => (
+                <div
+                  key={color.label}
+                  className="flex flex-wrap items-center gap-2"
+                >
+                  <Badge size={size} className={`${color.bg} ${color.text}`}>
+                    <Diamond data-icon="inline-start" />
+                    {color.label}
+                    <Diamond data-icon="inline-end" />
+                  </Badge>
+                  <Badge size={size} className={`${color.bg} ${color.text}`}>
+                    <Diamond data-icon="inline-start" />
+                    {color.label}
+                  </Badge>
+                  <Badge size={size} className={`${color.bg} ${color.text}`}>
+                    {color.label}
+                    <Diamond data-icon="inline-end" />
+                  </Badge>
+                  <Badge size={size} className={`${color.bg} ${color.text}`}>
+                    {color.label}
+                  </Badge>
+                </div>
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -101,55 +183,53 @@ export default function BadgePage() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">
-                  Default
-                </td>
-                {variants.map((variant) => (
-                  <td key={variant} className="px-4 py-3">
-                    <Badge variant={variant}>Badge</Badge>
+              {sizes.map((size) => (
+                <tr key={`${size}`} className="border-t border-border">
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    {size}
                   </td>
-                ))}
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">
-                  Icon Start
-                </td>
-                {variants.map((variant) => (
-                  <td key={variant} className="px-4 py-3">
-                    <Badge variant={variant}>
-                      <Circle data-icon="inline-start" />
-                      Badge
-                    </Badge>
+                  {variants.map((variant) => (
+                    <td key={variant} className="px-4 py-3">
+                      <Badge variant={variant} size={size}>
+                        Badge
+                      </Badge>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              {sizes.map((size) => (
+                <tr
+                  key={`icon-start-${size}`}
+                  className="border-t border-border"
+                >
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    {size} + Icon Start
                   </td>
-                ))}
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">
-                  Icon End
-                </td>
-                {variants.map((variant) => (
-                  <td key={variant} className="px-4 py-3">
-                    <Badge variant={variant}>
-                      Badge
-                      <ArrowRight data-icon="inline-end" />
-                    </Badge>
+                  {variants.map((variant) => (
+                    <td key={variant} className="px-4 py-3">
+                      <Badge variant={variant} size={size}>
+                        <Diamond data-icon="inline-start" />
+                        Badge
+                      </Badge>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              {sizes.map((size) => (
+                <tr key={`icon-end-${size}`} className="border-t border-border">
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    {size} + Icon End
                   </td>
-                ))}
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">
-                  Close
-                </td>
-                {variants.map((variant) => (
-                  <td key={variant} className="px-4 py-3">
-                    <Badge variant={variant}>
-                      Badge
-                      <X data-icon="inline-end" />
-                    </Badge>
-                  </td>
-                ))}
-              </tr>
+                  {variants.map((variant) => (
+                    <td key={variant} className="px-4 py-3">
+                      <Badge variant={variant} size={size}>
+                        Badge
+                        <Diamond data-icon="inline-end" />
+                      </Badge>
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
