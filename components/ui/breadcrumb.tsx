@@ -3,7 +3,7 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 
 import { cn } from "@/lib/utils"
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { ChevronRightIcon, EllipsisIcon } from "lucide-react"
 
 function Breadcrumb({
   className,
@@ -28,7 +28,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-2 text-base wrap-break-word text-muted-foreground group-data-[size=md]/breadcrumb:text-lg",
+        "flex flex-wrap items-center gap-0.5 text-base leading-base tracking-base wrap-break-word text-accent-foreground group-data-[size=md]/breadcrumb:text-lg [&>[data-slot=breadcrumb-separator]:has(+*>[data-slot=breadcrumb-page])]:text-foreground",
         className
       )}
       {...props}
@@ -55,7 +55,10 @@ function BreadcrumbLink({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
-        className: cn("transition-colors hover:text-foreground", className),
+        className: cn(
+          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-muted hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-foreground",
+          className
+        ),
       },
       props
     ),
@@ -73,7 +76,10 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       role="link"
       aria-disabled="true"
       aria-current="page"
-      className={cn("font-normal text-foreground", className)}
+      className={cn(
+        "flex h-7 items-center px-2 font-normal text-foreground group-data-[size=md]/breadcrumb:px-[5px]",
+        className
+      )}
       {...props}
     />
   )
@@ -89,12 +95,13 @@ function BreadcrumbSeparator({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn("[&>svg]:size-3 group-data-[size=md]/breadcrumb:[&>svg]:size-4", className)}
+      className={cn(
+        "[&>svg]:size-3 group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        className
+      )}
       {...props}
     >
-      {children ?? (
-        <ChevronRightIcon />
-      )}
+      {children ?? <ChevronRightIcon />}
     </li>
   )
 }
@@ -109,13 +116,12 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex items-center justify-center [&>svg]:size-3 group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        "flex size-7 items-center justify-center rounded-md transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-muted hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-input active:text-foreground group-data-[size=md]/breadcrumb:[&>svg]:size-4",
         className
       )}
       {...props}
     >
-      <MoreHorizontalIcon
-      />
+      <EllipsisIcon />
       <span className="sr-only">More</span>
     </span>
   )
@@ -130,3 +136,40 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 }
+
+/**
+ * Changelog — compared to shadcn base-ui breadcrumb (npx shadcn@latest add breadcrumb)
+ *
+ * Breadcrumb (Root):
+ *   Before: No size prop. Plain <nav> with aria-label.
+ *   After:  Added size prop: "sm" (default) | "md".
+ *           Added data-size attribute and group/breadcrumb for child selectors.
+ *
+ * BreadcrumbList:
+ *   Before: gap-1.5, text-sm, text-muted-foreground.
+ *   After:  gap-0.5, text-base (14px) for sm, text-lg (16px) for md.
+ *           Changed text-muted-foreground to text-accent-foreground.
+ *           Added leading-base, tracking-base.
+ *           Added last separator color matching: last separator before BreadcrumbPage gets text-foreground.
+ *
+ * BreadcrumbLink:
+ *   Before: Only transition-colors hover:text-foreground.
+ *   After:  Added h-7, rounded-md, px-2 (sm) / px-[5px] (md).
+ *           Added hover:bg-muted hover:text-secondary-foreground.
+ *           Added focus-visible:bg-secondary focus-visible:ring-2 focus-visible:ring-ring.
+ *           Added active:bg-transparent active:text-foreground.
+ *
+ * BreadcrumbPage:
+ *   Before: Only font-normal text-foreground.
+ *   After:  Added h-7, px-2 (sm) / px-[5px] (md) to match BreadcrumbLink alignment.
+ *
+ * BreadcrumbSeparator:
+ *   Before: [&>svg]:size-3.5.
+ *   After:  [&>svg]:size-3 (sm), [&>svg]:size-4 (md).
+ *
+ * BreadcrumbEllipsis:
+ *   Before: flex size-5, [&>svg]:size-4. Used MoreHorizontalIcon.
+ *   After:  size-7 (sm), size-5 (md). Uses EllipsisIcon.
+ *           Added hover/focus/active styles matching BreadcrumbLink.
+ *           Icon size: [&>svg]:size-4 for md.
+ */

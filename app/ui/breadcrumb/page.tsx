@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Slash, ChevronRight, ArrowRight } from "lucide-react"
+import { Slash, ChevronRight, ArrowRight, Diamond } from "lucide-react"
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -57,6 +57,58 @@ export default function BreadcrumbPage_() {
         </Breadcrumb>
       </div>
 
+      {/* With Icons (sm) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>With Icons (sm)</SectionTitle>
+        <Breadcrumb size="sm">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Components
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
+      {/* With Icons (md) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>With Icons (md)</SectionTitle>
+        <Breadcrumb size="md">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Components
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
       {/* With Ellipsis */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Ellipsis</SectionTitle>
@@ -81,30 +133,6 @@ export default function BreadcrumbPage_() {
         </Breadcrumb>
       </div>
 
-      {/* Custom Separator — Slash */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Custom Separator — Slash</SectionTitle>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Components</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash />
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </div>
-
       {/* Custom Separator — Arrow */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Custom Separator — Arrow</SectionTitle>
@@ -122,6 +150,32 @@ export default function BreadcrumbPage_() {
             <BreadcrumbSeparator>
               <ArrowRight />
             </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+
+      {/* Custom Separator — Slash with Icons */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Custom Separator — Slash with Icons</SectionTitle>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="#" className="gap-2">
+                <Diamond className="size-4" />
+                Components
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
             <BreadcrumbItem>
               <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
             </BreadcrumbItem>
@@ -159,7 +213,9 @@ export default function BreadcrumbPage_() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink render={<Link href="/ui/breadcrumb" />}>Breadcrumb</BreadcrumbLink>
+              <BreadcrumbLink render={<Link href="/ui/breadcrumb" />}>
+                Breadcrumb
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
