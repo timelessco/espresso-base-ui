@@ -1,7 +1,7 @@
 "use client"
 
 import { Switch } from "@/components/ui/switch"
-import { FieldLabel } from "@/components/ui/field"
+import { Label } from "@/components/ui/label"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -41,14 +41,14 @@ export default function SwitchPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Label (default)</SectionTitle>
         <div className="flex items-center gap-6">
-          <FieldLabel size="md">
+          <Label size="md">
             <Switch />
             Label
-          </FieldLabel>
-          <FieldLabel size="md">
+          </Label>
+          <Label size="md">
             <Switch defaultChecked />
             Label
-          </FieldLabel>
+          </Label>
         </div>
       </div>
 
@@ -56,14 +56,14 @@ export default function SwitchPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Label (md)</SectionTitle>
         <div className="flex items-center gap-6">
-          <FieldLabel size="md">
+          <Label size="md">
             <Switch size="md" />
             Label
-          </FieldLabel>
-          <FieldLabel size="md">
+          </Label>
+          <Label size="md">
             <Switch size="md" defaultChecked />
             Label
-          </FieldLabel>
+          </Label>
         </div>
       </div>
 
@@ -71,14 +71,14 @@ export default function SwitchPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Label (sm)</SectionTitle>
         <div className="flex items-center gap-6">
-          <FieldLabel size="sm">
+          <Label size="sm">
             <Switch size="sm" />
             Label
-          </FieldLabel>
-          <FieldLabel size="sm">
+          </Label>
+          <Label size="sm">
             <Switch size="sm" defaultChecked />
             Label
-          </FieldLabel>
+          </Label>
         </div>
       </div>
 
@@ -87,34 +87,34 @@ export default function SwitchPage() {
         <SectionTitle>Disabled</SectionTitle>
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-6">
-            <FieldLabel size="md" className="pointer-events-none opacity-50">
+            <Label size="md">
               <Switch disabled />
               Label
-            </FieldLabel>
-            <FieldLabel size="md" className="pointer-events-none opacity-50">
+            </Label>
+            <Label size="md">
               <Switch disabled defaultChecked />
               Label
-            </FieldLabel>
+            </Label>
           </div>
           <div className="flex items-center gap-6">
-            <FieldLabel size="md" className="pointer-events-none opacity-50">
+            <Label size="md">
               <Switch size="md" disabled />
               Label
-            </FieldLabel>
-            <FieldLabel size="md" className="pointer-events-none opacity-50">
+            </Label>
+            <Label size="md">
               <Switch size="md" disabled defaultChecked />
               Label
-            </FieldLabel>
+            </Label>
           </div>
           <div className="flex items-center gap-6">
-            <FieldLabel size="sm" className="pointer-events-none opacity-50">
+            <Label size="sm">
               <Switch size="sm" disabled />
               Label
-            </FieldLabel>
-            <FieldLabel size="sm" className="pointer-events-none opacity-50">
+            </Label>
+            <Label size="sm">
               <Switch size="sm" disabled defaultChecked />
               Label
-            </FieldLabel>
+            </Label>
           </div>
         </div>
       </div>

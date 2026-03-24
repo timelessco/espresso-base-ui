@@ -1,20 +1,43 @@
 "use client"
 
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Label({ className, ...props }: React.ComponentProps<"label">) {
+const labelVariants = cva(
+  [
+    "flex w-fit items-center gap-2 rounded-md leading-normal tracking-normal transition-colors outline-none select-none",
+    "text-muted-foreground hover:bg-muted hover:text-muted-foreground",
+    "focus-within:bg-secondary focus-within:text-secondary-foreground focus-within:ring-2 focus-within:ring-ring",
+    "active:bg-accent active:text-secondary-foreground",
+    "has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50",
+  ],
+  {
+    variants: {
+      size: {
+        sm: "p-1.5 text-base font-normal",
+        md: "px-2 py-1.75 text-lg font-medium",
+      },
+    },
+    defaultVariants: {
+      size: "sm",
+    },
+  }
+)
+
+function Label({
+  className,
+  size,
+  ...props
+}: React.ComponentProps<"label"> & VariantProps<typeof labelVariants>) {
   return (
     <label
       data-slot="label"
-      className={cn(
-        "flex items-center gap-2 text-sm leading-none select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
-        className
-      )}
+      className={cn(labelVariants({ size, className }))}
       {...props}
     />
   )
 }
 
-export { Label }
+export { Label, labelVariants }
