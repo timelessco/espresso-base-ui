@@ -62,6 +62,7 @@
   --destructive-active: oklch(0.3998 0.1474 27.42); /* #941F1F */
   --destructive-disabled: oklch(0.9351 0.0268 17.5); /* #FFE7E7 */
   --destructive-disabled-foreground: oklch(0.7468 0.0856 18.72); /* #F79596 */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   /* end custom variables */
 
   --spacing: 0.25rem; /* 4px */
@@ -290,6 +291,7 @@
   --radius-5xl: calc(var(--radius) * 2.4);
 
   /* shadows */
+  --shadow-sm: var(--shadow-sm);
   --shadow-md:
     0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
     0 44px 52px -10px rgba(0, 0, 0, 0.1);
