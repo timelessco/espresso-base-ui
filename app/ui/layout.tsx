@@ -10,7 +10,9 @@ const sidebarItems = [
   { label: "Badge", href: "/ui/badge" },
   { label: "Breadcrumb", href: "/ui/breadcrumb" },
   { label: "Button", href: "/ui/button" },
+  { label: "Checkbox", href: "/ui/checkbox" },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu" },
+  { label: "Field", href: "/ui/field" },
 ]
 
 function Sidebar() {
