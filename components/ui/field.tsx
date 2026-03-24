@@ -2,7 +2,6 @@
 
 import { useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -30,7 +29,7 @@ function FieldLegend({
       data-slot="field-legend"
       data-variant={variant}
       className={cn(
-        "mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base",
+        "mb-1.5 data-[variant=label]:text-sm data-[variant=legend]:text-base",
         className
       )}
       {...props}
@@ -90,7 +89,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-content"
       className={cn(
-        "group/field-content flex flex-1 flex-col gap-0.5 leading-snug",
+        "group/field-content flex flex-1 flex-col gap-0.5",
         className
       )}
       {...props}
@@ -98,18 +97,39 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+const fieldLabelVariants = cva(
+  [
+    "group/field-label peer/field-label flex w-fit items-center gap-2 rounded-md leading-normal tracking-normal transition-colors outline-none",
+    "text-muted-foreground hover:bg-muted hover:text-muted-foreground",
+    "focus-within:bg-secondary focus-within:text-secondary-foreground focus-within:ring-2 focus-within:ring-ring",
+    "active:bg-accent active:text-secondary-foreground",
+    "group-data-[disabled=true]/field:pointer-events-none group-data-[disabled=true]/field:opacity-50",
+    "has-data-checked:border-primary/30 has-data-checked:bg-primary/5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
+    "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5",
+  ],
+  {
+    variants: {
+      size: {
+        sm: "p-1.5 text-base font-normal",
+        md: "px-2 py-1.75 text-lg font-medium",
+      },
+    },
+    defaultVariants: {
+      size: "sm",
+    },
+  }
+)
+
 function FieldLabel({
   className,
+  size = "sm",
   ...props
-}: React.ComponentProps<typeof Label>) {
+}: React.ComponentProps<typeof Label> &
+  VariantProps<typeof fieldLabelVariants>) {
   return (
     <Label
       data-slot="field-label"
-      className={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
-        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
-        className
-      )}
+      className={cn(fieldLabelVariants({ size, className }))}
       {...props}
     />
   )
@@ -120,7 +140,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-label"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50",
+        "flex w-fit items-center gap-2 text-sm group-data-[disabled=true]/field:opacity-50",
         className
       )}
       {...props}
@@ -133,7 +153,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="field-description"
       className={cn(
-        "text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
+        "text-left text-sm text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
         "last:mt-0 nth-last-2:-mt-1",
         "[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
         className
@@ -216,7 +236,7 @@ function FieldError({
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("text-sm font-normal text-destructive", className)}
+      className={cn("text-sm text-destructive", className)}
       {...props}
     >
       {content}
@@ -227,6 +247,7 @@ function FieldError({
 export {
   Field,
   FieldLabel,
+  fieldLabelVariants,
   FieldDescription,
   FieldError,
   FieldGroup,
