@@ -104,7 +104,7 @@ const fieldLabelVariants = cva(
     "focus-within:bg-secondary focus-within:text-secondary-foreground focus-within:ring-2 focus-within:ring-ring",
     "active:bg-accent active:text-secondary-foreground",
     "group-data-[disabled=true]/field:pointer-events-none group-data-[disabled=true]/field:opacity-50",
-    "has-data-checked:border-primary/30 has-data-checked:bg-primary/5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
+
     "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5",
   ],
   {

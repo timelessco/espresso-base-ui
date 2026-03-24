@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { FieldLabel } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -31,30 +32,38 @@ export default function CheckboxPage() {
       {/* With Label — sm */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Label (sm)</SectionTitle>
-        <div className="flex flex-col gap-3">
-          <label className="flex items-center gap-2 text-base">
+        <div className="flex items-center gap-6">
+          <FieldLabel size="sm">
             <Checkbox size="sm" />
-            Accept terms and conditions
-          </label>
-          <label className="flex items-center gap-2 text-base">
+            Label
+          </FieldLabel>
+          <FieldLabel size="sm">
             <Checkbox size="sm" defaultChecked />
-            Send me marketing emails
-          </label>
+            Label
+          </FieldLabel>
+          <FieldLabel size="sm">
+            <Checkbox size="sm" indeterminate />
+            Label
+          </FieldLabel>
         </div>
       </div>
 
       {/* With Label — md */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Label (md)</SectionTitle>
-        <div className="flex flex-col gap-3">
-          <label className="flex items-center gap-2 text-lg">
+        <div className="flex items-center gap-6">
+          <FieldLabel size="md">
             <Checkbox size="md" />
-            Accept terms and conditions
-          </label>
-          <label className="flex items-center gap-2 text-lg">
+            Label
+          </FieldLabel>
+          <FieldLabel size="md">
             <Checkbox size="md" defaultChecked />
-            Send me marketing emails
-          </label>
+            Label
+          </FieldLabel>
+          <FieldLabel size="md">
+            <Checkbox size="md" indeterminate />
+            Label
+          </FieldLabel>
         </div>
       </div>
 
@@ -62,25 +71,25 @@ export default function CheckboxPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled</SectionTitle>
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 text-base">
+          <div className="flex items-center gap-6">
+            <FieldLabel size="sm" className="opacity-50 pointer-events-none">
               <Checkbox size="sm" disabled />
-              Unchecked disabled
-            </label>
-            <label className="flex items-center gap-2 text-base">
+              Label
+            </FieldLabel>
+            <FieldLabel size="sm" className="opacity-50 pointer-events-none">
               <Checkbox size="sm" disabled defaultChecked />
-              Checked disabled
-            </label>
+              Label
+            </FieldLabel>
           </div>
-          <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2 text-lg">
+          <div className="flex items-center gap-6">
+            <FieldLabel size="md" className="opacity-50 pointer-events-none">
               <Checkbox size="md" disabled />
-              Unchecked disabled
-            </label>
-            <label className="flex items-center gap-2 text-lg">
+              Label
+            </FieldLabel>
+            <FieldLabel size="md" className="opacity-50 pointer-events-none">
               <Checkbox size="md" disabled defaultChecked />
-              Checked disabled
-            </label>
+              Label
+            </FieldLabel>
           </div>
         </div>
       </div>
@@ -98,14 +107,14 @@ export default function CheckboxPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Indeterminate with Label</SectionTitle>
         <div className="flex flex-col gap-3">
-          <label className="flex items-center gap-2 text-base">
+          <FieldLabel size="sm">
             <Checkbox size="sm" indeterminate />
             Select all (sm)
-          </label>
-          <label className="flex items-center gap-2 text-lg">
+          </FieldLabel>
+          <FieldLabel size="md">
             <Checkbox size="md" indeterminate />
             Select all (md)
-          </label>
+          </FieldLabel>
         </div>
       </div>
 
@@ -113,22 +122,22 @@ export default function CheckboxPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Multiple Options</SectionTitle>
         <div className="flex flex-col gap-3">
-          <label className="flex items-center gap-2 text-base">
+          <FieldLabel size="sm">
             <Checkbox size="sm" defaultChecked />
             Notifications
-          </label>
-          <label className="flex items-center gap-2 text-base">
+          </FieldLabel>
+          <FieldLabel size="sm">
             <Checkbox size="sm" />
             Email updates
-          </label>
-          <label className="flex items-center gap-2 text-base">
+          </FieldLabel>
+          <FieldLabel size="sm">
             <Checkbox size="sm" defaultChecked />
             SMS alerts
-          </label>
-          <label className="flex items-center gap-2 text-base">
+          </FieldLabel>
+          <FieldLabel size="sm">
             <Checkbox size="sm" />
             Push notifications
-          </label>
+          </FieldLabel>
         </div>
       </div>
 
