@@ -12,8 +12,6 @@ const sidebarItems = [
   { label: "Button", href: "/ui/button" },
   { label: "Checkbox", href: "/ui/checkbox" },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu" },
-  { label: "Radio", href: "/ui/radio" },
-  { label: "Switch", href: "/ui/switch" },
 ]
 
 function Sidebar() {

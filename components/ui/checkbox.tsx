@@ -7,23 +7,23 @@ import { cn } from "@/lib/utils"
 
 const checkboxVariants = cva(
   [
-    "peer relative flex shrink-0 items-center justify-center rounded-[4px] border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 disabled:cursor-not-allowed",
+    "peer relative flex shrink-0 items-center justify-center rounded-2xs border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
     // unchecked states
-    "data-unchecked:border-primary/44 data-unchecked:hover:border-primary/68 data-unchecked:hover:shadow-sm data-unchecked:active:border-primary/75 data-unchecked:focus-visible:border-primary data-unchecked:focus-visible:ring-3 data-unchecked:focus-visible:ring-ring/50 data-unchecked:disabled:border-primary/20 data-unchecked:disabled:bg-secondary",
+    "data-unchecked:border-primary/44 not-data-disabled:data-unchecked:hover:border-primary/68 not-data-disabled:data-unchecked:hover:shadow-sm not-data-disabled:data-unchecked:active:border-primary/75 not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground data-checked:hover:bg-primary/86 data-checked:hover:shadow-sm data-checked:active:bg-primary/74 data-checked:focus-visible:bg-primary data-checked:focus-visible:ring-3 data-checked:focus-visible:ring-ring/50 data-checked:disabled:bg-primary/20",
-    // indeterminate states
-    "data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:hover:bg-primary/86 data-indeterminate:hover:shadow-sm data-indeterminate:active:bg-primary/74 data-indeterminate:focus-visible:bg-primary data-indeterminate:focus-visible:ring-3 data-indeterminate:focus-visible:ring-ring/50 data-indeterminate:disabled:bg-primary/20",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-sm not-data-disabled:data-checked:active:bg-primary/74 not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring",
+    // invalid states
+    "aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 aria-invalid:data-checked:border-primary",
   ],
   {
     variants: {
       size: {
         sm: "size-3.5",
-        md: "size-4",
+        default: "size-4",
       },
     },
     defaultVariants: {
-      size: "sm",
+      size: "default",
     },
   }
 )
@@ -34,26 +34,24 @@ const checkboxIndicatorVariants = cva(
     variants: {
       size: {
         sm: "[&>svg]:size-2.5",
-        md: "[&>svg]:size-3",
+        default: "[&>svg]:size-3",
       },
     },
     defaultVariants: {
-      size: "sm",
+      size: "default",
     },
   }
 )
 
 function Checkbox({
   className,
-  size = "sm",
-  indeterminate,
+  size = "default",
   ...props
 }: CheckboxPrimitive.Root.Props & VariantProps<typeof checkboxVariants>) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       data-size={size}
-      indeterminate={indeterminate}
       className={cn(checkboxVariants({ size, className }))}
       {...props}
     >
@@ -61,15 +59,18 @@ function Checkbox({
         data-slot="checkbox-indicator"
         className={checkboxIndicatorVariants({ size })}
       >
-        {indeterminate ? (
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path fillRule="evenodd" clipRule="evenodd" d="M2 4.99995C2 4.72381 2.22386 4.49995 2.5 4.49995H7.5C7.77614 4.49995 8 4.72381 8 4.99995C8 5.2761 7.77614 5.49995 7.5 5.49995H2.5C2.22386 5.49995 2 5.2761 2 4.99995Z" fill="currentColor"/>
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path fillRule="evenodd" clipRule="evenodd" d="M8.74012 1.93999C8.94911 2.12048 8.97221 2.43622 8.79172 2.64521L4.16 8.00825C4.06619 8.11687 3.93022 8.17995 3.78671 8.18141C3.64319 8.18288 3.50596 8.1226 3.40994 8.01592L1.21597 5.57818C1.03124 5.37292 1.04788 5.05678 1.25314 4.87205C1.45839 4.68732 1.77454 4.70396 1.95927 4.90921L3.77386 6.92542L8.0349 1.99159C8.21539 1.7826 8.53113 1.75949 8.74012 1.93999Z" fill="currentColor"/>
-          </svg>
-        )}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          fill="none"
+        >
+          <path
+            d="M8.03488 1.99125C8.2154 1.78244 8.53103 1.76003 8.73996 1.94047C8.94881 2.12099 8.97216 2.43661 8.79172 2.64555L4.15988 8.00785C4.0661 8.11645 3.9303 8.18018 3.78683 8.18168C3.64331 8.18315 3.50589 8.12235 3.40988 8.01567L1.21554 5.57817C1.03111 5.373 1.04775 5.05681 1.25265 4.87211C1.45791 4.68738 1.77496 4.70397 1.95968 4.90922L3.77316 6.92485L8.03488 1.99125Z"
+            fill="currentColor"
+          />
+        </svg>
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
