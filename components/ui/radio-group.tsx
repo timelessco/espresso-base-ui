@@ -2,6 +2,7 @@
 
 import { Radio as RadioPrimitive } from "@base-ui/react/radio"
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
@@ -15,24 +16,81 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   )
 }
 
-function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
+const radioGroupItemVariants = cva(
+  [
+    "peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
+    // unchecked states
+    "data-unchecked:border-primary/44 not-data-disabled:data-unchecked:hover:border-primary/68 not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:border-primary/75",
+    // checked states
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
+    // disabled
+    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+  ],
+  {
+    variants: {
+      size: {
+        sm: "size-3.5",
+        default: "size-4",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+    },
+  }
+)
+
+const radioGroupIndicatorVariants = cva("flex items-center justify-center", {
+  variants: {
+    size: {
+      sm: "size-3.5 [&>span]:size-1.5",
+      default: "size-4 [&>span]:size-1.75",
+    },
+  },
+  defaultVariants: {
+    size: "default",
+  },
+})
+
+function RadioGroupItem({
+  className,
+  size = "default",
+  ...props
+}: RadioPrimitive.Root.Props & VariantProps<typeof radioGroupItemVariants>) {
   return (
     <RadioPrimitive.Root
       data-slot="radio-group-item"
-      className={cn(
-        "group/radio-group-item peer relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 aria-invalid:aria-checked:border-primary dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary",
-        className
-      )}
+      data-size={size}
+      className={cn(radioGroupItemVariants({ size, className }))}
       {...props}
     >
       <RadioPrimitive.Indicator
         data-slot="radio-group-indicator"
-        className="flex size-4 items-center justify-center"
+        className={radioGroupIndicatorVariants({ size })}
       >
-        <span className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground" />
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground" />
       </RadioPrimitive.Indicator>
     </RadioPrimitive.Root>
   )
 }
 
-export { RadioGroup, RadioGroupItem }
+export { RadioGroup, RadioGroupItem, radioGroupItemVariants }
+
+// ## RadioGroup Changelog
+//
+// ### Added
+// - CVA-based `radioGroupItemVariants` and `radioGroupIndicatorVariants`
+// - Size variants (`sm`, `default`) with `default` as default
+// - `data-size` attribute on `RadioGroupItem`
+// - Exported `radioGroupItemVariants`
+// - Hover, active, and focus states for unchecked and checked
+// - `data-disabled:pointer-events-none` to prevent interaction when disabled
+// - Indicator dot scales with size variant
+//
+// ### Changed
+// - Replaced inline className string with CVA variants
+//
+// ### Removed
+// - `aria-invalid` styles
+// - `group/radio-group-item` class
+// - `aspect-square` (redundant with `size-*` on a circle)
+// - Dark mode overrides
