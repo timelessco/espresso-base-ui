@@ -56,7 +56,7 @@ function BreadcrumbLink({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-muted hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-foreground",
+          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-muted hover:text-secondary-foreground focus:bg-secondary focus:text-secondary-foreground focus:ring-2 focus:ring-ring active:bg-transparent active:text-foreground active:ring-0",
           className
         ),
       },
