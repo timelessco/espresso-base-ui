@@ -78,7 +78,7 @@ function AvatarFallback({
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
       className={cn(
-        "flex size-full items-center justify-center rounded-[inherit] bg-secondary text-base leading-base font-medium tracking-base text-secondary-foreground group-data-[size=2xl]/avatar:text-xl group-data-[size=3xl]/avatar:text-2xl group-data-[size=lg]/avatar:text-base group-data-[size=sm]/avatar:text-sm group-data-[size=xl]/avatar:text-lg group-data-[size=xs]/avatar:text-2xs group-data-[size=xs]/avatar:font-medium-plus",
+        "flex size-full items-center justify-center rounded-[inherit] bg-secondary text-base leading-base font-medium tracking-normal text-secondary-foreground group-data-[size=2xl]/avatar:text-xl group-data-[size=3xl]/avatar:text-2xl group-data-[size=lg]/avatar:text-base group-data-[size=sm]/avatar:text-sm group-data-[size=xl]/avatar:text-lg group-data-[size=xs]/avatar:text-2xs group-data-[size=xs]/avatar:font-medium-plus",
         "group-data-[size=2xl]/avatar:[&_svg]:size-5 group-data-[size=3xl]/avatar:[&_svg]:size-5 group-data-[size=default]/avatar:[&_svg]:size-3.5 group-data-[size=lg]/avatar:[&_svg]:size-4 group-data-[size=sm]/avatar:[&_svg]:size-3 group-data-[size=xl]/avatar:[&_svg]:size-4 group-data-[size=xs]/avatar:[&_svg]:size-2.5",
         className
       )}
@@ -119,7 +119,7 @@ function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="avatar-group"
       className={cn(
-        "group/avatar-group flex [&>*+*]:ml-[var(--overlap)] *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background [&>*]:z-[var(--stack-index)] [&>*]:[--stack-index:0] [&>*:nth-child(1)]:[--stack-index:10] [&>*:nth-child(2)]:[--stack-index:9] [&>*:nth-child(3)]:[--stack-index:8] [&>*:nth-child(4)]:[--stack-index:7] [&>*:nth-child(5)]:[--stack-index:6] [&>*:nth-child(6)]:[--stack-index:5] [&>*:nth-child(7)]:[--stack-index:4] [&>*:nth-child(8)]:[--stack-index:3]",
+        "group/avatar-group flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background [&>*]:z-[var(--stack-index)] [&>*]:[--stack-index:0] [&>*+*]:ml-[var(--overlap)] [&>*:nth-child(1)]:[--stack-index:10] [&>*:nth-child(2)]:[--stack-index:9] [&>*:nth-child(3)]:[--stack-index:8] [&>*:nth-child(4)]:[--stack-index:7] [&>*:nth-child(5)]:[--stack-index:6] [&>*:nth-child(6)]:[--stack-index:5] [&>*:nth-child(7)]:[--stack-index:4] [&>*:nth-child(8)]:[--stack-index:3]",
         className
       )}
       {...props}
@@ -135,7 +135,7 @@ function AvatarGroupCount({
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-base leading-base font-medium tracking-base text-secondary-foreground ring-2 ring-background [--overlap:-4px] group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-2xs group-has-data-[size=xs]/avatar-group:[--overlap:-2px] group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=sm]/avatar-group:text-sm group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=lg]/avatar-group:[--overlap:-5px] group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xl]/avatar-group:text-lg group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=2xl]/avatar-group:text-xl group-has-data-[size=2xl]/avatar-group:[--overlap:-6px] group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=3xl]/avatar-group:text-2xl group-has-data-[size=3xl]/avatar-group:[--overlap:-8px]",
+        "relative flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-base leading-base font-medium tracking-normal text-secondary-foreground ring-2 ring-background [--overlap:-4px] group-has-data-[size=2xl]/avatar-group:size-10 group-has-data-[size=2xl]/avatar-group:text-xl group-has-data-[size=2xl]/avatar-group:[--overlap:-6px] group-has-data-[size=3xl]/avatar-group:size-[46px] group-has-data-[size=3xl]/avatar-group:text-2xl group-has-data-[size=3xl]/avatar-group:[--overlap:-8px] group-has-data-[size=lg]/avatar-group:size-7 group-has-data-[size=lg]/avatar-group:text-base group-has-data-[size=lg]/avatar-group:[--overlap:-5px] group-has-data-[size=sm]/avatar-group:size-5 group-has-data-[size=sm]/avatar-group:text-sm group-has-data-[size=xl]/avatar-group:size-8 group-has-data-[size=xl]/avatar-group:text-lg group-has-data-[size=xs]/avatar-group:size-4 group-has-data-[size=xs]/avatar-group:text-2xs group-has-data-[size=xs]/avatar-group:[--overlap:-2px]",
         className
       )}
       {...props}
@@ -182,7 +182,7 @@ export {
  *   After:  rounded-[inherit], bg-secondary, text-secondary-foreground.
  *           Font size per size: xs=text-2xs, sm=text-sm, default=text-base, lg=text-base,
  *           xl=text-lg, 2xl=text-xl, 3xl=text-2xl.
- *           Added leading-base, font-medium, tracking-base.
+ *           Added leading-base, font-medium, tracking-normal.
  *           Added [&_svg] sizing per size for fallback icons.
  *
  * AvatarBadge:

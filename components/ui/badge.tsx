@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent leading-base font-normal tracking-base whitespace-nowrap transition-all [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent leading-base font-normal tracking-normal whitespace-nowrap transition-all [&>svg]:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -71,7 +71,7 @@ export { Badge, badgeVariants }
  *   Before: h-5, px-2, py-0.5, text-xs, font-medium, focus-visible styles inline.
  *   After:  Removed fixed h/px/text from base (moved to size variants).
  *           Changed font-medium to font-normal.
- *           Added leading-base, tracking-base.
+ *           Added leading-base, tracking-normal.
  *
  * Link variant:
  *   Before: overflow-hidden clipped the underline on hover.
