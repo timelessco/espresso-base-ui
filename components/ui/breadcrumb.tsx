@@ -28,7 +28,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-0.5 text-base leading-base tracking-base wrap-break-word text-accent-foreground group-data-[size=md]/breadcrumb:text-lg [&>[data-slot=breadcrumb-separator]:has(+*>[data-slot=breadcrumb-page])]:text-foreground",
+        "flex flex-wrap items-center gap-0.5 text-base leading-base tracking-normal wrap-break-word text-accent-foreground group-data-[size=md]/breadcrumb:text-lg [&>[data-slot=breadcrumb-separator]:has(+*>[data-slot=breadcrumb-page])]:text-foreground",
         className
       )}
       {...props}
@@ -149,7 +149,7 @@ export {
  *   Before: gap-1.5, text-sm, text-muted-foreground.
  *   After:  gap-0.5, text-base (14px) for sm, text-lg (16px) for md.
  *           Changed text-muted-foreground to text-accent-foreground.
- *           Added leading-base, tracking-base.
+ *           Added leading-base, tracking-normal.
  *           Added last separator color matching: last separator before BreadcrumbPage gets text-foreground.
  *
  * BreadcrumbLink:
