@@ -6,21 +6,21 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center bg-clip-padding text-sm whitespace-nowrap transition-all outline-none select-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center bg-clip-padding text-sm whitespace-nowrap transition-all outline-none select-none focus:ring-2 focus:ring-ring active:ring-0 disabled:pointer-events-none aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-popover-foreground active:bg-muted-foreground disabled:bg-secondary disabled:text-secondary-foreground/50",
+          "bg-primary text-primary-foreground hover:bg-primary/86 active:bg-primary/75 disabled:bg-secondary disabled:text-card-foreground",
         outline:
-          "border border-border bg-background text-secondary-foreground hover:border-primary/24 focus-visible:bg-secondary active:bg-input disabled:bg-secondary disabled:text-secondary-foreground/50",
+          "active:card-foreground border border-border bg-background text-secondary-foreground hover:border-popover-foreground focus:bg-secondary active:border-card-foreground active:bg-accent disabled:border-border disabled:bg-secondary disabled:text-card-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted active:bg-input disabled:text-secondary-foreground/50",
+          "bg-secondary text-secondary-foreground hover:bg-muted active:bg-accent disabled:bg-secondary disabled:text-card-foreground",
         ghost:
-          "text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-input disabled:text-secondary-foreground/50",
+          "text-secondary-foreground hover:bg-muted focus:bg-secondary active:bg-accent disabled:text-card-foreground",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:ring-destructive/50 active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
-        link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-secondary-foreground/50",
+          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus:ring-destructive/50 active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
+        link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground",
       },
       size: {
         xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",

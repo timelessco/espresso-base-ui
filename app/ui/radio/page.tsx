@@ -34,14 +34,20 @@ export default function RadioPage() {
       {/* Disabled */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled</SectionTitle>
-        <RadioGroup defaultValue="dis-2" disabled>
-          <div className="flex items-center gap-4">
-            <RadioGroupItem value="dis-1" />
-            <RadioGroupItem value="dis-2" />
-            <RadioGroupItem size="sm" value="dis-3" />
-            <RadioGroupItem size="sm" value="dis-4" />
-          </div>
-        </RadioGroup>
+        <div className="flex items-center gap-4">
+          <RadioGroup defaultValue="dis-2" disabled className="w-auto">
+            <div className="flex items-center gap-4">
+              <RadioGroupItem value="dis-1" />
+              <RadioGroupItem value="dis-2" />
+            </div>
+          </RadioGroup>
+          <RadioGroup defaultValue="dis-4" disabled className="w-auto">
+            <div className="flex items-center gap-4">
+              <RadioGroupItem size="sm" value="dis-3" />
+              <RadioGroupItem size="sm" value="dis-4" />
+            </div>
+          </RadioGroup>
+        </div>
       </div>
 
       {/* All States */}

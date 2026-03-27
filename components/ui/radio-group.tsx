@@ -18,13 +18,11 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
 
 const radioGroupItemVariants = cva(
   [
-    "peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
+    "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted",
     // unchecked states
-    "data-unchecked:border-primary/44 not-data-disabled:data-unchecked:hover:border-primary/68 not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:border-primary/75",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus:border-primary not-data-disabled:data-unchecked:focus:ring-2 not-data-disabled:data-unchecked:focus:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none not-data-disabled:data-unchecked:active:ring-0",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
-    // disabled
-    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus:ring-2 not-data-disabled:data-checked:focus:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
   ],
   {
     variants: {
@@ -67,7 +65,7 @@ function RadioGroupItem({
         data-slot="radio-group-indicator"
         className={radioGroupIndicatorVariants({ size })}
       >
-        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground" />
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-foreground group-data-disabled/radio:bg-popover-foreground" />
       </RadioPrimitive.Indicator>
     </RadioPrimitive.Root>
   )
