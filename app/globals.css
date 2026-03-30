@@ -66,13 +66,13 @@
   --input-invalid: oklch(94.73% 0.026 17.63); /* #FFE7E7 */ /*surface/red-2*/
   --input-filled: oklch(96.18% 0.023 56.96); /* #FFEFE4 */ /*surface/orange-2*/
 
-  --input-valid-border: oklch(
+  --input-valid-outline: oklch(
     82.69% 0.135 154.7
   ); /* #78E09F */ /*outline/green-3*/
-  --input-invalid-border: oklch(
+  --input-invalid-outline: oklch(
     77.17% 0.118 19.5
   ); /* #F79596 */ /*outline/red-3*/
-  --input-filled-border: oklch(
+  --input-filled-outline: oklch(
     81.04% 0.102 56.49
   ); /* #F4B07F */ /*outline/orange-3*/
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -217,13 +217,13 @@
   --input-valid: oklch(27.01% 0.053 157.34); /* #0b2e1c */ /*surface/green-2*/
   --input-invalid: oklch(25.37% 0.065 18.58); /* #3C1316 */ /*surface/red-2*/
   --input-filled: oklch(25.78% 0.051 54.3); /* #361C09 */ /*surface/orange-2*/
-  --input-valid-border: oklch(
+  --input-valid-outline: oklch(
     40.52% 0.098 155.47
   ); /* #035831 */ /*outline/green-3*/
-  --input-invalid-border: oklch(
+  --input-invalid-outline: oklch(
     34.06% 0.112 25.44
   ); /* #661717 */ /*outline/red-3*/
-  --input-filled-border: oklch(
+  --input-filled-outline: oklch(
     38.04% 0.093 50.98
   ); /* #683108 */ /*outline/orange-3*/
 
@@ -294,9 +294,9 @@
   --color-input-valid: var(--input-valid);
   --color-input-invalid: var(--input-invalid);
   --color-input-filled: var(--input-filled);
-  --color-input-valid-border: var(--input-valid-border);
-  --color-input-invalid-border: var(--input-invalid-border);
-  --color-input-filled-border: var(--input-filled-border);
+  --color-input-valid-outline: var(--input-valid-outline);
+  --color-input-invalid-outline: var(--input-invalid-outline);
+  --color-input-filled-outline: var(--input-filled-outline);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);

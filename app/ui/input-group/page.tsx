@@ -206,20 +206,49 @@ export default function InputGroupPage() {
         </InputGroup>
       </div>
 
-      {/* Invalid */}
+      {/* Data States — Outline */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>Invalid</SectionTitle>
-        <InputGroup variant="outline">
+        <SectionTitle>Outline — Data States</SectionTitle>
+        <InputGroup variant="outline" data-valid="true">
           <InputGroupAddon align="inline-start">
-            <InputGroupText><Mail /></InputGroupText>
+            <InputGroupText><Search /></InputGroupText>
           </InputGroupAddon>
-          <InputGroupInput aria-invalid="true" defaultValue="Outline invalid" />
+          <InputGroupInput defaultValue="Valid" />
         </InputGroup>
-        <InputGroup variant="subtle">
+        <InputGroup variant="outline" data-invalid="true">
           <InputGroupAddon align="inline-start">
-            <InputGroupText><Mail /></InputGroupText>
+            <InputGroupText><Search /></InputGroupText>
           </InputGroupAddon>
-          <InputGroupInput aria-invalid="true" defaultValue="Subtle invalid" />
+          <InputGroupInput defaultValue="Invalid" />
+        </InputGroup>
+        <InputGroup variant="outline" data-filled="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText><Search /></InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Filled" />
+        </InputGroup>
+      </div>
+
+      {/* Data States — Subtle */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Subtle — Data States</SectionTitle>
+        <InputGroup variant="subtle" data-valid="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText><Search /></InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Valid" />
+        </InputGroup>
+        <InputGroup variant="subtle" data-invalid="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText><Search /></InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Invalid" />
+        </InputGroup>
+        <InputGroup variant="subtle" data-filled="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText><Search /></InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Filled" />
         </InputGroup>
       </div>
 
@@ -267,17 +296,47 @@ export default function InputGroupPage() {
                 </td>
               </tr>
               <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
+                <td className="px-4 py-3 text-xs text-muted-foreground">Valid</td>
                 <td className="px-4 py-3">
-                  <InputGroup variant="outline" className="max-w-xs">
-                    <InputGroupAddon align="inline-start"><InputGroupText><Mail /></InputGroupText></InputGroupAddon>
-                    <InputGroupInput aria-invalid="true" defaultValue="Invalid" />
+                  <InputGroup variant="outline" data-valid="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Valid" />
                   </InputGroup>
                 </td>
                 <td className="px-4 py-3">
-                  <InputGroup variant="subtle" className="max-w-xs">
-                    <InputGroupAddon align="inline-start"><InputGroupText><Mail /></InputGroupText></InputGroupAddon>
-                    <InputGroupInput aria-invalid="true" defaultValue="Invalid" />
+                  <InputGroup variant="subtle" data-valid="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Valid" />
+                  </InputGroup>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
+                <td className="px-4 py-3">
+                  <InputGroup variant="outline" data-invalid="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Invalid" />
+                  </InputGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <InputGroup variant="subtle" data-invalid="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Invalid" />
+                  </InputGroup>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Filled</td>
+                <td className="px-4 py-3">
+                  <InputGroup variant="outline" data-filled="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Filled" />
+                  </InputGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <InputGroup variant="subtle" data-filled="true" className="max-w-xs">
+                    <InputGroupAddon align="inline-start"><InputGroupText><Search /></InputGroupText></InputGroupAddon>
+                    <InputGroupInput defaultValue="Filled" />
                   </InputGroup>
                 </td>
               </tr>

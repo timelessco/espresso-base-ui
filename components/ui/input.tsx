@@ -12,7 +12,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-accent bg-primary-foreground hover:border-popover-foreground hover:shadow-4xs focus:border-primary-foreground focus:shadow-3xs active:border-card-foreground active:shadow-md active:ring-0 data-disabled:border-accent data-[valid=true]:border-input-valid-border data-[invalid=true]:border-input-invalid-border data-[filled=true]:border-input-filled-border",
+          "border-accent bg-primary-foreground hover:border-popover-foreground hover:shadow-4xs focus:border-primary-foreground focus:shadow-3xs active:border-card-foreground active:shadow-md active:ring-0 data-disabled:border-accent data-[valid=true]:border-input-valid-outline data-[invalid=true]:border-input-invalid-outline data-[filled=true]:border-input-filled-outline",
         subtle:
           "border-transparent bg-secondary hover:bg-muted focus:border-primary-foreground focus:bg-primary-foreground focus:shadow-3xs active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 data-disabled:bg-input data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-input-filled",
       },

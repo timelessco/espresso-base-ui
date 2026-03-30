@@ -22,9 +22,7 @@ const inputGroupVariants = cva(
   [
     "group/input-group relative flex w-full min-w-0 items-center border text-secondary-foreground transition-colors outline-none",
     // disabled
-    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground",
-    // invalid
-    "has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-2 has-[[data-slot][aria-invalid=true]]:ring-destructive/20",
+    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground has-disabled:[&_*]:!text-popover-foreground",
     // block/textarea layout
     "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto",
   ],
@@ -32,9 +30,9 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-accent bg-primary-foreground focus-within:border-primary-foreground focus-within:shadow-3xs! hover:border-popover-foreground hover:shadow-4xs active:border-card-foreground active:shadow-md active:ring-0 has-disabled:border-accent",
+          "border-accent bg-primary-foreground focus-within:border-primary-foreground focus-within:shadow-3xs! hover:border-popover-foreground hover:shadow-4xs active:border-card-foreground active:shadow-md active:ring-0 has-disabled:border-accent data-[filled=true]:border-input-filled-outline data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline",
         subtle:
-          "border-transparent bg-secondary focus-within:border-primary-foreground focus-within:bg-primary-foreground! focus-within:shadow-3xs! hover:bg-muted active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 has-disabled:bg-input",
+          "border-transparent bg-secondary focus-within:border-primary-foreground focus-within:bg-primary-foreground! focus-within:shadow-3xs! hover:bg-muted active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 has-disabled:bg-input data-[filled=true]:bg-input-filled data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid",
       },
       size: {
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
@@ -179,7 +177,7 @@ function InputGroupInput({
       data-slot="input-group-control"
       size={sizeProp ?? contextSize}
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0",
+        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent",
         className
       )}
       {...props}
@@ -195,7 +193,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus:shadow-none focus:ring-0 disabled:bg-transparent aria-invalid:ring-0",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus:shadow-none focus:ring-0 disabled:bg-transparent",
         className
       )}
       {...props}
