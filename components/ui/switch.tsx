@@ -9,11 +9,11 @@ const switchVariants = cva(
   [
     "peer group/switch relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
     // unchecked states
-    "data-unchecked:bg-primary/20 not-data-disabled:data-unchecked:hover:bg-primary/28 not-data-disabled:data-unchecked:focus-visible:bg-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:bg-primary/44",
+    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:active:bg-card-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring",
     // checked states
     "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
     // disabled
-    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:opacity-50",
+    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-unchecked:bg-input",
   ],
   {
     variants: {
@@ -29,7 +29,7 @@ const switchVariants = cva(
 )
 
 const switchThumbVariants = cva(
-  "pointer-events-none block rounded-full bg-background ring-0 transition-transform",
+  "pointer-events-none block rounded-full bg-background ring-0 transition-transform shadow-xs",
   {
     variants: {
       size: {

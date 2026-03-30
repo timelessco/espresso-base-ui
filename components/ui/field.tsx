@@ -106,7 +106,24 @@ function FieldLabel({
     <Label
       data-slot="field-label"
       className={cn(
-        "group/field-label peer/field-label flex w-fit gap-2 rounded-md px-1.5 py-1.75 leading-snug transition-colors outline-none group-data-[disabled=true]/field:pointer-events-none group-data-[disabled=true]/field:opacity-50 focus-within:bg-secondary focus-within:ring-2 focus-within:ring-ring group-not-data-[disabled=true]/field:hover:bg-muted group-not-data-[disabled=true]/field:active:bg-accent has-data-checked:border-primary/30 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5 has-data-checked:[&_[data-slot=checkbox]]:shadow-none has-data-checked:[&_[data-slot=checkbox]]:ring-0 has-data-checked:[&_[data-slot=radio-group-item]]:shadow-none has-data-checked:[&_[data-slot=radio-group-item]]:ring-0 has-data-checked:[&_[data-slot=switch]]:shadow-none has-data-checked:[&_[data-slot=switch]]:ring-0",
+        "group/field-label peer/field-label flex w-fit gap-2 rounded-md px-1.5 py-1.75 leading-snug transition-colors outline-none group-data-[disabled=true]/field:pointer-events-none group-data-[disabled=true]/field:opacity-50 focus-within:bg-secondary focus-within:ring-2 focus-within:ring-ring group-not-data-[disabled=true]/field:hover:bg-muted group-not-data-[disabled=true]/field:active:bg-accent has-data-checked:border-primary/30 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-2.5",
+        // checkbox hover/active from FieldLabel
+        "[&:hover_[data-slot=checkbox][data-unchecked]]:border-accent-foreground [&:hover_[data-slot=checkbox][data-unchecked]]:shadow-sm",
+        "[&:hover_[data-slot=checkbox][data-checked]]:bg-primary/86 [&:hover_[data-slot=checkbox][data-checked]]:shadow-sm",
+        "[&:active_[data-slot=checkbox][data-unchecked]]:border-muted-foreground",
+        "[&:active_[data-slot=checkbox][data-checked]]:bg-primary/74",
+        // radio hover/active from FieldLabel
+        "[&:hover_[data-slot=radio-group-item][data-unchecked]]:border-accent-foreground [&:hover_[data-slot=radio-group-item][data-unchecked]]:shadow-md",
+        "[&:hover_[data-slot=radio-group-item][data-checked]]:bg-primary/86 [&:hover_[data-slot=radio-group-item][data-checked]]:shadow-md",
+        "[&:active_[data-slot=radio-group-item][data-unchecked]]:border-muted-foreground [&:active_[data-slot=radio-group-item][data-unchecked]]:bg-secondary [&:active_[data-slot=radio-group-item][data-unchecked]]:shadow-none",
+        "[&:active_[data-slot=radio-group-item][data-checked]]:bg-primary/74",
+        // switch hover/active from FieldLabel
+        "[&:hover_[data-slot=switch][data-unchecked]]:bg-popover-foreground",
+        "[&:hover_[data-slot=switch][data-checked]]:bg-primary/86",
+        "[&:active_[data-slot=switch][data-unchecked]]:bg-card-foreground",
+        "[&:active_[data-slot=switch][data-checked]]:bg-primary/74",
+        // suppress child focus ring when FieldLabel has focus-within
+        "[&:focus-within_[data-slot=checkbox]]:ring-0 [&:focus-within_[data-slot=radio-group-item]]:ring-0 [&:focus-within_[data-slot=switch]]:ring-0",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
         className
       )}
