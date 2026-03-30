@@ -34,7 +34,6 @@ export default function InputPage() {
         <Input variant="outline" defaultValue="With value" />
         <Input variant="outline" disabled placeholder="Disabled" />
         <Input variant="outline" disabled defaultValue="Disabled with value" />
-        <Input variant="outline" aria-invalid="true" defaultValue="Invalid" />
       </div>
 
       {/* Subtle — States */}
@@ -44,7 +43,22 @@ export default function InputPage() {
         <Input variant="subtle" defaultValue="With value" />
         <Input variant="subtle" disabled placeholder="Disabled" />
         <Input variant="subtle" disabled defaultValue="Disabled with value" />
-        <Input variant="subtle" aria-invalid="true" defaultValue="Invalid" />
+      </div>
+
+      {/* Outline — Data States */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Outline — Data States</SectionTitle>
+        <Input variant="outline" data-valid="true" defaultValue="Valid" />
+        <Input variant="outline" data-invalid="true" defaultValue="Invalid" />
+        <Input variant="outline" data-filled="true" defaultValue="Filled" />
+      </div>
+
+      {/* Subtle — Data States */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Subtle — Data States</SectionTitle>
+        <Input variant="subtle" data-valid="true" defaultValue="Valid" />
+        <Input variant="subtle" data-invalid="true" defaultValue="Invalid" />
+        <Input variant="subtle" data-filled="true" defaultValue="Filled" />
       </div>
 
       {/* All States Table */}
@@ -76,9 +90,19 @@ export default function InputPage() {
                 <td className="px-4 py-3"><Input variant="subtle" disabled placeholder="Disabled" className="max-w-xs" /></td>
               </tr>
               <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Valid</td>
+                <td className="px-4 py-3"><Input variant="outline" data-valid="true" defaultValue="Valid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Input variant="subtle" data-valid="true" defaultValue="Valid" className="max-w-xs" /></td>
+              </tr>
+              <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
-                <td className="px-4 py-3"><Input variant="outline" aria-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
-                <td className="px-4 py-3"><Input variant="subtle" aria-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Input variant="outline" data-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Input variant="subtle" data-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Filled</td>
+                <td className="px-4 py-3"><Input variant="outline" data-filled="true" defaultValue="Filled" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Input variant="subtle" data-filled="true" defaultValue="Filled" className="max-w-xs" /></td>
               </tr>
             </tbody>
           </table>
