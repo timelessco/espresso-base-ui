@@ -6,7 +6,15 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
+import { CheckIcon, ChevronUpIcon, ChevronDownIcon } from "lucide-react"
+
+function SelectChevronIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M5.85355 10.6464C5.65829 10.4512 5.34171 10.4512 5.14645 10.6464C4.95118 10.8417 4.95118 11.1583 5.14645 11.3536L7.64645 13.8536C7.84171 14.0488 8.15829 14.0488 8.35355 13.8536L10.8536 11.3536C11.0488 11.1583 11.0488 10.8417 10.8536 10.6464C10.6583 10.4512 10.3417 10.4512 10.1464 10.6464L8 12.7929L5.85355 10.6464ZM5.85355 5.35355C5.65829 5.54882 5.34171 5.54882 5.14645 5.35355C4.95118 5.15829 4.95118 4.84171 5.14645 4.64645L7.64645 2.14645C7.84171 1.95118 8.15829 1.95118 8.35355 2.14645L10.8536 4.64645C11.0488 4.84171 11.0488 5.15829 10.8536 5.35355C10.6583 5.54882 10.3417 5.54882 10.1464 5.35355L8 3.20711L5.85355 5.35355Z" fill="currentColor"/>
+    </svg>
+  )
+}
 
 const Select = SelectPrimitive.Root
 
@@ -32,7 +40,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-1.5 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus:text-secondary-foreground active:text-secondary-foreground data-placeholder:text-card-foreground data-[valid=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground data-[filled=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-card-foreground data-disabled:text-popover-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus:text-secondary-foreground active:text-secondary-foreground data-placeholder:text-card-foreground data-[valid=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground data-[filled=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-card-foreground data-disabled:text-popover-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
@@ -61,9 +69,15 @@ function SelectTrigger({
   className,
   variant,
   size,
+  prefixIcon,
+  suffixIcon,
   children,
   ...props
-}: SelectPrimitive.Trigger.Props & VariantProps<typeof selectTriggerVariants>) {
+}: SelectPrimitive.Trigger.Props &
+  VariantProps<typeof selectTriggerVariants> & {
+    prefixIcon?: React.ReactNode
+    suffixIcon?: React.ReactNode
+  }) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
@@ -72,12 +86,15 @@ function SelectTrigger({
       className={cn(selectTriggerVariants({ variant, size, className }))}
       {...props}
     >
+      {prefixIcon}
       {children}
-      <SelectPrimitive.Icon
-        render={
-          <ChevronDownIcon className="pointer-events-none size-4 text-current" />
-        }
-      />
+      {suffixIcon ?? (
+        <SelectPrimitive.Icon
+          render={
+            <SelectChevronIcon className="pointer-events-none size-4 text-current" />
+          }
+        />
+      )}
     </SelectPrimitive.Trigger>
   )
 }
