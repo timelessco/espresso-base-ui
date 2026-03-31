@@ -32,17 +32,17 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-1.5 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus:text-secondary-foreground active:text-secondary-foreground data-placeholder:text-card-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-card-foreground data-disabled:text-popover-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-1.5 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus:text-secondary-foreground active:text-secondary-foreground data-placeholder:text-card-foreground data-[valid=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground data-[filled=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-card-foreground data-disabled:text-popover-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground hover:border-popover-foreground focus:bg-secondary focus:ring-2 focus:ring-ring active:border-card-foreground active:ring-0 data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border border-border bg-primary-foreground hover:border-popover-foreground focus:bg-secondary focus:ring-2 focus:ring-ring active:border-card-foreground active:ring-0 data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:border-input-valid-outline data-[invalid=true]:border-input-invalid-outline data-[filled=true]:border-border",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border-transparent bg-secondary hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-secondary",
         ghost:
-          "border-transparent bg-transparent hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-disabled:bg-transparent data-disabled:text-popover-foreground",
+          "border-transparent bg-transparent hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-disabled:bg-transparent data-disabled:text-popover-foreground data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-secondary",
       },
       size: {
         sm: "h-7 rounded-md px-2 text-base",

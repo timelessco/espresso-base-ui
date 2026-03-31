@@ -193,6 +193,71 @@ export default function SelectPage() {
         </Select>
       </div>
 
+      {/* Data States */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Data States</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="outline" data-valid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="subtle" data-valid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="ghost" data-valid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-4">
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="outline" data-invalid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="subtle" data-invalid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="ghost" data-invalid="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-4">
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="outline" data-filled="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="subtle" data-filled="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+          <Select defaultValue="option-1">
+            <SelectTrigger variant="ghost" data-filled="true">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>{options}</SelectContent>
+          </Select>
+        </div>
+      </div>
+
       {/* All States Table */}
       <div className="flex flex-col gap-4">
         <SectionTitle>All States</SectionTitle>
@@ -241,6 +306,42 @@ export default function SelectPage() {
                 </td>
                 <td className="px-4 py-3">
                   <Select disabled><SelectTrigger variant="ghost"><SelectValue placeholder="Disabled" /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Valid</td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Filled</td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
+                </td>
+                <td className="px-4 py-3">
+                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
                 </td>
               </tr>
             </tbody>
