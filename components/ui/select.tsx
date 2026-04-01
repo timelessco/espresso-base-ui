@@ -6,7 +6,15 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { CheckIcon, ChevronUpIcon, ChevronDownIcon } from "lucide-react"
+import { ChevronUpIcon, ChevronDownIcon } from "lucide-react"
+
+function SelectCheckIcon({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
+      <path d="M13.0831 3.3823C13.2637 3.17362 13.5793 3.15113 13.7882 3.33152C13.9969 3.51206 14.0204 3.82772 13.84 4.0366L6.42885 12.6167C6.33507 12.7253 6.19926 12.789 6.0558 12.7905C5.91228 12.792 5.77486 12.7312 5.67885 12.6245L2.1681 8.7241L2.54018 8.39012L2.91225 8.05516L6.04213 11.5337L13.0831 3.3823ZM2.20521 8.01805C2.41047 7.83332 2.72752 7.8499 2.91225 8.05516L2.1681 8.7241C1.98378 8.51889 2.00023 8.20268 2.20521 8.01805Z" fill="currentColor"/>
+    </svg>
+  )
+}
 
 function SelectChevronIcon({ className }: { className?: string }) {
   return (
@@ -52,17 +60,17 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus:text-secondary-foreground active:text-secondary-foreground data-placeholder:text-card-foreground data-[filled=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-[valid=true]:text-secondary-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-card-foreground data-disabled:text-popover-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-placeholder:text-card-foreground data-[filled=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-[valid=true]:text-secondary-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground hover:border-popover-foreground focus:bg-secondary focus:ring-2 focus:ring-ring active:border-card-foreground active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border border-border bg-primary-foreground hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border-transparent bg-secondary hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-input data-disabled:text-popover-foreground",
         ghost:
-          "border-transparent bg-transparent hover:bg-muted focus:bg-secondary focus:ring-2 focus:ring-ring active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-transparent data-disabled:text-popover-foreground",
+          "border-transparent bg-transparent hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-transparent data-disabled:text-popover-foreground",
       },
       size: {
         sm: "h-7 rounded-md px-2 text-base",
@@ -89,12 +97,20 @@ function SelectTrigger({
   VariantProps<typeof selectTriggerVariants> & {
     prefixIcon?: React.ReactNode
     suffixIcon?: React.ReactNode
+    "data-invalid"?: string
+    "data-disabled"?: string
+    "data-valid"?: string
+    "data-filled"?: string
   }) {
+  const dataInvalid = props["data-invalid"]
+  const dataDisabled = props["data-disabled"]
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-variant={variant ?? "outline"}
       data-size={size ?? "default"}
+      aria-invalid={dataInvalid === "true" || undefined}
+      aria-disabled={dataDisabled === "true" || undefined}
       className={cn(selectTriggerVariants({ variant, size, className }))}
       {...props}
     >
@@ -191,7 +207,7 @@ function SelectItem({
           <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
         }
       >
-        <CheckIcon className="pointer-events-none" />
+        <SelectCheckIcon className="pointer-events-none" />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   )
