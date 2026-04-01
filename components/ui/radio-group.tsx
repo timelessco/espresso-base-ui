@@ -18,11 +18,13 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
 
 const radioGroupItemVariants = cva(
   [
-    "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted",
+    "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input",
     // unchecked states
-    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus:border-primary not-data-disabled:data-unchecked:focus:ring-2 not-data-disabled:data-unchecked:focus:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none not-data-disabled:data-unchecked:active:ring-0",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:focus-within:border-primary not-data-disabled:data-unchecked:focus-within:ring-2 not-data-disabled:data-unchecked:focus-within:ring-ring not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none not-data-disabled:data-unchecked:active:ring-0",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus:ring-2 not-data-disabled:data-checked:focus:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:focus-within:ring-2 not-data-disabled:data-checked:focus-within:ring-ring not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:active:bg-primary/74",
+    // invalid state
+    "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20! data-[invalid=true]:data-checked:border-destructive!",
   ],
   {
     variants: {
@@ -52,12 +54,18 @@ const radioGroupIndicatorVariants = cva("flex items-center justify-center", {
 function RadioGroupItem({
   className,
   size = "default",
+  "data-invalid": dataInvalid,
   ...props
-}: RadioPrimitive.Root.Props & VariantProps<typeof radioGroupItemVariants>) {
+}: RadioPrimitive.Root.Props &
+  VariantProps<typeof radioGroupItemVariants> & {
+    "data-invalid"?: string
+  }) {
   return (
     <RadioPrimitive.Root
       data-slot="radio-group-item"
       data-size={size}
+      data-invalid={dataInvalid}
+      aria-invalid={dataInvalid === "true" || undefined}
       className={cn(radioGroupItemVariants({ size, className }))}
       {...props}
     >
