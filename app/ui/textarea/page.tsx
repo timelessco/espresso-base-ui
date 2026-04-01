@@ -49,6 +49,30 @@ export default function TextareaPage() {
         <Textarea variant="ghost" defaultValue="Ghost with content that spans multiple lines to show how the component handles text." />
       </div>
 
+      {/* Outline — Data States */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Outline — Data States</SectionTitle>
+        <Textarea variant="outline" data-valid="true" defaultValue="Valid" />
+        <Textarea variant="outline" data-invalid="true" defaultValue="Invalid" />
+        <Textarea variant="outline" data-filled="true" defaultValue="Filled" />
+      </div>
+
+      {/* Subtle — Data States */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Subtle — Data States</SectionTitle>
+        <Textarea variant="subtle" data-valid="true" defaultValue="Valid" />
+        <Textarea variant="subtle" data-invalid="true" defaultValue="Invalid" />
+        <Textarea variant="subtle" data-filled="true" defaultValue="Filled" />
+      </div>
+
+      {/* Ghost — Data States */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Ghost — Data States</SectionTitle>
+        <Textarea variant="ghost" data-valid="true" defaultValue="Valid" />
+        <Textarea variant="ghost" data-invalid="true" defaultValue="Invalid" />
+        <Textarea variant="ghost" data-filled="true" defaultValue="Filled" />
+      </div>
+
       {/* All States Table */}
       <div className="flex flex-col gap-4">
         <SectionTitle>All States</SectionTitle>
@@ -80,6 +104,24 @@ export default function TextareaPage() {
                 <td className="px-4 py-3"><Textarea variant="outline" disabled placeholder="Disabled" className="max-w-xs" /></td>
                 <td className="px-4 py-3"><Textarea variant="subtle" disabled placeholder="Disabled" className="max-w-xs" /></td>
                 <td className="px-4 py-3"><Textarea variant="ghost" disabled placeholder="Disabled" className="max-w-xs" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Valid</td>
+                <td className="px-4 py-3"><Textarea variant="outline" data-valid="true" defaultValue="Valid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="subtle" data-valid="true" defaultValue="Valid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="ghost" data-valid="true" defaultValue="Valid" className="max-w-xs" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
+                <td className="px-4 py-3"><Textarea variant="outline" data-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="subtle" data-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="ghost" data-invalid="true" defaultValue="Invalid" className="max-w-xs" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Filled</td>
+                <td className="px-4 py-3"><Textarea variant="outline" data-filled="true" defaultValue="Filled" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="subtle" data-filled="true" defaultValue="Filled" className="max-w-xs" /></td>
+                <td className="px-4 py-3"><Textarea variant="ghost" data-filled="true" defaultValue="Filled" className="max-w-xs" /></td>
               </tr>
             </tbody>
           </table>
