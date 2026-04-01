@@ -50,6 +50,25 @@ export default function RadioPage() {
         </div>
       </div>
 
+      {/* Invalid */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Invalid</SectionTitle>
+        <div className="flex items-center gap-4">
+          <RadioGroup value="" className="w-auto">
+            <RadioGroupItem data-invalid="true" value="inv-1" />
+          </RadioGroup>
+          <RadioGroup value="inv-2" className="w-auto">
+            <RadioGroupItem data-invalid="true" value="inv-2" />
+          </RadioGroup>
+          <RadioGroup value="" className="w-auto">
+            <RadioGroupItem size="sm" data-invalid="true" value="inv-3" />
+          </RadioGroup>
+          <RadioGroup value="inv-4" className="w-auto">
+            <RadioGroupItem size="sm" data-invalid="true" value="inv-4" />
+          </RadioGroup>
+        </div>
+      </div>
+
       {/* All States */}
       <div className="flex flex-col gap-4">
         <SectionTitle>All States</SectionTitle>
@@ -99,6 +118,32 @@ export default function RadioPage() {
                 <td className="px-4 py-3">
                   <RadioGroup value="" disabled>
                     <RadioGroupItem size="sm" value="dis-unchecked" />
+                  </RadioGroup>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Unchecked</td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="">
+                    <RadioGroupItem data-invalid="true" value="inv-unchecked" />
+                  </RadioGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="">
+                    <RadioGroupItem size="sm" data-invalid="true" value="inv-unchecked" />
+                  </RadioGroup>
+                </td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Checked</td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="inv-checked">
+                    <RadioGroupItem data-invalid="true" value="inv-checked" />
+                  </RadioGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="inv-checked">
+                    <RadioGroupItem size="sm" data-invalid="true" value="inv-checked" />
                   </RadioGroup>
                 </td>
               </tr>
