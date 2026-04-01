@@ -9,11 +9,12 @@ const checkboxVariants = cva(
   [
     "peer relative flex shrink-0 items-center justify-center rounded-2xs border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:border-popover-foreground data-disabled:bg-input data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-[disabled]:data-[checked]:[&_svg]:text-card-foreground",
     // unchecked states
-    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-sm not-data-disabled:data-unchecked:focus:border-primary not-data-disabled:data-unchecked:focus:ring-0 not-data-disabled:data-unchecked:focus:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-sm not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-sm not-data-disabled:data-checked:focus:ring-2 not-data-disabled:data-checked:focus:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-sm not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
     // invalid states
     "aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 aria-invalid:data-checked:border-primary",
+    "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20! data-[invalid=true]:data-checked:border-destructive!",
   ],
   {
     variants: {
@@ -46,12 +47,18 @@ const checkboxIndicatorVariants = cva(
 function Checkbox({
   className,
   size = "default",
+  "data-invalid": dataInvalid,
   ...props
-}: CheckboxPrimitive.Root.Props & VariantProps<typeof checkboxVariants>) {
+}: CheckboxPrimitive.Root.Props &
+  VariantProps<typeof checkboxVariants> & {
+    "data-invalid"?: string
+  }) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       data-size={size}
+      data-invalid={dataInvalid}
+      aria-invalid={dataInvalid === "true" || undefined}
       className={cn(checkboxVariants({ size, className }))}
       {...props}
     >
