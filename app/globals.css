@@ -82,6 +82,7 @@
   --shadow-4xs: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   --shadow-3xs: 0 0 0 2px rgba(201, 201, 201, 0.9);
   --shadow-xs: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 0 0 2px #C7C7C7;
   --border-soft: oklch(94.61% 0 0); /* #EDEDED */ /*outline/gray-1*/
   --border-normal: oklch(82.97% 0 0); /* #C7C7C7 */ /*outline/gray-3*/
   --border-strong: oklch(68.3% 0 0); /* #999999 */ /*outline/gray-4*/
@@ -350,6 +351,7 @@
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
 
   /* font sizes */
   --text-tiny: var(--text-tiny);

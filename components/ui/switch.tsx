@@ -9,11 +9,13 @@ const switchVariants = cva(
   [
     "peer group/switch relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
     // unchecked states
-    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:active:bg-card-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring",
+    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:focus-visible:shadow-lg not-data-disabled:data-unchecked:active:bg-card-foreground",
     // checked states
-    "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:focus-visible:shadow-lg not-data-disabled:data-checked:active:bg-primary/74",
+    // invalid state
+    "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20!",
     // disabled
-    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-unchecked:bg-input",
+    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-muted",
   ],
   {
     variants: {
@@ -29,7 +31,7 @@ const switchVariants = cva(
 )
 
 const switchThumbVariants = cva(
-  "pointer-events-none block rounded-full bg-background ring-0 transition-transform shadow-xs",
+  "pointer-events-none block rounded-full bg-background shadow-xs ring-0 transition-transform",
   {
     variants: {
       size: {
@@ -47,12 +49,18 @@ const switchThumbVariants = cva(
 function Switch({
   className,
   size = "default",
+  "data-invalid": dataInvalid,
   ...props
-}: SwitchPrimitive.Root.Props & VariantProps<typeof switchVariants>) {
+}: SwitchPrimitive.Root.Props &
+  VariantProps<typeof switchVariants> & {
+    "data-invalid"?: string
+  }) {
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
       data-size={size}
+      data-invalid={dataInvalid}
+      aria-invalid={dataInvalid === "true" || undefined}
       className={cn(switchVariants({ size, className }))}
       {...props}
     >
