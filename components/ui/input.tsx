@@ -39,7 +39,10 @@ function Input({
   "data-disabled": dataDisabled,
   ...props
 }: Omit<React.ComponentProps<"input">, "size"> &
-  VariantProps<typeof inputVariants>) {
+  VariantProps<typeof inputVariants> & {
+    "data-invalid"?: string
+    "data-disabled"?: string
+  }) {
   return (
     <InputPrimitive
       type={type}
