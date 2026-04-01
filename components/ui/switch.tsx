@@ -9,9 +9,9 @@ const switchVariants = cva(
   [
     "peer group/switch relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
     // unchecked states
-    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:focus-visible:shadow-lg not-data-disabled:data-unchecked:active:bg-card-foreground",
+    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:shadow-3xs not-data-disabled:data-unchecked:active:bg-card-foreground",
     // checked states
-    "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:focus-visible:shadow-lg not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:shadow-3xs not-data-disabled:data-checked:active:bg-primary/74",
     // invalid state
     "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20!",
     // disabled

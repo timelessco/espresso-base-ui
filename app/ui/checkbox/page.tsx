@@ -38,6 +38,17 @@ export default function CheckboxPage() {
         </div>
       </div>
 
+      {/* Invalid */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Invalid</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Checkbox data-invalid="true" />
+          <Checkbox data-invalid="true" defaultChecked />
+          <Checkbox size="sm" data-invalid="true" />
+          <Checkbox size="sm" data-invalid="true" defaultChecked />
+        </div>
+      </div>
+
       {/* All States */}
       <div className="flex flex-col gap-4">
         <SectionTitle>All States</SectionTitle>
@@ -70,6 +81,16 @@ export default function CheckboxPage() {
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled Checked</td>
                 <td className="px-4 py-3"><Checkbox disabled defaultChecked /></td>
                 <td className="px-4 py-3"><Checkbox size="sm" disabled defaultChecked /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Unchecked</td>
+                <td className="px-4 py-3"><Checkbox data-invalid="true" /></td>
+                <td className="px-4 py-3"><Checkbox size="sm" data-invalid="true" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Checked</td>
+                <td className="px-4 py-3"><Checkbox data-invalid="true" defaultChecked /></td>
+                <td className="px-4 py-3"><Checkbox size="sm" data-invalid="true" defaultChecked /></td>
               </tr>
             </tbody>
           </table>
