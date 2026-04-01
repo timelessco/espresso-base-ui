@@ -65,7 +65,6 @@
   --input-valid: oklch(96.49% 0.03 155.99); /* #E4FAEB */ /*surface/green-2*/
   --input-invalid: oklch(94.73% 0.026 17.63); /* #FFE7E7 */ /*surface/red-2*/
   --input-filled: oklch(96.18% 0.023 56.96); /* #FFEFE4 */ /*surface/orange-2*/
-
   --input-valid-outline: oklch(
     82.69% 0.135 154.7
   ); /* #78E09F */ /*outline/green-3*/
@@ -77,10 +76,15 @@
   ); /* #F4B07F */ /*outline/orange-3*/
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-md: 0 0 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.14);
-  --shadow-5xs: 0 0 1px 0 rgba(0, 0, 0, 0.20), 0 0 10px 2px rgba(0, 0, 0, 0.04), 0 24px 30px -8px rgba(0, 0, 0, 0.10);
+  --shadow-5xs:
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 10px 2px rgba(0, 0, 0, 0.04),
+    0 24px 30px -8px rgba(0, 0, 0, 0.1);
   --shadow-4xs: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   --shadow-3xs: 0 0 0 2px rgba(201, 201, 201, 0.9);
   --shadow-xs: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
+  --border-soft: oklch(94.61% 0 0); /* #EDEDED */ /*outline/gray-1*/
+  --border-normal: oklch(82.97% 0 0); /* #C7C7C7 */ /*outline/gray-3*/
+  --border-strong: oklch(68.3% 0 0); /* #999999 */ /*outline/gray-4*/
   /* end custom variables */
 
   --spacing: 0.25rem; /* 4px */
@@ -227,10 +231,15 @@
   --input-filled-outline: oklch(
     38.04% 0.093 50.98
   ); /* #683108 */ /*outline/orange-3*/
+  --shadow-5xs:
+    0 0.5px 1.5px 0.5px rgba(255, 255, 255, 0.04) inset,
+    0 0 14px 2px rgba(0, 0, 0, 0.12), 0 26px 34px -6px rgba(0, 0, 0, 0.42);
 
-  --shadow-5xs: 0 0.5px 1.5px 0.5px rgba(255, 255, 255, 0.04) inset, 0 0 14px 2px rgba(0, 0, 0, 0.12), 0 26px 34px -6px rgba(0, 0, 0, 0.42);
-
+  --border-soft: oklch(25.62% 0 0); /* #232323 */ /*outline/gray-1*/
+  --border-normal: oklch(37.91% 0 0); /* #424242 */ /*outline/gray-3*/
+  --border-strong: oklch(45.68% 0 0); /* #575757 */ /*outline/gray-4*/
   /* end custom variables */
+
   --border: oklch(32.5% 0 0); /* #343434 */ /*outline/gray-2*/
   --input: oklch(25.62% 0 0); /* #232323 */ /*surface/gray-1*/
 
@@ -287,6 +296,9 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-border-normal: var(--border-normal);
+  --color-border-strong: var(--border-strong);
   --color-destructive: var(--destructive);
   --color-destructive-hover: var(--destructive-hover);
   --color-destructive-active: var(--destructive-active);

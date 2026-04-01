@@ -12,9 +12,9 @@ const inputVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-accent bg-primary-foreground hover:border-popover-foreground hover:shadow-4xs focus:border-primary-foreground focus:shadow-3xs active:border-card-foreground active:shadow-md active:ring-0 data-disabled:border-accent data-[valid=true]:border-input-valid-outline data-[invalid=true]:border-input-invalid-outline data-[filled=true]:border-input-filled-outline",
+          "border-border bg-primary-foreground hover:border-border-normal hover:shadow-4xs focus:border-primary-foreground focus:shadow-3xs active:border-border-strong active:shadow-md active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline data-disabled:border-border [&:-webkit-autofill]:border-input-filled-outline",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted focus:border-primary-foreground focus:bg-primary-foreground focus:shadow-3xs active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 data-disabled:bg-input data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-input-filled",
+          "border-transparent bg-secondary hover:bg-muted focus:border-primary-foreground focus:bg-primary-foreground focus:shadow-3xs active:border-border-strong active:bg-primary-foreground active:shadow-md active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid [&:-webkit-autofill]:bg-input-filled",
       },
       size: {
         sm: "h-7 rounded-md px-2 py-1.5 text-base",
@@ -35,15 +35,24 @@ function Input({
   type,
   variant,
   size,
+  "data-invalid": dataInvalid,
+  "data-disabled": dataDisabled,
   ...props
 }: Omit<React.ComponentProps<"input">, "size"> &
-  VariantProps<typeof inputVariants>) {
+  VariantProps<typeof inputVariants> & {
+    "data-invalid"?: string
+    "data-disabled"?: string
+  }) {
   return (
     <InputPrimitive
       type={type}
       data-slot="input"
       data-variant={variant ?? "outline"}
       data-size={size ?? "md"}
+      data-invalid={dataInvalid}
+      data-disabled={dataDisabled}
+      aria-invalid={dataInvalid === "true" || undefined}
+      aria-disabled={dataDisabled === "true" || undefined}
       className={cn(inputVariants({ variant, size, className }))}
       {...props}
     />
