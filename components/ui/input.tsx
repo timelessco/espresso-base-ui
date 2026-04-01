@@ -35,6 +35,8 @@ function Input({
   type,
   variant,
   size,
+  "data-invalid": dataInvalid,
+  "data-disabled": dataDisabled,
   ...props
 }: Omit<React.ComponentProps<"input">, "size"> &
   VariantProps<typeof inputVariants>) {
@@ -44,6 +46,10 @@ function Input({
       data-slot="input"
       data-variant={variant ?? "outline"}
       data-size={size ?? "md"}
+      data-invalid={dataInvalid}
+      data-disabled={dataDisabled}
+      aria-invalid={dataInvalid === "true" || undefined}
+      aria-disabled={dataDisabled === "true" || undefined}
       className={cn(inputVariants({ variant, size, className }))}
       {...props}
     />
