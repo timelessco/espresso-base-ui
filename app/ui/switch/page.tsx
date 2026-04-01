@@ -38,6 +38,17 @@ export default function SwitchPage() {
         </div>
       </div>
 
+      {/* Invalid */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Invalid</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Switch data-invalid="true" />
+          <Switch data-invalid="true" defaultChecked />
+          <Switch size="sm" data-invalid="true" />
+          <Switch size="sm" data-invalid="true" defaultChecked />
+        </div>
+      </div>
+
       {/* All States */}
       <div className="flex flex-col gap-4">
         <SectionTitle>All States</SectionTitle>
@@ -70,6 +81,16 @@ export default function SwitchPage() {
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled On</td>
                 <td className="px-4 py-3"><Switch disabled defaultChecked /></td>
                 <td className="px-4 py-3"><Switch size="sm" disabled defaultChecked /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Off</td>
+                <td className="px-4 py-3"><Switch data-invalid="true" /></td>
+                <td className="px-4 py-3"><Switch size="sm" data-invalid="true" /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid On</td>
+                <td className="px-4 py-3"><Switch data-invalid="true" defaultChecked /></td>
+                <td className="px-4 py-3"><Switch size="sm" data-invalid="true" defaultChecked /></td>
               </tr>
             </tbody>
           </table>
