@@ -23,9 +23,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 export default function FieldPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
-      {/* Checkbox with Field */}
+      {/* Simple Label (no interactive styles) */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>Checkbox with Field</SectionTitle>
+        <SectionTitle>Simple Label</SectionTitle>
         <FieldGroup>
           <Field orientation="vertical">
             <FieldLabel>
@@ -52,9 +52,102 @@ export default function FieldPage() {
         </FieldGroup>
       </div>
 
-      {/* Radio with Field */}
+      {/* Choice Card — Checkbox */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>Radio with Field</SectionTitle>
+        <SectionTitle>Choice Card — Checkbox</SectionTitle>
+        <FieldGroup>
+          <FieldLabel>
+            <Field orientation="horizontal">
+              <Checkbox size="sm" />
+              <FieldContent>
+                <FieldTitle>Accept terms</FieldTitle>
+                <FieldDescription>
+                  You agree to our terms of service and privacy policy.
+                </FieldDescription>
+              </FieldContent>
+            </Field>
+          </FieldLabel>
+          <FieldLabel>
+            <Field orientation="horizontal">
+              <Checkbox size="sm" defaultChecked />
+              <FieldContent>
+                <FieldTitle>Marketing emails</FieldTitle>
+                <FieldDescription>
+                  Receive emails about new products and features.
+                </FieldDescription>
+              </FieldContent>
+            </Field>
+          </FieldLabel>
+        </FieldGroup>
+      </div>
+
+      {/* Choice Card — Radio */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Choice Card — Radio</SectionTitle>
+        <FieldGroup>
+          <FieldSet>
+            <FieldLegend variant="label">Compute Environment</FieldLegend>
+            <FieldDescription>
+              Select the compute environment for your cluster.
+            </FieldDescription>
+            <RadioGroup defaultValue="kubernetes">
+              <FieldLabel htmlFor="kubernetes">
+                <Field orientation="horizontal">
+                  <RadioGroupItem value="kubernetes" id="kubernetes" />
+                  <FieldContent>
+                    <FieldTitle>Kubernetes</FieldTitle>
+                    <FieldDescription>
+                      Run GPU workloads on a K8s cluster.
+                    </FieldDescription>
+                  </FieldContent>
+                </Field>
+              </FieldLabel>
+              <FieldLabel htmlFor="vm">
+                <Field orientation="horizontal">
+                  <RadioGroupItem value="vm" id="vm" />
+                  <FieldContent>
+                    <FieldTitle>Virtual Machine</FieldTitle>
+                    <FieldDescription>
+                      Access a cluster to run GPU workloads.
+                    </FieldDescription>
+                  </FieldContent>
+                </Field>
+              </FieldLabel>
+            </RadioGroup>
+          </FieldSet>
+        </FieldGroup>
+      </div>
+
+      {/* Choice Card — Switch */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Choice Card — Switch</SectionTitle>
+        <FieldGroup>
+          <FieldLabel>
+            <Field orientation="horizontal">
+              <Switch size="sm" />
+              <FieldContent>
+                <FieldTitle>Dark mode</FieldTitle>
+                <FieldDescription>
+                  Use dark theme across the app.
+                </FieldDescription>
+              </FieldContent>
+            </Field>
+          </FieldLabel>
+          <FieldLabel>
+            <Field orientation="horizontal">
+              <Switch size="sm" defaultChecked />
+              <FieldContent>
+                <FieldTitle>Compact mode</FieldTitle>
+                <FieldDescription>Reduce spacing in the UI.</FieldDescription>
+              </FieldContent>
+            </Field>
+          </FieldLabel>
+        </FieldGroup>
+      </div>
+
+      {/* Simple Label — Radio */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Simple Label — Radio</SectionTitle>
         <RadioGroup defaultValue="notifications">
           <FieldGroup>
             <Field orientation="vertical">
@@ -79,24 +172,13 @@ export default function FieldPage() {
                 </FieldContent>
               </FieldLabel>
             </Field>
-            <Field orientation="vertical">
-              <FieldLabel>
-                <RadioGroupItem size="sm" value="sms" />
-                <FieldContent>
-                  <FieldTitle>SMS alerts</FieldTitle>
-                  <FieldDescription>
-                    Get text messages for urgent updates.
-                  </FieldDescription>
-                </FieldContent>
-              </FieldLabel>
-            </Field>
           </FieldGroup>
         </RadioGroup>
       </div>
 
-      {/* Switch with Field */}
+      {/* Simple Label — Switch */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>Switch with Field</SectionTitle>
+        <SectionTitle>Simple Label — Switch</SectionTitle>
         <FieldGroup>
           <Field orientation="horizontal">
             <FieldLabel>
@@ -121,34 +203,7 @@ export default function FieldPage() {
         </FieldGroup>
       </div>
 
-      {/* Orientation — Horizontal */}
-      <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>Orientation — Horizontal</SectionTitle>
-        <FieldGroup>
-          <Field orientation="horizontal">
-            <FieldLabel>
-              <Checkbox size="sm" defaultChecked />
-              <FieldContent>
-                <FieldTitle>Push notifications</FieldTitle>
-                <FieldDescription>
-                  Receive push notifications on your device.
-                </FieldDescription>
-              </FieldContent>
-            </FieldLabel>
-          </Field>
-          <Field orientation="horizontal">
-            <FieldLabel>
-              <Checkbox size="sm" />
-              <FieldContent>
-                <FieldTitle>Email notifications</FieldTitle>
-                <FieldDescription>Get updates via email.</FieldDescription>
-              </FieldContent>
-            </FieldLabel>
-          </Field>
-        </FieldGroup>
-      </div>
-
-      {/* State — Invalid (Checkbox) */}
+      {/* Invalid — Checkbox */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Invalid — Checkbox</SectionTitle>
         <Field orientation="vertical" data-invalid="true">
@@ -165,7 +220,7 @@ export default function FieldPage() {
         </Field>
       </div>
 
-      {/* State — Invalid (Radio) */}
+      {/* Invalid — Radio */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Invalid — Radio</SectionTitle>
         <RadioGroup>
@@ -197,7 +252,7 @@ export default function FieldPage() {
         </RadioGroup>
       </div>
 
-      {/* State — Invalid (Switch) */}
+      {/* Invalid — Switch */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Invalid — Switch</SectionTitle>
         <Field orientation="horizontal" data-invalid="true">
@@ -214,9 +269,37 @@ export default function FieldPage() {
         </Field>
       </div>
 
-      {/* State — Disabled */}
+      {/* Invalid — Choice Card */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>State — Disabled</SectionTitle>
+        <SectionTitle>Invalid — Choice Card</SectionTitle>
+        <RadioGroup>
+          <FieldLabel>
+            <Field orientation="horizontal" data-invalid="true">
+              <FieldContent>
+                <FieldTitle>Option one</FieldTitle>
+                <FieldDescription>
+                  Select this option to continue.
+                </FieldDescription>
+                <FieldError>Please select an option.</FieldError>
+              </FieldContent>
+              <RadioGroupItem size="sm" value="option-1" />
+            </Field>
+          </FieldLabel>
+          <FieldLabel>
+            <Field orientation="horizontal" data-invalid="true">
+              <FieldContent>
+                <FieldTitle>Option two</FieldTitle>
+                <FieldDescription>Or select this alternative.</FieldDescription>
+              </FieldContent>
+              <RadioGroupItem size="sm" value="option-2" />
+            </Field>
+          </FieldLabel>
+        </RadioGroup>
+      </div>
+
+      {/* Disabled */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Disabled</SectionTitle>
         <Field orientation="vertical" data-disabled="true">
           <FieldLabel>
             <Checkbox size="sm" disabled />
