@@ -76,6 +76,7 @@
   ); /* #F4B07F */ /*outline/orange-3*/
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-md: 0 0 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+  --shadow-6xs: 0 0 1.5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
   --shadow-5xs:
     0 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 10px 2px rgba(0, 0, 0, 0.04),
     0 24px 30px -8px rgba(0, 0, 0, 0.1);
@@ -345,6 +346,7 @@
   --radius-5xl: calc(var(--radius) * 2.4);
 
   /* shadows */
+  --shadow-6xs: var(--shadow-6xs);
   --shadow-5xs: var(--shadow-5xs);
   --shadow-4xs: var(--shadow-4xs);
   --shadow-3xs: var(--shadow-3xs);

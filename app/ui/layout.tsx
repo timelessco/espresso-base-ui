@@ -19,6 +19,7 @@ const sidebarItems = [
   { label: "Select", href: "/ui/select" },
   { label: "Switch", href: "/ui/switch" },
   { label: "Textarea", href: "/ui/textarea" },
+  { label: "Tooltip", href: "/ui/tooltip" },
 ]
 
 function Sidebar() {
