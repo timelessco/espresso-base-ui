@@ -275,6 +275,7 @@ export default function FieldPage() {
         <RadioGroup>
           <FieldLabel>
             <Field orientation="horizontal" data-invalid="true">
+              <RadioGroupItem size="sm" value="option-1" />
               <FieldContent>
                 <FieldTitle>Option one</FieldTitle>
                 <FieldDescription>
@@ -282,16 +283,15 @@ export default function FieldPage() {
                 </FieldDescription>
                 <FieldError>Please select an option.</FieldError>
               </FieldContent>
-              <RadioGroupItem size="sm" value="option-1" />
             </Field>
           </FieldLabel>
           <FieldLabel>
             <Field orientation="horizontal" data-invalid="true">
+              <RadioGroupItem size="sm" value="option-2" />
               <FieldContent>
                 <FieldTitle>Option two</FieldTitle>
                 <FieldDescription>Or select this alternative.</FieldDescription>
               </FieldContent>
-              <RadioGroupItem size="sm" value="option-2" />
             </Field>
           </FieldLabel>
         </RadioGroup>
