@@ -23,8 +23,10 @@ const radioGroupItemVariants = cva(
     "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:focus-within:border-primary not-data-disabled:data-unchecked:focus-within:ring-2 not-data-disabled:data-unchecked:focus-within:ring-ring not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none not-data-disabled:data-unchecked:active:ring-0",
     // checked states
     "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:focus-within:ring-2 not-data-disabled:data-checked:focus-within:ring-ring not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:active:bg-primary/74",
-    // invalid state
+    // invalid state (self)
     "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20! data-[invalid=true]:data-checked:border-destructive!",
+    // invalid state (from parent Field)
+    "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20! group-data-[invalid=true]/field:data-checked:border-destructive!",
   ],
   {
     variants: {

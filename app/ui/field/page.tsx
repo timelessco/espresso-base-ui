@@ -148,9 +148,9 @@ export default function FieldPage() {
         </FieldGroup>
       </div>
 
-      {/* State — Invalid */}
+      {/* State — Invalid (Checkbox) */}
       <div className="flex max-w-sm flex-col gap-4">
-        <SectionTitle>State — Invalid</SectionTitle>
+        <SectionTitle>Invalid — Checkbox</SectionTitle>
         <Field orientation="vertical" data-invalid="true">
           <FieldLabel>
             <Checkbox size="sm" />
@@ -160,6 +160,55 @@ export default function FieldPage() {
                 You must accept the terms to continue.
               </FieldDescription>
               <FieldError>This field is required.</FieldError>
+            </FieldContent>
+          </FieldLabel>
+        </Field>
+      </div>
+
+      {/* State — Invalid (Radio) */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Invalid — Radio</SectionTitle>
+        <RadioGroup>
+          <FieldGroup>
+            <Field orientation="vertical" data-invalid="true">
+              <FieldLabel>
+                <RadioGroupItem size="sm" value="option-1" />
+                <FieldContent>
+                  <FieldTitle>Option one</FieldTitle>
+                  <FieldDescription>
+                    Select this option to continue.
+                  </FieldDescription>
+                  <FieldError>Please select an option.</FieldError>
+                </FieldContent>
+              </FieldLabel>
+            </Field>
+            <Field orientation="vertical" data-invalid="true">
+              <FieldLabel>
+                <RadioGroupItem size="sm" value="option-2" />
+                <FieldContent>
+                  <FieldTitle>Option two</FieldTitle>
+                  <FieldDescription>
+                    Or select this alternative.
+                  </FieldDescription>
+                </FieldContent>
+              </FieldLabel>
+            </Field>
+          </FieldGroup>
+        </RadioGroup>
+      </div>
+
+      {/* State — Invalid (Switch) */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Invalid — Switch</SectionTitle>
+        <Field orientation="horizontal" data-invalid="true">
+          <FieldLabel>
+            <Switch size="sm" />
+            <FieldContent>
+              <FieldTitle>Enable notifications</FieldTitle>
+              <FieldDescription>
+                You must enable notifications to proceed.
+              </FieldDescription>
+              <FieldError>This setting is required.</FieldError>
             </FieldContent>
           </FieldLabel>
         </Field>
