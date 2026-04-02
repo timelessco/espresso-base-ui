@@ -1,6 +1,7 @@
 "use client"
 
 import { Input } from "@/components/ui/input"
+import { Field, FieldError } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -59,6 +60,19 @@ export default function InputPage() {
         <Input variant="subtle" data-valid="true" defaultValue="Valid" />
         <Input variant="subtle" data-invalid="true" defaultValue="Invalid" />
         <Input variant="subtle" data-filled="true" defaultValue="Filled" />
+      </div>
+
+      {/* Invalid via Field */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Invalid via Field</SectionTitle>
+        <Field data-invalid="true">
+          <Input variant="outline" defaultValue="Outline invalid" />
+          <FieldError>This field is required.</FieldError>
+        </Field>
+        <Field data-invalid="true">
+          <Input variant="subtle" defaultValue="Subtle invalid" />
+          <FieldError>This field is required.</FieldError>
+        </Field>
       </div>
 
       {/* All States Table */}

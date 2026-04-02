@@ -66,11 +66,11 @@ const selectTriggerVariants = cva(
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border border-border bg-primary-foreground hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground group-data-[invalid=true]/field:border-input-invalid-outline!",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border-transparent bg-secondary hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-input data-disabled:text-popover-foreground group-data-[invalid=true]/field:bg-input-invalid!",
         ghost:
-          "border-transparent bg-transparent hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-transparent data-disabled:text-popover-foreground",
+          "border-transparent bg-transparent hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid data-disabled:bg-transparent data-disabled:text-popover-foreground group-data-[invalid=true]/field:bg-input-invalid!",
       },
       size: {
         sm: "h-7 rounded-md px-2 text-base",
