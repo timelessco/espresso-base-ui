@@ -12,8 +12,10 @@ const switchVariants = cva(
     "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:shadow-3xs not-data-disabled:data-unchecked:active:bg-card-foreground",
     // checked states
     "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:shadow-3xs not-data-disabled:data-checked:active:bg-primary/74",
-    // invalid state
+    // invalid state (self)
     "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20!",
+    // invalid state (from parent Field)
+    "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20!",
     // disabled
     "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-muted",
   ],
