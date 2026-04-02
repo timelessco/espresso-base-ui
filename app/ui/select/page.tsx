@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Field, FieldError } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -289,6 +290,34 @@ export default function SelectPage() {
             <SelectItem value="option-3">Option 3</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Invalid via Field */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Invalid via Field</SectionTitle>
+        <div className="flex items-start gap-4">
+          <Field data-invalid="true">
+            <Select defaultValue="option-1">
+              <SelectTrigger variant="outline"><SelectValue /></SelectTrigger>
+              <SelectContent>{options}</SelectContent>
+            </Select>
+            <FieldError>Please select a valid option.</FieldError>
+          </Field>
+          <Field data-invalid="true">
+            <Select defaultValue="option-1">
+              <SelectTrigger variant="subtle"><SelectValue /></SelectTrigger>
+              <SelectContent>{options}</SelectContent>
+            </Select>
+            <FieldError>Please select a valid option.</FieldError>
+          </Field>
+          <Field data-invalid="true">
+            <Select defaultValue="option-1">
+              <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
+              <SelectContent>{options}</SelectContent>
+            </Select>
+            <FieldError>Please select a valid option.</FieldError>
+          </Field>
+        </div>
       </div>
 
       {/* Data States */}
