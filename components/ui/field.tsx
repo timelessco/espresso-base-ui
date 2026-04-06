@@ -107,7 +107,7 @@ function FieldLabel({
       data-slot="field-label"
       className={cn(
         // base styles (always applied)
-        "group/field-label peer/field-label flex w-fit gap-2 leading-snug transition-colors outline-none group-data-[disabled=true]/field:opacity-50",
+        "group/field-label peer/field-label flex w-fit items-start gap-2 leading-snug transition-colors outline-none group-data-[disabled=true]/field:opacity-50 not-has-[>[data-slot=field]]:[&_[data-slot=checkbox]]:mt-0.5 not-has-[>[data-slot=field]]:[&_[data-slot=radio-group-item]]:mt-0.5",
         // choice card layout (when wrapping a Field)
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:px-1.5 has-[>[data-slot=field]]:py-1.75 *:data-[slot=field]:p-1.5",
         // interactive styles only when wrapping a Field (choice card)

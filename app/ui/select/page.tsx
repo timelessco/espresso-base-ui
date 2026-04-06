@@ -54,20 +54,20 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Outline — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select>
-            <SelectTrigger variant="outline" size="sm">
+          <Select variant="outline" size="sm">
+            <SelectTrigger>
               <SelectValue placeholder="Small (sm)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="outline" size="default">
+          <Select variant="outline" size="default">
+            <SelectTrigger>
               <SelectValue placeholder="Default" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="outline" size="lg">
+          <Select variant="outline" size="lg">
+            <SelectTrigger>
               <SelectValue placeholder="Large (lg)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
@@ -79,20 +79,20 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Subtle — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select>
-            <SelectTrigger variant="subtle" size="sm">
+          <Select variant="subtle" size="sm">
+            <SelectTrigger>
               <SelectValue placeholder="Small (sm)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="subtle" size="default">
+          <Select variant="subtle" size="default">
+            <SelectTrigger>
               <SelectValue placeholder="Default" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="subtle" size="lg">
+          <Select variant="subtle" size="lg">
+            <SelectTrigger>
               <SelectValue placeholder="Large (lg)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
@@ -104,20 +104,20 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Ghost — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select>
-            <SelectTrigger variant="ghost" size="sm">
+          <Select variant="ghost" size="sm">
+            <SelectTrigger>
               <SelectValue placeholder="Small (sm)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="ghost" size="default">
+          <Select variant="ghost" size="default">
+            <SelectTrigger>
               <SelectValue placeholder="Default" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>
           </Select>
-          <Select>
-            <SelectTrigger variant="ghost" size="lg">
+          <Select variant="ghost" size="lg">
+            <SelectTrigger>
               <SelectValue placeholder="Large (lg)" />
             </SelectTrigger>
             <SelectContent>{options}</SelectContent>

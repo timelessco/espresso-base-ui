@@ -20,9 +20,9 @@ const radioGroupItemVariants = cva(
   [
     "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input",
     // unchecked states
-    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:focus-within:border-primary not-data-disabled:data-unchecked:focus-within:ring-2 not-data-disabled:data-unchecked:focus-within:ring-ring not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none not-data-disabled:data-unchecked:active:ring-0",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus-within:border-primary not-data-disabled:data-unchecked:focus-within:shadow-3xs! not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none!",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:focus-within:ring-2 not-data-disabled:data-checked:focus-within:ring-ring not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus-within:shadow-3xs! not-data-disabled:data-checked:active:bg-primary/74",
     // invalid state (self)
     "data-[invalid=true]:border-destructive! data-[invalid=true]:ring-2! data-[invalid=true]:ring-destructive/20! data-[invalid=true]:data-checked:border-destructive!",
     // invalid state (from parent Field)
