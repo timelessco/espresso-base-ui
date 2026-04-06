@@ -36,7 +36,34 @@ function SelectChevronIcon({ className }: { className?: string }) {
   )
 }
 
-const Select = SelectPrimitive.Root
+type SelectContextValue = {
+  size: "sm" | "default" | "lg"
+  variant: "outline" | "subtle" | "ghost"
+}
+
+const SelectContext = React.createContext<SelectContextValue>({
+  size: "default",
+  variant: "outline",
+})
+
+function Select({
+  size = "default",
+  variant = "outline",
+  ...props
+}: SelectPrimitive.Root.Props<string> & {
+  size?: "sm" | "default" | "lg"
+  variant?: "outline" | "subtle" | "ghost"
+}) {
+  const contextValue = React.useMemo(
+    () => ({ size, variant }),
+    [size, variant]
+  )
+  return (
+    <SelectContext.Provider value={contextValue}>
+      <SelectPrimitive.Root {...props} />
+    </SelectContext.Provider>
+  )
+}
 
 function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
@@ -87,8 +114,8 @@ const selectTriggerVariants = cva(
 
 function SelectTrigger({
   className,
-  variant,
-  size,
+  variant: variantProp,
+  size: sizeProp,
   prefixIcon,
   suffixIcon,
   children,
@@ -102,13 +129,16 @@ function SelectTrigger({
     "data-valid"?: string
     "data-filled"?: string
   }) {
+  const { size: contextSize, variant: contextVariant } = React.useContext(SelectContext)
+  const variant = variantProp ?? contextVariant
+  const size = sizeProp ?? contextSize
   const dataInvalid = props["data-invalid"]
   const dataDisabled = props["data-disabled"]
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
-      data-variant={variant ?? "outline"}
-      data-size={size ?? "default"}
+      data-variant={variant}
+      data-size={size}
       aria-invalid={dataInvalid === "true" || undefined}
       aria-disabled={dataDisabled === "true" || undefined}
       className={cn(selectTriggerVariants({ variant, size, className }))}
@@ -134,7 +164,7 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = true,
+  alignItemWithTrigger = false,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
@@ -185,16 +215,24 @@ function SelectLabel({
   )
 }
 
+const selectItemSizeMap = {
+  sm: "h-7",
+  default: "h-7.5",
+  lg: "h-8",
+}
+
 function SelectItem({
   className,
   children,
   ...props
 }: SelectPrimitive.Item.Props) {
+  const { size } = React.useContext(SelectContext)
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-1.5 rounded-md py-1.5 pr-8 pl-2 text-sm text-secondary-foreground outline-hidden select-none focus:bg-accent focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative flex w-full cursor-default items-center gap-1.5 rounded-md pr-8 pl-2 text-sm text-secondary-foreground outline-hidden select-none focus:bg-accent focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        selectItemSizeMap[size],
         className
       )}
       {...props}
@@ -275,3 +313,29 @@ export {
   selectTriggerVariants,
   SelectValue,
 }
+
+// ## Select Changelog
+//
+// ### React Context
+// - `SelectContext` passes `variant` and `size` from `Select` root to children
+// - `SelectTrigger` reads `variant` and `size` from context, can be overridden per-trigger via props
+// - `SelectItem` reads `size` from context to set item height (sm: h-7, default: h-7.5, lg: h-8)
+// - Usage: `<Select variant="outline" size="sm">` — no need to pass variant/size to SelectTrigger
+//
+// ### Added
+// - `Select` wrapper component with `variant` and `size` props (replaces direct `SelectPrimitive.Root`)
+// - `SelectSizeContext` → `SelectContext` (holds both variant and size)
+// - CVA-based `selectTriggerVariants` with variant (`outline`, `subtle`, `ghost`) and size (`sm`, `default`, `lg`)
+// - `prefixIcon` and `suffixIcon` props on `SelectTrigger`
+// - Custom `SelectChevronIcon` and `SelectCheckIcon` SVGs (replaced lucide icons)
+// - Data states: `data-[valid]`, `data-[invalid]`, `data-[filled]` on all variants
+// - Aria states: `aria-invalid` and `aria-disabled` auto-set from data attributes
+// - `data-disabled` styles with `!important` text color override
+//
+// ### Changed
+// - `alignItemWithTrigger` default changed from `true` to `false`
+// - `SelectItem` height now varies by size via context
+//
+// ### Removed
+// - Lucide `CheckIcon` (replaced with custom SVG)
+// - Dark mode overrides
