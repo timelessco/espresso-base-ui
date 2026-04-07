@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Header } from "@/components/header"
 
 const sidebarItems = [
+  { label: "Alert", href: "/ui/alert" },
   { label: "Avatar", href: "/ui/avatar" },
   { label: "Badge", href: "/ui/badge" },
   { label: "Breadcrumb", href: "/ui/breadcrumb" },
