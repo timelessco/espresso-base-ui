@@ -11,11 +11,11 @@ const textareaVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:border-input-valid-outline data-[invalid=true]:border-input-invalid-outline data-[filled=true]:border-border",
+          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:border-success-outline data-[invalid=true]:border-error-outline data-[filled=true]:border-border",
         subtle:
-          "border-transparent bg-secondary not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger not-data-disabled:active:bg-primary-foreground data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-secondary",
+          "border-transparent bg-secondary not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger not-data-disabled:active:bg-primary-foreground data-disabled:bg-input data-disabled:text-popover-foreground data-[valid=true]:bg-success data-[invalid=true]:bg-error data-[filled=true]:bg-secondary",
         ghost:
-          "border-transparent bg-transparent not-data-disabled:hover:bg-muted not-data-disabled:focus:border-transparent not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-transparent! not-data-disabled:active:bg-primary-foreground data-disabled:bg-transparent data-disabled:text-popover-foreground data-[valid=true]:bg-input-valid data-[invalid=true]:bg-input-invalid data-[filled=true]:bg-secondary",
+          "border-transparent bg-transparent not-data-disabled:hover:bg-muted not-data-disabled:focus:border-transparent not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-transparent! not-data-disabled:active:bg-primary-foreground data-disabled:bg-transparent data-disabled:text-popover-foreground data-[valid=true]:bg-success data-[invalid=true]:bg-error data-[filled=true]:bg-secondary",
       },
       size: {
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",
