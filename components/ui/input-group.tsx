@@ -30,9 +30,9 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-accent bg-primary-foreground focus-within:border-primary-foreground focus-within:shadow-3xs! hover:border-popover-foreground hover:shadow-4xs active:border-card-foreground active:shadow-md active:ring-0 has-disabled:border-accent data-[filled=true]:border-input-filled-outline data-[invalid=true]:border-input-invalid-outline data-[valid=true]:border-input-valid-outline",
+          "border-accent bg-primary-foreground focus-within:border-primary-foreground focus-within:shadow-3xs! hover:border-popover-foreground hover:shadow-4xs active:border-card-foreground active:shadow-md active:ring-0 has-disabled:border-accent data-[filled=true]:border-filled-outline data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline",
         subtle:
-          "border-transparent bg-secondary focus-within:border-primary-foreground focus-within:bg-primary-foreground! focus-within:shadow-3xs! hover:bg-muted active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 has-disabled:bg-input data-[filled=true]:bg-input-filled data-[invalid=true]:bg-input-invalid data-[valid=true]:bg-input-valid",
+          "border-transparent bg-secondary focus-within:border-primary-foreground focus-within:bg-primary-foreground! focus-within:shadow-3xs! hover:bg-muted active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 has-disabled:bg-input data-[filled=true]:bg-filled data-[invalid=true]:bg-error data-[valid=true]:bg-success",
       },
       size: {
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
