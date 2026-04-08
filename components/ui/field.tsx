@@ -30,7 +30,7 @@ function FieldLegend({
       data-slot="field-legend"
       data-variant={variant}
       className={cn(
-        "mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base",
+        "mb-1.5 leading-base font-medium tracking-normal data-[variant=label]:text-sm data-[variant=legend]:text-base",
         className
       )}
       {...props}
@@ -90,7 +90,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-content"
       className={cn(
-        "group/field-content flex flex-1 flex-col gap-0.5 leading-snug",
+        "group/field-content flex flex-1 flex-col gap-0.5 leading-base tracking-normal",
         className
       )}
       {...props}
@@ -107,7 +107,7 @@ function FieldLabel({
       data-slot="field-label"
       className={cn(
         // base styles (always applied)
-        "group/field-label peer/field-label flex w-fit items-start gap-2 leading-snug transition-colors outline-none group-data-[disabled=true]/field:opacity-50 not-has-[>[data-slot=field]]:[&_[data-slot=checkbox]]:mt-0.5 not-has-[>[data-slot=field]]:[&_[data-slot=radio-group-item]]:mt-0.5",
+        "group/field-label peer/field-label flex w-fit items-start gap-2 leading-base tracking-normal transition-colors outline-none group-data-[disabled=true]/field:opacity-50 not-has-[>[data-slot=field]]:[&_[data-slot=checkbox]]:mt-0.5 not-has-[>[data-slot=field]]:[&_[data-slot=radio-group-item]]:mt-0.5",
         // choice card layout (when wrapping a Field)
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:px-1.5 has-[>[data-slot=field]]:py-1.75 *:data-[slot=field]:p-1.5",
         // interactive styles only when wrapping a Field (choice card)
@@ -142,7 +142,7 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="field-label"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50",
+        "flex w-fit items-center gap-2 text-sm leading-base font-medium tracking-normal group-data-[disabled=true]/field:opacity-50",
         className
       )}
       {...props}
@@ -155,7 +155,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="field-description"
       className={cn(
-        "text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
+        "text-left text-sm leading-base font-normal tracking-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
         "last:mt-0 nth-last-2:-mt-1",
         "[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
         className
@@ -238,7 +238,10 @@ function FieldError({
     <div
       role="alert"
       data-slot="field-error"
-      className={cn("text-sm font-normal text-destructive", className)}
+      className={cn(
+        "text-sm leading-base font-normal tracking-normal text-destructive",
+        className
+      )}
       {...props}
     >
       {content}
