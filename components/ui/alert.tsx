@@ -37,22 +37,26 @@ const alertVariants = cva(
       {
         type: "default",
         variant: "success",
-        className: "border-border-soft bg-primary-foreground",
+        className:
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
       },
       {
         type: "default",
         variant: "destructive",
-        className: "border-border-soft bg-primary-foreground",
+        className:
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
       },
       {
         type: "default",
         variant: "warning",
-        className: "border-border-soft bg-primary-foreground",
+        className:
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
       },
       {
         type: "default",
         variant: "info",
-        className: "border-border-soft bg-primary-foreground",
+        className:
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
       },
       // banner type — variant bg colors
       {
@@ -124,25 +128,7 @@ const alertDescriptionVariants = cva(
 )
 
 const alertButtonVariants = cva(
-  "mt-2 flex items-center gap-2 *:[button]:border-0 group-data-[type=default]/alert:[&>button]:w-full",
-  {
-    variants: {
-      variant: {
-        default:
-          "group-data-[type=default]/alert:[&>button]:bg-secondary group-data-[type=default]/alert:[&>button]:text-secondary-foreground",
-        success:
-          "group-data-[type=default]/alert:[&>button]:bg-success group-data-[type=default]/alert:[&>button]:text-green-700 dark:group-data-[type=default]/alert:[&>button]:text-green-300",
-        destructive:
-          "group-data-[type=default]/alert:[&>button]:bg-error group-data-[type=default]/alert:[&>button]:text-red-500 dark:group-data-[type=default]/alert:[&>button]:text-red-300",
-        warning:
-          "group-data-[type=default]/alert:[&>button]:bg-warning group-data-[type=default]/alert:[&>button]:text-amber-700 dark:group-data-[type=default]/alert:[&>button]:text-amber-300",
-        info: "group-data-[type=default]/alert:[&>button]:bg-info group-data-[type=default]/alert:[&>button]:text-blue-700 dark:group-data-[type=default]/alert:[&>button]:text-blue-300",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
+  "mt-2 flex items-center gap-2 group-data-[type=default]/alert:[&>button]:w-full"
 )
 
 type AlertContextValue = {
@@ -214,12 +200,11 @@ function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function AlertButton({ className, ...props }: React.ComponentProps<"div">) {
-  const { variant } = React.useContext(AlertContext)
+function AlertHandlers({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-button"
-      className={cn(alertButtonVariants({ variant }), className)}
+      className={cn(alertButtonVariants(), className)}
       {...props}
     />
   )
@@ -230,6 +215,6 @@ export {
   AlertTitle,
   AlertDescription,
   AlertAction,
-  AlertButton,
+  AlertHandlers,
   alertVariants,
 }

@@ -63,10 +63,16 @@
   --destructive-disabled: oklch(0.9351 0.0268 17.5); /* #FFE7E7 */
   --destructive-disabled-foreground: oklch(0.7468 0.0856 18.72); /* #F79596 */
   --success: oklch(96.49% 0.03 155.99); /* #E4FAEB */ /*surface/green-2*/
+  --success-foreground: oklch(
+    50.94% 0.116 156.33
+  ); /* #137949 */ /*ink/green-4*/
   --error: oklch(94.73% 0.026 17.63); /* #FFE7E7 */ /*surface/red-2*/
+  --error-foreground: oklch(50.95% 0.176 26.08); /* #B52A2A */ /*ink/red-4*/
   --filled: oklch(96.18% 0.023 56.96); /* #FFEFE4 */ /*surface/orange-2*/
   --warning: oklch(97.32% 0.047 96.81); /* #FFF7D3 */ /*surface/amber-2*/
+  --warning-foreground: oklch(55.38% 0.145 49.26); /* #B35309 */ /*ink/amber-4*/
   --info: oklch(96% 0.021 241.35); /* #E6F4FF */ /*surface/blue-2*/
+  --info-foreground: oklch(54.42% 0.165 252.54); /* #0070CC */ /*ink/blue-4*/
   --success-outline: oklch(
     82.69% 0.135 154.7
   ); /* #78E09F */ /*outline/green-3*/
@@ -230,10 +236,16 @@
   --destructive-disabled: oklch(25.37% 0.065 18.58); /* #3C1316 */
   --destructive-disabled-foreground: oklch(34.06% 0.112 25.44); /* #661717 */
   --success: oklch(27.01% 0.053 157.34); /* #0b2e1c */ /*surface/green-2*/
+  --success-foreground: oklch(
+    73.25% 0.122 160.22
+  ); /* #58C08E */ /*ink/green-4*/
   --error: oklch(25.37% 0.065 18.58); /* #3C1316 */ /*surface/red-2*/
+  --error-foreground: oklch(64.13% 0.194 22.78); /* #EB4D52 */ /*ink/red-4*/
   --filled: oklch(25.78% 0.051 54.3); /* #361C09 */ /*surface/orange-2*/
   --warning: oklch(26.34% 0.053 60.93); /* #371E06 */ /*surface/amber-2*/
+  --warning-foreground: oklch(76.14% 0.166 62.77); /* #FA961F */ /*ink/amber-4*/
   --info: oklch(24.14% 0.05 255.39); /* #0E2037 */ /*surface/blue-2*/
+  --info-foreground: oklch(72.68% 0.129 245.33); /* #5AAEF2 */ /*ink/blue-4*/
   --success-outline: oklch(
     40.52% 0.098 155.47
   ); /* #035831 */ /*outline/green-3*/
@@ -320,10 +332,14 @@
     --destructive-disabled-foreground
   );
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
   --color-filled: var(--filled);
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
   --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-success-outline: var(--success-outline);
   --color-error-outline: var(--error-outline);
   --color-filled-outline: var(--filled-outline);
