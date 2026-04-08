@@ -58,7 +58,7 @@ const fieldVariants = cva(
       orientation: {
         vertical: "flex-col *:w-full [&>.sr-only]:w-auto",
         horizontal:
-          "flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+          "flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-0 has-[>[data-slot=field-content]]:[&>[role=switch]]:-mt-px",
         responsive:
           "flex-col *:w-full @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
       },
@@ -107,7 +107,7 @@ function FieldLabel({
       data-slot="field-label"
       className={cn(
         // base styles (always applied)
-        "group/field-label peer/field-label flex w-fit items-start gap-2 leading-base tracking-normal transition-colors outline-none group-data-[disabled=true]/field:opacity-50 not-has-[>[data-slot=field]]:[&_[data-slot=checkbox]]:mt-0.5 not-has-[>[data-slot=field]]:[&_[data-slot=radio-group-item]]:mt-0.5",
+        "group/field-label peer/field-label flex w-fit items-start gap-2 leading-base tracking-normal transition-colors outline-none group-data-[disabled=true]/field:opacity-50 not-has-[>[data-slot=field]]:[&_[data-slot=checkbox]]:mt-0 not-has-[>[data-slot=field]]:[&_[data-slot=radio-group-item]]:mt-0 not-has-[>[data-slot=field]]:[&_[data-slot=switch]]:-mt-px",
         // choice card layout (when wrapping a Field)
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:px-1.5 has-[>[data-slot=field]]:py-1.75 *:data-[slot=field]:p-1.5",
         // interactive styles only when wrapping a Field (choice card)
@@ -155,7 +155,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="field-description"
       className={cn(
-        "text-left text-sm leading-base font-normal tracking-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
+        "pt-1 text-left text-sm leading-base font-normal tracking-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
         "last:mt-0 nth-last-2:-mt-1",
         "[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
         className
@@ -239,7 +239,7 @@ function FieldError({
       role="alert"
       data-slot="field-error"
       className={cn(
-        "text-sm leading-base font-normal tracking-normal text-destructive",
+        "pt-1 text-sm leading-base font-normal tracking-normal text-destructive",
         className
       )}
       {...props}
