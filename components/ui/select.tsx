@@ -10,8 +10,18 @@ import { ChevronUpIcon, ChevronDownIcon } from "lucide-react"
 
 function SelectCheckIcon({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" className={className}>
-      <path d="M13.0831 3.3823C13.2637 3.17362 13.5793 3.15113 13.7882 3.33152C13.9969 3.51206 14.0204 3.82772 13.84 4.0366L6.42885 12.6167C6.33507 12.7253 6.19926 12.789 6.0558 12.7905C5.91228 12.792 5.77486 12.7312 5.67885 12.6245L2.1681 8.7241L2.54018 8.39012L2.91225 8.05516L6.04213 11.5337L13.0831 3.3823ZM2.20521 8.01805C2.41047 7.83332 2.72752 7.8499 2.91225 8.05516L2.1681 8.7241C1.98378 8.51889 2.00023 8.20268 2.20521 8.01805Z" fill="currentColor"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M13.0831 3.3823C13.2637 3.17362 13.5793 3.15113 13.7882 3.33152C13.9969 3.51206 14.0204 3.82772 13.84 4.0366L6.42885 12.6167C6.33507 12.7253 6.19926 12.789 6.0558 12.7905C5.91228 12.792 5.77486 12.7312 5.67885 12.6245L2.1681 8.7241L2.54018 8.39012L2.91225 8.05516L6.04213 11.5337L13.0831 3.3823ZM2.20521 8.01805C2.41047 7.83332 2.72752 7.8499 2.91225 8.05516L2.1681 8.7241C1.98378 8.51889 2.00023 8.20268 2.20521 8.01805Z"
+        fill="currentColor"
+      />
     </svg>
   )
 }
@@ -54,10 +64,7 @@ function Select({
   size?: "sm" | "default" | "lg"
   variant?: "outline" | "subtle" | "ghost"
 }) {
-  const contextValue = React.useMemo(
-    () => ({ size, variant }),
-    [size, variant]
-  )
+  const contextValue = React.useMemo(() => ({ size, variant }), [size, variant])
   return (
     <SelectContext.Provider value={contextValue}>
       <SelectPrimitive.Root {...props} />
@@ -93,11 +100,11 @@ const selectTriggerVariants = cva(
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground group-data-[invalid=true]/field:border-error-outline!",
+          "border border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-input data-disabled:text-popover-foreground group-data-[invalid=true]/field:bg-error!",
+          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-input data-disabled:text-popover-foreground",
         ghost:
-          "border-transparent bg-transparent hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-transparent data-disabled:text-popover-foreground group-data-[invalid=true]/field:bg-error!",
+          "border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-transparent data-disabled:text-popover-foreground",
       },
       size: {
         sm: "h-7 rounded-md px-2 text-base",
@@ -129,7 +136,8 @@ function SelectTrigger({
     "data-valid"?: string
     "data-filled"?: string
   }) {
-  const { size: contextSize, variant: contextVariant } = React.useContext(SelectContext)
+  const { size: contextSize, variant: contextVariant } =
+    React.useContext(SelectContext)
   const variant = variantProp ?? contextVariant
   const size = sizeProp ?? contextSize
   const dataInvalid = props["data-invalid"]
@@ -141,12 +149,25 @@ function SelectTrigger({
       data-size={size}
       aria-invalid={dataInvalid === "true" || undefined}
       aria-disabled={dataDisabled === "true" || undefined}
-      className={cn(selectTriggerVariants({ variant, size, className }))}
+      className={cn(
+        "relative",
+        selectTriggerVariants({ variant, size, className }),
+        prefixIcon && "[&>[data-slot=select-value]]:pl-6",
+        suffixIcon && "[&>[data-slot=select-value]]:pr-6"
+      )}
       {...props}
     >
-      {prefixIcon}
+      {prefixIcon && (
+        <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center">
+          {prefixIcon}
+        </span>
+      )}
       {children}
-      {suffixIcon ?? (
+      {suffixIcon ? (
+        <span className="pointer-events-none absolute top-1/2 right-2.5 flex -translate-y-1/2 items-center">
+          {suffixIcon}
+        </span>
+      ) : (
         <SelectPrimitive.Icon
           render={
             <SelectChevronIcon className="pointer-events-none size-4 text-current" />
@@ -164,7 +185,7 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = false,
+  alignItemWithTrigger = true,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
@@ -339,3 +360,18 @@ export {
 // ### Removed
 // - Lucide `CheckIcon` (replaced with custom SVG)
 // - Dark mode overrides
+//
+// ### Prefix/Suffix Icon Positioning
+// - `prefixIcon` and `suffixIcon` are now absolutely positioned inside the
+//   `SelectTrigger` (left-2.5 / right-2.5, vertically centered) instead of
+//   being rendered in the normal flow.
+// - `SelectValue` receives `pl-6` / `pr-6` when a prefix/suffix icon is
+//   present so its text doesn't overlap the icons.
+// - Reason: with icons in flow, `SelectValue`'s bounding rect was pushed
+//   inward, and Base UI's `alignItemWithTrigger` positioning (which aligns
+//   the selected item's text with the value text) dragged the popup off the
+//   trigger's left edge. Taking the icons out of flow keeps
+//   `SelectValue`'s rect flush with the trigger's content edge, so the
+//   popup stays anchored to the trigger regardless of prefix icon presence.
+// - The trigger now has `relative` positioning so the absolute icon spans
+//   anchor to it.
