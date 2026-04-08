@@ -23,9 +23,13 @@ export default function AlertPage() {
         <Alert>
           <Info />
           <AlertTitle>Your trial end soon!</AlertTitle>
-          <AlertDescription>Upgrade to keep enjoying features.</AlertDescription>
+          <AlertDescription>
+            Upgrade to keep enjoying features.
+          </AlertDescription>
           <AlertButton>
-            <Button variant="outline" className="w-full">Update now</Button>
+            <Button variant="outline" className="w-full">
+              Update now
+            </Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -41,7 +45,9 @@ export default function AlertPage() {
           <AlertTitle>Default alert</AlertTitle>
           <AlertDescription>This is a default vertical alert.</AlertDescription>
           <AlertButton>
-            <Button variant="outline" className="w-full">Take action</Button>
+            <Button variant="outline" className="w-full">
+              Take action
+            </Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -52,7 +58,9 @@ export default function AlertPage() {
           <AlertTitle>Info alert</AlertTitle>
           <AlertDescription>This is an info vertical alert.</AlertDescription>
           <AlertButton>
-            <Button variant="outline" className="w-full">Learn more</Button>
+            <Button variant="outline" className="w-full">
+              Learn more
+            </Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -63,7 +71,9 @@ export default function AlertPage() {
           <AlertTitle>Warning alert</AlertTitle>
           <AlertDescription>This is a warning vertical alert.</AlertDescription>
           <AlertButton>
-            <Button variant="outline" className="w-full">Review</Button>
+            <Button variant="outline" className="w-full">
+              Review
+            </Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -72,9 +82,13 @@ export default function AlertPage() {
         <Alert variant="destructive">
           <AlertCircle />
           <AlertTitle>Destructive alert</AlertTitle>
-          <AlertDescription>This is a destructive vertical alert.</AlertDescription>
+          <AlertDescription>
+            This is a destructive vertical alert.
+          </AlertDescription>
           <AlertButton>
-            <Button variant="outline" className="w-full">Try again</Button>
+            <Button variant="outline" className="w-full">
+              Try again
+            </Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -103,8 +117,8 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertButton>
-            <Button>Explore now</Button>
-            <Button variant="ghost">Dismiss</Button>
+            <Button variant="inverted">Explore now</Button>
+            <Button variant="inverted-ghost">Dismiss</Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -115,8 +129,8 @@ export default function AlertPage() {
           <AlertTitle>Changes saved successfully</AlertTitle>
           <AlertDescription>Your changes have been saved.</AlertDescription>
           <AlertButton>
-            <Button>View changes</Button>
-            <Button variant="ghost">Dismiss</Button>
+            <Button variant="inverted">View changes</Button>
+            <Button variant="inverted-ghost">Dismiss</Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -129,8 +143,8 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertButton>
-            <Button>Explore now</Button>
-            <Button variant="ghost">Dismiss</Button>
+            <Button variant="inverted">Explore now</Button>
+            <Button variant="inverted-ghost">Dismiss</Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -143,8 +157,8 @@ export default function AlertPage() {
             Your subscription will expire in 7 days.
           </AlertDescription>
           <AlertButton>
-            <Button>Renew now</Button>
-            <Button variant="ghost">Remind me later</Button>
+            <Button variant="inverted">Renew now</Button>
+            <Button variant="inverted-ghost">Remind me later</Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />
@@ -157,8 +171,8 @@ export default function AlertPage() {
             There was a problem processing your request.
           </AlertDescription>
           <AlertButton>
-            <Button>Try again</Button>
-            <Button variant="ghost">Dismiss</Button>
+            <Button variant="inverted">Try again</Button>
+            <Button variant="inverted-ghost">Dismiss</Button>
           </AlertButton>
           <AlertAction>
             <X className="size-4" />

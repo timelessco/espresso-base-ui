@@ -58,27 +58,32 @@ const alertVariants = cva(
       {
         type: "banner",
         variant: "default",
-        className: "border border-border-soft bg-input",
+        className:
+          "border border-border-soft bg-input dark:[--btn-inverted-bg:theme(colors.gray.500)] dark:[--btn-inverted-fg:theme(colors.gray.50)] dark:[--btn-inverted-ghost-fg:theme(colors.gray.50)]",
       },
       {
         type: "banner",
         variant: "success",
-        className: "bg-success",
+        className:
+          "bg-success dark:[--btn-inverted-bg:theme(colors.green.700)] dark:[--btn-inverted-fg:theme(colors.green.200)] dark:[--btn-inverted-ghost-fg:theme(colors.green.400)]",
       },
       {
         type: "banner",
         variant: "destructive",
-        className: "bg-error",
+        className:
+          "bg-error dark:[--btn-inverted-bg:theme(colors.red.700)] dark:[--btn-inverted-fg:theme(colors.red.200)] dark:[--btn-inverted-ghost-fg:theme(colors.red.400)]",
       },
       {
         type: "banner",
         variant: "warning",
-        className: "bg-warning",
+        className:
+          "bg-warning dark:[--btn-inverted-bg:theme(colors.amber.700)] dark:[--btn-inverted-fg:theme(colors.amber.200)] dark:[--btn-inverted-ghost-fg:theme(colors.amber.400)]",
       },
       {
         type: "banner",
         variant: "info",
-        className: "bg-info",
+        className:
+          "bg-info dark:[--btn-inverted-bg:theme(colors.blue.700)] dark:[--btn-inverted-fg:theme(colors.blue.200)] dark:[--btn-inverted-ghost-fg:theme(colors.blue.400)]",
       },
     ],
     defaultVariants: {
