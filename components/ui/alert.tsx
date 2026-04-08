@@ -3,35 +3,27 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-type AlertVariant =
-  | "default"
-  | "success"
-  | "destructive"
-  | "warning"
-  | "info"
+type AlertVariant = "default" | "success" | "destructive" | "warning" | "info"
 type AlertType = "default" | "banner"
 
 const alertVariants = cva(
   [
     "group/alert relative w-full rounded-lg border text-left leading-base tracking-normal",
-    "[&>svg:not([class*='size-'])]:size-4 [&>svg]:shrink-0",
+    "[&>svg]:shrink-0 [&>svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
       type: {
         default:
-          "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 px-3 py-2.5 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 px-3 py-2.5 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
         banner:
-          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 border-0 px-3.5 py-2.5 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 border-0 px-3.5 py-2.5 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
       },
       variant: {
         default: "[&>svg]:text-muted-foreground",
-        success:
-          "[&>svg]:text-green-600 dark:[&>svg]:text-green-400",
-        destructive:
-          "[&>svg]:text-red-600 dark:[&>svg]:text-red-400",
-        warning:
-          "[&>svg]:text-amber-600 dark:[&>svg]:text-amber-400",
+        success: "[&>svg]:text-green-600 dark:[&>svg]:text-green-400",
+        destructive: "[&>svg]:text-red-600 dark:[&>svg]:text-red-400",
+        warning: "[&>svg]:text-amber-600 dark:[&>svg]:text-amber-400",
         info: "[&>svg]:text-blue-600 dark:[&>svg]:text-blue-400",
       },
     },
@@ -66,27 +58,27 @@ const alertVariants = cva(
       {
         type: "banner",
         variant: "default",
-        className: "bg-primary-foreground",
+        className: "border border-border-soft bg-input",
       },
       {
         type: "banner",
         variant: "success",
-        className: "bg-green-50 dark:bg-green-950",
+        className: "bg-success",
       },
       {
         type: "banner",
         variant: "destructive",
-        className: "bg-red-50 dark:bg-red-950",
+        className: "bg-error",
       },
       {
         type: "banner",
         variant: "warning",
-        className: "bg-amber-50 dark:bg-amber-950",
+        className: "bg-warning",
       },
       {
         type: "banner",
         variant: "info",
-        className: "bg-blue-50 dark:bg-blue-950",
+        className: "bg-info",
       },
     ],
     defaultVariants: {
@@ -127,19 +119,19 @@ const alertDescriptionVariants = cva(
 )
 
 const alertButtonVariants = cva(
-  "mt-2 flex items-center gap-2 *:[button]:border-0 group-data-[type=default]/alert:[&>button:only-child]:w-full",
+  "mt-2 flex items-center gap-2 *:[button]:border-0 group-data-[type=default]/alert:[&>button]:w-full",
   {
     variants: {
       variant: {
         default:
-          "[&>button:first-child]:bg-secondary [&>button:first-child]:text-secondary-foreground",
+          "group-data-[type=default]/alert:[&>button]:bg-secondary group-data-[type=default]/alert:[&>button]:text-secondary-foreground",
         success:
-          "[&>button:first-child]:bg-green-600 [&>button:first-child]:text-white dark:[&>button:first-child]:bg-green-500",
+          "group-data-[type=default]/alert:[&>button]:bg-success group-data-[type=default]/alert:[&>button]:text-green-700 dark:group-data-[type=default]/alert:[&>button]:text-green-300",
         destructive:
-          "[&>button:first-child]:bg-red-600 [&>button:first-child]:text-white dark:[&>button:first-child]:bg-red-500",
+          "group-data-[type=default]/alert:[&>button]:bg-error group-data-[type=default]/alert:[&>button]:text-red-500 dark:group-data-[type=default]/alert:[&>button]:text-red-300",
         warning:
-          "[&>button:first-child]:bg-amber-600 [&>button:first-child]:text-white dark:[&>button:first-child]:bg-amber-500",
-        info: "[&>button:first-child]:bg-blue-600 [&>button:first-child]:text-white dark:[&>button:first-child]:bg-blue-500",
+          "group-data-[type=default]/alert:[&>button]:bg-warning group-data-[type=default]/alert:[&>button]:text-amber-700 dark:group-data-[type=default]/alert:[&>button]:text-amber-300",
+        info: "group-data-[type=default]/alert:[&>button]:bg-info group-data-[type=default]/alert:[&>button]:text-blue-700 dark:group-data-[type=default]/alert:[&>button]:text-blue-300",
       },
     },
     defaultVariants: {
@@ -211,7 +203,7 @@ function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-action"
-      className={cn("absolute top-2 right-2", className)}
+      className={cn("absolute top-2.5 right-3", className)}
       {...props}
     />
   )
