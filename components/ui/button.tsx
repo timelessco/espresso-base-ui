@@ -21,6 +21,10 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
         link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground",
+        inverted:
+          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-md hover:brightness-95 active:brightness-90",
+        "inverted-ghost":
+          "bg-[var(--btn-inverted-ghost-bg,transparent)] text-[var(--btn-inverted-ghost-fg,#383838)] hover:opacity-85 active:opacity-70",
       },
       size: {
         xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
