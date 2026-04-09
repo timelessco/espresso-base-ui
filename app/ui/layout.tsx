@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Header } from "@/components/header"
+import { Toaster } from "@/components/ui/sonner"
 
 const sidebarItems = [
   { label: "Alert", href: "/ui/alert" },
@@ -19,6 +20,7 @@ const sidebarItems = [
   { label: "Radio", href: "/ui/radio" },
   { label: "Select", href: "/ui/select" },
   { label: "Separator", href: "/ui/separator" },
+  { label: "Sonner", href: "/ui/sonner" },
   { label: "Spacer", href: "/ui/spacer" },
   { label: "Slider", href: "/ui/slider" },
   { label: "Spinner", href: "/ui/spinner" },
@@ -63,6 +65,7 @@ export default function UILayout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+      <Toaster />
     </div>
   )
 }
