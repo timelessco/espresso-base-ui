@@ -17,6 +17,7 @@ const sidebarItems = [
   { label: "Field", href: "/ui/field" },
   { label: "Input", href: "/ui/input" },
   { label: "Input Group", href: "/ui/input-group" },
+  { label: "Popover", href: "/ui/popover" },
   { label: "Radio", href: "/ui/radio" },
   { label: "Select", href: "/ui/select" },
   { label: "Separator", href: "/ui/separator" },
