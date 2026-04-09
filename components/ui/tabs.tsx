@@ -24,7 +24,7 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  "group/tabs-list inline-flex w-fit items-center justify-center text-muted-foreground group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none",
+  "group/tabs-list relative inline-flex w-fit items-center justify-center text-muted-foreground group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col data-[variant=line]:rounded-none",
   {
     variants: {
       variant: {
@@ -120,16 +120,10 @@ function TabsList({
 
 const tabsTriggerVariants = cva([
   "relative inline-flex flex-1 items-center justify-center gap-2 rounded-[7px] text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  // variant-specific active styles
-  "group-data-[variant=default]/tabs-list:data-active:bg-surface group-data-[variant=default]/tabs-list:data-active:shadow-6xs",
-  "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent group-data-[variant=line]/tabs-list:data-active:shadow-none",
-  "group-data-[variant=outline]/tabs-list:bg-transparent group-data-[variant=outline]/tabs-list:data-active:bg-surface group-data-[variant=outline]/tabs-list:data-active:shadow-sm",
-  "group-data-[variant=ghost]/tabs-list:bg-transparent group-data-[variant=ghost]/tabs-list:data-active:bg-surface group-data-[variant=ghost]/tabs-list:data-active:shadow-sm",
-  "group-data-[variant=browser]/tabs-list:bottom-[-1px] group-data-[variant=browser]/tabs-list:h-full group-data-[variant=browser]/tabs-list:rounded-none group-data-[variant=browser]/tabs-list:rounded-b-none group-data-[variant=browser]/tabs-list:border-x group-data-[variant=browser]/tabs-list:border-t group-data-[variant=browser]/tabs-list:border-transparent group-data-[variant=browser]/tabs-list:bg-transparent group-data-[variant=browser]/tabs-list:after:hidden group-data-[variant=browser]/tabs-list:data-active:rounded-t-md group-data-[variant=browser]/tabs-list:data-active:border-border group-data-[variant=browser]/tabs-list:data-active:bg-primary-foreground group-data-[variant=browser]/tabs-list:data-active:shadow-none",
-  // active base
-  "data-active:bg-background data-active:text-foreground",
-  // line indicator
-  "after:absolute after:bg-foreground after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:bottom-[-1.5px] group-data-horizontal/tabs:after:h-px group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-right-1 group-data-vertical/tabs:after:w-px group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
+  // active text color (background handled by TabsIndicator)
+  "z-[1] data-active:text-foreground",
+  // browser variant keeps per-tab border structure for its unique look
+  "group-data-[variant=browser]/tabs-list:bottom-[-1px] group-data-[variant=browser]/tabs-list:h-full group-data-[variant=browser]/tabs-list:rounded-none group-data-[variant=browser]/tabs-list:rounded-b-none group-data-[variant=browser]/tabs-list:border-x group-data-[variant=browser]/tabs-list:border-t group-data-[variant=browser]/tabs-list:border-transparent group-data-[variant=browser]/tabs-list:bg-transparent",
   // size sm
   "group-data-[size=sm]/tabs-list:h-6.5 group-data-[size=sm]/tabs-list:px-2 group-data-[size=sm]/tabs-list:py-1.25 group-data-[size=sm]/tabs-list:font-normal",
   // size default
@@ -146,6 +140,32 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
   )
 }
 
+function TabsIndicator({
+  className,
+  ...props
+}: TabsPrimitive.Indicator.Props) {
+  return (
+    <TabsPrimitive.Indicator
+      data-slot="tabs-indicator"
+      className={cn(
+        "absolute rounded-[7px] transition-all duration-200 ease-out",
+        // horizontal
+        "group-data-horizontal/tabs:top-[var(--active-tab-top)] group-data-horizontal/tabs:left-[var(--active-tab-left)] group-data-horizontal/tabs:h-[var(--active-tab-height)] group-data-horizontal/tabs:w-[var(--active-tab-width)]",
+        // vertical
+        "group-data-vertical/tabs:top-[var(--active-tab-top)] group-data-vertical/tabs:left-[var(--active-tab-left)] group-data-vertical/tabs:h-[var(--active-tab-height)] group-data-vertical/tabs:w-[var(--active-tab-width)]",
+        // variant-specific styling
+        "group-data-[variant=default]/tabs-list:bg-surface group-data-[variant=default]/tabs-list:shadow-6xs",
+        "group-data-[variant=outline]/tabs-list:bg-surface group-data-[variant=outline]/tabs-list:shadow-sm",
+        "group-data-[variant=ghost]/tabs-list:bg-surface group-data-[variant=ghost]/tabs-list:shadow-sm",
+        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:shadow-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:top-auto group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:bottom-[-1.5px] group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:h-px group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:rounded-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:bg-foreground group-data-[variant=line]/tabs-list:group-data-vertical/tabs:left-auto group-data-[variant=line]/tabs-list:group-data-vertical/tabs:right-[-1px] group-data-[variant=line]/tabs-list:group-data-vertical/tabs:w-px group-data-[variant=line]/tabs-list:group-data-vertical/tabs:bg-foreground",
+        "group-data-[variant=browser]/tabs-list:rounded-b-none group-data-[variant=browser]/tabs-list:border-x group-data-[variant=browser]/tabs-list:border-t group-data-[variant=browser]/tabs-list:border-border group-data-[variant=browser]/tabs-list:bg-primary-foreground group-data-[variant=browser]/tabs-list:shadow-none",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
@@ -156,4 +176,38 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   )
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, tabsListVariants }
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsIndicator,
+  TabsContent,
+  tabsListVariants,
+}
+
+// ## Tabs Changelog (vs shadcn)
+//
+// ### Added
+// - `TabsIndicator` component wrapping `TabsPrimitive.Indicator`, providing
+//   a sliding active-tab highlight via Base UI's `--active-tab-*` CSS vars.
+//   Consumers render `<TabsIndicator />` inside `<TabsList>`.
+// - `size` variant on `TabsList` (`sm`, `default`) with `sm` as default.
+//   shadcn has no size variants.
+// - Additional `variant`s on `TabsList`: `outline`, `ghost`, `browser`.
+//   shadcn ships only `default` and `line`.
+// - CVA compound variants on `tabsListVariants` pairing each
+//   `variant` with each `size` to set appropriate heights.
+// - `tabsTriggerVariants` exported as a CVA (shadcn inlines the class string
+//   directly in the component).
+//
+// ### Changed
+// - Active-tab background/highlight is owned by `TabsIndicator` instead of
+//   being rendered per-trigger. This is what enables the smooth sliding
+//   transition between tabs.
+// - `TabsTrigger` no longer carries variant-specific `data-active:bg-*`
+//   rules; it only handles active text color, leaving the visual highlight
+//   to the indicator.
+//
+// ### Removed
+// - Per-trigger `after:` pseudo-element used as the line-variant underline
+//   in shadcn — the indicator now handles the line variant too.

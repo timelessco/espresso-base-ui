@@ -1,7 +1,13 @@
 "use client"
 
 import { User, Lock, Settings, Bell } from "lucide-react"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsIndicator,
+  TabsContent,
+} from "@/components/ui/tabs"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -18,6 +24,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -45,6 +52,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -72,6 +80,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -82,6 +91,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -94,6 +104,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -104,6 +115,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -116,6 +128,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -126,6 +139,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -140,6 +154,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-3">Tab</TabsTrigger>
             <TabsTrigger value="tab-4">Tab</TabsTrigger>
             <TabsTrigger value="tab-5">Tab</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -152,6 +167,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-3">Tab</TabsTrigger>
             <TabsTrigger value="tab-4">Tab</TabsTrigger>
             <TabsTrigger value="tab-5">Tab</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -173,6 +189,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-4">
               <Bell /> Notifications
             </TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -214,6 +231,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-4">
               <Bell /> Notifications
             </TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -255,6 +273,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-4">
               <Bell />
             </TabsTrigger>
+            <TabsIndicator />
           </TabsList>
         </Tabs>
       </div>
@@ -267,6 +286,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -296,6 +316,7 @@ export default function TabsPage() {
               Password
             </TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -320,6 +341,7 @@ export default function TabsPage() {
               Password
             </TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -342,6 +364,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -369,6 +392,7 @@ export default function TabsPage() {
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
           </TabsList>
           <TabsContent value="tab-1">
             <p className="text-sm text-muted-foreground">
@@ -412,18 +436,20 @@ export default function TabsPage() {
                   Default
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1">
+                  <Tabs>
                     <TabsList>
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1" orientation="vertical">
+                  <Tabs orientation="vertical">
                     <TabsList>
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
@@ -433,18 +459,20 @@ export default function TabsPage() {
                   Line
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1">
+                  <Tabs>
                     <TabsList variant="line">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1" orientation="vertical">
+                  <Tabs orientation="vertical">
                     <TabsList variant="line">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
@@ -454,18 +482,20 @@ export default function TabsPage() {
                   Outline
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1">
+                  <Tabs>
                     <TabsList variant="outline">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1" orientation="vertical">
+                  <Tabs orientation="vertical">
                     <TabsList variant="outline">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
@@ -475,18 +505,20 @@ export default function TabsPage() {
                   Ghost
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1">
+                  <Tabs>
                     <TabsList variant="ghost">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1" orientation="vertical">
+                  <Tabs orientation="vertical">
                     <TabsList variant="ghost">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
@@ -496,14 +528,23 @@ export default function TabsPage() {
                   Browser
                 </td>
                 <td className="px-4 py-3">
-                  <Tabs value="t1">
+                  <Tabs>
                     <TabsList variant="browser">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
                     </TabsList>
                   </Tabs>
                 </td>
-                <td className="px-4 py-3 text-xs text-muted-foreground">—</td>
+                <td className="px-4 py-3">
+                  <Tabs orientation="vertical">
+                    <TabsList variant="browser">
+                      <TabsTrigger value="t1">Tab 1</TabsTrigger>
+                      <TabsTrigger value="t2">Tab 2</TabsTrigger>
+                      <TabsIndicator />
+                    </TabsList>
+                  </Tabs>
+                </td>
               </tr>
             </tbody>
           </table>
