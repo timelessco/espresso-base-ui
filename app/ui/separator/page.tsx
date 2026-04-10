@@ -34,46 +34,50 @@ export default function SeparatorPage() {
       {/* Vertical */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical</SectionTitle>
-        <div className="flex h-16 items-center">
+        <div className="flex h-16 items-center gap-4">
           <div className="text-sm text-muted-foreground">Left</div>
-          <Separator orientation="vertical" spacing="md" />
+          <Separator orientation="vertical" />
           <div className="text-sm text-muted-foreground">Middle</div>
-          <Separator orientation="vertical" spacing="md" />
+          <Separator orientation="vertical" />
           <div className="text-sm text-muted-foreground">Right</div>
         </div>
       </div>
 
-      {/* Between content */}
+      {/* Between sections */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Between Sections</SectionTitle>
         <div className="flex flex-col">
           <p className="text-sm text-muted-foreground">
             First paragraph of content goes here with some descriptive text.
           </p>
-          <Separator spacing="md" />
+          <Separator className="my-3" />
           <p className="text-sm text-muted-foreground">
             Second paragraph continues the content after the separator.
+          </p>
+          <Separator className="my-3" />
+          <p className="text-sm text-muted-foreground">
+            Third paragraph wraps up the section.
           </p>
         </div>
       </div>
 
       {/* Horizontal with slot */}
-      <div className="flex max-w-lg flex-col">
+      <div className="flex max-w-lg flex-col gap-6">
         <SectionTitle>Horizontal — With Slot</SectionTitle>
-        <Separator spacing="lg" slot slotAlign="start">
+        <Separator slot slotAlign="start">
           Continue
         </Separator>
-        <Separator spacing="lg" slot slotAlign="center">
+        <Separator slot slotAlign="center">
           Continue
         </Separator>
-        <Separator spacing="lg" slot slotAlign="end">
+        <Separator slot slotAlign="end">
           Continue
         </Separator>
-        <Separator spacing="lg" slot slotAlign="center">
+        <Separator slot slotAlign="center">
           <Check />
           Continue
         </Separator>
-        <Separator spacing="lg" slot slotAlign="center">
+        <Separator slot slotAlign="center">
           <Check />
         </Separator>
       </div>
@@ -81,26 +85,26 @@ export default function SeparatorPage() {
       {/* Paragraphs with slot separator */}
       <div className="flex max-w-xl flex-col gap-4">
         <SectionTitle>Paragraphs — With Slot Separator</SectionTitle>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-6">
           <p className="text-sm text-muted-foreground">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
-          <Separator spacing="lg" slot slotAlign="start">
+          <Separator slot slotAlign="start">
             Section 1
           </Separator>
           <p className="text-sm text-muted-foreground">
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
             nisi ut aliquip ex ea commodo consequat.
           </p>
-          <Separator spacing="lg" slot slotAlign="center">
+          <Separator slot slotAlign="center">
             Continue reading
           </Separator>
           <p className="text-sm text-muted-foreground">
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur.
           </p>
-          <Separator spacing="lg" slot slotAlign="end">
+          <Separator slot slotAlign="end">
             <Check />
             Finished
           </Separator>
@@ -111,78 +115,20 @@ export default function SeparatorPage() {
         </div>
       </div>
 
-      {/* Horizontal Spacing */}
-      <div className="flex max-w-md flex-col gap-4">
-        <SectionTitle>Horizontal — Spacing</SectionTitle>
-        <div className="flex flex-col">
-          <p className="text-sm text-muted-foreground">Above (sm)</p>
-          <Separator spacing="sm" />
-          <p className="text-sm text-muted-foreground">Between (sm & md)</p>
-          <Separator spacing="md" />
-          <p className="text-sm text-muted-foreground">Between (md & lg)</p>
-          <Separator spacing="lg" />
-          <p className="text-sm text-muted-foreground">Below (lg)</p>
-        </div>
-      </div>
-
-      {/* Horizontal Spacing with slot */}
-      <div className="flex max-w-md flex-col gap-4">
-        <SectionTitle>Horizontal — Spacing with Slot</SectionTitle>
-        <div className="flex flex-col">
-          <p className="text-sm text-muted-foreground">Above (sm)</p>
-          <Separator spacing="sm" slot>
-            sm
-          </Separator>
-          <p className="text-sm text-muted-foreground">Between (sm & md)</p>
-          <Separator spacing="md" slot>
-            md
-          </Separator>
-          <p className="text-sm text-muted-foreground">Between (md & lg)</p>
-          <Separator spacing="lg" slot>
-            lg
-          </Separator>
-          <p className="text-sm text-muted-foreground">Below (lg)</p>
-        </div>
-      </div>
-
-      {/* Vertical Spacing */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Vertical — Spacing</SectionTitle>
-        <div className="flex h-16 items-center">
-          <span className="text-sm text-muted-foreground">Left</span>
-          <Separator orientation="vertical" spacing="sm" />
-          <span className="text-sm text-muted-foreground">sm</span>
-          <Separator orientation="vertical" spacing="md" />
-          <span className="text-sm text-muted-foreground">md</span>
-          <Separator orientation="vertical" spacing="lg" />
-          <span className="text-sm text-muted-foreground">lg</span>
-        </div>
-      </div>
-
       {/* Vertical with slot */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical — With Slot</SectionTitle>
-        <div className="flex h-72 items-stretch">
-          <Separator orientation="vertical" spacing="lg" slot slotAlign="start">
+        <div className="flex h-72 items-stretch gap-20">
+          <Separator orientation="vertical" slot slotAlign="start">
             Continue
           </Separator>
-          <Separator
-            orientation="vertical"
-            spacing="lg"
-            slot
-            slotAlign="center"
-          >
+          <Separator orientation="vertical" slot slotAlign="center">
             Continue
           </Separator>
-          <Separator orientation="vertical" spacing="lg" slot slotAlign="end">
+          <Separator orientation="vertical" slot slotAlign="end">
             Continue
           </Separator>
-          <Separator
-            orientation="vertical"
-            spacing="lg"
-            slot
-            slotAlign="center"
-          >
+          <Separator orientation="vertical" slot slotAlign="center">
             <Check />
             Continue
           </Separator>
