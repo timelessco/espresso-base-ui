@@ -65,7 +65,7 @@ function RadioGroupItem({
     <RadioPrimitive.Root
       data-slot="radio-group-item"
       data-size={size}
-      data-invalid={dataInvalid}
+      {...(dataInvalid !== undefined && { "data-invalid": dataInvalid })}
       className={cn(radioGroupItemVariants({ size, className }))}
       {...props}
     >

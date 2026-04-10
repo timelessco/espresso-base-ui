@@ -12,9 +12,9 @@ const inputVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground hover:border-border-normal hover:shadow-4xs focus:border-primary-foreground focus:shadow-3xs active:border-border-strong active:shadow-md active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline group-data-[invalid=true]/field:border-error-outline!",
+          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:hover:shadow-4xs not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-strong not-data-disabled:active:shadow-md not-data-disabled:active:ring-0 data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline group-data-[invalid=true]/field:border-error-outline!",
         subtle:
-          "border-transparent bg-secondary hover:bg-muted focus:border-primary-foreground focus:bg-primary-foreground focus:shadow-3xs active:border-border-strong active:bg-primary-foreground active:shadow-md active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success [&:-webkit-autofill]:bg-filled group-data-[invalid=true]/field:bg-error!",
+          "border-transparent bg-secondary not-data-disabled:hover:bg-muted not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-strong not-data-disabled:active:bg-primary-foreground not-data-disabled:active:shadow-md not-data-disabled:active:ring-0 data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled group-data-[invalid=true]/field:bg-error!",
       },
       size: {
         sm: "h-7 rounded-md px-2 py-1.5 text-base",
@@ -49,10 +49,8 @@ function Input({
       data-slot="input"
       data-variant={variant ?? "outline"}
       data-size={size ?? "md"}
-      data-invalid={dataInvalid}
-      data-disabled={dataDisabled}
-      aria-invalid={dataInvalid === "true" || undefined}
-      aria-disabled={dataDisabled === "true" || undefined}
+      {...(dataInvalid !== undefined && { "data-invalid": dataInvalid })}
+      {...(dataDisabled !== undefined && { "data-disabled": dataDisabled })}
       className={cn(inputVariants({ variant, size, className }))}
       {...props}
     />

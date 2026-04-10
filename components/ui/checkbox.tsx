@@ -59,7 +59,7 @@ function Checkbox({
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       data-size={size}
-      data-invalid={dataInvalid}
+      {...(dataInvalid !== undefined && { "data-invalid": dataInvalid })}
       className={cn(checkboxVariants({ size, className }))}
       {...props}
     >

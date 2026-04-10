@@ -60,7 +60,7 @@ function Switch({
     <SwitchPrimitive.Root
       data-slot="switch"
       data-size={size}
-      data-invalid={dataInvalid}
+      {...(dataInvalid !== undefined && { "data-invalid": dataInvalid })}
       className={cn(switchVariants({ size, className }))}
       {...props}
     >
