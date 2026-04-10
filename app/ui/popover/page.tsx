@@ -52,12 +52,12 @@ export default function PopoverPage() {
             <Button variant="ghost" size="sm" className="gap-1">
               Text
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="sm" className="gap-1.5">
               <MessageCircle />
               Comment
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="icon-sm">
               <Bold />
             </Button>
@@ -70,14 +70,14 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <Underline />
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="icon-sm">
               <Quote />
             </Button>
             <Button variant="ghost" size="icon-sm">
               <Code />
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="icon-sm">
               <Link />
             </Button>
@@ -87,7 +87,7 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <Table />
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="icon-sm">
               <ListOrdered />
             </Button>
@@ -97,14 +97,14 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <AlignLeft />
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="sm" className="gap-2">
               Text
             </Button>
             <Button variant="ghost" size="sm" className="gap-2">
               Highlight
             </Button>
-            <Separator orientation="vertical" spacing="sm" />
+            <Separator orientation="vertical" />
             <Button variant="ghost" size="icon-sm">
               <MoreHorizontal />
             </Button>

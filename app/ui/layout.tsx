@@ -23,6 +23,7 @@ const sidebarItems = [
   { label: "Select", href: "/ui/select" },
   { label: "Sonner", href: "/ui/sonner" },
   { label: "Spacer", href: "/ui/spacer" },
+  { label: "Separator", href: "/ui/separator" },
   { label: "Slider", href: "/ui/slider" },
   { label: "Spinner", href: "/ui/spinner" },
   { label: "Switch", href: "/ui/switch" },
