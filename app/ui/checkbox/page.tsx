@@ -38,6 +38,17 @@ export default function CheckboxPage() {
         </div>
       </div>
 
+      {/* Indeterminate */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Indeterminate</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Checkbox indeterminate />
+          <Checkbox size="sm" indeterminate />
+          <Checkbox indeterminate disabled />
+          <Checkbox size="sm" indeterminate disabled />
+        </div>
+      </div>
+
       {/* Invalid */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Invalid</SectionTitle>
@@ -71,6 +82,16 @@ export default function CheckboxPage() {
                 <td className="px-4 py-3 text-xs text-muted-foreground">Checked</td>
                 <td className="px-4 py-3"><Checkbox defaultChecked /></td>
                 <td className="px-4 py-3"><Checkbox size="sm" defaultChecked /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Indeterminate</td>
+                <td className="px-4 py-3"><Checkbox indeterminate /></td>
+                <td className="px-4 py-3"><Checkbox size="sm" indeterminate /></td>
+              </tr>
+              <tr className="border-t border-border">
+                <td className="px-4 py-3 text-xs text-muted-foreground">Disabled Indeterminate</td>
+                <td className="px-4 py-3"><Checkbox indeterminate disabled /></td>
+                <td className="px-4 py-3"><Checkbox size="sm" indeterminate disabled /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled Unchecked</td>
