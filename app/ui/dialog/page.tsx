@@ -13,6 +13,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field, FieldLabel } from "@/components/ui/field"
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsIndicator,
+  TabsContent,
+} from "@/components/ui/tabs"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -36,8 +43,8 @@ export default function DialogPage() {
               </DialogDescription>
             </DialogHeader>
             <p className="text-sm text-muted-foreground">
-              This is the main content of the dialog. You can place any
-              children here.
+              This is the main content of the dialog. You can place any children
+              here.
             </p>
           </DialogContent>
         </Dialog>
@@ -92,10 +99,134 @@ export default function DialogPage() {
             </DialogHeader>
             <DialogFooter>
               <DialogClose render={<Button variant="outline">Cancel</Button>} />
-              <DialogClose render={<Button variant="destructive">Delete</Button>} />
+              <DialogClose
+                render={<Button variant="destructive">Delete</Button>}
+              />
             </DialogFooter>
           </DialogContent>
         </Dialog>
+      </div>
+
+      {/* With Tabs */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>With Tabs</SectionTitle>
+        <Dialog>
+          <DialogTrigger
+            render={<Button variant="outline">Account settings</Button>}
+          />
+          <DialogContent size="sm">
+            <DialogHeader>
+              <DialogTitle>Account settings</DialogTitle>
+              <DialogDescription>
+                Manage your account preferences and profile information.
+              </DialogDescription>
+            </DialogHeader>
+            <Tabs defaultValue="profile">
+              <TabsList className={"w-full"}>
+                <TabsTrigger value="profile">Profile</TabsTrigger>
+                <TabsTrigger value="password">Password</TabsTrigger>
+                <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                <TabsIndicator />
+              </TabsList>
+              <TabsContent value="profile">
+                <div className="flex flex-col gap-3 pt-4">
+                  <Field>
+                    <FieldLabel>Display name</FieldLabel>
+                    <Input defaultValue="Pedro Duarte" />
+                  </Field>
+                  <Field>
+                    <FieldLabel>Email</FieldLabel>
+                    <Input defaultValue="pedro@example.com" type="email" />
+                  </Field>
+                  <Field>
+                    <FieldLabel>Bio</FieldLabel>
+                    <Input defaultValue="Design engineer at Acme" />
+                  </Field>
+                </div>
+              </TabsContent>
+              <TabsContent value="password">
+                <div className="flex flex-col gap-3 pt-4">
+                  <Field>
+                    <FieldLabel>Current password</FieldLabel>
+                    <Input
+                      type="password"
+                      placeholder="Enter current password"
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel>New password</FieldLabel>
+                    <Input type="password" placeholder="Enter new password" />
+                  </Field>
+                  <Field>
+                    <FieldLabel>Confirm password</FieldLabel>
+                    <Input type="password" placeholder="Confirm new password" />
+                  </Field>
+                </div>
+              </TabsContent>
+              <TabsContent value="notifications">
+                <div className="flex flex-col gap-2 pt-4">
+                  <p className="text-sm text-muted-foreground">
+                    Choose how you want to be notified about updates.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Email notifications are sent to your primary email address.
+                    Push notifications appear on your device.
+                  </p>
+                </div>
+              </TabsContent>
+            </Tabs>
+            <DialogFooter showCloseButton>
+              <Button>Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {/* Sizes */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes</SectionTitle>
+        <div className="flex flex-wrap items-center gap-3">
+          <Dialog>
+            <DialogTrigger
+              render={<Button variant="outline">Small (sm)</Button>}
+            />
+            <DialogContent size="sm">
+              <DialogHeader>
+                <DialogTitle>Small dialog</DialogTitle>
+                <DialogDescription>
+                  This dialog uses the sm size variant (max-w-sm).
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger
+              render={<Button variant="outline">Default</Button>}
+            />
+            <DialogContent size="default">
+              <DialogHeader>
+                <DialogTitle>Default dialog</DialogTitle>
+                <DialogDescription>
+                  This dialog uses the default size variant (max-w-md).
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger
+              render={<Button variant="outline">Large (lg)</Button>}
+            />
+            <DialogContent size="lg">
+              <DialogHeader>
+                <DialogTitle>Large dialog</DialogTitle>
+                <DialogDescription>
+                  This dialog uses the lg size variant (max-w-2xl). Ideal for
+                  forms or content that needs more horizontal space.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       {/* Without close button */}
