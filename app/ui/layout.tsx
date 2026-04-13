@@ -14,6 +14,7 @@ const sidebarItems = [
   { label: "Breadcrumb", href: "/ui/breadcrumb" },
   { label: "Button", href: "/ui/button" },
   { label: "Button Group", href: "/ui/button-group" },
+  { label: "Calendar", href: "/ui/calendar" },
   { label: "Checkbox", href: "/ui/checkbox" },
   { label: "Dialog", href: "/ui/dialog" },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu" },
