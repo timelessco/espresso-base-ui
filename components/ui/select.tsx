@@ -94,17 +94,17 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-placeholder:text-card-foreground data-[filled=true]:text-secondary-foreground data-[invalid=true]:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-[valid=true]:text-secondary-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-placeholder:text-card-foreground data-filled:text-secondary-foreground data-invalid:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-valid:text-secondary-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! hover:border-border-normal active:border-border-strong active:ring-0 data-[filled=true]:border-border data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal not-data-disabled:active:border-border-strong not-data-disabled:active:ring-0 data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border data-disabled:bg-input data-disabled:text-popover-foreground",
         subtle:
-          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-input data-disabled:text-popover-foreground",
+          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:active:bg-accent not-data-disabled:active:ring-0 data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input data-disabled:text-popover-foreground",
         ghost:
-          "border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! hover:bg-muted active:bg-accent active:ring-0 data-[filled=true]:bg-secondary data-[invalid=true]:bg-error data-[valid=true]:bg-success data-disabled:bg-transparent data-disabled:text-popover-foreground",
+          "border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:active:bg-accent not-data-disabled:active:ring-0 data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent data-disabled:text-popover-foreground",
       },
       size: {
         sm: "h-7 rounded-md px-2 text-base",
@@ -131,24 +131,16 @@ function SelectTrigger({
   VariantProps<typeof selectTriggerVariants> & {
     prefixIcon?: React.ReactNode
     suffixIcon?: React.ReactNode
-    "data-invalid"?: string
-    "data-disabled"?: string
-    "data-valid"?: string
-    "data-filled"?: string
   }) {
   const { size: contextSize, variant: contextVariant } =
     React.useContext(SelectContext)
   const variant = variantProp ?? contextVariant
   const size = sizeProp ?? contextSize
-  const dataInvalid = props["data-invalid"]
-  const dataDisabled = props["data-disabled"]
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-variant={variant}
       data-size={size}
-      aria-invalid={dataInvalid === "true" || undefined}
-      aria-disabled={dataDisabled === "true" || undefined}
       className={cn(
         "relative",
         selectTriggerVariants({ variant, size, className }),
