@@ -12,6 +12,7 @@ const sidebarItems = [
   { label: "Badge", href: "/ui/badge" },
   { label: "Breadcrumb", href: "/ui/breadcrumb" },
   { label: "Button", href: "/ui/button" },
+  { label: "Button Group", href: "/ui/button-group" },
   { label: "Checkbox", href: "/ui/checkbox" },
   { label: "Dialog", href: "/ui/dialog" },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu" },
