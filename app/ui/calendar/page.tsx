@@ -54,8 +54,8 @@ function DateTimePresetPicker() {
   }, [])
 
   return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl border border-border bg-popover shadow-sm">
-      <div className="">
+    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
+      <div className="flex justify-center">
         <Calendar
           mode="single"
           selected={date}
@@ -70,10 +70,10 @@ function DateTimePresetPicker() {
             MonthCaption: () => (
               <div className="flex h-(--cell-size) items-center gap-1.5">
                 <Select
-                  value={String(month.getMonth())}
+                  value={monthNames[month.getMonth()]}
                   onValueChange={(v) => {
                     const next = new Date(month)
-                    next.setMonth(Number(v))
+                    next.setMonth(monthNames.indexOf(v))
                     setMonth(next)
                   }}
                 >
@@ -81,9 +81,9 @@ function DateTimePresetPicker() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {monthNames.map((m, i) => (
-                      <SelectItem key={i} value={String(i)}>
-                        {m}
+                    {monthNames.map((mName) => (
+                      <SelectItem key={mName} value={mName}>
+                        {mName}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -116,13 +116,12 @@ function DateTimePresetPicker() {
         />
       </div>
       <div className="flex items-center justify-between border-t px-4 py-3">
-        <span className="text-sm font-medium text-foreground">Time</span>
-        <button
-          onClick={setToNow}
-          className="text-sm font-medium text-foreground hover:text-muted-foreground"
-        >
+        <span className="text-base leading-base font-medium tracking-normal text-foreground">
+          Time
+        </span>
+        <Button variant="ghost" size="sm" onClick={setToNow}>
           Now
-        </button>
+        </Button>
       </div>
       <div className="flex items-center gap-2 px-4 pb-3">
         <Select value={hour} onValueChange={setHour}>
@@ -211,10 +210,10 @@ function MultiMonthRangePicker() {
   })
 
   const formatDate = (date: Date | undefined) =>
-    date ? `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : ""
+    date ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` : ""
 
   return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl border border-border bg-popover shadow-sm">
+    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
       <Calendar
         mode="range"
         selected={range}
@@ -224,24 +223,34 @@ function MultiMonthRangePicker() {
         className="border-0 shadow-none"
         classNames={{
           months:
-            "relative flex flex-row gap-0 [&>div:not(:first-child)]:border-l [&>div:not(:first-child)]:border-border [&>div:not(:first-child)]:pl-3 [&>div:not(:last-child)]:pr-3",
+            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
+          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
+          root: "w-fit p-0!",
         }}
       />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3">
+      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
         <div className="flex items-center gap-2 text-sm">
-          <span className="rounded-lg bg-secondary px-3 py-1.5 text-foreground">
-            {formatDate(range?.from)}
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDate(range?.from) || (
+              <span className="text-card-foreground">Start date</span>
+            )}
           </span>
-          <span className="text-muted-foreground">to</span>
-          <span className="rounded-lg bg-secondary px-3 py-1.5 text-foreground">
-            {formatDate(range?.to)}
+          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            to
+          </span>
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDate(range?.to) || (
+              <span className="text-card-foreground">End date</span>
+            )}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setRange(undefined)}
+            onClick={() => {
+              setRange(undefined)
+            }}
           >
             Cancel
           </Button>
@@ -259,10 +268,10 @@ function DateRangePicker() {
   })
 
   const formatDate = (date: Date | undefined) =>
-    date ? `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` : ""
+    date ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` : ""
 
   return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl border border-border bg-popover shadow-sm">
+    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
       <Calendar
         mode="range"
         selected={range}
@@ -272,24 +281,34 @@ function DateRangePicker() {
         className="border-0 shadow-none"
         classNames={{
           months:
-            "relative flex flex-row gap-0 [&>div:not(:first-child)]:border-l [&>div:not(:first-child)]:border-border [&>div:not(:first-child)]:pl-3 [&>div:not(:last-child)]:pr-3",
+            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
+          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
+          root: "w-fit p-0!",
         }}
       />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3">
+      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
         <div className="flex items-center gap-2 text-sm">
-          <span className="rounded-lg bg-secondary px-3 py-1.5 text-foreground">
-            {formatDate(range?.from)}
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDate(range?.from) || (
+              <span className="text-card-foreground">Start date</span>
+            )}
           </span>
-          <span className="text-muted-foreground">to</span>
-          <span className="rounded-lg bg-secondary px-3 py-1.5 text-foreground">
-            {formatDate(range?.to)}
+          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            to
+          </span>
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDate(range?.to) || (
+              <span className="text-card-foreground">End date</span>
+            )}
           </span>
         </div>
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setRange(undefined)}
+            onClick={() => {
+              setRange(undefined)
+            }}
           >
             Cancel
           </Button>
@@ -328,7 +347,7 @@ export default function CalendarPage() {
   ]
 
   return (
-    <div className="flex flex-col gap-12 p-8">
+    <div className="flex flex-col gap-20 p-8">
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
@@ -336,17 +355,6 @@ export default function CalendarPage() {
           mode="single"
           selected={singleDate}
           onSelect={setSingleDate}
-        />
-      </div>
-
-      {/* Range */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Range</SectionTitle>
-        <Calendar
-          mode="range"
-          selected={rangeDate}
-          onSelect={setRangeDate}
-          numberOfMonths={2}
         />
       </div>
 
@@ -369,8 +377,66 @@ export default function CalendarPage() {
       {/* Presets */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Presets</SectionTitle>
-        <div className="flex gap-4">
-          <div className="flex flex-col gap-2">
+        <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
+          <Calendar
+            mode="single"
+            selected={presetDate}
+            onSelect={setPresetDate}
+            month={presetMonth}
+            onMonthChange={setPresetMonth}
+            className="border-0 shadow-none"
+            classNames={{
+              nav: "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
+            }}
+            components={{
+              MonthCaption: () => (
+                <div className="flex h-(--cell-size) items-center gap-1.5">
+                  <Select
+                    value={monthNames[presetMonth.getMonth()]}
+                    onValueChange={(v) => {
+                      const next = new Date(presetMonth)
+                      next.setMonth(monthNames.indexOf(v))
+                      setPresetMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {monthNames.map((mName) => (
+                        <SelectItem key={mName} value={mName}>
+                          {mName}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    value={String(presetMonth.getFullYear())}
+                    onValueChange={(v) => {
+                      const next = new Date(presetMonth)
+                      next.setFullYear(Number(v))
+                      setPresetMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 14 }, (_, i) => {
+                        const y = 2017 + i
+                        return (
+                          <SelectItem key={y} value={String(y)}>
+                            {y}
+                          </SelectItem>
+                        )
+                      })}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ),
+            }}
+          />
+          <div className="flex items-center gap-2 border-t border-border px-4 py-3">
             <Button
               variant="outline"
               size="sm"
@@ -397,43 +463,14 @@ export default function CalendarPage() {
               variant="outline"
               size="sm"
               onClick={() => {
-                const d = addDays(new Date(), 3)
-                setPresetDate(d)
-                setPresetMonth(d)
-              }}
-            >
-              In 3 days
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
                 const d = addDays(new Date(), 7)
                 setPresetDate(d)
                 setPresetMonth(d)
               }}
             >
-              In a week
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const d = addDays(new Date(), 14)
-                setPresetDate(d)
-                setPresetMonth(d)
-              }}
-            >
-              In 2 weeks
+              Next week
             </Button>
           </div>
-          <Calendar
-            mode="single"
-            selected={presetDate}
-            onSelect={setPresetDate}
-            month={presetMonth}
-            onMonthChange={setPresetMonth}
-          />
         </div>
       </div>
 
@@ -471,27 +508,6 @@ export default function CalendarPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Multiple Months</SectionTitle>
         <MultiMonthRangePicker />
-      </div>
-
-      {/* With Select */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>With Select</SectionTitle>
-        <div className="flex w-max flex-col gap-3 rounded-lg border p-3">
-          <Select defaultValue="this-week">
-            <SelectTrigger variant="outline" className="w-full">
-              <SelectValue placeholder="Select range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="tomorrow">Tomorrow</SelectItem>
-              <SelectItem value="this-week">This week</SelectItem>
-              <SelectItem value="next-week">Next week</SelectItem>
-              <SelectItem value="this-month">This month</SelectItem>
-              <SelectItem value="custom">Custom range</SelectItem>
-            </SelectContent>
-          </Select>
-          <Calendar mode="range" selected={rangeDate} onSelect={setRangeDate} />
-        </div>
       </div>
 
       {/* Disabled Weekends */}
