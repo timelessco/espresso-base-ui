@@ -45,6 +45,8 @@ function Calendar({
       formatters={{
         formatMonthDropdown: (date) =>
           date.toLocaleString(locale?.code, { month: "short" }),
+        formatWeekdayName: (date) =>
+          date.toLocaleDateString(locale?.code, { weekday: "narrow" }),
         ...formatters,
       }}
       classNames={{
@@ -98,7 +100,7 @@ function Calendar({
         table: "w-full border-collapse",
         weekdays: cn("flex gap-2.5", defaultClassNames.weekdays),
         weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-[0.8rem] font-normal text-muted-foreground select-none",
+          "flex-1 rounded-(--cell-radius) text-xs leading-base font-medium tracking-normal text-card-foreground select-none",
           defaultClassNames.weekday
         ),
         week: cn(

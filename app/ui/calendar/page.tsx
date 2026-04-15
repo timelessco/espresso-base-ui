@@ -55,14 +55,14 @@ function DateTimePresetPicker() {
 
   return (
     <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
-      <div className="flex justify-center">
+      <div className="flex">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
           month={month}
           onMonthChange={setMonth}
-          className="border-0 shadow-none"
+          className="w-full border-0 shadow-none"
           classNames={{
             nav: "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
           }}
@@ -72,6 +72,7 @@ function DateTimePresetPicker() {
                 <Select
                   value={monthNames[month.getMonth()]}
                   onValueChange={(v) => {
+                    if (!v) return
                     const next = new Date(month)
                     next.setMonth(monthNames.indexOf(v))
                     setMonth(next)
@@ -91,6 +92,7 @@ function DateTimePresetPicker() {
                 <Select
                   value={String(month.getFullYear())}
                   onValueChange={(v) => {
+                    if (!v) return
                     const next = new Date(month)
                     next.setFullYear(Number(v))
                     setMonth(next)
@@ -124,7 +126,7 @@ function DateTimePresetPicker() {
         </Button>
       </div>
       <div className="flex items-center gap-2 px-4 pb-3">
-        <Select value={hour} onValueChange={setHour}>
+        <Select value={hour} onValueChange={(v) => v && setHour(v)}>
           <SelectTrigger variant="subtle" size="sm" className="w-full">
             <SelectValue />
           </SelectTrigger>
@@ -139,7 +141,7 @@ function DateTimePresetPicker() {
             })}
           </SelectContent>
         </Select>
-        <Select value={minute} onValueChange={setMinute}>
+        <Select value={minute} onValueChange={(v) => v && setMinute(v)}>
           <SelectTrigger variant="subtle" size="sm" className="w-full">
             <SelectValue />
           </SelectTrigger>
@@ -154,7 +156,7 @@ function DateTimePresetPicker() {
             })}
           </SelectContent>
         </Select>
-        <Select value={period} onValueChange={setPeriod}>
+        <Select value={period} onValueChange={(v) => v && setPeriod(v)}>
           <SelectTrigger variant="subtle" size="sm" className="w-16">
             <SelectValue />
           </SelectTrigger>
@@ -384,7 +386,7 @@ export default function CalendarPage() {
             onSelect={setPresetDate}
             month={presetMonth}
             onMonthChange={setPresetMonth}
-            className="border-0 shadow-none"
+            className="w-full border-0 shadow-none"
             classNames={{
               nav: "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
             }}
@@ -394,6 +396,7 @@ export default function CalendarPage() {
                   <Select
                     value={monthNames[presetMonth.getMonth()]}
                     onValueChange={(v) => {
+                      if (!v) return
                       const next = new Date(presetMonth)
                       next.setMonth(monthNames.indexOf(v))
                       setPresetMonth(next)
@@ -413,6 +416,7 @@ export default function CalendarPage() {
                   <Select
                     value={String(presetMonth.getFullYear())}
                     onValueChange={(v) => {
+                      if (!v) return
                       const next = new Date(presetMonth)
                       next.setFullYear(Number(v))
                       setPresetMonth(next)
