@@ -52,12 +52,28 @@ export default function SonnerPage() {
             variant="outline"
             onClick={() =>
               toast("Dismissible notification", {
+                duration: 90000,
                 icon: <BellIcon className="size-4" />,
                 closeButton: true,
               })
             }
           >
             With close icon
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Event has been created", {
+                description: "December 03, 2023 at 9:00 AM",
+                action: {
+                  label: "Undo",
+                  onClick: () => toast("Undone"),
+                },
+                closeButton: true,
+              })
+            }
+          >
+            Close + Action
           </Button>
         </div>
       </div>
