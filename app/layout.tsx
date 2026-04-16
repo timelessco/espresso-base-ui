@@ -32,7 +32,7 @@ export default function RootLayout({
         inter.variable
       )}
     >
-      <body className="overflow-hidden">
+      <body className="overflow-hidden leading-base tracking-normal">
         <ThemeProvider>
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
