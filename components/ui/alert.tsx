@@ -2,6 +2,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 type AlertVariant = "default" | "success" | "destructive" | "warning" | "info"
 type AlertType = "default" | "banner"
@@ -38,25 +39,25 @@ const alertVariants = cva(
         type: "default",
         variant: "success",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:bg-success/80! [&_[data-slot=alert-button]>button]:active:bg-success/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--success),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--success),white_10%)]!",
       },
       {
         type: "default",
         variant: "destructive",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:bg-error/80! [&_[data-slot=alert-button]>button]:active:bg-error/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--error),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--error),white_10%)]!",
       },
       {
         type: "default",
         variant: "warning",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:bg-warning/80! [&_[data-slot=alert-button]>button]:active:bg-warning/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--warning),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--warning),white_10%)]!",
       },
       {
         type: "default",
         variant: "info",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:brightness-97 [&_[data-slot=alert-button]>button]:active:brightness-95",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info/80! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
       },
       // banner type — variant bg colors
       {
@@ -190,13 +191,21 @@ function AlertDescription({
   )
 }
 
-function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
+function AlertAction({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof Button>) {
   return (
-    <div
+    <Button
       data-slot="alert-action"
-      className={cn("absolute top-2.5 right-3", className)}
+      variant="ghost"
+      size="icon-xs"
+      className={cn("absolute top-1.5 right-3", className)}
       {...props}
-    />
+    >
+      {children}
+    </Button>
   )
 }
 
