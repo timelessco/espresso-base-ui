@@ -33,6 +33,7 @@ const sidebarItems = [
   { label: "Spinner", href: "/ui/spinner" },
   { label: "Switch", href: "/ui/switch" },
   { label: "Table", href: "/ui/table" },
+  { label: "Tag", href: "/ui/tag" },
   { label: "Tabs", href: "/ui/tabs" },
   { label: "Textarea", href: "/ui/textarea" },
   { label: "Tooltip", href: "/ui/tooltip" },
