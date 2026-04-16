@@ -28,8 +28,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "rounded-md bg-secondary p-px",
-        outline: "rounded-md border border-border-soft bg-transparent p-px",
+        default: "overflow-hidden rounded-md bg-secondary p-px",
         line: "rounded-md bg-transparent p-px group-data-horizontal/tabs:border-b group-data-horizontal/tabs:border-border-soft group-data-vertical/tabs:border-r group-data-vertical/tabs:border-border-soft",
         ghost: "rounded-md bg-transparent p-px",
         browser:
@@ -46,11 +45,6 @@ const tabsListVariants = cva(
         variant: "default",
         size: "sm",
         className: "group-data-horizontal/tabs:h-7",
-      },
-      {
-        variant: "outline",
-        size: "sm",
-        className: "group-data-horizontal/tabs:h-7.25",
       },
       {
         variant: "line",
@@ -72,11 +66,6 @@ const tabsListVariants = cva(
         variant: "default",
         size: "default",
         className: "group-data-horizontal/tabs:h-7.5",
-      },
-      {
-        variant: "outline",
-        size: "default",
-        className: "group-data-horizontal/tabs:h-7.75",
       },
       {
         variant: "line",
@@ -152,7 +141,6 @@ function TabsIndicator({ className, ...props }: TabsPrimitive.Indicator.Props) {
         "group-data-vertical/tabs:top-[var(--active-tab-top)] group-data-vertical/tabs:left-[var(--active-tab-left)] group-data-vertical/tabs:h-[var(--active-tab-height)] group-data-vertical/tabs:w-[var(--active-tab-width)]",
         // variant-specific styling
         "group-data-[variant=default]/tabs-list:bg-surface group-data-[variant=default]/tabs-list:shadow-6xs",
-        "group-data-[variant=outline]/tabs-list:bg-surface group-data-[variant=outline]/tabs-list:shadow-6xs",
         "group-data-[variant=ghost]/tabs-list:bg-surface group-data-[variant=ghost]/tabs-list:shadow-6xs",
         "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:shadow-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:top-auto group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:-bottom-px group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:h-px group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:rounded-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:bg-foreground group-data-[variant=line]/tabs-list:group-data-vertical/tabs:right-[-1px] group-data-[variant=line]/tabs-list:group-data-vertical/tabs:left-auto group-data-[variant=line]/tabs-list:group-data-vertical/tabs:w-px group-data-[variant=line]/tabs-list:group-data-vertical/tabs:bg-foreground",
         "group-data-[variant=browser]/tabs-list:border-border group-data-[variant=browser]/tabs-list:bg-primary-foreground group-data-[variant=browser]/tabs-list:shadow-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:rounded-b-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-x group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-t group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:rounded-r-none group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-y group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-l",
@@ -190,7 +178,7 @@ export {
 //   Consumers render `<TabsIndicator />` inside `<TabsList>`.
 // - `size` variant on `TabsList` (`sm`, `default`) with `sm` as default.
 //   shadcn has no size variants.
-// - Additional `variant`s on `TabsList`: `outline`, `ghost`, `browser`.
+// - Additional `variant`s on `TabsList`: `ghost`, `browser`.
 //   shadcn ships only `default` and `line`.
 // - CVA compound variants on `tabsListVariants` pairing each
 //   `variant` with each `size` to set appropriate heights.

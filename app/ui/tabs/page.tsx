@@ -72,30 +72,6 @@ export default function TabsPage() {
         </Tabs>
       </div>
 
-      {/* Outline — sm & default */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Outline — sm</SectionTitle>
-        <Tabs defaultValue="tab-1">
-          <TabsList variant="outline" size="sm">
-            <TabsTrigger value="tab-1">Account</TabsTrigger>
-            <TabsTrigger value="tab-2">Password</TabsTrigger>
-            <TabsTrigger value="tab-3">Settings</TabsTrigger>
-            <TabsIndicator />
-          </TabsList>
-        </Tabs>
-      </div>
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Outline — default</SectionTitle>
-        <Tabs defaultValue="tab-1">
-          <TabsList variant="outline" size="default">
-            <TabsTrigger value="tab-1">Account</TabsTrigger>
-            <TabsTrigger value="tab-2">Password</TabsTrigger>
-            <TabsTrigger value="tab-3">Settings</TabsTrigger>
-            <TabsIndicator />
-          </TabsList>
-        </Tabs>
-      </div>
-
       {/* Line — sm & default */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Line — sm</SectionTitle>
@@ -470,29 +446,6 @@ export default function TabsPage() {
                 <td className="px-4 py-3">
                   <Tabs orientation="vertical">
                     <TabsList variant="line">
-                      <TabsTrigger value="t1">Tab 1</TabsTrigger>
-                      <TabsTrigger value="t2">Tab 2</TabsTrigger>
-                      <TabsIndicator />
-                    </TabsList>
-                  </Tabs>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">
-                  Outline
-                </td>
-                <td className="px-4 py-3">
-                  <Tabs>
-                    <TabsList variant="outline">
-                      <TabsTrigger value="t1">Tab 1</TabsTrigger>
-                      <TabsTrigger value="t2">Tab 2</TabsTrigger>
-                      <TabsIndicator />
-                    </TabsList>
-                  </Tabs>
-                </td>
-                <td className="px-4 py-3">
-                  <Tabs orientation="vertical">
-                    <TabsList variant="outline">
                       <TabsTrigger value="t1">Tab 1</TabsTrigger>
                       <TabsTrigger value="t2">Tab 2</TabsTrigger>
                       <TabsIndicator />
