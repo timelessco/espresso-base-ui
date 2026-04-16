@@ -71,7 +71,7 @@ function Slider({
             data-slot="slider-thumb"
             key={index}
             className={cn(
-              "relative block shrink-0 rounded-full bg-white shadow-6xs ring-ring/70 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:shadow-3xl hover:ring-3 focus:shadow-3xl focus:ring-3 focus:outline-hidden active:shadow-3xl active:ring-3 data-disabled:pointer-events-none data-disabled:bg-accent data-disabled:shadow-none data-disabled:ring-0",
+              "relative block shrink-0 rounded-full bg-white shadow-6xs ring-ring/70 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:shadow-3xl hover:ring-3 has-[:focus-visible]:shadow-3xl has-[:focus-visible]:ring-3 has-[:focus-visible]:outline-hidden active:shadow-3xl active:ring-3 data-disabled:pointer-events-none data-disabled:bg-accent data-disabled:shadow-none data-disabled:ring-0",
               thumbSizeMap[size ?? "default"]
             )}
           />
