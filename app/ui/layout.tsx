@@ -24,6 +24,7 @@ const sidebarItems = [
   { label: "Notification", href: "/ui/notification" },
   { label: "Popover", href: "/ui/popover" },
   { label: "Radio", href: "/ui/radio" },
+  { label: "Rating", href: "/ui/rating" },
   { label: "Select", href: "/ui/select" },
   { label: "Sonner", href: "/ui/sonner" },
   { label: "Spacer", href: "/ui/spacer" },
