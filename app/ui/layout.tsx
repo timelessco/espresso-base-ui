@@ -22,6 +22,8 @@ const sidebarItems = [
   { label: "Header", href: "/ui/header" },
   { label: "Input", href: "/ui/input" },
   { label: "Input Group", href: "/ui/input-group" },
+  { label: "Item", href: "/ui/item" },
+  { label: "Kbd", href: "/ui/kbd" },
   { label: "Notification", href: "/ui/notification" },
   { label: "Popover", href: "/ui/popover" },
   { label: "Progress", href: "/ui/progress" },
