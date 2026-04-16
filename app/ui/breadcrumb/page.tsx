@@ -9,6 +9,12 @@ import {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 } from "@/components/ui/breadcrumb"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -119,7 +125,14 @@ export default function BreadcrumbPage_() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbEllipsis />
+              <DropdownMenu>
+                <DropdownMenuTrigger nativeButton={false} render={<BreadcrumbEllipsis />} />
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem>Documentation</DropdownMenuItem>
+                  <DropdownMenuItem>Themes</DropdownMenuItem>
+                  <DropdownMenuItem>GitHub</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -263,7 +276,13 @@ export default function BreadcrumbPage_() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbEllipsis />
+              <DropdownMenu>
+                <DropdownMenuTrigger nativeButton={false} render={<BreadcrumbEllipsis />} />
+                <DropdownMenuContent align="start">
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
