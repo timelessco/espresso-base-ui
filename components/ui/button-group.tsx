@@ -20,7 +20,7 @@ const buttonGroupVariants = cva(
         horizontal: "",
         vertical: "flex-col",
       },
-      destructive: {
+      detached: {
         true: "",
         false: "",
       },
@@ -37,23 +37,23 @@ const buttonGroupVariants = cva(
     compoundVariants: [
       {
         orientation: "horizontal",
-        destructive: false,
+        detached: false,
         className:
           "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:-ml-px",
       },
       {
         orientation: "vertical",
-        destructive: false,
+        detached: false,
         className:
           "*:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg! [&>[data-slot]~[data-slot]]:rounded-t-none [&>[data-slot]~[data-slot]]:-mt-px",
       },
-      { destructive: true, size: "sm", className: "gap-1" },
-      { destructive: true, size: "default", className: "gap-1.5" },
-      { destructive: true, size: "lg", className: "gap-1.5" },
+      { detached: true, size: "sm", className: "gap-1" },
+      { detached: true, size: "default", className: "gap-1.5" },
+      { detached: true, size: "lg", className: "gap-1.5" },
     ],
     defaultVariants: {
       orientation: "horizontal",
-      destructive: false,
+      detached: false,
       wrapLayout: false,
       size: "default",
     },
@@ -63,7 +63,7 @@ const buttonGroupVariants = cva(
 function ButtonGroup({
   className,
   orientation,
-  destructive,
+  detached,
   wrapLayout,
   size,
   children,
@@ -76,10 +76,10 @@ function ButtonGroup({
         role="group"
         data-slot="button-group"
         data-orientation={orientation}
-        data-destructive={destructive || undefined}
+        data-detached={detached || undefined}
         data-wrap={wrapLayout || undefined}
         data-size={size ?? "default"}
-        className={cn(buttonGroupVariants({ orientation, destructive, wrapLayout, size }), className)}
+        className={cn(buttonGroupVariants({ orientation, detached, wrapLayout, size }), className)}
         {...props}
       >
         {children}

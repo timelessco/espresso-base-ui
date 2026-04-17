@@ -225,25 +225,25 @@ export default function ButtonGroupPage() {
         </div>
       </div>
 
-      {/* Destructive */}
+      {/* Detached */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Destructive</SectionTitle>
+        <SectionTitle>Detached</SectionTitle>
         <div className="flex flex-col gap-3">
-          <ButtonGroup destructive size="sm">
+          <ButtonGroup detached size="sm">
             <Button>Small</Button>
             <Button>Small</Button>
             <Button>Small</Button>
             <Button>Small</Button>
             <Button>Small</Button>
           </ButtonGroup>
-          <ButtonGroup destructive>
+          <ButtonGroup detached>
             <Button>Default</Button>
             <Button>Default</Button>
             <Button>Default</Button>
             <Button>Default</Button>
             <Button>Default</Button>
           </ButtonGroup>
-          <ButtonGroup destructive size="lg">
+          <ButtonGroup detached size="lg">
             <Button>Large</Button>
             <Button>Large</Button>
             <Button>Large</Button>
@@ -253,16 +253,16 @@ export default function ButtonGroupPage() {
         </div>
       </div>
 
-      {/* Destructive — Variants */}
+      {/* Detached — Variants */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Destructive — Variants</SectionTitle>
+        <SectionTitle>Detached — Variants</SectionTitle>
         <div className="flex flex-col gap-3">
-          <ButtonGroup destructive>
+          <ButtonGroup detached>
             <Button variant="outline">Outline</Button>
             <Button variant="outline">Outline</Button>
             <Button variant="outline">Outline</Button>
           </ButtonGroup>
-          <ButtonGroup destructive>
+          <ButtonGroup detached>
             <Button variant="secondary">Secondary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="secondary">Secondary</Button>
@@ -274,7 +274,7 @@ export default function ButtonGroupPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Wrap Layout</SectionTitle>
         <div className="flex max-w-sm flex-col gap-8">
-          <ButtonGroup destructive wrapLayout>
+          <ButtonGroup detached wrapLayout>
             <Button>Button</Button>
             <Button>Button</Button>
             <Button>Button</Button>
@@ -283,7 +283,7 @@ export default function ButtonGroupPage() {
             <Button>Button</Button>
             <Button>Button</Button>
           </ButtonGroup>
-          <ButtonGroup destructive wrapLayout size="sm">
+          <ButtonGroup detached wrapLayout size="sm">
             <Button>Button</Button>
             <Button>Button</Button>
             <Button>Button</Button>
@@ -292,7 +292,7 @@ export default function ButtonGroupPage() {
             <Button>Button</Button>
             <Button>Button</Button>
           </ButtonGroup>
-          <ButtonGroup destructive wrapLayout size="lg">
+          <ButtonGroup detached wrapLayout size="lg">
             <Button>Button</Button>
             <Button>Button</Button>
             <Button>Button</Button>
@@ -304,10 +304,10 @@ export default function ButtonGroupPage() {
         </div>
       </div>
 
-      {/* Destructive — Vertical */}
+      {/* Detached — Vertical */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Destructive — Vertical</SectionTitle>
-        <ButtonGroup destructive orientation="vertical">
+        <SectionTitle>Detached — Vertical</SectionTitle>
+        <ButtonGroup detached orientation="vertical">
           <Button>Button</Button>
           <Button>Button</Button>
           <Button>Button</Button>
