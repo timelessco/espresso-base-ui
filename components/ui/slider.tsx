@@ -30,7 +30,7 @@ function Slider({
 }: SliderPrimitive.Root.Props & {
   size?: "sm" | "default" | "lg" | "xl"
 }) {
-  const _defaultValue = defaultValue ?? [min]
+  const _defaultValue = defaultValue ?? [min, max]
   const _values = React.useMemo(
     () =>
       Array.isArray(value)
