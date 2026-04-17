@@ -34,27 +34,14 @@ function Textarea({
   className,
   variant,
   size,
-  disabled,
-  "data-invalid": dataInvalid,
-  "data-disabled": dataDisabled,
   ...props
 }: React.ComponentProps<"textarea"> &
-  VariantProps<typeof textareaVariants> & {
-    "data-invalid"?: string
-    "data-disabled"?: string
-    "data-valid"?: string
-    "data-filled"?: string
-  }) {
+  VariantProps<typeof textareaVariants>) {
   return (
     <textarea
       data-slot="textarea"
       data-variant={variant ?? "outline"}
       data-size={size ?? "default"}
-      data-invalid={dataInvalid}
-      data-disabled={disabled || dataDisabled === "true" ? "true" : undefined}
-      disabled={disabled}
-      aria-invalid={dataInvalid === "true" || undefined}
-      aria-disabled={disabled || dataDisabled === "true" || undefined}
       className={cn(textareaVariants({ variant, size, className }))}
       {...props}
     />
