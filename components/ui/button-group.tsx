@@ -24,6 +24,10 @@ const buttonGroupVariants = cva(
         true: "",
         false: "",
       },
+      wrapLayout: {
+        true: "flex-wrap justify-center",
+        false: "",
+      },
       size: {
         sm: "",
         default: "",
@@ -50,6 +54,7 @@ const buttonGroupVariants = cva(
     defaultVariants: {
       orientation: "horizontal",
       destructive: false,
+      wrapLayout: false,
       size: "default",
     },
   }
@@ -59,6 +64,7 @@ function ButtonGroup({
   className,
   orientation,
   destructive,
+  wrapLayout,
   size,
   children,
   ...props
@@ -71,8 +77,9 @@ function ButtonGroup({
         data-slot="button-group"
         data-orientation={orientation}
         data-destructive={destructive || undefined}
+        data-wrap={wrapLayout || undefined}
         data-size={size ?? "default"}
-        className={cn(buttonGroupVariants({ orientation, destructive, size }), className)}
+        className={cn(buttonGroupVariants({ orientation, destructive, wrapLayout, size }), className)}
         {...props}
       >
         {children}
