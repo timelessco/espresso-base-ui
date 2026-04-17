@@ -189,13 +189,6 @@ export default function ProgressPage() {
         </div>
       </div>
 
-      {/* Indeterminate */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Indeterminate</SectionTitle>
-        <Progress value={null} className="w-80">
-          <ProgressLabel>Loading…</ProgressLabel>
-        </Progress>
-      </div>
     </div>
   )
 }

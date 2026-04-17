@@ -166,24 +166,24 @@ export default function ButtonGroupPage() {
         </ButtonGroup>
       </div>
 
-      {/* Sizes */}
+      {/* Sizes (via ButtonGroup) */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Sizes</SectionTitle>
+        <SectionTitle>Sizes (via ButtonGroup)</SectionTitle>
         <div className="flex flex-col gap-3">
-          <ButtonGroup>
-            <Button variant="outline" size="sm">Small</Button>
-            <Button variant="outline" size="sm">Group</Button>
-            <Button variant="outline" size="sm">Buttons</Button>
+          <ButtonGroup size="sm">
+            <Button variant="outline">Small</Button>
+            <Button variant="outline">Group</Button>
+            <Button variant="outline">Buttons</Button>
           </ButtonGroup>
-          <ButtonGroup>
+          <ButtonGroup size="default">
             <Button variant="outline">Default</Button>
             <Button variant="outline">Group</Button>
             <Button variant="outline">Buttons</Button>
           </ButtonGroup>
-          <ButtonGroup>
-            <Button variant="outline" size="lg">Large</Button>
-            <Button variant="outline" size="lg">Group</Button>
-            <Button variant="outline" size="lg">Buttons</Button>
+          <ButtonGroup size="lg">
+            <Button variant="outline">Large</Button>
+            <Button variant="outline">Group</Button>
+            <Button variant="outline">Buttons</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -208,6 +208,61 @@ export default function ButtonGroupPage() {
             <Button variant="ghost">Buttons</Button>
           </ButtonGroup>
         </div>
+      </div>
+
+      {/* Destructive */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Destructive</SectionTitle>
+        <div className="flex flex-col gap-3">
+          <ButtonGroup destructive size="sm">
+            <Button>Small</Button>
+            <Button>Small</Button>
+            <Button>Small</Button>
+            <Button>Small</Button>
+            <Button>Small</Button>
+          </ButtonGroup>
+          <ButtonGroup destructive>
+            <Button>Default</Button>
+            <Button>Default</Button>
+            <Button>Default</Button>
+            <Button>Default</Button>
+            <Button>Default</Button>
+          </ButtonGroup>
+          <ButtonGroup destructive size="lg">
+            <Button>Large</Button>
+            <Button>Large</Button>
+            <Button>Large</Button>
+            <Button>Large</Button>
+            <Button>Large</Button>
+          </ButtonGroup>
+        </div>
+      </div>
+
+      {/* Destructive — Variants */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Destructive — Variants</SectionTitle>
+        <div className="flex flex-col gap-3">
+          <ButtonGroup destructive>
+            <Button variant="outline">Outline</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="outline">Outline</Button>
+          </ButtonGroup>
+          <ButtonGroup destructive>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="secondary">Secondary</Button>
+          </ButtonGroup>
+        </div>
+      </div>
+
+      {/* Destructive — Vertical */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Destructive — Vertical</SectionTitle>
+        <ButtonGroup destructive orientation="vertical">
+          <Button>Button</Button>
+          <Button>Button</Button>
+          <Button>Button</Button>
+        </ButtonGroup>
       </div>
     </div>
   )
