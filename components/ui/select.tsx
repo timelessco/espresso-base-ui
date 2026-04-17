@@ -144,28 +144,19 @@ function SelectTrigger({
       className={cn(
         "relative",
         selectTriggerVariants({ variant, size, className }),
-        prefixIcon && "[&>[data-slot=select-value]]:pl-6",
-        suffixIcon && "[&>[data-slot=select-value]]:pr-6"
+        prefixIcon && "[&>[data-slot=select-value]]:pl-6"
       )}
       {...props}
     >
       {prefixIcon && (
-        <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center">
+        <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center [&>svg]:size-4">
           {prefixIcon}
         </span>
       )}
       {children}
-      {suffixIcon ? (
-        <span className="pointer-events-none absolute top-1/2 right-2.5 flex -translate-y-1/2 items-center">
-          {suffixIcon}
-        </span>
-      ) : (
-        <SelectPrimitive.Icon
-          render={
-            <SelectChevronIcon className="pointer-events-none size-4 text-current" />
-          }
-        />
-      )}
+      <SelectPrimitive.Icon className="pointer-events-none flex shrink-0 items-center [&>svg]:size-4">
+        {suffixIcon ?? <SelectChevronIcon />}
+      </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
 }
@@ -353,17 +344,17 @@ export {
 // - Lucide `CheckIcon` (replaced with custom SVG)
 // - Dark mode overrides
 //
-// ### Prefix/Suffix Icon Positioning
-// - `prefixIcon` and `suffixIcon` are now absolutely positioned inside the
-//   `SelectTrigger` (left-2.5 / right-2.5, vertically centered) instead of
-//   being rendered in the normal flow.
-// - `SelectValue` receives `pl-6` / `pr-6` when a prefix/suffix icon is
-//   present so its text doesn't overlap the icons.
-// - Reason: with icons in flow, `SelectValue`'s bounding rect was pushed
-//   inward, and Base UI's `alignItemWithTrigger` positioning (which aligns
-//   the selected item's text with the value text) dragged the popup off the
-//   trigger's left edge. Taking the icons out of flow keeps
-//   `SelectValue`'s rect flush with the trigger's content edge, so the
-//   popup stays anchored to the trigger regardless of prefix icon presence.
-// - The trigger now has `relative` positioning so the absolute icon spans
-//   anchor to it.
+// ### Prefix Icon Positioning
+// - `prefixIcon` is absolutely positioned inside `SelectTrigger`
+//   (left-2.5, vertically centered) to avoid breaking Base UI's
+//   `alignItemWithTrigger` popup alignment. `SelectValue` receives `pl-6`
+//   when prefix is present so text doesn't overlap.
+// - Trigger has `relative` positioning so the absolute icon anchors to it.
+//
+// ### Suffix Icon (Select.Icon)
+// - Uses Base UI's `SelectPrimitive.Icon` children pattern per docs:
+//   `<Select.Icon>{icon}</Select.Icon>`
+// - `suffixIcon` prop replaces the default `SelectChevronIcon` as children
+//   inside the Icon wrapper span. The wrapper gets `data-popup-open`
+//   automatically from Base UI for open-state styling.
+// - Suffix is in normal flex flow (not absolute), no padding hack needed.
