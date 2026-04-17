@@ -1,6 +1,21 @@
 "use client"
 
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Plus, Minus, ChevronDown, ArrowLeft, MoreHorizontal, Trash2, Forward, Star } from "lucide-react"
+import {
+  Bold,
+  Italic,
+  Underline,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Plus,
+  Minus,
+  ChevronDown,
+  ArrowLeft,
+  MoreHorizontal,
+  Trash2,
+  Forward,
+  Star,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   ButtonGroup,
@@ -251,6 +266,40 @@ export default function ButtonGroupPage() {
             <Button variant="secondary">Secondary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="secondary">Secondary</Button>
+          </ButtonGroup>
+        </div>
+      </div>
+
+      {/* Wrap Layout */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Wrap Layout</SectionTitle>
+        <div className="flex max-w-sm flex-col gap-8">
+          <ButtonGroup destructive wrapLayout>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+          </ButtonGroup>
+          <ButtonGroup destructive wrapLayout size="sm">
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+          </ButtonGroup>
+          <ButtonGroup destructive wrapLayout size="lg">
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
           </ButtonGroup>
         </div>
       </div>
