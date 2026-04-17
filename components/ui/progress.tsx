@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 const SEGMENT_COUNT = 5
 
-const progressVariants = cva("flex flex-wrap items-center gap-2.5", {
+const progressVariants = cva("group/progress flex flex-wrap items-center gap-2.5", {
   variants: {
     size: {
       sm: "",
@@ -32,25 +32,6 @@ const progressVariants = cva("flex flex-wrap items-center gap-2.5", {
   },
 })
 
-type ProgressContextValue = Required<VariantProps<typeof progressVariants>> & {
-  value: number | null
-  min: number
-  max: number
-}
-
-const ProgressContext = React.createContext<ProgressContextValue>({
-  size: "default",
-  edge: "round-edge",
-  type: "default",
-  value: null,
-  min: 0,
-  max: 100,
-})
-
-function useProgress() {
-  return React.useContext(ProgressContext)
-}
-
 function Progress({
   className,
   children,
@@ -62,92 +43,64 @@ function Progress({
   max,
   ...props
 }: ProgressPrimitive.Root.Props & VariantProps<typeof progressVariants>) {
-  const context = React.useMemo(
-    () => ({
-      size: size ?? "default",
-      edge: edge ?? "round-edge",
-      type: type ?? "default",
-      value: value ?? null,
-      min: min ?? 0,
-      max: max ?? 100,
-    }),
-    [size, edge, type, value, min, max]
-  )
   return (
-    <ProgressContext.Provider value={context}>
-      <ProgressPrimitive.Root
-        value={value}
-        min={min}
-        max={max}
-        data-slot="progress"
-        data-size={context.size}
-        data-edge={context.edge}
-        data-type={context.type}
-        className={cn(progressVariants({ size, edge, type }), className)}
-        {...props}
-      >
-        {children}
-        {type === "segmented" ? (
-          <ProgressSegments />
-        ) : (
-          <ProgressTrack>
-            <ProgressIndicator />
-          </ProgressTrack>
-        )}
-      </ProgressPrimitive.Root>
-    </ProgressContext.Provider>
+    <ProgressPrimitive.Root
+      value={value}
+      min={min}
+      max={max}
+      data-slot="progress"
+      data-size={size}
+      data-edge={edge}
+      data-type={type}
+      className={cn(progressVariants({ size, edge, type }), className)}
+      {...props}
+    >
+      {children}
+      {type === "segmented" ? (
+        <ProgressSegments
+          value={value ?? null}
+          min={min ?? 0}
+          max={max ?? 100}
+        />
+      ) : (
+        <ProgressTrack>
+          <ProgressIndicator />
+        </ProgressTrack>
+      )}
+    </ProgressPrimitive.Root>
   )
 }
 
-const trackVariants = cva(
-  "relative flex w-full items-center overflow-x-hidden rounded-full bg-secondary",
-  {
-    variants: {
-      size: {
-        sm: "h-0.5",
-        default: "h-1",
-        lg: "h-2",
-        xl: "h-3",
-      },
-    },
-    defaultVariants: {
-      size: "default",
-    },
-  }
-)
-
 function ProgressTrack({ className, ...props }: ProgressPrimitive.Track.Props) {
-  const { size } = useProgress()
   return (
     <ProgressPrimitive.Track
       data-slot="progress-track"
-      className={cn(trackVariants({ size }), className)}
+      className={cn(
+        "relative flex w-full items-center overflow-x-hidden rounded-full bg-secondary",
+        "group-data-[size=sm]/progress:h-0.5",
+        "group-data-[size=default]/progress:h-1",
+        "group-data-[size=lg]/progress:h-2",
+        "group-data-[size=xl]/progress:h-3",
+        className
+      )}
       {...props}
     />
   )
 }
 
-const indicatorVariants = cva("h-full bg-primary transition-all", {
-  variants: {
-    edge: {
-      "round-edge": "rounded-full",
-      "square-edge": "rounded-none",
-    },
-  },
-  defaultVariants: {
-    edge: "round-edge",
-  },
-})
-
 function ProgressIndicator({
   className,
   ...props
 }: ProgressPrimitive.Indicator.Props) {
-  const { edge } = useProgress()
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
-      className={cn(indicatorVariants({ edge }), className)}
+      className={cn(
+        "h-full bg-primary transition-all",
+        "group-data-[edge=round-edge]/progress:rounded-full",
+        "group-data-[edge=square-edge]/progress:rounded-none",
+        className
+      )}
       {...props}
     />
   )
@@ -169,15 +122,28 @@ const segmentsVariants = cva("flex w-full gap-1", {
 
 function ProgressSegments({
   className,
+  value,
+  min,
+  max,
   ...props
-}: React.ComponentProps<"div">) {
-  const { size, edge, value, min, max } = useProgress()
+}: React.ComponentProps<"div"> & {
+  value: number | null
+  min: number
+  max: number
+}) {
   const percentage = value === null ? 0 : ((value - min) / (max - min)) * 100
   const filledCount = Math.round((percentage / 100) * SEGMENT_COUNT)
   return (
     <div
       data-slot="progress-segments"
-      className={cn(segmentsVariants({ size }), className)}
+      className={cn(
+        "flex w-full gap-1",
+        "group-data-[size=sm]/progress:h-0.5",
+        "group-data-[size=default]/progress:h-1",
+        "group-data-[size=lg]/progress:h-2",
+        "group-data-[size=xl]/progress:h-3",
+        className
+      )}
       {...props}
     >
       {Array.from({ length: SEGMENT_COUNT }).map((_, i) => {
@@ -192,9 +158,10 @@ function ProgressSegments({
             className={cn(
               "h-full flex-1 transition-colors",
               isFilled ? "bg-primary" : "bg-secondary",
-              edge === "round-edge" && "rounded-full",
-              edge === "square-edge" && isFirst && "rounded-l-full",
-              edge === "square-edge" && isLast && "rounded-r-full"
+              "group-data-[edge=round-edge]/progress:rounded-full",
+              "group-data-[edge=square-edge]/progress:rounded-none",
+              "group-data-[edge=square-edge]/progress:first:rounded-l-full",
+              "group-data-[edge=square-edge]/progress:last:rounded-r-full"
             )}
           />
         )
