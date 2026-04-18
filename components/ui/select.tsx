@@ -342,36 +342,63 @@ export {
   SelectValue,
 }
 
-// ## Select Changelog
-//
-// ### React Context
-// - `SelectContext` passes `variant` and `size` from `Select` root to children
-// - `SelectTrigger` reads `variant` and `size` from context, can be overridden per-trigger via props
-// - `SelectItem` reads `size` from context to set item height (sm: h-7, default: h-7.5, lg: h-8)
-// - Usage: `<Select variant="outline" size="sm">` — no need to pass variant/size to SelectTrigger
-//
-// ### Added
-// - `Select` wrapper component with `variant` and `size` props (replaces direct `SelectPrimitive.Root`)
-// - `SelectSizeContext` → `SelectContext` (holds both variant and size)
-// - CVA-based `selectTriggerVariants` with variant (`outline`, `subtle`, `ghost`) and size (`sm`, `default`, `lg`)
-// - `suffixIcon` prop on `SelectTrigger`
-// - Custom `SelectChevronIcon` and `SelectCheckIcon` SVGs (replaced lucide icons)
-// - Data states: `data-[valid]`, `data-[invalid]`, `data-[filled]` on all variants
-// - Aria states: `aria-invalid` and `aria-disabled` auto-set from data attributes
-// - `data-disabled` styles with `!important` text color override
-//
-// ### Changed
-// - `alignItemWithTrigger` default changed from `true` to `false`
-// - `SelectItem` height now varies by size via context
-//
-// ### Removed
-// - Lucide `CheckIcon` (replaced with custom SVG)
-// - Dark mode overrides
-//
-// ### Suffix Icon (Select.Icon)
-// - Uses Base UI's `SelectPrimitive.Icon` children pattern per docs:
-//   `<Select.Icon>{icon}</Select.Icon>`
-// - `suffixIcon` prop replaces the default `SelectChevronIcon` as children
-//   inside the Icon wrapper span. The wrapper gets `data-popup-open`
-//   automatically from Base UI for open-state styling.
-// - Suffix is in normal flex flow (not absolute), no padding hack needed.
+/**
+ * Changelog — compared to shadcn base-ui select
+ * (npx shadcn@latest add base/select)
+ *
+ * Reference: https://ui.shadcn.com/docs/components/base/select
+ * Base UI:   https://base-ui.com/react/components/select
+ * Source:    apps/v4/registry/bases/base/ui/select.tsx
+ *
+ * Structure preserved from shadcn base:
+ *   - SelectGroup, SelectContent, SelectLabel, SelectSeparator,
+ *     SelectScrollUpButton, SelectScrollDownButton — identical structure
+ *   - All components use correct Base UI primitives with data-slot attributes
+ *   - SelectContent: Portal → Positioner → Popup + ScrollUp/Down + List
+ *   - SelectContent defaults: side="bottom", sideOffset=4, align="center",
+ *     alignOffset=0, alignItemWithTrigger=true
+ *   - SelectItem: Item → ItemText + ItemIndicator with check icon
+ *
+ * Design extensions (behavioral — not in shadcn):
+ *
+ *   Select (Root):
+ *     Before: `const Select = SelectPrimitive.Root` (direct re-export).
+ *     After:  Wrapper function with `SelectContext.Provider`.
+ *             Accepts `size`, `variant`, `items` props.
+ *             `items` stored in context AND forwarded to SelectPrimitive.Root.
+ *             Context shares size/variant/items to Trigger, Value, and Item.
+ *
+ *   SelectValue:
+ *     Before: Stateless — passes className + ...props.
+ *     After:  Reads `items` from context. When items with `icon` field exist,
+ *             injects a children render function `(value) => icon + label`
+ *             per Base UI docs (Select.Value children accepts a function).
+ *             User-provided children take priority over auto-rendering.
+ *
+ *   SelectTrigger:
+ *     Before: Destructures `size` only, renders children + Icon via `render` prop.
+ *     After:  Reads `size`/`variant` from context (overridable per-trigger).
+ *             CVA `selectTriggerVariants` with variant (outline|subtle|ghost)
+ *             and size (sm|default|lg).
+ *             `suffixIcon` prop replaces default SelectChevronIcon.
+ *             Uses Base UI's Icon children pattern per docs:
+ *             `<Select.Icon>{icon}</Select.Icon>` — gets `data-popup-open`.
+ *             Added `data-variant` attribute.
+ *
+ *   SelectItem:
+ *     Before: Stateless — fixed height via CSS.
+ *     After:  Reads `size` from context for dynamic item height
+ *             (sm: h-7, default: h-7.5, lg: h-8).
+ *
+ *   SelectItem type:
+ *     Added `{ label, value, icon? }` type extending Base UI's
+ *     `{ label, value }` format. The `icon` field enables automatic
+ *     icon rendering in SelectValue.
+ *
+ * Tailwind-only swaps (class-level, no behavior impact):
+ *   - cn-select-* slot classes → explicit Tailwind utilities
+ *   - Color tokens, border, bg, shadow, ring, animation classes
+ *   - IconPlaceholder → custom SVGs (SelectChevronIcon, SelectCheckIcon)
+ *     and lucide (ChevronUpIcon, ChevronDownIcon)
+ *   - selectTriggerVariants exported for external use
+ */
