@@ -8,21 +8,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
-type InputGroupContextValue = {
-  size?: "sm" | "md" | "lg" | "xl"
-  variant?: "outline" | "subtle"
-}
-
-const InputGroupContext = React.createContext<InputGroupContextValue>({
-  size: "md",
-  variant: "outline",
-})
-
 const inputGroupVariants = cva(
   [
-    "group/input-group relative flex w-full min-w-0 items-center border text-secondary-foreground transition-colors outline-none",
+    "group/input-group relative flex w-full min-w-0 items-center border transition-colors outline-none",
     // disabled
-    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground has-disabled:[&_*]:!text-popover-foreground",
+    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground",
+    // focus-within
+    "has-[[data-slot=input-group-control]:focus-visible]:shadow-3xs",
+    // invalid
+    "has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
     // block/textarea layout
     "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto",
   ],
@@ -30,9 +24,9 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-accent bg-primary-foreground focus-within:border-primary-foreground focus-within:shadow-3xs! hover:border-popover-foreground hover:shadow-4xs active:border-card-foreground active:shadow-md active:ring-0 has-disabled:border-accent data-[filled=true]:border-filled-outline data-[invalid=true]:border-error-outline data-[valid=true]:border-success-outline",
+          "border-border bg-primary-foreground not-has-disabled:hover:border-border-normal has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground not-has-disabled:active:border-border-strong data-[filled=true]:border-border data-[invalid=true]:border-error-outline! data-[valid=true]:border-success-outline! group-data-[invalid=true]/field:border-error-outline!",
         subtle:
-          "border-transparent bg-secondary focus-within:border-primary-foreground focus-within:bg-primary-foreground! focus-within:shadow-3xs! hover:bg-muted active:border-card-foreground active:bg-primary-foreground active:shadow-md active:ring-0 has-disabled:bg-input data-[filled=true]:bg-filled data-[invalid=true]:bg-error data-[valid=true]:bg-success",
+          "border-transparent bg-secondary not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground has-[[data-slot=input-group-control]:focus-visible]:bg-primary-foreground not-has-disabled:active:border-border-strong data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! group-data-[invalid=true]/field:bg-error!",
       },
       size: {
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
@@ -54,26 +48,20 @@ function InputGroup({
   size,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupVariants>) {
-  const contextValue = React.useMemo(
-    () => ({ size: size ?? "md", variant: variant ?? "outline" }),
-    [size, variant]
-  )
   return (
-    <InputGroupContext.Provider value={contextValue}>
-      <div
-        data-slot="input-group"
-        data-variant={variant ?? "outline"}
-        data-size={size ?? "md"}
-        role="group"
-        className={cn(inputGroupVariants({ variant, size, className }))}
-        {...props}
-      />
-    </InputGroupContext.Provider>
+    <div
+      data-slot="input-group"
+      data-variant={variant ?? "outline"}
+      data-size={size ?? "md"}
+      role="group"
+      className={cn(inputGroupVariants({ variant, size }), className)}
+      {...props}
+    />
   )
 }
 
 const inputGroupAddonVariants = cva(
-  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)]",
+  "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
   {
     variants: {
       align: {
@@ -158,7 +146,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none",
+        "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -168,16 +156,13 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
 
 function InputGroupInput({
   className,
-  size: sizeProp,
   ...props
-}: React.ComponentProps<typeof Input>) {
-  const { size: contextSize } = React.useContext(InputGroupContext)
+}: React.ComponentProps<"input">) {
   return (
     <Input
       data-slot="input-group-control"
-      size={sizeProp ?? contextSize}
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent",
+        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 focus-visible:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl",
         className
       )}
       {...props}
@@ -188,13 +173,12 @@ function InputGroupInput({
 function InputGroupTextarea({
   className,
   ...props
-}: React.ComponentProps<typeof Textarea>) {
+}: React.ComponentProps<"textarea">) {
   return (
     <Textarea
       data-slot="input-group-control"
-      variant="ghost"
       className={cn(
-        "flex-1 resize-none rounded-[inherit] border-0 bg-transparent py-2 shadow-none! ring-0 hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:shadow-none! focus:ring-0 active:bg-transparent! disabled:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none! ring-0 hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:shadow-none! focus:ring-0 active:border-0 active:bg-transparent! active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
