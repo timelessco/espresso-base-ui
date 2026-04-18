@@ -46,9 +46,16 @@ function SelectChevronIcon({ className }: { className?: string }) {
   )
 }
 
+type SelectItem = {
+  label: string
+  value: string | null
+  icon?: React.ComponentType<{ className?: string }> | null
+}
+
 type SelectContextValue = {
   size: "sm" | "default" | "lg"
   variant: "outline" | "subtle" | "ghost"
+  items?: SelectItem[]
 }
 
 const SelectContext = React.createContext<SelectContextValue>({
@@ -59,15 +66,20 @@ const SelectContext = React.createContext<SelectContextValue>({
 function Select({
   size = "default",
   variant = "outline",
+  items,
   ...props
 }: SelectPrimitive.Root.Props<string> & {
   size?: "sm" | "default" | "lg"
   variant?: "outline" | "subtle" | "ghost"
+  items?: SelectItem[]
 }) {
-  const contextValue = React.useMemo(() => ({ size, variant }), [size, variant])
+  const contextValue = React.useMemo(
+    () => ({ size, variant, items }),
+    [size, variant, items]
+  )
   return (
     <SelectContext.Provider value={contextValue}>
-      <SelectPrimitive.Root {...props} />
+      <SelectPrimitive.Root items={items} {...props} />
     </SelectContext.Provider>
   )
 }
@@ -82,13 +94,36 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   )
 }
 
-function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
+function SelectValue({
+  className,
+  children,
+  ...props
+}: SelectPrimitive.Value.Props) {
+  const { items } = React.useContext(SelectContext)
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
-      className={cn("flex flex-1 text-left", className)}
+      className={cn(
+        "flex flex-1 items-center gap-1.5 text-left [&>svg]:size-4 [&>svg]:shrink-0",
+        className
+      )}
       {...props}
-    />
+    >
+      {children ??
+        (items
+          ? (value: string | null) => {
+              const item = items.find((i) => i.value === value)
+              if (!item) return null
+              const Icon = item.icon
+              return (
+                <>
+                  {Icon && <Icon className="size-4" />}
+                  {item.label}
+                </>
+              )
+            }
+          : undefined)}
+    </SelectPrimitive.Value>
   )
 }
 
