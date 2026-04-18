@@ -19,14 +19,25 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 function ChevronUpDownIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path fillRule="evenodd" clipRule="evenodd" d="M5.85355 10.6464C5.65829 10.4512 5.34171 10.4512 5.14645 10.6464C4.95118 10.8417 4.95118 11.1583 5.14645 11.3536L7.64645 13.8536C7.84171 14.0488 8.15829 14.0488 8.35355 13.8536L10.8536 11.3536C11.0488 11.1583 11.0488 10.8417 10.8536 10.6464C10.6583 10.4512 10.3417 10.4512 10.1464 10.6464L8 12.7929L5.85355 10.6464ZM5.85355 5.35355C5.65829 5.54882 5.34171 5.54882 5.14645 5.35355C4.95118 5.15829 4.95118 4.84171 5.14645 4.64645L7.64645 2.14645C7.84171 1.95118 8.15829 1.95118 8.35355 2.14645L10.8536 4.64645C11.0488 4.84171 11.0488 5.15829 10.8536 5.35355C10.6583 5.54882 10.3417 5.54882 10.1464 5.35355L8 3.20711L5.85355 5.35355Z" fill="currentColor"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.85355 10.6464C5.65829 10.4512 5.34171 10.4512 5.14645 10.6464C4.95118 10.8417 4.95118 11.1583 5.14645 11.3536L7.64645 13.8536C7.84171 14.0488 8.15829 14.0488 8.35355 13.8536L10.8536 11.3536C11.0488 11.1583 11.0488 10.8417 10.8536 10.6464C10.6583 10.4512 10.3417 10.4512 10.1464 10.6464L8 12.7929L5.85355 10.6464ZM5.85355 5.35355C5.65829 5.54882 5.34171 5.54882 5.14645 5.35355C4.95118 5.15829 4.95118 4.84171 5.14645 4.64645L7.64645 2.14645C7.84171 1.95118 8.15829 1.95118 8.35355 2.14645L10.8536 4.64645C11.0488 4.84171 11.0488 5.15829 10.8536 5.35355C10.6583 5.54882 10.3417 5.54882 10.1464 5.35355L8 3.20711L5.85355 5.35355Z"
+        fill="currentColor"
+      />
     </svg>
   )
 }
 
 const fruits = [
-  { label: "Select a fruit", value: null, icon: Diamond },
+  { label: "Select fruit", value: null, icon: Diamond },
   { label: "Apple", value: "apple", icon: Apple },
   { label: "Banana", value: "banana", icon: Banana },
   { label: "Cherry", value: "cherry", icon: Cherry },
@@ -39,6 +50,13 @@ const options = [
   { label: "Option 1", value: "option-1" },
   { label: "Option 2", value: "option-2" },
   { label: "Option 3", value: "option-3" },
+]
+
+const groupedItems = [
+  ...fruits,
+  { label: "Carrot", value: "carrot" },
+  { label: "Broccoli", value: "broccoli" },
+  { label: "Spinach", value: "spinach" },
 ]
 
 export default function SelectPage() {
@@ -275,19 +293,21 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Groups</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select items={[...fruits, { label: "Carrot", value: "carrot", icon: null }, { label: "Broccoli", value: "broccoli", icon: null }, { label: "Spinach", value: "spinach", icon: null }]}>
+          <Select items={groupedItems}>
             <SelectTrigger variant="outline">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
-                {fruits.filter(f => f.value).map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
+                {fruits
+                  .filter((f) => f.value)
+                  .map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.icon && <item.icon className="size-4" />}
+                      {item.label}
+                    </SelectItem>
+                  ))}
               </SelectGroup>
               <SelectSeparator />
               <SelectGroup>
@@ -311,7 +331,9 @@ export default function SelectPage() {
             </SelectTrigger>
             <SelectContent>
               {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -321,7 +343,9 @@ export default function SelectPage() {
             </SelectTrigger>
             <SelectContent>
               {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -331,7 +355,9 @@ export default function SelectPage() {
             </SelectTrigger>
             <SelectContent>
               {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -346,9 +372,15 @@ export default function SelectPage() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="apple"><Apple className="size-4" /> Apple</SelectItem>
-            <SelectItem value="banana" disabled><Banana className="size-4" /> Banana (disabled)</SelectItem>
-            <SelectItem value="cherry"><Cherry className="size-4" /> Cherry</SelectItem>
+            <SelectItem value="apple">
+              <Apple className="size-4" /> Apple
+            </SelectItem>
+            <SelectItem value="banana" disabled>
+              <Banana className="size-4" /> Banana (disabled)
+            </SelectItem>
+            <SelectItem value="cherry">
+              <Cherry className="size-4" /> Cherry
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -359,42 +391,54 @@ export default function SelectPage() {
         <div className="flex items-start gap-4">
           <Field data-invalid="true">
             <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="outline"><SelectValue /></SelectTrigger>
+              <SelectTrigger variant="outline">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
-                {fruits.filter(f => f.value).map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
+                {fruits
+                  .filter((f) => f.value)
+                  .map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.icon && <item.icon className="size-4" />}
+                      {item.label}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>
           </Field>
           <Field data-invalid="true">
             <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="subtle"><SelectValue /></SelectTrigger>
+              <SelectTrigger variant="subtle">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
-                {fruits.filter(f => f.value).map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
+                {fruits
+                  .filter((f) => f.value)
+                  .map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.icon && <item.icon className="size-4" />}
+                      {item.label}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>
           </Field>
           <Field data-invalid="true">
             <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
+              <SelectTrigger variant="ghost">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
-                {fruits.filter(f => f.value).map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
+                {fruits
+                  .filter((f) => f.value)
+                  .map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.icon && <item.icon className="size-4" />}
+                      {item.label}
+                    </SelectItem>
+                  ))}
               </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>

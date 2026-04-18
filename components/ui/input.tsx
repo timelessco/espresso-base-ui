@@ -12,7 +12,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:hover:shadow-4xs not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-strong not-data-disabled:active:shadow-md not-data-disabled:active:ring-0 data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline group-data-[invalid=true]/field:border-error-outline!",
+          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-strong not-data-disabled:active:shadow-md not-data-disabled:active:ring-0 data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline group-data-[invalid=true]/field:border-error-outline!",
         subtle:
           "border-transparent bg-secondary not-data-disabled:hover:bg-muted not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-strong not-data-disabled:active:bg-primary-foreground not-data-disabled:active:shadow-md not-data-disabled:active:ring-0 data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled group-data-[invalid=true]/field:bg-error!",
       },
