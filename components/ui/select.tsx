@@ -123,13 +123,11 @@ function SelectTrigger({
   className,
   variant: variantProp,
   size: sizeProp,
-  prefixIcon,
   suffixIcon,
   children,
   ...props
 }: SelectPrimitive.Trigger.Props &
   VariantProps<typeof selectTriggerVariants> & {
-    prefixIcon?: React.ReactNode
     suffixIcon?: React.ReactNode
   }) {
   const { size: contextSize, variant: contextVariant } =
@@ -141,18 +139,9 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-variant={variant}
       data-size={size}
-      className={cn(
-        "relative",
-        selectTriggerVariants({ variant, size, className }),
-        prefixIcon && "[&>[data-slot=select-value]]:pl-6"
-      )}
+      className={cn(selectTriggerVariants({ variant, size, className }))}
       {...props}
     >
-      {prefixIcon && (
-        <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center [&>svg]:size-4">
-          {prefixIcon}
-        </span>
-      )}
       {children}
       <SelectPrimitive.Icon className="pointer-events-none flex shrink-0 items-center [&>svg]:size-4">
         {suffixIcon ?? <SelectChevronIcon />}
@@ -330,7 +319,7 @@ export {
 // - `Select` wrapper component with `variant` and `size` props (replaces direct `SelectPrimitive.Root`)
 // - `SelectSizeContext` → `SelectContext` (holds both variant and size)
 // - CVA-based `selectTriggerVariants` with variant (`outline`, `subtle`, `ghost`) and size (`sm`, `default`, `lg`)
-// - `prefixIcon` and `suffixIcon` props on `SelectTrigger`
+// - `suffixIcon` prop on `SelectTrigger`
 // - Custom `SelectChevronIcon` and `SelectCheckIcon` SVGs (replaced lucide icons)
 // - Data states: `data-[valid]`, `data-[invalid]`, `data-[filled]` on all variants
 // - Aria states: `aria-invalid` and `aria-disabled` auto-set from data attributes
@@ -343,13 +332,6 @@ export {
 // ### Removed
 // - Lucide `CheckIcon` (replaced with custom SVG)
 // - Dark mode overrides
-//
-// ### Prefix Icon Positioning
-// - `prefixIcon` is absolutely positioned inside `SelectTrigger`
-//   (left-2.5, vertically centered) to avoid breaking Base UI's
-//   `alignItemWithTrigger` popup alignment. `SelectValue` receives `pl-6`
-//   when prefix is present so text doesn't overlap.
-// - Trigger has `relative` positioning so the absolute icon anchors to it.
 //
 // ### Suffix Icon (Select.Icon)
 // - Uses Base UI's `SelectPrimitive.Icon` children pattern per docs:
