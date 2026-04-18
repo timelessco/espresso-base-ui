@@ -1,5 +1,6 @@
 "use client"
 
+import { Apple, Banana, Cherry, Citrus, Diamond, Grape } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -16,21 +17,6 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
-function DiamondIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <g clipPath="url(#clip0_63_109864)">
-        <path fillRule="evenodd" clipRule="evenodd" d="M7.50504 0.787869C7.77841 0.514501 8.22162 0.514503 8.49499 0.787869L15.2121 7.50503C15.4855 7.77839 15.4855 8.22161 15.2121 8.49498L11.8536 11.8536L8.49499 15.2121C8.22162 15.4855 7.7784 15.4855 7.50504 15.2121L4.14646 11.8536L0.78788 8.49498C0.514513 8.22161 0.514514 7.77839 0.787881 7.50503L4.14646 4.14645L7.50504 0.787869ZM8.00001 1.70711L4.85357 4.85355L1.70712 8L4.85357 11.1464L8.00001 14.2929L11.1465 11.1464L14.2929 8L8.00001 1.70711Z" fill="currentColor"/>
-      </g>
-      <defs>
-        <clipPath id="clip0_63_109864">
-          <rect width="16" height="16" fill="white"/>
-        </clipPath>
-      </defs>
-    </svg>
-  )
-}
-
 function ChevronUpDownIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -39,13 +25,21 @@ function ChevronUpDownIcon() {
   )
 }
 
-const options = (
-  <>
-    <SelectItem value="option-1">Option 1</SelectItem>
-    <SelectItem value="option-2">Option 2</SelectItem>
-    <SelectItem value="option-3">Option 3</SelectItem>
-  </>
-)
+const fruits = [
+  { label: "Select a fruit", value: null, icon: Diamond },
+  { label: "Apple", value: "apple", icon: Apple },
+  { label: "Banana", value: "banana", icon: Banana },
+  { label: "Cherry", value: "cherry", icon: Cherry },
+  { label: "Citrus", value: "citrus", icon: Citrus },
+  { label: "Grape", value: "grape", icon: Grape },
+]
+
+const options = [
+  { label: "Select an option", value: null },
+  { label: "Option 1", value: "option-1" },
+  { label: "Option 2", value: "option-2" },
+  { label: "Option 3", value: "option-3" },
+]
 
 export default function SelectPage() {
   return (
@@ -54,23 +48,44 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Outline — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select variant="outline" size="sm">
+          <Select items={fruits} variant="outline" size="sm">
             <SelectTrigger>
-              <SelectValue placeholder="Small (sm)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="outline" size="default">
+          <Select items={fruits} variant="outline" size="default">
             <SelectTrigger>
-              <SelectValue placeholder="Default" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="outline" size="lg">
+          <Select items={fruits} variant="outline" size="lg">
             <SelectTrigger>
-              <SelectValue placeholder="Large (lg)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -79,23 +94,44 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Subtle — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select variant="subtle" size="sm">
+          <Select items={fruits} variant="subtle" size="sm">
             <SelectTrigger>
-              <SelectValue placeholder="Small (sm)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="subtle" size="default">
+          <Select items={fruits} variant="subtle" size="default">
             <SelectTrigger>
-              <SelectValue placeholder="Default" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="subtle" size="lg">
+          <Select items={fruits} variant="subtle" size="lg">
             <SelectTrigger>
-              <SelectValue placeholder="Large (lg)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -104,48 +140,44 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Ghost — Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select variant="ghost" size="sm">
+          <Select items={fruits} variant="ghost" size="sm">
             <SelectTrigger>
-              <SelectValue placeholder="Small (sm)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="ghost" size="default">
+          <Select items={fruits} variant="ghost" size="default">
             <SelectTrigger>
-              <SelectValue placeholder="Default" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select variant="ghost" size="lg">
+          <Select items={fruits} variant="ghost" size="lg">
             <SelectTrigger>
-              <SelectValue placeholder="Large (lg)" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Prefix Icon */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Prefix Icon</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select>
-            <SelectTrigger variant="outline" prefixIcon={<DiamondIcon />}>
-              <SelectValue placeholder="Outline" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger variant="subtle" prefixIcon={<DiamondIcon />}>
-              <SelectValue placeholder="Subtle" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger variant="ghost" prefixIcon={<DiamondIcon />}>
-              <SelectValue placeholder="Ghost" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -154,48 +186,41 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Suffix Icon</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select>
+          <Select items={options}>
             <SelectTrigger variant="outline" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Outline" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select>
+          <Select items={options}>
             <SelectTrigger variant="subtle" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Subtle" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select>
+          <Select items={options}>
             <SelectTrigger variant="ghost" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Ghost" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Both Icons */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Both Icons</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select>
-            <SelectTrigger variant="outline" prefixIcon={<DiamondIcon />} suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Outline" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger variant="subtle" prefixIcon={<DiamondIcon />} suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Subtle" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger variant="ghost" prefixIcon={<DiamondIcon />} suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue placeholder="Ghost" />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -204,23 +229,44 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Default Value</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select defaultValue="option-2">
+          <Select items={fruits} defaultValue="cherry">
             <SelectTrigger variant="outline">
-              <SelectValue placeholder="Select..." />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select defaultValue="option-2">
+          <Select items={fruits} defaultValue="cherry">
             <SelectTrigger variant="subtle">
-              <SelectValue placeholder="Select..." />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select defaultValue="option-2">
+          <Select items={fruits} defaultValue="cherry">
             <SelectTrigger variant="ghost">
-              <SelectValue placeholder="Select..." />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -229,16 +275,19 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>With Groups</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select>
+          <Select items={[...fruits, { label: "Carrot", value: "carrot", icon: null }, { label: "Broccoli", value: "broccoli", icon: null }, { label: "Spinach", value: "spinach", icon: null }]}>
             <SelectTrigger variant="outline">
-              <SelectValue placeholder="Select a fruit" />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="orange">Orange</SelectItem>
+                {fruits.filter(f => f.value).map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectGroup>
               <SelectSeparator />
               <SelectGroup>
@@ -256,23 +305,35 @@ export default function SelectPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select disabled>
+          <Select items={options} disabled>
             <SelectTrigger variant="outline">
-              <SelectValue placeholder="Outline" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select disabled>
+          <Select items={options} disabled>
             <SelectTrigger variant="subtle">
-              <SelectValue placeholder="Subtle" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+              ))}
+            </SelectContent>
           </Select>
-          <Select disabled>
+          <Select items={options} disabled>
             <SelectTrigger variant="ghost">
-              <SelectValue placeholder="Ghost" />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
+            <SelectContent>
+              {options.map((item) => (
+                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+              ))}
+            </SelectContent>
           </Select>
         </div>
       </div>
@@ -280,14 +341,14 @@ export default function SelectPage() {
       {/* Disabled Items */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled Items</SectionTitle>
-        <Select>
+        <Select items={fruits}>
           <SelectTrigger variant="outline">
-            <SelectValue placeholder="Select an option" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="option-1">Option 1</SelectItem>
-            <SelectItem value="option-2" disabled>Option 2 (disabled)</SelectItem>
-            <SelectItem value="option-3">Option 3</SelectItem>
+            <SelectItem value="apple"><Apple className="size-4" /> Apple</SelectItem>
+            <SelectItem value="banana" disabled><Banana className="size-4" /> Banana (disabled)</SelectItem>
+            <SelectItem value="cherry"><Cherry className="size-4" /> Cherry</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -297,182 +358,47 @@ export default function SelectPage() {
         <SectionTitle>Invalid via Field</SectionTitle>
         <div className="flex items-start gap-4">
           <Field data-invalid="true">
-            <Select defaultValue="option-1">
+            <Select items={fruits} defaultValue="apple">
               <SelectTrigger variant="outline"><SelectValue /></SelectTrigger>
-              <SelectContent>{options}</SelectContent>
+              <SelectContent>
+                {fruits.filter(f => f.value).map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>
           </Field>
           <Field data-invalid="true">
-            <Select defaultValue="option-1">
+            <Select items={fruits} defaultValue="apple">
               <SelectTrigger variant="subtle"><SelectValue /></SelectTrigger>
-              <SelectContent>{options}</SelectContent>
+              <SelectContent>
+                {fruits.filter(f => f.value).map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>
           </Field>
           <Field data-invalid="true">
-            <Select defaultValue="option-1">
+            <Select items={fruits} defaultValue="apple">
               <SelectTrigger variant="ghost"><SelectValue /></SelectTrigger>
-              <SelectContent>{options}</SelectContent>
+              <SelectContent>
+                {fruits.filter(f => f.value).map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
             <FieldError>Please select a valid option.</FieldError>
           </Field>
-        </div>
-      </div>
-
-      {/* Data States */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Data States</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="outline" data-valid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="subtle" data-valid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="ghost" data-valid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-        </div>
-        <div className="flex items-center gap-4">
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="outline" data-invalid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="subtle" data-invalid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="ghost" data-invalid="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-        </div>
-        <div className="flex items-center gap-4">
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="outline" data-filled="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="subtle" data-filled="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-          <Select defaultValue="option-1">
-            <SelectTrigger variant="ghost" data-filled="true">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>{options}</SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* All States Table */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>All States</SectionTitle>
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">State</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Outline</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Subtle</th>
-                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">Ghost</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Placeholder</td>
-                <td className="px-4 py-3">
-                  <Select><SelectTrigger variant="outline"><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select><SelectTrigger variant="subtle"><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select><SelectTrigger variant="ghost"><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">With Value</td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="outline"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="subtle"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="ghost"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Disabled</td>
-                <td className="px-4 py-3">
-                  <Select disabled><SelectTrigger variant="outline"><SelectValue placeholder="Disabled" /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select disabled><SelectTrigger variant="subtle"><SelectValue placeholder="Disabled" /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select disabled><SelectTrigger variant="ghost"><SelectValue placeholder="Disabled" /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Valid</td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-valid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Invalid</td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-invalid="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-              <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">Filled</td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="outline" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="subtle" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-                <td className="px-4 py-3">
-                  <Select defaultValue="option-1"><SelectTrigger variant="ghost" data-filled="true"><SelectValue /></SelectTrigger><SelectContent>{options}</SelectContent></Select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

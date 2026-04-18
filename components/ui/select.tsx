@@ -46,9 +46,16 @@ function SelectChevronIcon({ className }: { className?: string }) {
   )
 }
 
+type SelectItem = {
+  label: string
+  value: string | null
+  icon?: React.ComponentType<{ className?: string }> | null
+}
+
 type SelectContextValue = {
   size: "sm" | "default" | "lg"
   variant: "outline" | "subtle" | "ghost"
+  items?: SelectItem[]
 }
 
 const SelectContext = React.createContext<SelectContextValue>({
@@ -59,15 +66,20 @@ const SelectContext = React.createContext<SelectContextValue>({
 function Select({
   size = "default",
   variant = "outline",
+  items,
   ...props
 }: SelectPrimitive.Root.Props<string> & {
   size?: "sm" | "default" | "lg"
   variant?: "outline" | "subtle" | "ghost"
+  items?: SelectItem[]
 }) {
-  const contextValue = React.useMemo(() => ({ size, variant }), [size, variant])
+  const contextValue = React.useMemo(
+    () => ({ size, variant, items }),
+    [size, variant, items]
+  )
   return (
     <SelectContext.Provider value={contextValue}>
-      <SelectPrimitive.Root {...props} />
+      <SelectPrimitive.Root items={items} {...props} />
     </SelectContext.Provider>
   )
 }
@@ -82,13 +94,36 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   )
 }
 
-function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
+function SelectValue({
+  className,
+  children,
+  ...props
+}: SelectPrimitive.Value.Props) {
+  const { items } = React.useContext(SelectContext)
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
-      className={cn("flex flex-1 text-left", className)}
+      className={cn(
+        "flex flex-1 items-center gap-1.5 text-left [&>svg]:size-4 [&>svg]:shrink-0",
+        className
+      )}
       {...props}
-    />
+    >
+      {children ??
+        (items
+          ? (value: string | null) => {
+              const item = items.find((i) => i.value === value)
+              if (!item) return null
+              const Icon = item.icon
+              return (
+                <>
+                  {Icon && <Icon className="size-4" />}
+                  {item.label}
+                </>
+              )
+            }
+          : undefined)}
+    </SelectPrimitive.Value>
   )
 }
 
@@ -123,13 +158,11 @@ function SelectTrigger({
   className,
   variant: variantProp,
   size: sizeProp,
-  prefixIcon,
   suffixIcon,
   children,
   ...props
 }: SelectPrimitive.Trigger.Props &
   VariantProps<typeof selectTriggerVariants> & {
-    prefixIcon?: React.ReactNode
     suffixIcon?: React.ReactNode
   }) {
   const { size: contextSize, variant: contextVariant } =
@@ -141,18 +174,9 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-variant={variant}
       data-size={size}
-      className={cn(
-        "relative",
-        selectTriggerVariants({ variant, size, className }),
-        prefixIcon && "[&>[data-slot=select-value]]:pl-6"
-      )}
+      className={cn(selectTriggerVariants({ variant, size, className }))}
       {...props}
     >
-      {prefixIcon && (
-        <span className="pointer-events-none absolute top-1/2 left-2.5 flex -translate-y-1/2 items-center [&>svg]:size-4">
-          {prefixIcon}
-        </span>
-      )}
       {children}
       <SelectPrimitive.Icon className="pointer-events-none flex shrink-0 items-center [&>svg]:size-4">
         {suffixIcon ?? <SelectChevronIcon />}
@@ -330,7 +354,7 @@ export {
 // - `Select` wrapper component with `variant` and `size` props (replaces direct `SelectPrimitive.Root`)
 // - `SelectSizeContext` → `SelectContext` (holds both variant and size)
 // - CVA-based `selectTriggerVariants` with variant (`outline`, `subtle`, `ghost`) and size (`sm`, `default`, `lg`)
-// - `prefixIcon` and `suffixIcon` props on `SelectTrigger`
+// - `suffixIcon` prop on `SelectTrigger`
 // - Custom `SelectChevronIcon` and `SelectCheckIcon` SVGs (replaced lucide icons)
 // - Data states: `data-[valid]`, `data-[invalid]`, `data-[filled]` on all variants
 // - Aria states: `aria-invalid` and `aria-disabled` auto-set from data attributes
@@ -343,13 +367,6 @@ export {
 // ### Removed
 // - Lucide `CheckIcon` (replaced with custom SVG)
 // - Dark mode overrides
-//
-// ### Prefix Icon Positioning
-// - `prefixIcon` is absolutely positioned inside `SelectTrigger`
-//   (left-2.5, vertically centered) to avoid breaking Base UI's
-//   `alignItemWithTrigger` popup alignment. `SelectValue` receives `pl-6`
-//   when prefix is present so text doesn't overlap.
-// - Trigger has `relative` positioning so the absolute icon anchors to it.
 //
 // ### Suffix Icon (Select.Icon)
 // - Uses Base UI's `SelectPrimitive.Icon` children pattern per docs:
