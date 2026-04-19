@@ -1,6 +1,6 @@
 "use client"
 
-import { Apple, Banana, Cherry, Citrus, Diamond, Grape } from "lucide-react"
+import { Apple, Banana, Cherry, Citrus, Diamond, Grape, Users } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Field, FieldError } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -57,6 +58,56 @@ const groupedItems = [
   { label: "Carrot", value: "carrot" },
   { label: "Broccoli", value: "broccoli" },
   { label: "Spinach", value: "spinach" },
+]
+
+const members = [
+  {
+    label: "Select member",
+    value: null,
+    icon: ({ className }: { className?: string }) => (
+      <Users className={className} />
+    ),
+  },
+  {
+    label: "Sarah Chen",
+    value: "sarah",
+    icon: ({ className }: { className?: string }) => (
+      <Avatar className={className} size="xs">
+        <AvatarImage src="https://i.pravatar.cc/32?u=sarah" />
+        <AvatarFallback>SC</AvatarFallback>
+      </Avatar>
+    ),
+  },
+  {
+    label: "James Wilson",
+    value: "james",
+    icon: ({ className }: { className?: string }) => (
+      <Avatar className={className} size="xs">
+        <AvatarImage src="https://i.pravatar.cc/32?u=james" />
+        <AvatarFallback>JW</AvatarFallback>
+      </Avatar>
+    ),
+  },
+  {
+    label: "Emily Park",
+    value: "emily",
+    icon: ({ className }: { className?: string }) => (
+      <Avatar className={className} size="xs">
+        <AvatarImage src="https://i.pravatar.cc/32?u=emily" />
+        <AvatarFallback>EP</AvatarFallback>
+      </Avatar>
+    ),
+  },
+  {
+    label: "Alex Rivera",
+    value: "alex",
+    icon: ({ className }: { className?: string }) => (
+      <Avatar className={className} size="xs">
+        <AvatarImage src="https://i.pravatar.cc/32?u=alex" />
+        <AvatarFallback>AR</AvatarFallback>
+      </Avatar>
+    ),
+  },
 ]
 
 export default function SelectPage() {
@@ -316,6 +367,52 @@ export default function SelectPage() {
                 <SelectItem value="broccoli">Broccoli</SelectItem>
                 <SelectItem value="spinach">Spinach</SelectItem>
               </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* With Avatar */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>With Avatar</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Select items={members} variant="outline" defaultValue="sarah">
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {members.filter((m) => m.value).map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select items={members} variant="subtle" defaultValue="james">
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {members.filter((m) => m.value).map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select items={members} variant="ghost" defaultValue="emily">
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {members.filter((m) => m.value).map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.icon && <item.icon className="size-4" />}
+                  {item.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
