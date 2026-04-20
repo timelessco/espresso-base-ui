@@ -1,0 +1,15 @@
+{
+  "name": "header",
+  "files": [
+    {
+      "type": "ui",
+      "path": "components/ui/header.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\ntype HeaderProps = React.ComponentProps<\"header\"> & {\n  leftControls?: React.ReactNode\n  centerControls?: React.ReactNode\n  rightControls?: React.ReactNode\n}\n\nfunction Header({\n  className,\n  leftControls,\n  centerControls,\n  rightControls,\n  children,\n  ...props\n}: HeaderProps) {\n  return (\n    <header\n      data-slot=\"header\"\n      className={cn(\n        \"relative flex shrink-0 items-center justify-between gap-3 border-b border-border-soft bg-background px-3 py-2\",\n        className\n      )}\n      {...props}\n    >\n      {leftControls !== undefined && (\n        <div\n          data-slot=\"header-left\"\n          className=\"flex min-w-0 items-center gap-2\"\n        >\n          {leftControls}\n        </div>\n      )}\n      {centerControls !== undefined && (\n        <div\n          data-slot=\"header-center\"\n          className=\"pointer-events-none absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 [&>*]:pointer-events-auto\"\n        >\n          {centerControls}\n        </div>\n      )}\n      {rightControls !== undefined && (\n        <div\n          data-slot=\"header-right\"\n          className=\"flex items-center gap-2\"\n        >\n          {rightControls}\n        </div>\n      )}\n      {children}\n    </header>\n  )\n}\n\nfunction HeaderSeparator({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      role=\"separator\"\n      aria-orientation=\"vertical\"\n      data-slot=\"header-separator\"\n      className={cn(\"h-5 w-px shrink-0 bg-border-soft\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Header, HeaderSeparator, type HeaderProps }\n"
+    }
+  ],
+  "subComponents": [],
+  "dependencies": {
+    "react": "^19.2.4"
+  },
+  "devDependencies": {}
+}

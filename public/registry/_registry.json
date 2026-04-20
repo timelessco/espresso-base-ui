@@ -1,0 +1,113 @@
+{
+  "indexes": [
+    {
+      "name": "theme"
+    },
+    {
+      "name": "alert"
+    },
+    {
+      "name": "avatar"
+    },
+    {
+      "name": "badge"
+    },
+    {
+      "name": "breadcrumb"
+    },
+    {
+      "name": "button"
+    },
+    {
+      "name": "button-group"
+    },
+    {
+      "name": "calendar"
+    },
+    {
+      "name": "checkbox"
+    },
+    {
+      "name": "dialog"
+    },
+    {
+      "name": "dropdown-menu"
+    },
+    {
+      "name": "field"
+    },
+    {
+      "name": "header"
+    },
+    {
+      "name": "input"
+    },
+    {
+      "name": "input-group"
+    },
+    {
+      "name": "item"
+    },
+    {
+      "name": "kbd"
+    },
+    {
+      "name": "label"
+    },
+    {
+      "name": "notification"
+    },
+    {
+      "name": "popover"
+    },
+    {
+      "name": "progress"
+    },
+    {
+      "name": "radio-group"
+    },
+    {
+      "name": "rating"
+    },
+    {
+      "name": "select"
+    },
+    {
+      "name": "separator"
+    },
+    {
+      "name": "sheet"
+    },
+    {
+      "name": "skeleton"
+    },
+    {
+      "name": "slider"
+    },
+    {
+      "name": "sonner"
+    },
+    {
+      "name": "spinner"
+    },
+    {
+      "name": "switch"
+    },
+    {
+      "name": "table"
+    },
+    {
+      "name": "tabs"
+    },
+    {
+      "name": "tag"
+    },
+    {
+      "name": "textarea"
+    },
+    {
+      "name": "tooltip"
+    }
+  ],
+  "unlistedIndexes": []
+}
