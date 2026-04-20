@@ -1,16 +1,9 @@
-import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
-
-type ButtonGroupContextValue = {
-  size?: "sm" | "default" | "lg" | null
-}
-
-const ButtonGroupContext = React.createContext<ButtonGroupContextValue>({})
 
 const buttonGroupVariants = cva(
   "flex w-fit items-stretch *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1",
@@ -29,9 +22,9 @@ const buttonGroupVariants = cva(
         false: "",
       },
       size: {
-        sm: "",
+        sm: "[&>[data-slot=button]]:h-7! [&>[data-slot=button]]:px-2! [&>[data-slot=button]]:text-base! [&>[data-slot=button]]:font-normal!",
         default: "",
-        lg: "",
+        lg: "[&>[data-slot=button]]:h-10! [&>[data-slot=button]]:px-3! [&>[data-slot=button]]:text-lg! [&>[data-slot=button]]:font-medium!",
       },
     },
     compoundVariants: [
@@ -66,28 +59,22 @@ function ButtonGroup({
   detached,
   wrapLayout,
   size,
-  children,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
-  const contextValue = React.useMemo(() => ({ size }), [size])
   return (
-    <ButtonGroupContext.Provider value={contextValue}>
-      <div
-        role="group"
-        data-slot="button-group"
-        data-orientation={orientation}
-        data-detached={detached || undefined}
-        data-wrap={wrapLayout || undefined}
-        data-size={size ?? "default"}
-        className={cn(
-          buttonGroupVariants({ orientation, detached, wrapLayout, size }),
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
-    </ButtonGroupContext.Provider>
+    <div
+      role="group"
+      data-slot="button-group"
+      data-orientation={orientation}
+      data-detached={detached || undefined}
+      data-wrap={wrapLayout || undefined}
+      data-size={size ?? "default"}
+      className={cn(
+        buttonGroupVariants({ orientation, detached, wrapLayout, size }),
+        className
+      )}
+      {...props}
+    />
   )
 }
 
@@ -134,7 +121,6 @@ function ButtonGroupSeparator({
 
 export {
   ButtonGroup,
-  ButtonGroupContext,
   ButtonGroupSeparator,
   ButtonGroupText,
   buttonGroupVariants,

@@ -1,11 +1,9 @@
 "use client"
 
-import * as React from "react"
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { ButtonGroupContext } from "@/components/ui/button-group"
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center bg-clip-padding text-sm whitespace-nowrap transition-all outline-none select-none focus-visible:shadow-3xs disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -62,11 +60,9 @@ const buttonVariants = cva(
 function Button({
   className,
   variant = "default",
-  size: sizeProp,
+  size = "default",
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-  const { size: groupSize } = React.useContext(ButtonGroupContext)
-  const size = groupSize ?? sizeProp ?? "default"
   return (
     <ButtonPrimitive
       data-slot="button"
