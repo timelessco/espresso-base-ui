@@ -8,6 +8,9 @@
     "class-variance-authority",
     "lucide-react"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/select/select.tsx",

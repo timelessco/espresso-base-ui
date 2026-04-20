@@ -3,6 +3,9 @@
   "name": "header",
   "title": "Header",
   "description": "Page header with left, center, and right control slots.",
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/header/header.tsx",

@@ -7,6 +7,9 @@
     "@base-ui/react",
     "lucide-react"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/dropdown-menu/dropdown-menu.tsx",

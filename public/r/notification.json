@@ -8,6 +8,9 @@
     "sonner",
     "lucide-react"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/notification/notification.tsx",

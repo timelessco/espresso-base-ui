@@ -3,6 +3,9 @@
   "name": "rating",
   "title": "Rating",
   "description": "Star rating component with keyboard navigation.",
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/rating/rating.tsx",

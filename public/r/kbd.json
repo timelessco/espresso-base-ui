@@ -3,6 +3,9 @@
   "name": "kbd",
   "title": "Kbd",
   "description": "Keyboard key indicator.",
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/kbd/kbd.tsx",
