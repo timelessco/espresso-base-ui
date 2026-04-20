@@ -3,6 +3,9 @@
   "name": "skeleton",
   "title": "Skeleton",
   "description": "Loading placeholder skeleton.",
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/skeleton/skeleton.tsx",

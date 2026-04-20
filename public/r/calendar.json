@@ -8,6 +8,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
+    "espresso-theme",
     "button"
   ],
   "files": [

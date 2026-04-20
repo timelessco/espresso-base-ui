@@ -6,6 +6,9 @@
   "dependencies": [
     "@base-ui/react"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/tooltip/tooltip.tsx",

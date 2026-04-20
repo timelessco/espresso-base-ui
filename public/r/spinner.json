@@ -6,6 +6,9 @@
   "dependencies": [
     "class-variance-authority"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/spinner/spinner.tsx",

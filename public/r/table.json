@@ -3,6 +3,9 @@
   "name": "table",
   "title": "Table",
   "description": "Table with header, body, footer, and row hover effects.",
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/table/table.tsx",

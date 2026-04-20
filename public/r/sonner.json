@@ -8,6 +8,9 @@
     "next-themes",
     "lucide-react"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/sonner/sonner.tsx",

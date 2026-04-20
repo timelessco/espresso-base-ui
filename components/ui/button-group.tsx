@@ -39,13 +39,13 @@ const buttonGroupVariants = cva(
         orientation: "horizontal",
         detached: false,
         className:
-          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:rounded-l-none [&>[data-slot]~[data-slot]]:-ml-px",
+          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:-ml-px [&>[data-slot]~[data-slot]]:rounded-l-none",
       },
       {
         orientation: "vertical",
         detached: false,
         className:
-          "*:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg! [&>[data-slot]~[data-slot]]:rounded-t-none [&>[data-slot]~[data-slot]]:-mt-px",
+          "*:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg! [&>[data-slot]~[data-slot]]:-mt-px [&>[data-slot]~[data-slot]]:rounded-t-none",
       },
       { detached: true, size: "sm", className: "gap-1" },
       { detached: true, size: "default", className: "gap-1.5" },
@@ -79,7 +79,10 @@ function ButtonGroup({
         data-detached={detached || undefined}
         data-wrap={wrapLayout || undefined}
         data-size={size ?? "default"}
-        className={cn(buttonGroupVariants({ orientation, detached, wrapLayout, size }), className)}
+        className={cn(
+          buttonGroupVariants({ orientation, detached, wrapLayout, size }),
+          className
+        )}
         {...props}
       >
         {children}

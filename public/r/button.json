@@ -8,6 +8,7 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
+    "espresso-theme",
     "button-group"
   ],
   "files": [

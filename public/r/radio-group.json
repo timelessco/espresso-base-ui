@@ -7,6 +7,9 @@
     "@base-ui/react",
     "class-variance-authority"
   ],
+  "registryDependencies": [
+    "espresso-theme"
+  ],
   "files": [
     {
       "path": "registry/espresso/radio-group/radio-group.tsx",
