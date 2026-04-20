@@ -8,8 +8,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "espresso-theme",
-    "button-group"
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+    "https://espresso-base-ui.vercel.app/r/button-group.json"
   ],
   "files": [
     {

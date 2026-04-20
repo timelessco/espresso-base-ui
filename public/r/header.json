@@ -4,7 +4,7 @@
   "title": "Header",
   "description": "Page header with left, center, and right control slots.",
   "registryDependencies": [
-    "espresso-theme"
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
   ],
   "files": [
     {

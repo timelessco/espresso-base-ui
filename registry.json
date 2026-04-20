@@ -246,8 +246,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "button-group"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button-group.json"
       ],
       "files": [
         {
@@ -267,8 +267,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "separator"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/separator.json"
       ],
       "files": [
         {
@@ -287,8 +287,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "button"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ],
       "files": [
         {
@@ -314,7 +314,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -334,7 +334,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -354,7 +354,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -368,8 +368,8 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "button"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ],
       "files": [
         {
@@ -395,7 +395,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -410,8 +410,8 @@
         "lucide-react"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "button"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ],
       "files": [
         {
@@ -437,7 +437,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -450,9 +450,9 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "label",
-        "separator"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/label.json",
+        "https://espresso-base-ui.vercel.app/r/separator.json"
       ],
       "files": [
         {
@@ -474,7 +474,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -494,7 +494,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -507,10 +507,10 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "button",
-        "input",
-        "textarea"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json",
+        "https://espresso-base-ui.vercel.app/r/input.json",
+        "https://espresso-base-ui.vercel.app/r/textarea.json"
       ],
       "files": [
         {
@@ -530,8 +530,8 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "espresso-theme",
-        "separator"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/separator.json"
       ],
       "files": [
         {
@@ -553,7 +553,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -572,7 +572,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -593,7 +593,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -612,7 +612,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -632,7 +632,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -652,7 +652,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -668,7 +668,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -689,7 +689,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -709,7 +709,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -728,7 +728,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -744,7 +744,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -763,7 +763,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -784,7 +784,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -803,7 +803,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -823,7 +823,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -839,7 +839,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -859,7 +859,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -878,7 +878,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -897,7 +897,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     },
     {
@@ -916,7 +916,7 @@
         }
       ],
       "registryDependencies": [
-        "espresso-theme"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
     }
   ]
