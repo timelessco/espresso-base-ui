@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "Badge component with variants and sizes.",
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "files": [
+    {
+      "path": "registry/espresso/badge/badge.tsx",
+      "content": "import { mergeProps } from \"@base-ui/react/merge-props\"\nimport { useRender } from \"@base-ui/react/use-render\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst badgeVariants = cva(\n  \"group/badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent leading-base font-normal tracking-normal whitespace-nowrap transition-all [&>svg]:pointer-events-none [&>svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground\",\n        secondary: \"bg-secondary text-muted-foreground\",\n        destructive: \"bg-destructive text-destructive-foreground\",\n        outline: \"border border-border bg-background text-muted-foreground\",\n        ghost: \"text-muted-foreground\",\n        link: \"overflow-visible text-muted-foreground underline-offset-4 hover:underline\",\n      },\n      size: {\n        default:\n          \"h-4 px-1.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-2.5!\",\n        md: \"h-5 px-1.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3!\",\n        lg: \"h-6 px-2 text-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&>svg]:size-3!\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n)\n\nfunction Badge({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  render,\n  ...props\n}: useRender.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\n  return useRender({\n    defaultTagName: \"span\",\n    props: mergeProps<\"span\">(\n      {\n        className: cn(badgeVariants({ variant, size }), className),\n      },\n      props\n    ),\n    render,\n    state: {\n      slot: \"badge\",\n      variant,\n      size,\n    },\n  })\n}\n\nexport { Badge, badgeVariants }\n\n/**\n * Changelog — compared to shadcn base-ui badge (npx shadcn@latest add badge)\n *\n * Size variant:\n *   Before: No size variant. Single fixed size: h-5, px-2, text-xs, [&>svg]:size-3.\n *   After:  Added size variant with 3 options:\n *             default (sm) → h-4 (16px), text-xs (12px), [&>svg]:size-2.5 (10px)\n *             md           → h-5 (20px), text-xs (12px), [&>svg]:size-3 (12px)\n *             lg           → h-6 (24px), text-sm (13px), [&>svg]:size-3 (12px)\n *           Each size has proportional px padding and icon padding adjustments.\n *\n * Base classes:\n *   Before: h-5, px-2, py-0.5, text-xs, font-medium, focus-visible styles inline.\n *   After:  Removed fixed h/px/text from base (moved to size variants).\n *           Changed font-medium to font-normal.\n *           Added leading-base, tracking-normal.\n *\n * Link variant:\n *   Before: overflow-hidden clipped the underline on hover.\n *   After:  Added overflow-visible to link variant.\n *\n * Variant changes:\n *   Before: destructive used bg-destructive/10 with text-destructive.\n *   After:  destructive uses bg-destructive with text-destructive-foreground.\n *   Before: secondary used text-secondary-foreground.\n *   After:  secondary uses text-muted-foreground.\n */\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
