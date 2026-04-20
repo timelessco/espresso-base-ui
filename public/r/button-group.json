@@ -8,8 +8,8 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "espresso-theme",
-    "separator"
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+    "https://espresso-base-ui.vercel.app/r/separator.json"
   ],
   "files": [
     {

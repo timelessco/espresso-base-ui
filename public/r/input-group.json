@@ -7,10 +7,10 @@
     "class-variance-authority"
   ],
   "registryDependencies": [
-    "espresso-theme",
-    "button",
-    "input",
-    "textarea"
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+    "https://espresso-base-ui.vercel.app/r/button.json",
+    "https://espresso-base-ui.vercel.app/r/input.json",
+    "https://espresso-base-ui.vercel.app/r/textarea.json"
   ],
   "files": [
     {
