@@ -830,6 +830,7 @@
 
   /* letter spacing */
   --tracking-normal: 0.015em;
+  --tracking-wider: 0.04em;
 }
 
 .dark {
@@ -1053,6 +1054,7 @@
 
   /* letter spacing */
   --tracking-normal: var(--tracking-normal);
+  --tracking-wider: var(--tracking-wider);
 
   /* colors */
   --color-red-50: var(--color-red-50);
