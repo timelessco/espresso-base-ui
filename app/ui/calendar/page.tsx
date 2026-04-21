@@ -145,7 +145,7 @@ function DateTimePresetPicker() {
           <SelectTrigger variant="subtle" size="sm" className="w-full">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent alignItemWithTrigger={false} className="max-h-60">
             {Array.from({ length: 60 }, (_, i) => {
               const v = String(i).padStart(2, "0")
               return (
