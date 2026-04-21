@@ -176,18 +176,16 @@ function AppSidebar() {
             <Plus />
           </SidebarGroupAction>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu className="gap-1">
               <SidebarMenuItem>
                 <SidebarMenuButton
                   className="h-7 py-0 text-base!"
                   tooltip="Design System"
+                  isActive
                 >
                   <Sparkles />
                   <span>Design System</span>
                 </SidebarMenuButton>
-                <SidebarMenuAction showOnHover>
-                  <Star className="size-4" />
-                </SidebarMenuAction>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
@@ -197,9 +195,6 @@ function AppSidebar() {
                   <GalleryVerticalEnd />
                   <span>Marketing Site</span>
                 </SidebarMenuButton>
-                <SidebarMenuAction showOnHover>
-                  <Star className="size-4" />
-                </SidebarMenuAction>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
@@ -209,9 +204,6 @@ function AppSidebar() {
                   <AudioWaveform />
                   <span>Mobile App</span>
                 </SidebarMenuButton>
-                <SidebarMenuAction showOnHover>
-                  <Star className="size-4" />
-                </SidebarMenuAction>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
