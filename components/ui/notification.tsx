@@ -192,16 +192,16 @@ function DefaultLayout({
           </span>
         )}
         <div className="flex flex-1 flex-col gap-1">
-          <span className="text-base leading-base font-medium tracking-normal text-foreground">
+          <span className="text-base leading-base font-medium tracking-normal! text-foreground">
             {title}
           </span>
           {description && (
-            <span className="text-base leading-base font-normal tracking-normal text-muted-foreground">
+            <span className="text-base leading-7xl font-normal tracking-normal! text-muted-foreground">
               {description}
             </span>
           )}
           {timestamp && (
-            <span className="mt-0.5 text-xs leading-base font-normal tracking-normal text-muted-foreground">
+            <span className="mt-0.5 text-xs leading-base font-normal tracking-normal! text-muted-foreground">
               {timestamp}
             </span>
           )}
@@ -288,14 +288,14 @@ function SplitLayout({
               {prefix}
             </span>
           )}
-          <span className="text-base leading-base font-semibold tracking-normal text-foreground">
+          <span className="text-base leading-base font-semibold tracking-normal! text-foreground">
             {title}
           </span>
         </div>
         {description && (
           <span
             className={cn(
-              "text-base leading-base font-normal tracking-normal text-muted-foreground",
+              "text-base leading-7xl font-normal tracking-normal! text-muted-foreground",
               prefix && "pl-6"
             )}
           >
@@ -344,11 +344,11 @@ function ModalLayout({
   return (
     <>
       <div className="flex w-full flex-col gap-1 text-center">
-        <span className="text-base leading-base font-semibold tracking-normal text-foreground">
+        <span className="text-base leading-base font-semibold tracking-normal! text-foreground">
           {title}
         </span>
         {description && (
-          <span className="text-base leading-base font-normal tracking-normal text-muted-foreground">
+          <span className="text-base leading-7xl font-normal tracking-normal! text-muted-foreground">
             {description}
           </span>
         )}

@@ -88,7 +88,7 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
     <SelectPrimitive.Group
       data-slot="select-group"
-      className={cn("scroll-my-1 p-1", className)}
+      className={cn("scroll-my-1", className)}
       {...props}
     />
   )
@@ -104,7 +104,7 @@ function SelectValue({
     <SelectPrimitive.Value
       data-slot="select-value"
       className={cn(
-        "flex flex-1 items-center gap-1.5 text-left [&>svg]:size-4 [&>svg]:shrink-0",
+        "flex flex-1 items-center gap-2 text-left [&>svg]:size-4 [&>svg]:shrink-0",
         className
       )}
       {...props}
@@ -129,7 +129,7 @@ function SelectValue({
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-placeholder:text-card-foreground data-filled:text-secondary-foreground data-invalid:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 data-valid:text-secondary-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-filled:text-secondary-foreground data-invalid:text-secondary-foreground data-placeholder:text-card-foreground data-valid:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
@@ -219,7 +219,9 @@ function SelectContent({
           {...props}
         >
           <SelectScrollUpButton />
-          <SelectPrimitive.List>{children}</SelectPrimitive.List>
+          <SelectPrimitive.List className="flex flex-col">
+            {children}
+          </SelectPrimitive.List>
           <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
@@ -245,8 +247,8 @@ function SelectLabel({
 
 const selectItemSizeMap = {
   sm: "h-7",
-  default: "h-7.5",
-  lg: "h-8",
+  default: "h-7",
+  lg: "h-7",
 }
 
 function SelectItem({
@@ -259,7 +261,7 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-default items-center gap-1.5 rounded-md pr-8 pl-2 text-sm text-secondary-foreground outline-hidden select-none focus:bg-accent focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md pr-8 pl-2 text-sm text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         selectItemSizeMap[size],
         className
       )}
