@@ -16,10 +16,21 @@ import {
   Sparkles,
   SquareTerminal,
   Star,
+  ChevronDown,
+  HelpCircle,
+  MessageCircle,
+  FileText,
+  PanelLeftClose,
   Users,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -103,17 +114,17 @@ function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search">
+                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
                   <Search />
                   <span>Search</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Inbox">
+                <SidebarMenuButton tooltip="Inbox" className="h-7 text-base">
                   <Inbox />
                   <span>Inbox</span>
                 </SidebarMenuButton>
-                <SidebarMenuBadge>12</SidebarMenuBadge>
+                <SidebarMenuBadge className="top-1!">12</SidebarMenuBadge>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
@@ -123,129 +134,31 @@ function AppSidebar() {
 
         {/* Platform */}
         <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
+          <SidebarGroupLabel className="mb-px h-7">Platform</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Dashboard" isActive>
+                <SidebarMenuButton
+                  tooltip="Dashboard"
+                  className="h-7 text-base font-normal!"
+                >
                   <Home />
                   <span>Dashboard</span>
                 </SidebarMenuButton>
                 <SidebarMenuSub>
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#" isActive>
+                    <SidebarMenuSubButton href="#" className="text-base!">
                       <span>Overview</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
+                    <SidebarMenuSubButton href="#" className="text-base!">
                       <span>Analytics</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
+                    <SidebarMenuSubButton href="#" className="text-base!">
                       <span>Reports</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Playground">
-                  <SquareTerminal />
-                  <span>Playground</span>
-                </SidebarMenuButton>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>History</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Starred</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Settings</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Models">
-                  <Bot />
-                  <span>Models</span>
-                </SidebarMenuButton>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Genesis</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Explorer</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Quantum</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Documentation">
-                  <BookOpen />
-                  <span>Documentation</span>
-                </SidebarMenuButton>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Introduction</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Get Started</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Tutorials</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Changelog</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
-              </SidebarMenuItem>
-
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Settings">
-                  <Settings />
-                  <span>Settings</span>
-                </SidebarMenuButton>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>General</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Team</span>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton href="#">
-                      <span>Billing</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 </SidebarMenuSub>
@@ -263,9 +176,12 @@ function AppSidebar() {
             <Plus />
           </SidebarGroupAction>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Design System">
+                <SidebarMenuButton
+                  className="h-7 py-0 text-base!"
+                  tooltip="Design System"
+                >
                   <Sparkles />
                   <span>Design System</span>
                 </SidebarMenuButton>
@@ -274,7 +190,10 @@ function AppSidebar() {
                 </SidebarMenuAction>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Marketing Site">
+                <SidebarMenuButton
+                  className="h-7 py-0 text-base!"
+                  tooltip="Marketing Site"
+                >
                   <GalleryVerticalEnd />
                   <span>Marketing Site</span>
                 </SidebarMenuButton>
@@ -283,7 +202,10 @@ function AppSidebar() {
                 </SidebarMenuAction>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Mobile App">
+                <SidebarMenuButton
+                  className="h-7 py-0 text-base!"
+                  tooltip="Mobile App"
+                >
                   <AudioWaveform />
                   <span>Mobile App</span>
                 </SidebarMenuButton>
@@ -303,62 +225,182 @@ function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Members">
+                <SidebarMenuButton
+                  tooltip="Members"
+                  className="h-7 py-0 text-base!"
+                >
                   <Users />
                   <span>Members</span>
                 </SidebarMenuButton>
-                <SidebarMenuBadge>
-                  <Badge variant="secondary" size="default">
-                    4
-                  </Badge>
-                </SidebarMenuBadge>
+                <SidebarMenuBadge className="top-1!">4</SidebarMenuBadge>
               </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarSeparator />
+
+        {/* Channels — Collapsible */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-0.5">
+              <Collapsible
+                defaultOpen={true}
+                className="group/collapsible group-data-[collapsible=icon]:hidden"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger
+                    render={
+                      <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
+                    }
+                  >
+                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <span className="flex size-4 items-center justify-center">
+                      ☀️
+                    </span>
+                    <span>Product</span>
+                  </CollapsibleTrigger>
+                  <SidebarMenuBadge className="top-1!">21</SidebarMenuBadge>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>General</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Standups</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Training</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Update</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              <Collapsible className="group/collapsible group-data-[collapsible=icon]:hidden">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger
+                    render={
+                      <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
+                    }
+                  >
+                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <span className="flex size-4 items-center justify-center">
+                      🔗
+                    </span>
+                    <span>Open FLC</span>
+                  </CollapsibleTrigger>
+                  <SidebarMenuBadge className="top-1!">21</SidebarMenuBadge>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>General</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Releases</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              <Collapsible className="group/collapsible group-data-[collapsible=icon]:hidden">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger
+                    render={
+                      <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
+                    }
+                  >
+                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <span className="flex size-4 items-center justify-center">
+                      🚚
+                    </span>
+                    <span>Delivery team</span>
+                  </CollapsibleTrigger>
+                  <SidebarMenuBadge className="top-1!">13</SidebarMenuBadge>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>General</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Standups</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+
+              <Collapsible className="group/collapsible group-data-[collapsible=icon]:hidden">
+                <SidebarMenuItem>
+                  <CollapsibleTrigger
+                    render={
+                      <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
+                    }
+                  >
+                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <span className="flex size-4 items-center justify-center">
+                      📦
+                    </span>
+                    <span>Sales</span>
+                  </CollapsibleTrigger>
+                  <SidebarMenuBadge className="top-1!">25</SidebarMenuBadge>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>General</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton href="#" className="text-base!">
+                          <span>Leads</span>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className="pb-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <SidebarMenuButton
-                    size="lg"
-                    className="data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
-                  />
-                }
-              >
-                <Avatar size="sm">
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>SC</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">shadcn</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    m@example.com
-                  </span>
-                </div>
-                <ChevronsUpDown className="ml-auto size-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-[--anchor-width] min-w-56"
-                align="end"
-                side="top"
-                sideOffset={4}
-              >
-                <DropdownMenuItem>
-                  <Settings />
-                  Account Settings
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <LogOut />
-                  Log out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button
+              variant="ghost"
+              className="h-7 w-full justify-start gap-2 overflow-hidden text-base text-muted-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2!"
+              onClick={() =>
+                document
+                  .querySelector<HTMLButtonElement>('[data-sidebar="trigger"]')
+                  ?.click()
+              }
+            >
+              <PanelLeftClose className="size-4 shrink-0" />
+              <span className="group-data-[collapsible=icon]:hidden">
+                Collapse
+              </span>
+            </Button>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
@@ -375,23 +417,10 @@ export default function SidebarPage() {
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border-soft px-4">
           <SidebarTrigger className="-ml-1" />
-          <div className="flex flex-1 items-center gap-2">
-            <h1 className="text-sm font-medium">Sidebar Showcase</h1>
-          </div>
+          <div className="flex flex-1 items-center gap-2"></div>
         </header>
         <div className="flex flex-1 flex-col gap-6 p-6">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-lg font-semibold">Welcome back</h2>
-            <p className="text-sm text-muted-foreground">
-              This page demonstrates the sidebar component with collapsible
-              navigation, nested menus, projects, team section, and user
-              dropdown. Press{" "}
-              <kbd className="rounded border px-1.5 py-0.5 text-xs font-medium">
-                ⌘B
-              </kbd>{" "}
-              or click the rail to toggle collapse.
-            </p>
-          </div>
+          <div className="flex flex-col gap-2"></div>
         </div>
       </SidebarInset>
     </SidebarProvider>
