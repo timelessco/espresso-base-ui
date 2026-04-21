@@ -24,9 +24,9 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground not-has-disabled:hover:border-border-normal has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground not-has-disabled:active:border-border-strong data-[filled=true]:border-border data-[invalid=true]:border-error-outline! data-[valid=true]:border-success-outline! group-data-[invalid=true]/field:border-error-outline!",
+          "border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-has-disabled:hover:border-border-normal has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground data-[filled=true]:border-border data-[invalid=true]:border-error-outline! data-[valid=true]:border-success-outline!",
         subtle:
-          "border-transparent bg-secondary not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground has-[[data-slot=input-group-control]:focus-visible]:bg-primary-foreground not-has-disabled:active:border-border-strong data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! group-data-[invalid=true]/field:bg-error!",
+          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground has-[[data-slot=input-group-control]:focus-visible]:bg-primary-foreground data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
@@ -162,7 +162,7 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 focus-visible:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl",
+        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl hover:border-0 hover:shadow-none! focus:border-0 focus:shadow-none! focus:ring-0 focus-visible:ring-0 active:border-0 active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}

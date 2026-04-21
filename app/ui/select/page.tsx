@@ -1,6 +1,14 @@
 "use client"
 
-import { Apple, Banana, Cherry, Citrus, Diamond, Grape, Users } from "lucide-react"
+import {
+  Apple,
+  Banana,
+  Cherry,
+  Citrus,
+  Diamond,
+  Grape,
+  Users,
+} from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -381,12 +389,14 @@ export default function SelectPage() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {members.filter((m) => m.value).map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+              {members
+                .filter((m) => m.value)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
           <Select items={members} variant="subtle" defaultValue="james">
@@ -394,12 +404,14 @@ export default function SelectPage() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {members.filter((m) => m.value).map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+              {members
+                .filter((m) => m.value)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
           <Select items={members} variant="ghost" defaultValue="emily">
@@ -407,12 +419,14 @@ export default function SelectPage() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {members.filter((m) => m.value).map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+              {members
+                .filter((m) => m.value)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.icon && <item.icon className="size-4" />}
+                    {item.label}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>
@@ -473,7 +487,7 @@ export default function SelectPage() {
               <Apple className="size-4" /> Apple
             </SelectItem>
             <SelectItem value="banana" disabled>
-              <Banana className="size-4" /> Banana (disabled)
+              <Banana className="size-4" /> Banana
             </SelectItem>
             <SelectItem value="cherry">
               <Cherry className="size-4" /> Cherry
