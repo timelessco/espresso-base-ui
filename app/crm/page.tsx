@@ -33,8 +33,19 @@ import {
   ArrowRight,
   ArrowRightFromLine,
   Zap,
+  Phone as PhoneIcon,
 } from "lucide-react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import {
   Collapsible,
   CollapsibleContent,
@@ -70,6 +81,201 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+
+const statusColors: Record<string, string> = {
+  Open: "#7C7C7C",
+  Contacted: "#B35309",
+  Nurture: "#0070CC",
+  Qualified: "#137949",
+  Unqualified: "#B52A2A",
+  Junk: "#4F3DA1",
+}
+
+const organisations = [
+  { name: "Gumroad", image: "/images/svg/gumroad.svg" },
+  { name: "Attentive", image: "/images/svg/attentive.svg" },
+  { name: "Evergreen", image: "/images/svg/evergreen.svg" },
+  { name: "Dropbox", image: "/images/svg/dropbox.svg" },
+  { name: "Hourglass", image: "/images/svg/hourglass.svg" },
+  { name: "Miro", image: "/images/svg/miro.svg" },
+  { name: "Zapier", image: "/images/svg/zapier.svg" },
+  { name: "Figma", image: "/images/svg/figma.svg" },
+  { name: "1password", image: "/images/svg/1password.svg" },
+  { name: "Cooper", image: "/images/svg/cooper.svg" },
+  { name: "ChatGpt", image: "/images/svg/chatgpt.svg" },
+  { name: "Github", image: "/images/svg/github.svg" },
+  { name: "Metalab", image: "/images/svg/metalab.svg" },
+  { name: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
+  { name: "Spotify", image: "/images/svg/spotify.svg" },
+]
+
+const leads = [
+  {
+    name: "Jenny Wilson",
+    avatar: "https://i.pravatar.cc/32?u=jenny",
+    organisation: "Gumroad",
+    status: "Open",
+    email: "stacy@example.com",
+    mobile: "+91 9994445678",
+    assignee: "Avinash Goel",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash",
+    lastModified: "2 days ago",
+  },
+  {
+    name: "Mariana Rodriguez",
+    avatar: "https://i.pravatar.cc/32?u=mariana",
+    organisation: "Attentive",
+    status: "Contacted",
+    email: "mariana@example.com",
+    mobile: "+91 8885556789",
+    assignee: "Rahul Sharma",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul",
+    lastModified: "1 week ago",
+  },
+  {
+    name: "Sophie Chen",
+    avatar: "https://i.pravatar.cc/32?u=sophie",
+    organisation: "Evergreen",
+    status: "Nurture",
+    email: "sophie@example.com",
+    mobile: "+91 7773335678",
+    assignee: "Elena Petrova",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=elena",
+    lastModified: "3 days ago",
+  },
+  {
+    name: "David Lee",
+    avatar: "https://i.pravatar.cc/32?u=david",
+    organisation: "Dropbox",
+    status: "Qualified",
+    email: "david@example.com",
+    mobile: "+91 6662225678",
+    assignee: "Priya Patel",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=priya",
+    lastModified: "4 days ago",
+  },
+  {
+    name: "Maria Gomez",
+    avatar: "https://i.pravatar.cc/32?u=maria",
+    organisation: "Hourglass",
+    status: "Unqualified",
+    email: "maria@example.com",
+    mobile: "+91 5554445678",
+    assignee: "James Smith",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=james",
+    lastModified: "5 days ago",
+  },
+  {
+    name: "Anika Sharma",
+    avatar: "https://i.pravatar.cc/32?u=anika",
+    organisation: "Miro",
+    status: "Nurture",
+    email: "anika@example.com",
+    mobile: "+91 4443335678",
+    assignee: "Mark Johnson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=mark",
+    lastModified: "6 days ago",
+  },
+  {
+    name: "Liam Brown",
+    avatar: "https://i.pravatar.cc/32?u=liam",
+    organisation: "Zapier",
+    status: "Junk",
+    email: "liam@example.com",
+    mobile: "+91 3332225678",
+    assignee: "Olivia Martinez",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=olivia",
+    lastModified: "1 week ago",
+  },
+  {
+    name: "Daniel Kim",
+    avatar: "https://i.pravatar.cc/32?u=daniel",
+    organisation: "Figma",
+    status: "Contacted",
+    email: "daniel@example.com",
+    mobile: "+91 2221115678",
+    assignee: "Isabella Davis",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=isabella",
+    lastModified: "1 week ago",
+  },
+  {
+    name: "Nina Lee",
+    avatar: "https://i.pravatar.cc/32?u=nina",
+    organisation: "1password",
+    status: "Open",
+    email: "nina@example.com",
+    mobile: "+91 1110005678",
+    assignee: "Ethan Wilson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=ethan",
+    lastModified: "8 days ago",
+  },
+  {
+    name: "Avery Clark",
+    avatar: "https://i.pravatar.cc/32?u=avery",
+    organisation: "Cooper",
+    status: "Qualified",
+    email: "avery@example.com",
+    mobile: "+91 9998885678",
+    assignee: "Mia Thompson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=mia",
+    lastModified: "9 days ago",
+  },
+  {
+    name: "Lucas White",
+    avatar: "https://i.pravatar.cc/32?u=lucas",
+    organisation: "ChatGpt",
+    status: "Junk",
+    email: "lucas@example.com",
+    mobile: "+91 8887775678",
+    assignee: "Ella Hill",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=ella",
+    lastModified: "10 days ago",
+  },
+  {
+    name: "Chloe Allen",
+    avatar: "https://i.pravatar.cc/32?u=chloe",
+    organisation: "Github",
+    status: "Contacted",
+    email: "chloe@example.com",
+    mobile: "+91 7776665678",
+    assignee: "Noah Scott",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=noah",
+    lastModified: "11 days ago",
+  },
+  {
+    name: "Evelyn Young",
+    avatar: "https://i.pravatar.cc/32?u=evelyn",
+    organisation: "Metalab",
+    status: "Open",
+    email: "evelyn@example.com",
+    mobile: "+91 6665555678",
+    assignee: "Alexander King",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=alexander",
+    lastModified: "12 days ago",
+  },
+  {
+    name: "Nathan Green",
+    avatar: "https://i.pravatar.cc/32?u=nathan",
+    organisation: "Adobe Express",
+    status: "Unqualified",
+    email: "nathan@example.com",
+    mobile: "+91 5554445678",
+    assignee: "Sofia Walker",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sofia",
+    lastModified: "13 days ago",
+  },
+  {
+    name: "Grace Roberts",
+    avatar: "https://i.pravatar.cc/32?u=grace",
+    organisation: "Spotify",
+    status: "Junk",
+    email: "grace@example.com",
+    mobile: "+91 4443335678",
+    assignee: "Henry Allen",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=henry",
+    lastModified: "14 days ago",
+  },
+]
 
 function CrmSidebar() {
   return (
@@ -441,8 +647,108 @@ export default function CrmPage() {
       <CrmSidebar />
       <SidebarInset>
         <SidebarTrigger className="sr-only" />
-        <div className="flex flex-1 flex-col">
-          <div className="flex-1" />
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex-1 overflow-auto">
+            <div className="p-5">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-10">
+                      <Checkbox />
+                    </TableHead>
+                    <TableHead className="min-w-[200px]">Name</TableHead>
+                    <TableHead className="min-w-[160px]">
+                      Organisation
+                    </TableHead>
+                    <TableHead className="min-w-[130px]">Status</TableHead>
+                    <TableHead className="min-w-[200px]">Email</TableHead>
+                    <TableHead className="min-w-[160px]">Mobile no.</TableHead>
+                    <TableHead className="min-w-[180px]">Assigned to</TableHead>
+                    <TableHead className="min-w-[120px]">
+                      Last modified
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {leads.map((lead, i) => {
+                    const org = organisations.find(
+                      (o) => o.name === lead.organisation
+                    )
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>
+                          <Checkbox />
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Avatar size="sm">
+                              <AvatarImage src={lead.avatar} />
+                              <AvatarFallback>
+                                {lead.name.slice(0, 2)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span className="font-medium text-foreground">
+                              {lead.name}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {org && (
+                              <Avatar size="sm" variant="square">
+                                <AvatarImage src={org.image} />
+                                <AvatarFallback>
+                                  {lead.organisation.slice(0, 1)}
+                                </AvatarFallback>
+                              </Avatar>
+                            )}
+                            <span>{lead.organisation}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
+                              style={{
+                                backgroundColor: statusColors[lead.status],
+                              }}
+                            >
+                              <span
+                                className="size-1.5 rounded-full"
+                                style={{
+                                  backgroundColor: "white",
+                                }}
+                              />
+                            </span>
+                            <span>{lead.status}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{lead.email}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <PhoneIcon className="size-3.5 text-muted-foreground" />
+                            <span>{lead.mobile}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Avatar size="sm">
+                              <AvatarImage src={lead.assigneeAvatar} />
+                              <AvatarFallback>
+                                {lead.assignee.slice(0, 2)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span>{lead.assignee}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell>{lead.lastModified}</TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
