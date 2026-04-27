@@ -713,14 +713,15 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "name",
     header: "Name",
     size: 200,
-    minSize: 120,
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <Avatar size="sm">
+      <div className="flex min-w-0 items-center gap-2">
+        <Avatar size="sm" className="shrink-0">
           <AvatarImage src={row.original.avatar} />
           <AvatarFallback>{row.original.name.slice(0, 2)}</AvatarFallback>
         </Avatar>
-        <span className="font-medium text-foreground">{row.original.name}</span>
+        <span className="truncate font-medium text-foreground">
+          {row.original.name}
+        </span>
       </div>
     ),
   },
@@ -728,22 +729,21 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "organisation",
     header: "Organisation",
     size: 160,
-    minSize: 100,
     cell: ({ row }) => {
       const org = organisations.find(
         (o) => o.name === row.original.organisation
       )
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           {org && (
-            <Avatar size="sm" variant="square">
+            <Avatar size="sm" variant="square" className="shrink-0">
               <AvatarImage src={org.image} />
               <AvatarFallback>
                 {row.original.organisation.slice(0, 1)}
               </AvatarFallback>
             </Avatar>
           )}
-          <span>{row.original.organisation}</span>
+          <span className="truncate">{row.original.organisation}</span>
         </div>
       )
     },
@@ -752,9 +752,8 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "status",
     header: "Status",
     size: 130,
-    minSize: 80,
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2">
         <span
           className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
           style={{ backgroundColor: statusColors[row.original.status] }}
@@ -764,7 +763,7 @@ const columns: ColumnDef<Lead>[] = [
             style={{ backgroundColor: "white" }}
           />
         </span>
-        <span>{row.original.status}</span>
+        <span className="truncate">{row.original.status}</span>
       </div>
     ),
   },
@@ -772,17 +771,15 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "email",
     header: "Email",
     size: 200,
-    minSize: 120,
   },
   {
     accessorKey: "mobile",
     header: "Mobile no.",
     size: 160,
-    minSize: 100,
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <PhoneIcon className="size-3.5 text-muted-foreground" />
-        <span>{row.original.mobile}</span>
+      <div className="flex min-w-0 items-center gap-2">
+        <PhoneIcon className="size-3.5 shrink-0 text-muted-foreground" />
+        <span className="truncate">{row.original.mobile}</span>
       </div>
     ),
   },
@@ -790,14 +787,13 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "assignee",
     header: "Assigned to",
     size: 180,
-    minSize: 120,
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
-        <Avatar size="sm">
+      <div className="flex min-w-0 items-center gap-2">
+        <Avatar size="sm" className="shrink-0">
           <AvatarImage src={row.original.assigneeAvatar} />
           <AvatarFallback>{row.original.assignee.slice(0, 2)}</AvatarFallback>
         </Avatar>
-        <span>{row.original.assignee}</span>
+        <span className="truncate">{row.original.assignee}</span>
       </div>
     ),
   },
@@ -805,7 +801,6 @@ const columns: ColumnDef<Lead>[] = [
     accessorKey: "lastModified",
     header: "Last modified",
     size: 120,
-    minSize: 80,
   },
 ]
 
@@ -1159,7 +1154,13 @@ export default function CrmPage() {
           />
 
           <div className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto px-5 pt-2 pb-5">
-            <Table className="table-fixed" style={{ width: Math.max(table.getTotalSize(), 0), minWidth: "100%" }}>
+            <Table
+              className="table-fixed"
+              style={{
+                width: Math.max(table.getTotalSize(), 0),
+                minWidth: "100%",
+              }}
+            >
               <TableHeader className="group/thead">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
