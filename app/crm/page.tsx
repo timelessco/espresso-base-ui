@@ -51,9 +51,13 @@ import {
 import {
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   flexRender,
   type ColumnDef,
+  type SortingState,
 } from "@tanstack/react-table"
+import { useState } from "react"
+import { ArrowUp, ArrowDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -805,10 +809,15 @@ const columns: ColumnDef<Lead>[] = [
 ]
 
 export default function CrmPage() {
+  const [sorting, setSorting] = useState<SortingState>([])
+
   const table = useReactTable({
     data: leads,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: { sorting },
     columnResizeMode: "onChange",
   })
 
@@ -1170,12 +1179,26 @@ export default function CrmPage() {
                         className="relative"
                         style={{ width: header.getSize() }}
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
+                        {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                          <div
+                            className="flex cursor-pointer select-none items-center gap-1"
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            {flexRender(
                               header.column.columnDef.header,
                               header.getContext()
                             )}
+                            {{
+                              asc: <ArrowUp className="size-3.5" />,
+                              desc: <ArrowDown className="size-3.5" />,
+                            }[header.column.getIsSorted() as string] ?? null}
+                          </div>
+                        ) : (
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                        )}
                         {header.column.getCanResize() && (
                           <div
                             onDoubleClick={() => header.column.resetSize()}
