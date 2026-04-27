@@ -303,21 +303,172 @@ const emails = [
     icon: "",
     date: "Apr 03, 2024",
   },
-  { from: "AWS", avatar: "", avatarLetter: "A", avatarColor: "#FF9900", starred: false, subject: "Your AWS bill for March 2024", preview: "Your total charges for the billing period ending March 31, 2024 are $87.23...", icon: "", date: "Apr 02, 2024" },
-  { from: "James Park", avatar: "https://i.pravatar.cc/32?u=jamesp", starred: true, subject: "Weekend hackathon plan", preview: "Hey! I was thinking we could work on that side project this weekend. I've set up...", icon: "", date: "Apr 02, 2024" },
-  { from: "Vercel", avatar: "", avatarLetter: "V", avatarColor: "#000000", starred: false, subject: "Deployment successful", preview: "Your project espresso-ui has been deployed to production. Build time: 45s...", icon: "", date: "Apr 01, 2024" },
-  { from: "Maya Chen", avatar: "https://i.pravatar.cc/32?u=mayac", starred: false, subject: "Design system review notes", preview: "Here are my notes from today's design system review. Overall the components look...", icon: "paperclip", date: "Apr 01, 2024" },
-  { from: "Slack", avatar: "", avatarLetter: "S", avatarColor: "#4A154B", starred: false, subject: "You have 12 unread messages", preview: "You missed some messages in #design-team and #engineering channels...", icon: "", date: "Mar 31, 2024" },
-  { from: "Rahul Mehta", avatar: "https://i.pravatar.cc/32?u=rahulm", starred: false, subject: "API integration docs", preview: "I've finished documenting the REST API endpoints. Please review the swagger...", icon: "paperclip", date: "Mar 31, 2024" },
-  { from: "Google Cloud", avatar: "", avatarLetter: "G", avatarColor: "#4285F4", starred: false, subject: "Security alert: New sign-in", preview: "A new sign-in was detected on your Google Cloud account from a new device...", icon: "", date: "Mar 30, 2024" },
-  { from: "Anita Desai", avatar: "https://i.pravatar.cc/32?u=anitad", starred: true, subject: "Congratulations on the launch!", preview: "Amazing work on shipping the new feature! The client loved the demo...", icon: "", date: "Mar 30, 2024" },
-  { from: "Medium", avatar: "", avatarLetter: "M", avatarColor: "#000000", starred: false, subject: "Daily digest: Top stories for you", preview: "Building scalable design systems, Why TypeScript is winning, The future of...", icon: "", date: "Mar 29, 2024" },
-  { from: "Tom Wilson", avatar: "https://i.pravatar.cc/32?u=tomw", starred: false, subject: "Sprint retrospective action items", preview: "Here are the action items from today's retro: 1. Improve PR review turnaround...", icon: "", date: "Mar 29, 2024" },
-  { from: "Dropbox", avatar: "", avatarLetter: "D", avatarColor: "#0061FF", starred: false, subject: "Someone shared a folder with you", preview: "Marketing Assets 2024 has been shared with you by design@company.com...", icon: "", date: "Mar 28, 2024" },
-  { from: "Lisa Wong", avatar: "https://i.pravatar.cc/32?u=lisaw", starred: false, subject: "Re: Brand guidelines update", preview: "I agree with the proposed color changes. Let's also update the typography...", icon: "", date: "Mar 28, 2024" },
-  { from: "ProductHunt", avatar: "", avatarLetter: "P", avatarColor: "#DA552F", starred: false, subject: "You're featured on Product Hunt!", preview: "Congratulations! Your product has been featured and is trending on...", icon: "", date: "Mar 27, 2024" },
-  { from: "Kevin Patel", avatar: "https://i.pravatar.cc/32?u=kevinp", starred: false, subject: "Database migration plan", preview: "Attached is the migration plan for moving from PostgreSQL 14 to 16...", icon: "paperclip", date: "Mar 27, 2024" },
-  { from: "Twilio", avatar: "", avatarLetter: "T", avatarColor: "#F22F46", starred: false, subject: "Your monthly usage report", preview: "Here's a summary of your Twilio usage for March 2024. Total messages sent...", icon: "", date: "Mar 26, 2024" },
+  {
+    from: "AWS",
+    avatar: "",
+    avatarLetter: "A",
+    avatarColor: "#FF9900",
+    starred: false,
+    subject: "Your AWS bill for March 2024",
+    preview:
+      "Your total charges for the billing period ending March 31, 2024 are $87.23...",
+    icon: "",
+    date: "Apr 02, 2024",
+  },
+  {
+    from: "James Park",
+    avatar: "https://i.pravatar.cc/32?u=jamesp",
+    starred: true,
+    subject: "Weekend hackathon plan",
+    preview:
+      "Hey! I was thinking we could work on that side project this weekend. I've set up...",
+    icon: "",
+    date: "Apr 02, 2024",
+  },
+  {
+    from: "Vercel",
+    avatar: "",
+    avatarLetter: "V",
+    avatarColor: "#000000",
+    starred: false,
+    subject: "Deployment successful",
+    preview:
+      "Your project espresso-ui has been deployed to production. Build time: 45s...",
+    icon: "",
+    date: "Apr 01, 2024",
+  },
+  {
+    from: "Maya Chen",
+    avatar: "https://i.pravatar.cc/32?u=mayac",
+    starred: false,
+    subject: "Design system review notes",
+    preview:
+      "Here are my notes from today's design system review. Overall the components look...",
+    icon: "paperclip",
+    date: "Apr 01, 2024",
+  },
+  {
+    from: "Slack",
+    avatar: "",
+    avatarLetter: "S",
+    avatarColor: "#4A154B",
+    starred: false,
+    subject: "You have 12 unread messages",
+    preview:
+      "You missed some messages in #design-team and #engineering channels...",
+    icon: "",
+    date: "Mar 31, 2024",
+  },
+  {
+    from: "Rahul Mehta",
+    avatar: "https://i.pravatar.cc/32?u=rahulm",
+    starred: false,
+    subject: "API integration docs",
+    preview:
+      "I've finished documenting the REST API endpoints. Please review the swagger...",
+    icon: "paperclip",
+    date: "Mar 31, 2024",
+  },
+  {
+    from: "Google Cloud",
+    avatar: "",
+    avatarLetter: "G",
+    avatarColor: "#4285F4",
+    starred: false,
+    subject: "Security alert: New sign-in",
+    preview:
+      "A new sign-in was detected on your Google Cloud account from a new device...",
+    icon: "",
+    date: "Mar 30, 2024",
+  },
+  {
+    from: "Anita Desai",
+    avatar: "https://i.pravatar.cc/32?u=anitad",
+    starred: true,
+    subject: "Congratulations on the launch!",
+    preview:
+      "Amazing work on shipping the new feature! The client loved the demo...",
+    icon: "",
+    date: "Mar 30, 2024",
+  },
+  {
+    from: "Medium",
+    avatar: "",
+    avatarLetter: "M",
+    avatarColor: "#000000",
+    starred: false,
+    subject: "Daily digest: Top stories for you",
+    preview:
+      "Building scalable design systems, Why TypeScript is winning, The future of...",
+    icon: "",
+    date: "Mar 29, 2024",
+  },
+  {
+    from: "Tom Wilson",
+    avatar: "https://i.pravatar.cc/32?u=tomw",
+    starred: false,
+    subject: "Sprint retrospective action items",
+    preview:
+      "Here are the action items from today's retro: 1. Improve PR review turnaround...",
+    icon: "",
+    date: "Mar 29, 2024",
+  },
+  {
+    from: "Dropbox",
+    avatar: "",
+    avatarLetter: "D",
+    avatarColor: "#0061FF",
+    starred: false,
+    subject: "Someone shared a folder with you",
+    preview:
+      "Marketing Assets 2024 has been shared with you by design@company.com...",
+    icon: "",
+    date: "Mar 28, 2024",
+  },
+  {
+    from: "Lisa Wong",
+    avatar: "https://i.pravatar.cc/32?u=lisaw",
+    starred: false,
+    subject: "Re: Brand guidelines update",
+    preview:
+      "I agree with the proposed color changes. Let's also update the typography...",
+    icon: "",
+    date: "Mar 28, 2024",
+  },
+  {
+    from: "ProductHunt",
+    avatar: "",
+    avatarLetter: "P",
+    avatarColor: "#DA552F",
+    starred: false,
+    subject: "You're featured on Product Hunt!",
+    preview:
+      "Congratulations! Your product has been featured and is trending on...",
+    icon: "",
+    date: "Mar 27, 2024",
+  },
+  {
+    from: "Kevin Patel",
+    avatar: "https://i.pravatar.cc/32?u=kevinp",
+    starred: false,
+    subject: "Database migration plan",
+    preview:
+      "Attached is the migration plan for moving from PostgreSQL 14 to 16...",
+    icon: "paperclip",
+    date: "Mar 27, 2024",
+  },
+  {
+    from: "Twilio",
+    avatar: "",
+    avatarLetter: "T",
+    avatarColor: "#F22F46",
+    starred: false,
+    subject: "Your monthly usage report",
+    preview:
+      "Here's a summary of your Twilio usage for March 2024. Total messages sent...",
+    icon: "",
+    date: "Mar 26, 2024",
+  },
 ]
 
 type Email = (typeof emails)[number]
@@ -519,7 +670,11 @@ function MailSidebar() {
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/crm-data-grid" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
@@ -795,8 +950,12 @@ function MailSidebar() {
                   <div className="flex items-start gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-blue-500" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">4:00 - 4:30PM</span>
-                      <p className="text-sm font-medium text-foreground">Branding changes</p>
+                      <span className="text-xs text-muted-foreground">
+                        4:00 - 4:30PM
+                      </span>
+                      <p className="text-sm font-medium text-foreground">
+                        Branding changes
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -804,8 +963,12 @@ function MailSidebar() {
                   <div className="flex items-start gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-red-500" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">4:00 - 4:30PM</span>
-                      <p className="text-sm font-medium text-foreground">Website design meeting</p>
+                      <span className="text-xs text-muted-foreground">
+                        4:00 - 4:30PM
+                      </span>
+                      <p className="text-sm font-medium text-foreground">
+                        Website design meeting
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -813,8 +976,12 @@ function MailSidebar() {
                   <div className="flex items-start gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-orange-400" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">4:00 - 4:30PM</span>
-                      <p className="text-sm font-medium text-foreground">Feedback loops within the...</p>
+                      <span className="text-xs text-muted-foreground">
+                        4:00 - 4:30PM
+                      </span>
+                      <p className="text-sm font-medium text-foreground">
+                        Feedback loops within the...
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -971,7 +1138,16 @@ export default function MailPage() {
                 <Button variant="outline" size="sm">
                   PDF
                 </Button>
-                <Select defaultValue="from" variant="outline" size="sm">
+                <Select
+                  items={[
+                    { label: "From", value: "from" },
+                    { label: "Anyone", value: "anyone" },
+                    { label: "Me", value: "me" },
+                  ]}
+                  defaultValue="from"
+                  variant="outline"
+                  size="sm"
+                >
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
@@ -981,7 +1157,18 @@ export default function MailPage() {
                     <SelectItem value="me">Me</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select defaultValue="anytime" variant="outline" size="sm">
+                <Select
+                  items={[
+                    { label: "Any time", value: "anytime" },
+                    { label: "Today", value: "today" },
+                    { label: "This week", value: "week" },
+                    { label: "This month", value: "month" },
+                    { label: "This year", value: "year" },
+                  ]}
+                  defaultValue="anytime"
+                  variant="outline"
+                  size="sm"
+                >
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
@@ -993,7 +1180,16 @@ export default function MailPage() {
                     <SelectItem value="year">This year</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select defaultValue="to" variant="outline" size="sm">
+                <Select
+                  items={[
+                    { label: "To", value: "to" },
+                    { label: "Me", value: "me-to" },
+                    { label: "Anyone", value: "anyone-to" },
+                  ]}
+                  defaultValue="to"
+                  variant="outline"
+                  size="sm"
+                >
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
