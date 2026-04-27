@@ -31,6 +31,7 @@ import {
   CircleHelp,
   PanelRight,
   ArrowRight,
+  ArrowRightFromLine,
   Zap,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -425,11 +426,7 @@ function CrmSidebar() {
             }
           >
             <PanelRight className="size-4 group-data-[collapsible=icon]:hidden" />
-            <img
-              src="/images/svg/menu-collapse.svg"
-              alt="Expand"
-              className="hidden size-4 group-data-[collapsible=icon]:block"
-            />
+            <ArrowRightFromLine className="hidden size-4 group-data-[collapsible=icon]:block" />
           </Button>
         </div>
       </SidebarFooter>
