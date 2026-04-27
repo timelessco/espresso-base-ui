@@ -27,7 +27,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft [&_tr:hover]:bg-transparent [&_tr:hover]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent",
+        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent [&_tr:hover]:border-border-soft [&_tr:hover]:bg-transparent",
         className
       )}
       {...props}
@@ -89,7 +89,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "p-2 align-middle text-base leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "h-11 p-2 align-middle text-base leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}
