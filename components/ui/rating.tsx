@@ -165,7 +165,7 @@ function RatingButton({
       data-filled={isFilled || undefined}
       disabled={disabled}
       className={cn(
-        "cursor-pointer rounded-sm text-muted-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring data-filled:text-yellow-500",
+        "cursor-pointer rounded-sm text-muted-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring data-filled:text-amber-500",
         readOnly && "cursor-default",
         className
       )}
