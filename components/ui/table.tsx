@@ -27,7 +27,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent [&_tr:hover]:border-border-soft [&_tr:hover]:bg-transparent",
+        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent [&_tr:hover]:border-border-soft [&_tr:hover]:bg-transparent [&_tr>*:first-child]:rounded-l-none [&_tr>*:last-child]:rounded-r-none",
         className
       )}
       {...props}
