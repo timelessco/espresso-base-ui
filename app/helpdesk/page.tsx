@@ -805,7 +805,7 @@ function HelpdeskSidebar() {
                     App
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
                         <img
                           src="/images/svg/logo-crm.svg"
@@ -815,7 +815,13 @@ function HelpdeskSidebar() {
                       </div>
                       CRM
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm-data-grid" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                      </div>
+                      CRM Data Grid
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/helpdesk" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
                         <img
                           src="/images/svg/logo-helpDesk.svg"
@@ -825,7 +831,7 @@ function HelpdeskSidebar() {
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/drive" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
                         <img
                           src="/images/svg/logo-drive.svg"
@@ -835,7 +841,7 @@ function HelpdeskSidebar() {
                       </div>
                       Drive
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/mail" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
                         <img
                           src="/images/svg/logo-mail.svg"
@@ -855,7 +861,7 @@ function HelpdeskSidebar() {
                       </div>
                       Gameplan
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/ui" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#84B346] text-white">
                         <Boxes className="size-4" />
                       </div>

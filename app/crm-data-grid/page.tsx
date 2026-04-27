@@ -123,67 +123,43 @@ function CrmSidebar() {
                     App
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img
-                          src="/images/svg/logo-crm.svg"
-                          alt="CRM"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
                       </div>
                       CRM
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm-data-grid" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img
-                          src="/images/svg/logo-crm.svg"
-                          alt="CRM"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/helpdesk" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
-                        <img
-                          src="/images/svg/logo-helpDesk.svg"
-                          alt="Helpdesk"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-helpDesk.svg" alt="Helpdesk" className="size-4" />
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/drive" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
-                        <img
-                          src="/images/svg/logo-drive.svg"
-                          alt="Drive"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-drive.svg" alt="Drive" className="size-4" />
                       </div>
                       Drive
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/mail" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
-                        <img
-                          src="/images/svg/logo-mail.svg"
-                          alt="Mail"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-mail.svg" alt="Mail" className="size-4" />
                       </div>
                       Mail
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
-                        <img
-                          src="/images/svg/logo-gameplan.svg"
-                          alt="Game Plan"
-                          className="size-4"
-                        />
+                        <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" className="size-4" />
                       </div>
                       Gameplan
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/ui" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#84B346] text-white">
                         <Boxes className="size-4" />
                       </div>
