@@ -51,9 +51,13 @@ import {
 import {
   useReactTable,
   getCoreRowModel,
+  getSortedRowModel,
   flexRender,
   type ColumnDef,
+  type SortingState,
 } from "@tanstack/react-table"
+import { useState } from "react"
+import { ArrowUp, ArrowDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -805,10 +809,15 @@ const columns: ColumnDef<Lead>[] = [
 ]
 
 export default function CrmPage() {
+  const [sorting, setSorting] = useState<SortingState>([])
+
   const table = useReactTable({
     data: leads,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: { sorting },
     columnResizeMode: "onChange",
   })
 
@@ -1170,21 +1179,35 @@ export default function CrmPage() {
                         className="relative"
                         style={{ width: header.getSize() }}
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
+                        {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                          <div
+                            className="flex cursor-pointer items-center gap-1 select-none"
+                            onClick={header.column.getToggleSortingHandler()}
+                          >
+                            {flexRender(
                               header.column.columnDef.header,
                               header.getContext()
                             )}
+                            {{
+                              asc: <ArrowUp className="size-3.5" />,
+                              desc: <ArrowDown className="size-3.5" />,
+                            }[header.column.getIsSorted() as string] ?? null}
+                          </div>
+                        ) : (
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                        )}
                         {header.column.getCanResize() && (
                           <div
                             onDoubleClick={() => header.column.resetSize()}
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 ${
+                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
                               header.column.getIsResizing()
-                                ? "bg-primary opacity-100"
-                                : "bg-border opacity-0"
+                                ? "opacity-100 before:bg-primary"
+                                : "opacity-0 before:bg-border"
                             }`}
                           />
                         )}
