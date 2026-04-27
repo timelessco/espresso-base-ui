@@ -48,6 +48,12 @@ import {
   ArrowUpDown,
   Ellipsis,
 } from "lucide-react"
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  type ColumnDef,
+} from "@tanstack/react-table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -691,13 +697,127 @@ function CrmSidebar() {
   )
 }
 
+type Lead = (typeof leads)[number]
+
+const columns: ColumnDef<Lead>[] = [
+  {
+    id: "select",
+    size: 40,
+    minSize: 40,
+    maxSize: 40,
+    enableResizing: false,
+    header: () => <Checkbox />,
+    cell: () => <Checkbox />,
+  },
+  {
+    accessorKey: "name",
+    header: "Name",
+    size: 200,
+    cell: ({ row }) => (
+      <div className="flex min-w-0 items-center gap-2">
+        <Avatar size="sm" className="shrink-0">
+          <AvatarImage src={row.original.avatar} />
+          <AvatarFallback>{row.original.name.slice(0, 2)}</AvatarFallback>
+        </Avatar>
+        <span className="truncate font-medium text-foreground">
+          {row.original.name}
+        </span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "organisation",
+    header: "Organisation",
+    size: 160,
+    cell: ({ row }) => {
+      const org = organisations.find(
+        (o) => o.name === row.original.organisation
+      )
+      return (
+        <div className="flex min-w-0 items-center gap-2">
+          {org && (
+            <Avatar size="sm" variant="square" className="shrink-0">
+              <AvatarImage src={org.image} />
+              <AvatarFallback>
+                {row.original.organisation.slice(0, 1)}
+              </AvatarFallback>
+            </Avatar>
+          )}
+          <span className="truncate">{row.original.organisation}</span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    size: 130,
+    cell: ({ row }) => (
+      <div className="flex min-w-0 items-center gap-2">
+        <span
+          className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
+          style={{ backgroundColor: statusColors[row.original.status] }}
+        >
+          <span
+            className="size-1.5 rounded-full"
+            style={{ backgroundColor: "white" }}
+          />
+        </span>
+        <span className="truncate">{row.original.status}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: "Email",
+    size: 200,
+  },
+  {
+    accessorKey: "mobile",
+    header: "Mobile no.",
+    size: 160,
+    cell: ({ row }) => (
+      <div className="flex min-w-0 items-center gap-2">
+        <PhoneIcon className="size-3.5 shrink-0 text-muted-foreground" />
+        <span className="truncate">{row.original.mobile}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "assignee",
+    header: "Assigned to",
+    size: 180,
+    cell: ({ row }) => (
+      <div className="flex min-w-0 items-center gap-2">
+        <Avatar size="sm" className="shrink-0">
+          <AvatarImage src={row.original.assigneeAvatar} />
+          <AvatarFallback>{row.original.assignee.slice(0, 2)}</AvatarFallback>
+        </Avatar>
+        <span className="truncate">{row.original.assignee}</span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "lastModified",
+    header: "Last modified",
+    size: 120,
+  },
+]
+
 export default function CrmPage() {
+  const table = useReactTable({
+    data: leads,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    columnResizeMode: "onChange",
+  })
+
   return (
     <SidebarProvider>
       <CrmSidebar />
-      <SidebarInset>
+      <SidebarInset className="min-w-0 overflow-hidden">
         <SidebarTrigger className="sr-only" />
-        <div className="flex flex-1 flex-col overflow-hidden">
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
           <Header
             leftControls={
               <Breadcrumb size="md">
@@ -1032,107 +1152,67 @@ export default function CrmPage() {
               </>
             }
           />
-          <div className="flex-1 overflow-auto">
-            <div className="px-5 pt-2 pb-5">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-10">
-                      <Checkbox />
-                    </TableHead>
-                    <TableHead className="min-w-[200px]">Name</TableHead>
-                    <TableHead className="min-w-[160px]">
-                      Organisation
-                    </TableHead>
-                    <TableHead className="min-w-[130px]">Status</TableHead>
-                    <TableHead className="min-w-[200px]">Email</TableHead>
-                    <TableHead className="min-w-[160px]">Mobile no.</TableHead>
-                    <TableHead className="min-w-[180px]">Assigned to</TableHead>
-                    <TableHead className="min-w-[120px]">
-                      Last modified
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {leads.map((lead, i) => {
-                    const org = organisations.find(
-                      (o) => o.name === lead.organisation
-                    )
-                    return (
-                      <TableRow key={i}>
-                        <TableCell>
-                          <Checkbox />
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Avatar size="sm">
-                              <AvatarImage src={lead.avatar} />
-                              <AvatarFallback>
-                                {lead.name.slice(0, 2)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="font-medium text-foreground">
-                              {lead.name}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            {org && (
-                              <Avatar size="sm" variant="square">
-                                <AvatarImage src={org.image} />
-                                <AvatarFallback>
-                                  {lead.organisation.slice(0, 1)}
-                                </AvatarFallback>
-                              </Avatar>
+
+          <div className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto px-5 pt-2 pb-5">
+            <Table
+              className="table-fixed"
+              style={{
+                width: Math.max(table.getTotalSize(), 0),
+                minWidth: "100%",
+              }}
+            >
+              <TableHeader className="group/thead">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <TableHead
+                        key={header.id}
+                        className="relative"
+                        style={{ width: header.getSize() }}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
                             )}
-                            <span>{lead.organisation}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
-                              style={{
-                                backgroundColor: statusColors[lead.status],
-                              }}
-                            >
-                              <span
-                                className="size-1.5 rounded-full"
-                                style={{
-                                  backgroundColor: "white",
-                                }}
-                              />
-                            </span>
-                            <span>{lead.status}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>{lead.email}</TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <PhoneIcon className="size-3.5 text-muted-foreground" />
-                            <span>{lead.mobile}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Avatar size="sm">
-                              <AvatarImage src={lead.assigneeAvatar} />
-                              <AvatarFallback>
-                                {lead.assignee.slice(0, 2)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span>{lead.assignee}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>{lead.lastModified}</TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </div>
+                        {header.column.getCanResize() && (
+                          <div
+                            onDoubleClick={() => header.column.resetSize()}
+                            onMouseDown={header.getResizeHandler()}
+                            onTouchStart={header.getResizeHandler()}
+                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 ${
+                              header.column.getIsResizing()
+                                ? "bg-primary opacity-100"
+                                : "bg-border opacity-0"
+                            }`}
+                          />
+                        )}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        style={{ width: cell.column.getSize() }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
+
           <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
             <Tabs defaultValue="20">
               <TabsList>
