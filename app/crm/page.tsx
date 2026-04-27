@@ -1181,7 +1181,7 @@ export default function CrmPage() {
                       >
                         {header.isPlaceholder ? null : header.column.getCanSort() ? (
                           <div
-                            className="flex cursor-pointer select-none items-center gap-1"
+                            className="flex cursor-pointer items-center gap-1 select-none"
                             onClick={header.column.getToggleSortingHandler()}
                           >
                             {flexRender(
@@ -1204,10 +1204,10 @@ export default function CrmPage() {
                             onDoubleClick={() => header.column.resetSize()}
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 ${
+                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
                               header.column.getIsResizing()
-                                ? "bg-primary opacity-100"
-                                : "bg-border opacity-0"
+                                ? "opacity-100 before:bg-primary"
+                                : "opacity-0 before:bg-border"
                             }`}
                           />
                         )}
