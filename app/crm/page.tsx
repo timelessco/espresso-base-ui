@@ -34,10 +34,35 @@ import {
   ArrowRightFromLine,
   Zap,
   Phone as PhoneIcon,
+  Plus,
+  AlignJustify,
+  Columns2,
+  CalendarDays as CalendarIcon,
+  Sun,
+  Anchor,
+  PinOff,
+  MapPin,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Header } from "@/components/ui/header"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -81,6 +106,19 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+
+const views = [
+  { label: "List view", value: "list-view", icon: AlignJustify },
+  { label: "Kanban view", value: "kanban-view", icon: Columns2 },
+  { label: "Calendar", value: "calendar", icon: CalendarIcon },
+]
+
+const savedViews = [
+  { label: "Product - sales", value: "product-sales", icon: Sun },
+  { label: "Support", value: "support", icon: Anchor },
+  { label: "Board - highest sales", value: "board-highest", icon: PinOff },
+  { label: "Board pinned", value: "board-pinned", icon: MapPin },
+]
 
 const statusColors: Record<string, string> = {
   Open: "#7C7C7C",
@@ -648,6 +686,51 @@ export default function CrmPage() {
       <SidebarInset>
         <SidebarTrigger className="sr-only" />
         <div className="flex flex-1 flex-col overflow-hidden">
+          <Header
+            leftControls={
+              <Breadcrumb size="md">
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                  <BreadcrumbItem>
+                    <Select
+                      items={[...views, ...savedViews]}
+                      defaultValue="list-view"
+                      variant="ghost"
+                      size="sm"
+                    >
+                      <SelectTrigger suffixIcon={<ChevronDown />}>
+                        <SelectValue className="text-lg font-medium text-foreground" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {views.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            <item.icon className="size-4" />
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                        <SelectSeparator />
+                        {savedViews.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            <item.icon className="size-4" />
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            }
+            rightControls={
+              <Button size="sm">
+                <Plus />
+                Create
+              </Button>
+            }
+          />
           <div className="flex-1 overflow-auto">
             <div className="p-5">
               <Table>
