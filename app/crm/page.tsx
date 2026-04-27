@@ -42,6 +42,11 @@ import {
   Anchor,
   PinOff,
   MapPin,
+  Columns3,
+  Group,
+  ListFilter,
+  ArrowUpDown,
+  Ellipsis,
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -55,6 +60,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Header } from "@/components/ui/header"
+import { SubHeader } from "@/components/ui/sub-header"
+import {
+  Tabs,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 import {
   Select,
   SelectContent,
@@ -731,8 +743,297 @@ export default function CrmPage() {
               </Button>
             }
           />
+          <SubHeader
+            leftControls={
+              <>
+                <Select defaultValue="Lead owner" variant="subtle" size="sm">
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="lead-owner">Lead Owner</SelectItem>
+                    <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
+                    <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
+                    <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
+                    <SelectItem value="david-lee">David Lee</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={organisations.map((o) => ({
+                    label: o.name,
+                    value: o.name.toLowerCase(),
+                    icon: ({ className }: { className?: string }) => (
+                      <Avatar size="xs" variant="square" className={className}>
+                        <AvatarImage src={o.image} />
+                        <AvatarFallback>{o.name[0]}</AvatarFallback>
+                      </Avatar>
+                    ),
+                  }))}
+                  defaultValue="gumroad"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    {organisations.map((o) => (
+                      <SelectItem key={o.name} value={o.name.toLowerCase()}>
+                        <Avatar size="xs" variant="square">
+                          <AvatarImage src={o.image} />
+                          <AvatarFallback>{o.name[0]}</AvatarFallback>
+                        </Avatar>
+                        {o.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={Object.keys(statusColors).map((s) => ({
+                    label: s,
+                    value: s.toLowerCase(),
+                    icon: ({ className }: { className?: string }) => (
+                      <span
+                        className="flex size-3 shrink-0 items-center justify-center rounded-full"
+                        style={{ backgroundColor: statusColors[s] }}
+                      >
+                        <span className="size-1 rounded-full bg-white" />
+                      </span>
+                    ),
+                  }))}
+                  defaultValue="open"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    {Object.keys(statusColors).map((s) => (
+                      <SelectItem key={s} value={s.toLowerCase()}>
+                        <span
+                          className="flex size-3 shrink-0 items-center justify-center rounded-full"
+                          style={{ backgroundColor: statusColors[s] }}
+                        >
+                          <span className="size-1 rounded-full bg-white" />
+                        </span>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
+            }
+            rightControls={
+              <>
+                <Select
+                  items={[
+                    { label: "Column", value: "column" },
+                    { label: "Name", value: "name" },
+                    { label: "Organisation", value: "organisation" },
+                    { label: "Start Date", value: "start-date" },
+                    { label: "Status", value: "status" },
+                    { label: "Email", value: "email" },
+                    { label: "Mobile No", value: "mobile" },
+                    { label: "Assigned To", value: "assigned" },
+                  ]}
+                  defaultValue="column"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue>
+                      {(value) => {
+                        const item = [
+                          { label: "Column", value: "column" },
+                          { label: "Name", value: "name" },
+                          { label: "Organisation", value: "organisation" },
+                          { label: "Start Date", value: "start-date" },
+                          { label: "Status", value: "status" },
+                          { label: "Email", value: "email" },
+                          { label: "Mobile No", value: "mobile" },
+                          { label: "Assigned To", value: "assigned" },
+                        ].find((i) => i.value === value)
+                        return (
+                          <>
+                            <Columns3 className="size-4" />
+                            {item?.label ?? "Column"}
+                          </>
+                        )
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="column">Column</SelectItem>
+                    <SelectItem value="name">Name</SelectItem>
+                    <SelectItem value="organisation">Organisation</SelectItem>
+                    <SelectItem value="start-date">Start Date</SelectItem>
+                    <SelectItem value="status">Status</SelectItem>
+                    <SelectItem value="email">Email</SelectItem>
+                    <SelectItem value="mobile">Mobile No</SelectItem>
+                    <SelectItem value="assigned">Assigned To</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={[
+                    { label: "Group", value: "group" },
+                    { label: "Options", value: "option-1" },
+                    { label: "Options", value: "option-2" },
+                    { label: "Options", value: "option-3" },
+                  ]}
+                  defaultValue="group"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue>
+                      {(value) => {
+                        const items = [
+                          { label: "Group", value: "group" },
+                          { label: "Options", value: "option-1" },
+                          { label: "Options", value: "option-2" },
+                          { label: "Options", value: "option-3" },
+                        ]
+                        const item = items.find((i) => i.value === value)
+                        return (
+                          <>
+                            <Group className="size-4" />
+                            {item?.label ?? "Group"}
+                          </>
+                        )
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="group">Group</SelectItem>
+                    <SelectItem value="option-1">Options</SelectItem>
+                    <SelectItem value="option-2">Options</SelectItem>
+                    <SelectItem value="option-3">Options</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={[
+                    { label: "Filter", value: "filter" },
+                    { label: "Title", value: "title" },
+                    { label: "Priority", value: "priority" },
+                    { label: "Start Date", value: "start-date" },
+                    { label: "Reference Document Type", value: "ref-doc-type" },
+                    { label: "Reference Doc", value: "ref-doc" },
+                    { label: "Assigned To", value: "assigned" },
+                    { label: "Status", value: "status" },
+                  ]}
+                  defaultValue="filter"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue>
+                      {(value) => {
+                        const items = [
+                          { label: "Filter", value: "filter" },
+                          { label: "Title", value: "title" },
+                          { label: "Priority", value: "priority" },
+                          { label: "Start Date", value: "start-date" },
+                          {
+                            label: "Reference Document Type",
+                            value: "ref-doc-type",
+                          },
+                          { label: "Reference Doc", value: "ref-doc" },
+                          { label: "Assigned To", value: "assigned" },
+                          { label: "Status", value: "status" },
+                        ]
+                        const item = items.find((i) => i.value === value)
+                        return (
+                          <>
+                            <ListFilter className="size-4" />
+                            {item?.label ?? "Filter"}
+                          </>
+                        )
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="filter">Filter</SelectItem>
+                    <SelectItem value="title">Title</SelectItem>
+                    <SelectItem value="priority">Priority</SelectItem>
+                    <SelectItem value="start-date">Start Date</SelectItem>
+                    <SelectItem value="ref-doc-type">
+                      Reference Document Type
+                    </SelectItem>
+                    <SelectItem value="ref-doc">Reference Doc</SelectItem>
+                    <SelectItem value="assigned">Assigned To</SelectItem>
+                    <SelectItem value="status">Status</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={[
+                    { label: "Sort", value: "short" },
+                    { label: "Status", value: "status" },
+                    { label: "Name", value: "name" },
+                    { label: "Created", value: "created" },
+                  ]}
+                  defaultValue="short"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue>
+                      {(value) => {
+                        const items = [
+                          { label: "Sort", value: "short" },
+                          { label: "Status", value: "status" },
+                          { label: "Name", value: "name" },
+                          { label: "Created", value: "created" },
+                        ]
+                        const item = items.find((i) => i.value === value)
+                        return (
+                          <>
+                            <ArrowUpDown className="size-4" />
+                            {item?.label ?? "Sort"}
+                          </>
+                        )
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="short">Sort</SelectItem>
+                    <SelectItem value="status">Status</SelectItem>
+                    <SelectItem value="name">Name</SelectItem>
+                    <SelectItem value="created">Created</SelectItem>
+                  </SelectContent>
+                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={<Button variant="secondary" size="icon-sm" />}
+                  >
+                    <Ellipsis />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem>Import</DropdownMenuItem>
+                    <DropdownMenuItem>User Permissions</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Role Permissions Manager
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Customize
+                      <span className="ml-auto text-xs text-muted-foreground">
+                        ⌘+Y
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Toggle Sidebar
+                      <span className="ml-auto text-xs text-muted-foreground">
+                        ⌘+G
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>List Settings</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            }
+          />
           <div className="flex-1 overflow-auto">
-            <div className="p-5">
+            <div className="px-5 pt-2 pb-5">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -831,6 +1132,17 @@ export default function CrmPage() {
                 </TableBody>
               </Table>
             </div>
+          </div>
+          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+            <Tabs defaultValue="20">
+              <TabsList>
+                <TabsIndicator />
+                <TabsTrigger value="20">20</TabsTrigger>
+                <TabsTrigger value="50">50</TabsTrigger>
+                <TabsTrigger value="80">80</TabsTrigger>
+              </TabsList>
+            </Tabs>
+            <span className="text-base text-muted-foreground">18 of 32</span>
           </div>
         </div>
       </SidebarInset>
