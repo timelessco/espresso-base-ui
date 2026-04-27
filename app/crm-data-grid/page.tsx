@@ -86,8 +86,8 @@ function CrmSidebar() {
                   />
                 }
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Handshake className="size-4" />
+                <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#DB4EE0]">
+                  <img src="/images/svg/logo-crm.svg" alt="CRM" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">CRM</span>
@@ -103,12 +103,14 @@ function CrmSidebar() {
                 sideOffset={4}
               >
                 <div className="flex items-center gap-3 px-2 py-2">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                    <Handshake className="size-5" />
+                  <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#DB4EE0]">
+                    <img src="/images/svg/logo-crm.svg" alt="CRM" />
                   </div>
                   <div className="grid text-left text-sm leading-tight">
-                    <span className="font-semibold">CRM</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="truncate font-semibold text-foreground">
+                      CRM
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground">
                       James fenimore
                     </span>
                   </div>
@@ -121,44 +123,68 @@ function CrmSidebar() {
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-purple-500 text-white">
-                        <Handshake className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-purple-500 text-white">
-                        <Handshake className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-purple-600 text-white">
-                        <ClipboardList className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
+                        <img
+                          src="/images/svg/logo-helpDesk.svg"
+                          alt="Helpdesk"
+                          className="size-4"
+                        />
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-teal-500 text-white">
-                        <HardDrive className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
+                        <img
+                          src="/images/svg/logo-drive.svg"
+                          alt="Drive"
+                          className="size-4"
+                        />
                       </div>
                       Drive
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-blue-500 text-white">
-                        <Mail className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
+                        <img
+                          src="/images/svg/logo-mail.svg"
+                          alt="Mail"
+                          className="size-4"
+                        />
                       </div>
                       Mail
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-orange-500 text-white">
-                        <MessageSquare className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
+                        <img
+                          src="/images/svg/logo-gameplan.svg"
+                          alt="Game Plan"
+                          className="size-4"
+                        />
                       </div>
                       Gameplan
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <div className="flex size-6 items-center justify-center rounded-md bg-pink-500 text-white">
-                        <Boxes className="size-3.5" />
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#84B346] text-white">
+                        <Boxes className="size-4" />
                       </div>
                       UI
                     </DropdownMenuItem>
@@ -398,7 +424,12 @@ function CrmSidebar() {
                 ?.click()
             }
           >
-            <PanelRight className="size-4" />
+            <PanelRight className="size-4 group-data-[collapsible=icon]:hidden" />
+            <img
+              src="/images/svg/menu-collapse.svg"
+              alt="Expand"
+              className="hidden size-4 group-data-[collapsible=icon]:block"
+            />
           </Button>
         </div>
       </SidebarFooter>
