@@ -31,6 +31,11 @@ import {
   ArrowUp,
   ArrowDown,
   Sparkles,
+  RefreshCw,
+  Contact,
+  TicketCheck,
+  TicketX,
+  TicketPlus,
 } from "lucide-react"
 import {
   useReactTable,
@@ -48,7 +53,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Rating, RatingButton } from "@/components/ui/rating"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Header } from "@/components/ui/header"
 import { SubHeader } from "@/components/ui/sub-header"
@@ -124,37 +131,440 @@ const statusColors: Record<string, string> = {
 }
 
 const tickets = [
-  { id: "#06070", ticket: "Update website content for new products", status: "New", firstDue: "22h 30m", resolution: "22h 30m", priority: "Medium", type: "Incident", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay", team: "Marketing", customer: "Namma yathri" },
-  { id: "#06069", ticket: "Prepare presentation for client pitch", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep", team: "Creative", customer: "Timeless" },
-  { id: "06065", ticket: "Analyze competitors' marketing strategies", status: "New", firstDue: "2h 30m", resolution: "2h 30m", priority: "Low", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep2", team: "Marketing", customer: "Agency" },
-  { id: "06063", ticket: "Create marketing materials for the campaign", status: "New", firstDue: "0h 35m", resolution: "0h 35m", priority: "High", type: "Incident", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay2", team: "Marketing", customer: "CRED" },
-  { id: "06059", ticket: "Create marketing materials for the campaign", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Bug", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep3", team: "Marketing", customer: "TCS" },
-  { id: "06058", ticket: "Develop social media strategy for next quarter", status: "Awaiting app...", firstDue: "Failed", resolution: "Failed", priority: "High", type: "Bug", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham", team: "Marketing", customer: "Pentagram" },
-  { id: "06056", ticket: "Develop social media strategy for next quarter", status: "Awaiting app...", firstDue: "Failed", resolution: "Failed", priority: "Medium", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep4", team: "Marketing", customer: "Crew" },
-  { id: "06066", ticket: "Conduct user feedback sessions for product", status: "Quotation", firstDue: "Failed", resolution: "Failed", priority: "Medium", type: "Incident", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay3", team: "Product", customer: "InsightsCorp" },
-  { id: "06055", ticket: "Optimise website SEO for better visibility", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Incident", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham2", team: "Marketing", customer: "WebSolutions" },
-  { id: "06054", ticket: "Update website content for new products", status: "Closed", firstDue: "Failed", resolution: "Failed", priority: "Low", type: "Bug", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep5", team: "Marketing", customer: "Namma yathri" },
-  { id: "06053", ticket: "Prepare presentation for client pitch", status: "Awaiting Cus...", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Bug", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham3", team: "Creative", customer: "Timeless" },
-  { id: "06052", ticket: "Analyze competitors' marketing strategies", status: "New", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep6", team: "Marketing", customer: "Agency" },
-  { id: "06051", ticket: "Create marketing materials for the campaign", status: "Replied", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep7", team: "Marketing", customer: "CRED" },
-  { id: "06050", ticket: "Launch email campaign targeting new subscribers", status: "New", firstDue: "1h 45m", resolution: "1h 45m", priority: "High", type: "Incident", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay4", team: "Creative", customer: "Timeless" },
-  { id: "06049", ticket: "Conduct A/B testing for website landing page", status: "In Progress", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Bug", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham4", team: "Product", customer: "WebSolutions" },
-  { id: "06050", ticket: "Revamp mobile app interface for improved", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "High", type: "Unspecified", assignee: "Aisha", assigneeAvatar: "https://i.pravatar.cc/32?u=aisha", team: "Design", customer: "AppInnovations" },
-  { id: "06051", ticket: "Integrate payment gateway for e-commerce", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "High", type: "Bug", assignee: "Rajesh", assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh", team: "Development", customer: "ShopTech" },
-  { id: "06052", ticket: "Conduct user research for new product features", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Incident", assignee: "Jessica", assigneeAvatar: "https://i.pravatar.cc/32?u=jessica", team: "UX", customer: "InnovativeIdeas" },
-  { id: "06053", ticket: "Update content strategy for social media channels", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Bug", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep8", team: "Marketing", customer: "SocialMediaMasters" },
-  { id: "06054", ticket: "Optimize website load time and performance", status: "Not Started", firstDue: "Pending", resolution: "Pending", priority: "High", type: "Improvement", assignee: "Lina", assigneeAvatar: "https://i.pravatar.cc/32?u=lina", team: "Engineering", customer: "TechSolutions" },
-  { id: "06055", ticket: "Design new onboarding flow for mobile users", status: "New", firstDue: "4h 15m", resolution: "4h 15m", priority: "High", type: "Incident", assignee: "Aisha", assigneeAvatar: "https://i.pravatar.cc/32?u=aisha2", team: "Design", customer: "AppInnovations" },
-  { id: "06056", ticket: "Fix authentication bug in production", status: "In Progress", firstDue: "1h 10m", resolution: "1h 10m", priority: "High", type: "Bug", assignee: "Rajesh", assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh2", team: "Development", customer: "ShopTech" },
-  { id: "06057", ticket: "Create quarterly performance report", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Incident", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay5", team: "Marketing", customer: "Agency" },
-  { id: "06058", ticket: "Set up monitoring alerts for API endpoints", status: "New", firstDue: "3h 20m", resolution: "3h 20m", priority: "Medium", type: "Improvement", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham5", team: "Engineering", customer: "WebSolutions" },
-  { id: "06059", ticket: "Review and update privacy policy documentation", status: "Closed", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Incident", assignee: "Jessica", assigneeAvatar: "https://i.pravatar.cc/32?u=jessica2", team: "Legal", customer: "Timeless" },
-  { id: "06060", ticket: "Implement dark mode for dashboard", status: "Awaiting app...", firstDue: "Failed", resolution: "Failed", priority: "Medium", type: "Improvement", assignee: "Lina", assigneeAvatar: "https://i.pravatar.cc/32?u=lina2", team: "Design", customer: "CRED" },
-  { id: "06061", ticket: "Migrate database to new cloud provider", status: "In Progress", firstDue: "12h 0m", resolution: "12h 0m", priority: "High", type: "Bug", assignee: "Rajesh", assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh3", team: "Engineering", customer: "TechSolutions" },
-  { id: "06062", ticket: "Train support team on new ticket workflow", status: "Resolved", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Low", type: "Incident", assignee: "Sandeep", assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep9", team: "Support", customer: "Namma yathri" },
-  { id: "06063", ticket: "Build analytics dashboard for customer metrics", status: "New", firstDue: "6h 45m", resolution: "6h 45m", priority: "Medium", type: "Improvement", assignee: "Gowtham", assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham6", team: "Product", customer: "InsightsCorp" },
-  { id: "06064", ticket: "Resolve billing discrepancy for enterprise client", status: "Replied", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "High", type: "Bug", assignee: "Jay", assigneeAvatar: "https://i.pravatar.cc/32?u=jay6", team: "Finance", customer: "Pentagram" },
-  { id: "06065", ticket: "Update API documentation for v3 release", status: "Closed", firstDue: "Fulfilled", resolution: "Fulfilled", priority: "Medium", type: "Incident", assignee: "Jessica", assigneeAvatar: "https://i.pravatar.cc/32?u=jessica3", team: "Development", customer: "Crew" },
+  {
+    id: "#06070",
+    ticket: "Update website content for new products",
+    status: "New",
+    firstDue: "22h 30m",
+    resolution: "3d 2h",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay",
+    team: "Marketing",
+    customer: "Namma yathri",
+    rating: 1,
+  },
+  {
+    id: "#06069",
+    ticket: "Prepare presentation for client pitch",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep",
+    team: "Creative",
+    customer: "Timeless",
+    rating: 5,
+  },
+  {
+    id: "06065",
+    ticket: "Analyze competitors' marketing strategies",
+    status: "New",
+    firstDue: "2h 30m",
+    resolution: "3d 2h",
+    priority: "Low",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep2",
+    team: "Marketing",
+    customer: "Agency",
+    rating: 0,
+  },
+  {
+    id: "06063",
+    ticket: "Create marketing materials for the campaign",
+    status: "New",
+    firstDue: "0h 35m",
+    resolution: "2d 2h",
+    priority: "High",
+    type: "Incident",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay2",
+    team: "Marketing",
+    customer: "CRED",
+    rating: 0,
+  },
+  {
+    id: "06059",
+    ticket: "Create marketing materials for the campaign",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Low",
+    type: "Bug",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep3",
+    team: "Marketing",
+    customer: "TCS",
+    rating: 4,
+  },
+  {
+    id: "06058",
+    ticket: "Develop social media strategy for next quarter",
+    status: "Awaiting app...",
+    firstDue: "Failed",
+    resolution: "3d 2h",
+    priority: "High",
+    type: "Bug",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham",
+    team: "Marketing",
+    customer: "Pentagram",
+    rating: 0,
+  },
+  {
+    id: "06056",
+    ticket: "Develop social media strategy for next quarter",
+    status: "Awaiting app...",
+    firstDue: "Failed",
+    resolution: "3d 2h",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep4",
+    team: "Marketing",
+    customer: "Crew",
+    rating: 0,
+  },
+  {
+    id: "06066",
+    ticket: "Conduct user feedback sessions for product",
+    status: "Quotation",
+    firstDue: "Failed",
+    resolution: "3d 2h",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay3",
+    team: "Product",
+    customer: "InsightsCorp",
+    rating: 0,
+  },
+  {
+    id: "06055",
+    ticket: "Optimise website SEO for better visibility",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Low",
+    type: "Incident",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham2",
+    team: "Marketing",
+    customer: "WebSolutions",
+    rating: 0,
+  },
+  {
+    id: "06054",
+    ticket: "Update website content for new products",
+    status: "Closed",
+    firstDue: "Failed",
+    resolution: "3d 2h",
+    priority: "Low",
+    type: "Bug",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep5",
+    team: "Marketing",
+    customer: "Namma yathri",
+    rating: 5,
+  },
+  {
+    id: "06053",
+    ticket: "Prepare presentation for client pitch",
+    status: "Awaiting Cus...",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Bug",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham3",
+    team: "Creative",
+    customer: "Timeless",
+    rating: 0,
+  },
+  {
+    id: "06052",
+    ticket: "Analyze competitors' marketing strategies",
+    status: "New",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep6",
+    team: "Marketing",
+    customer: "Agency",
+    rating: 0,
+  },
+  {
+    id: "06051",
+    ticket: "Create marketing materials for the campaign",
+    status: "Replied",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep7",
+    team: "Marketing",
+    customer: "CRED",
+    rating: 0,
+  },
+  {
+    id: "06050",
+    ticket: "Launch email campaign targeting new subscribers",
+    status: "New",
+    firstDue: "1h 45m",
+    resolution: "3d 2h",
+    priority: "High",
+    type: "Incident",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay4",
+    team: "Creative",
+    customer: "Timeless",
+    rating: 0,
+  },
+  {
+    id: "06049",
+    ticket: "Conduct A/B testing for website landing page",
+    status: "In Progress",
+    firstDue: "Fulfilled",
+    resolution: "1d 3h",
+    priority: "Medium",
+    type: "Bug",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham4",
+    team: "Product",
+    customer: "WebSolutions",
+    rating: 0,
+  },
+  {
+    id: "06050",
+    ticket: "Revamp mobile app interface for improved",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "1d 3h",
+    priority: "High",
+    type: "Unspecified",
+    assignee: "Aisha",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=aisha",
+    team: "Design",
+    customer: "AppInnovations",
+    rating: 0,
+  },
+  {
+    id: "06051",
+    ticket: "Integrate payment gateway for e-commerce",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "High",
+    type: "Bug",
+    assignee: "Rajesh",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh",
+    team: "Development",
+    customer: "ShopTech",
+    rating: 3,
+  },
+  {
+    id: "06052",
+    ticket: "Conduct user research for new product features",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Jessica",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jessica",
+    team: "UX",
+    customer: "InnovativeIdeas",
+    rating: 0,
+  },
+  {
+    id: "06053",
+    ticket: "Update content strategy for social media channels",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Low",
+    type: "Bug",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep8",
+    team: "Marketing",
+    customer: "SocialMediaMasters",
+    rating: 2,
+  },
+  {
+    id: "06054",
+    ticket: "Optimize website load time and performance",
+    status: "Not Started",
+    firstDue: "Pending",
+    resolution: "Fulfilled",
+    priority: "High",
+    type: "Improvement",
+    assignee: "Lina",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=lina",
+    team: "Engineering",
+    customer: "TechSolutions",
+    rating: 4,
+  },
+  {
+    id: "06055",
+    ticket: "Design new onboarding flow for mobile users",
+    status: "New",
+    firstDue: "4h 15m",
+    resolution: "3d 2h",
+    priority: "High",
+    type: "Incident",
+    assignee: "Aisha",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=aisha2",
+    team: "Design",
+    customer: "AppInnovations",
+    rating: 0,
+  },
+  {
+    id: "06056",
+    ticket: "Fix authentication bug in production",
+    status: "In Progress",
+    firstDue: "1h 10m",
+    resolution: "Fulfilled",
+    priority: "High",
+    type: "Bug",
+    assignee: "Rajesh",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh2",
+    team: "Development",
+    customer: "ShopTech",
+    rating: 3,
+  },
+  {
+    id: "06057",
+    ticket: "Create quarterly performance report",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Low",
+    type: "Incident",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay5",
+    team: "Marketing",
+    customer: "Agency",
+    rating: 0,
+  },
+  {
+    id: "06058",
+    ticket: "Set up monitoring alerts for API endpoints",
+    status: "New",
+    firstDue: "3h 20m",
+    resolution: "2d 2h",
+    priority: "Medium",
+    type: "Improvement",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham5",
+    team: "Engineering",
+    customer: "WebSolutions",
+    rating: 0,
+  },
+  {
+    id: "06059",
+    ticket: "Review and update privacy policy documentation",
+    status: "Closed",
+    firstDue: "Fulfilled",
+    resolution: "3d 2h",
+    priority: "Low",
+    type: "Incident",
+    assignee: "Jessica",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jessica2",
+    team: "Legal",
+    customer: "Timeless",
+    rating: 5,
+  },
+  {
+    id: "06060",
+    ticket: "Implement dark mode for dashboard",
+    status: "Awaiting app...",
+    firstDue: "Failed",
+    resolution: "1d 3h",
+    priority: "Medium",
+    type: "Improvement",
+    assignee: "Lina",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=lina2",
+    team: "Design",
+    customer: "CRED",
+    rating: 0,
+  },
+  {
+    id: "06061",
+    ticket: "Migrate database to new cloud provider",
+    status: "In Progress",
+    firstDue: "12h 0m",
+    resolution: "Fulfilled",
+    priority: "High",
+    type: "Bug",
+    assignee: "Rajesh",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rajesh3",
+    team: "Engineering",
+    customer: "TechSolutions",
+    rating: 0,
+  },
+  {
+    id: "06062",
+    ticket: "Train support team on new ticket workflow",
+    status: "Resolved",
+    firstDue: "Fulfilled",
+    resolution: "3d 2h",
+    priority: "Low",
+    type: "Incident",
+    assignee: "Sandeep",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sandeep9",
+    team: "Support",
+    customer: "Namma yathri",
+    rating: 1,
+  },
+  {
+    id: "06063",
+    ticket: "Build analytics dashboard for customer metrics",
+    status: "New",
+    firstDue: "6h 45m",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Improvement",
+    assignee: "Gowtham",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=gowtham6",
+    team: "Product",
+    customer: "InsightsCorp",
+    rating: 0,
+  },
+  {
+    id: "06064",
+    ticket: "Resolve billing discrepancy for enterprise client",
+    status: "Replied",
+    firstDue: "Fulfilled",
+    resolution: "3d 2h",
+    priority: "High",
+    type: "Bug",
+    assignee: "Jay",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jay6",
+    team: "Finance",
+    customer: "Pentagram",
+    rating: 4,
+  },
+  {
+    id: "06065",
+    ticket: "Update API documentation for v3 release",
+    status: "Closed",
+    firstDue: "Fulfilled",
+    resolution: "Fulfilled",
+    priority: "Medium",
+    type: "Incident",
+    assignee: "Jessica",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=jessica3",
+    team: "Development",
+    customer: "Crew",
+    rating: 0,
+  },
 ]
 
 type Ticket = (typeof tickets)[number]
@@ -176,7 +586,7 @@ const columns: ColumnDef<Ticket>[] = [
     size: 80,
     minSize: 60,
     cell: ({ row }) => (
-      <span className="font-medium text-foreground">{row.original.id}</span>
+      <span className={`text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}>{row.original.id}</span>
     ),
   },
   {
@@ -185,7 +595,7 @@ const columns: ColumnDef<Ticket>[] = [
     size: 300,
     minSize: 150,
     cell: ({ row }) => (
-      <span className="truncate">{row.original.ticket}</span>
+      <span className={`truncate text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}>{row.original.ticket}</span>
     ),
   },
   {
@@ -197,7 +607,9 @@ const columns: ColumnDef<Ticket>[] = [
       <div className="flex min-w-0 items-center gap-2">
         <span
           className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
-          style={{ backgroundColor: statusColors[row.original.status] ?? "#9CA3AF" }}
+          style={{
+            backgroundColor: statusColors[row.original.status] ?? "#9CA3AF",
+          }}
         >
           <span className="size-1.5 rounded-full bg-white" />
         </span>
@@ -208,20 +620,46 @@ const columns: ColumnDef<Ticket>[] = [
   {
     accessorKey: "firstDue",
     header: "First due",
-    size: 100,
-    minSize: 70,
+    size: 110,
+    minSize: 80,
+    cell: ({ row }) => {
+      const val = row.original.firstDue
+      if (val === "Fulfilled") return <Badge variant="secondary" size="md">{val}</Badge>
+      if (val === "Failed") return <Badge size="md" className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">{val}</Badge>
+      return <Badge size="md" className="border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-400">{val}</Badge>
+    },
   },
   {
     accessorKey: "resolution",
     header: "Resolution",
-    size: 100,
-    minSize: 70,
+    size: 110,
+    minSize: 80,
+    cell: ({ row }) => {
+      const val = row.original.resolution
+      if (val === "Fulfilled") return <Badge variant="secondary" size="md">{val}</Badge>
+      if (val === "Failed") return <Badge size="md" className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">{val}</Badge>
+      return <Badge size="md" className="border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-800 dark:bg-violet-950 dark:text-violet-400">{val}</Badge>
+    },
   },
   {
     accessorKey: "priority",
     header: "Priority",
-    size: 100,
-    minSize: 70,
+    size: 120,
+    minSize: 80,
+    cell: ({ row }) => {
+      const p = row.original.priority
+      const level = p === "High" ? 3 : p === "Medium" ? 2 : 1
+      return (
+        <div className="flex min-w-0 items-center gap-1.5">
+          <svg width="14" height="14" viewBox="0 0 14 14" className="shrink-0">
+            <rect x="1" y="9" width="3" height="4" rx="0.5" fill={level >= 1 ? "#6B7280" : "#D1D5DB"} />
+            <rect x="5.5" y="5" width="3" height="8" rx="0.5" fill={level >= 2 ? "#6B7280" : "#D1D5DB"} />
+            <rect x="10" y="1" width="3" height="12" rx="0.5" fill={level >= 3 ? "#6B7280" : "#D1D5DB"} />
+          </svg>
+          <span className="truncate">{p}</span>
+        </div>
+      )
+    },
   },
   {
     accessorKey: "type",
@@ -257,14 +695,21 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 100,
   },
   {
-    id: "star",
-    size: 40,
-    minSize: 40,
-    maxSize: 40,
+    id: "rating",
+    accessorKey: "rating",
+    header: "Rating",
+    size: 160,
+    minSize: 120,
     enableResizing: false,
-    enableSorting: false,
-    header: () => <Star className="size-4 text-muted-foreground" />,
-    cell: () => <Star className="size-4 text-amber-400 fill-amber-400" />,
+    cell: ({ row }) => (
+      <Rating defaultValue={row.original.rating} readOnly>
+        <RatingButton size={18} />
+        <RatingButton size={18} />
+        <RatingButton size={18} />
+        <RatingButton size={18} />
+        <RatingButton size={18} />
+      </Rating>
+    ),
   },
 ]
 
@@ -362,31 +807,51 @@ function HelpdeskSidebar() {
                   <DropdownMenuSubContent>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
-                        <img src="/images/svg/logo-helpDesk.svg" alt="Helpdesk" className="size-4" />
+                        <img
+                          src="/images/svg/logo-helpDesk.svg"
+                          alt="Helpdesk"
+                          className="size-4"
+                        />
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
-                        <img src="/images/svg/logo-drive.svg" alt="Drive" className="size-4" />
+                        <img
+                          src="/images/svg/logo-drive.svg"
+                          alt="Drive"
+                          className="size-4"
+                        />
                       </div>
                       Drive
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
-                        <img src="/images/svg/logo-mail.svg" alt="Mail" className="size-4" />
+                        <img
+                          src="/images/svg/logo-mail.svg"
+                          alt="Mail"
+                          className="size-4"
+                        />
                       </div>
                       Mail
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
-                        <img src="/images/svg/logo-gameplan.svg" alt="Game Plan" className="size-4" />
+                        <img
+                          src="/images/svg/logo-gameplan.svg"
+                          alt="Game Plan"
+                          className="size-4"
+                        />
                       </div>
                       Gameplan
                     </DropdownMenuItem>
@@ -431,7 +896,10 @@ function HelpdeskSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Notifications" className="h-7 text-base">
+                <SidebarMenuButton
+                  tooltip="Notifications"
+                  className="h-7 text-base"
+                >
                   <Bell />
                   <span>Notifications</span>
                 </SidebarMenuButton>
@@ -446,32 +914,48 @@ function HelpdeskSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Tickets" className="h-7 text-base font-normal!" data-active>
+                <SidebarMenuButton
+                  tooltip="Tickets"
+                  className="h-7 text-base font-normal!"
+                  data-active
+                >
                   <Ticket />
                   <span>Tickets</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Knowledge Base" className="h-7 text-base font-normal!">
+                <SidebarMenuButton
+                  tooltip="Knowledge Base"
+                  className="h-7 text-base font-normal!"
+                >
                   <BookOpen />
                   <span>Knowledge Base</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Canned response" className="h-7 text-base font-normal!">
+                <SidebarMenuButton
+                  tooltip="Canned response"
+                  className="h-7 text-base font-normal!"
+                >
                   <MessageSquareReply />
                   <span>Canned response</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Customers" className="h-7 text-base font-normal!">
+                <SidebarMenuButton
+                  tooltip="Customers"
+                  className="h-7 text-base font-normal!"
+                >
                   <Users />
                   <span>Customers</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Contacts" className="h-7 text-base font-normal!">
-                  <Users />
+                <SidebarMenuButton
+                  tooltip="Contacts"
+                  className="h-7 text-base font-normal!"
+                >
+                  <Contact />
                   <span>Contacts</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -484,7 +968,10 @@ function HelpdeskSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
-              <Collapsible defaultOpen className="group/collapsible group-data-[collapsible=icon]:hidden">
+              <Collapsible
+                defaultOpen
+                className="group/collapsible group-data-[collapsible=icon]:hidden"
+              >
                 <SidebarMenuItem>
                   <CollapsibleTrigger
                     render={
@@ -496,23 +983,26 @@ function HelpdeskSidebar() {
                     <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
+                    <SidebarMenu className="gap-0.5">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <TicketCheck />
                           <span>Resolved tickets</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <TicketX />
                           <span>Closed tickets</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <TicketPlus />
                           <span>My tickets</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
@@ -541,10 +1031,18 @@ function HelpdeskSidebar() {
 
         <div className="flex items-center justify-between px-2 group-data-[collapsible=icon]:justify-center">
           <div className="flex items-center gap-1 group-data-[collapsible=icon]:hidden">
-            <Button variant="ghost" size="icon-xs" className="text-muted-foreground">
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="text-muted-foreground"
+            >
               <Zap className="size-4" />
             </Button>
-            <Button variant="ghost" size="icon-xs" className="text-muted-foreground">
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="text-muted-foreground"
+            >
               <CircleHelp className="size-4" />
             </Button>
           </div>
@@ -590,13 +1088,9 @@ export default function HelpdeskPage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <Breadcrumb size="md">
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Tickets</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <span className="text-lg leading-base font-semibold tracking-normal text-foreground">
+                Tickets
+              </span>
             }
             rightControls={
               <Button size="sm">
@@ -617,6 +1111,10 @@ export default function HelpdeskPage() {
             }
             rightControls={
               <>
+                <Button variant="secondary" size="icon-sm">
+                  <RefreshCw className="size-4" />
+                </Button>
+
                 <Select
                   items={[
                     { label: "Title", value: "title" },
@@ -638,7 +1136,12 @@ export default function HelpdeskPage() {
                           { label: "Priority", value: "priority" },
                         ]
                         const item = items.find((i) => i.value === value)
-                        return (<><ListFilter className="size-4" />{item?.label ?? "Title"}</>)
+                        return (
+                          <>
+                            <ListFilter className="size-4" />
+                            {item?.label ?? "Title"}
+                          </>
+                        )
                       }}
                     </SelectValue>
                   </SelectTrigger>
@@ -703,7 +1206,12 @@ export default function HelpdeskPage() {
                           { label: "Customer", value: "customer" },
                         ]
                         const item = items.find((i) => i.value === value)
-                        return (<><Columns3 className="size-4" />{item?.label ?? "Column"}</>)
+                        return (
+                          <>
+                            <Columns3 className="size-4" />
+                            {item?.label ?? "Column"}
+                          </>
+                        )
                       }}
                     </SelectValue>
                   </SelectTrigger>
@@ -726,7 +1234,13 @@ export default function HelpdeskPage() {
           />
 
           <ScrollShadow className="min-h-0 min-w-0 flex-1">
-            <Table className="table-fixed" style={{ width: Math.max(table.getTotalSize(), 0), minWidth: "100%" }}>
+            <Table
+              className="table-fixed"
+              style={{
+                width: Math.max(table.getTotalSize(), 0),
+                minWidth: "100%",
+              }}
+            >
               <TableHeader className="group/thead">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
@@ -738,24 +1252,30 @@ export default function HelpdeskPage() {
                       >
                         {header.isPlaceholder ? null : header.column.getCanSort() ? (
                           <div
-                            className="flex cursor-pointer select-none items-center gap-1"
+                            className="flex cursor-pointer items-center gap-1 select-none"
                             onClick={header.column.getToggleSortingHandler()}
                           >
-                            {flexRender(header.column.columnDef.header, header.getContext())}
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
                             {{
                               asc: <ArrowUp className="size-3.5" />,
                               desc: <ArrowDown className="size-3.5" />,
                             }[header.column.getIsSorted() as string] ?? null}
                           </div>
                         ) : (
-                          flexRender(header.column.columnDef.header, header.getContext())
+                          flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
                         )}
                         {header.column.getCanResize() && (
                           <div
                             onDoubleClick={() => header.column.resetSize()}
                             onMouseDown={header.getResizeHandler()}
                             onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-2.5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
                               header.column.getIsResizing()
                                 ? "opacity-100 before:bg-primary"
                                 : "opacity-0 before:bg-border"
@@ -775,7 +1295,10 @@ export default function HelpdeskPage() {
                         key={cell.id}
                         style={{ width: cell.column.getSize() }}
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>

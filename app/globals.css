@@ -43,7 +43,7 @@
   --color-amber-200: oklch(0.9441 0.0877 95.79); /* #feeda9 */
   --color-amber-300: oklch(0.8976 0.1284 92.58); /* #fbdb73 */
   --color-amber-400: oklch(0.8498 0.1547 85.6); /* #fbc53f */
-  --color-amber-500: oklch(0.7432 0.1554 72.09); /* #e79913 */
+  --color-amber-500: oklch(74.31% 0.155 72.09); /* #e79913 */
   --color-amber-600: oklch(0.6686 0.1591 57.7); /* #db7706 */
   --color-amber-700: oklch(0.5538 0.1445 49.25); /* #b35309 */
   --color-amber-800: oklch(0.4716 0.1238 46.68); /* #91400d */
