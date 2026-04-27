@@ -933,12 +933,23 @@ export default function CrmPage() {
           <SubHeader
             leftControls={
               <>
-                <Select defaultValue="Lead owner" variant="subtle" size="sm">
+                <Select
+                  items={[
+                    { label: "Lead owner", value: "lead-owner" },
+                    { label: "Jenny Wilson", value: "jenny-wilson" },
+                    { label: "Mariana Rodriguez", value: "mariana" },
+                    { label: "Sophie Chen", value: "sophie-chen" },
+                    { label: "David Lee", value: "david-lee" },
+                  ]}
+                  defaultValue="lead-owner"
+                  variant="subtle"
+                  size="sm"
+                >
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="lead-owner">Lead Owner</SelectItem>
+                    <SelectItem value="lead-owner">Lead owner</SelectItem>
                     <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
                     <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
                     <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
