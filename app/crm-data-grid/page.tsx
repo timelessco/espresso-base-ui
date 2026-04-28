@@ -36,22 +36,28 @@ import {
   Anchor,
   PinOff,
   MapPin,
-  Columns3,
-  Group,
   ListFilter,
   ArrowUpDown,
-  Ellipsis,
   ArrowUp,
   ArrowDown,
+  EyeOff,
+  Minus,
+  Equal,
+  RectangleHorizontal,
+  X,
+  Check,
 } from "lucide-react"
 import {
   useReactTable,
   getCoreRowModel,
   getSortedRowModel,
+  getFilteredRowModel,
   flexRender,
   type ColumnDef,
+  type ColumnFiltersState,
   type SortingState,
   type RowData,
+  type VisibilityState,
 } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -94,6 +100,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Separator } from "@/components/ui/separator"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -910,6 +922,32 @@ const cellInputClass =
 
 const cellSelectTriggerClass = "h-7 w-full justify-between border-transparent"
 
+const columnLabels: Record<string, string> = {
+  name: "Name",
+  organisation: "Organisation",
+  status: "Status",
+  email: "Email",
+  mobile: "Mobile no.",
+  assignee: "Assigned to",
+  lastModified: "Last modified/Created",
+}
+
+type Density = "short" | "medium" | "tall" | "extra-tall"
+
+const densityOptions: { value: Density; label: string; icon: typeof Minus }[] = [
+  { value: "short", label: "Short", icon: Minus },
+  { value: "medium", label: "Medium", icon: Equal },
+  { value: "tall", label: "Tall", icon: RectangleHorizontal },
+  { value: "extra-tall", label: "Extra Tall", icon: X },
+]
+
+const densityCellClass: Record<Density, string> = {
+  short: "h-9 py-1",
+  medium: "h-11 py-2",
+  tall: "h-14 py-3",
+  "extra-tall": "h-16 py-4",
+}
+
 const columns: ColumnDef<Lead>[] = [
   {
     id: "select",
@@ -1129,17 +1167,27 @@ const columns: ColumnDef<Lead>[] = [
   },
 ]
 
+const ALL = "__all__"
+
 export default function CrmDataGridPage() {
   const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [data, setData] = useState<Lead[]>(initialLeads)
+  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr")
+  const [density, setDensity] = useState<Density>("medium")
+  const [columnSearch, setColumnSearch] = useState("")
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
-    state: { sorting },
+    onColumnFiltersChange: setColumnFilters,
+    onColumnVisibilityChange: setColumnVisibility,
+    state: { sorting, columnFilters, columnVisibility },
     columnResizeMode: "onChange",
     meta: {
       updateData: (rowIndex, columnId, value) => {
@@ -1152,29 +1200,51 @@ export default function CrmDataGridPage() {
     },
   })
 
-  const columnSelectItems = useMemo(
-    () => [
-      { label: "Column", value: "column" },
-      { label: "Name", value: "name" },
-      { label: "Organisation", value: "organisation" },
-      { label: "Start Date", value: "start-date" },
-      { label: "Status", value: "status" },
-      { label: "Email", value: "email" },
-      { label: "Mobile No", value: "mobile" },
-      { label: "Assigned To", value: "assigned" },
-    ],
-    []
+  const toggleableColumns = table
+    .getAllLeafColumns()
+    .filter((c) => c.id !== "select")
+
+  const visibleColumnsCount = toggleableColumns.filter((c) =>
+    c.getIsVisible()
+  ).length
+  const isAllVisible = visibleColumnsCount === toggleableColumns.length
+  const isSomeVisible = visibleColumnsCount > 0 && !isAllVisible
+
+  const filteredColumnList = toggleableColumns.filter((c) =>
+    (columnLabels[c.id] ?? c.id)
+      .toLowerCase()
+      .includes(columnSearch.toLowerCase())
   )
 
-  const groupSelectItems = useMemo(
-    () => [
-      { label: "Group", value: "group" },
-      { label: "Options", value: "option-1" },
-      { label: "Options", value: "option-2" },
-      { label: "Options", value: "option-3" },
-    ],
-    []
-  )
+  const currentDensity =
+    densityOptions.find((d) => d.value === density) ?? densityOptions[1]
+  const DensityIcon = currentDensity.icon
+
+  const cellPadClass = densityCellClass[density]
+
+  const getFilterValue = (columnId: string): string =>
+    (columnFilters.find((f) => f.id === columnId)?.value as string) ?? ALL
+
+  const setFilterValue = (columnId: string, value: string | null) => {
+    setColumnFilters((prev) => {
+      const others = prev.filter((f) => f.id !== columnId)
+      if (!value || value === ALL) return others
+      return [...others, { id: columnId, value }]
+    })
+  }
+
+  const sortValue = sorting[0]?.id ?? ALL
+
+  const setSortValue = (value: string | null) => {
+    if (!value || value === ALL) {
+      setSorting([])
+      return
+    }
+    setSorting([{ id: value, desc: false }])
+  }
+
+  const filteredCount = table.getFilteredRowModel().rows.length
+  const totalCount = data.length
 
   const filterSelectItems = useMemo(
     () => [
@@ -1192,10 +1262,11 @@ export default function CrmDataGridPage() {
 
   const sortSelectItems = useMemo(
     () => [
-      { label: "Sort", value: "short" },
-      { label: "Status", value: "status" },
+      { label: "Sort", value: ALL },
       { label: "Name", value: "name" },
-      { label: "Created", value: "created" },
+      { label: "Organisation", value: "organisation" },
+      { label: "Status", value: "status" },
+      { label: "Last modified", value: "lastModified" },
     ],
     []
   )
@@ -1256,13 +1327,14 @@ export default function CrmDataGridPage() {
               <>
                 <Select
                   items={[
-                    { label: "Lead owner", value: "lead-owner" },
-                    { label: "Jenny Wilson", value: "jenny-wilson" },
-                    { label: "Mariana Rodriguez", value: "mariana" },
-                    { label: "Sophie Chen", value: "sophie-chen" },
-                    { label: "David Lee", value: "david-lee" },
+                    { label: "Lead owner", value: ALL },
+                    ...assigneeItems.map((a) => ({
+                      label: a.label,
+                      value: a.value,
+                    })),
                   ]}
-                  defaultValue="lead-owner"
+                  value={getFilterValue("assignee")}
+                  onValueChange={(v) => setFilterValue("assignee", v)}
                   variant="subtle"
                   size="sm"
                 >
@@ -1270,25 +1342,35 @@ export default function CrmDataGridPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="lead-owner">Lead owner</SelectItem>
-                    <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
-                    <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
-                    <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
-                    <SelectItem value="david-lee">David Lee</SelectItem>
+                    <SelectItem value={ALL}>Lead owner</SelectItem>
+                    <SelectSeparator />
+                    {assigneeItems.map((a) => (
+                      <SelectItem key={a.value} value={a.value}>
+                        <Avatar size="xs">
+                          <AvatarImage src={assigneeMap.get(a.value) ?? ""} />
+                          <AvatarFallback>{a.label.slice(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        {a.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <Select
-                  items={organisations.map((o) => ({
-                    label: o.name,
-                    value: o.name.toLowerCase(),
-                    icon: ({ className }: { className?: string }) => (
-                      <Avatar size="xs" variant="square" className={className}>
-                        <AvatarImage src={o.image} />
-                        <AvatarFallback>{o.name[0]}</AvatarFallback>
-                      </Avatar>
-                    ),
-                  }))}
-                  defaultValue="gumroad"
+                  items={[
+                    { label: "Organisation", value: ALL },
+                    ...organisations.map((o) => ({
+                      label: o.name,
+                      value: o.name,
+                      icon: ({ className }: { className?: string }) => (
+                        <Avatar size="xs" variant="square" className={className}>
+                          <AvatarImage src={o.image} />
+                          <AvatarFallback>{o.name[0]}</AvatarFallback>
+                        </Avatar>
+                      ),
+                    })),
+                  ]}
+                  value={getFilterValue("organisation")}
+                  onValueChange={(v) => setFilterValue("organisation", v)}
                   variant="subtle"
                   size="sm"
                 >
@@ -1296,8 +1378,10 @@ export default function CrmDataGridPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value={ALL}>Organisation</SelectItem>
+                    <SelectSeparator />
                     {organisations.map((o) => (
-                      <SelectItem key={o.name} value={o.name.toLowerCase()}>
+                      <SelectItem key={o.name} value={o.name}>
                         <Avatar size="xs" variant="square">
                           <AvatarImage src={o.image} />
                           <AvatarFallback>{o.name[0]}</AvatarFallback>
@@ -1308,19 +1392,23 @@ export default function CrmDataGridPage() {
                   </SelectContent>
                 </Select>
                 <Select
-                  items={Object.keys(statusColors).map((s) => ({
-                    label: s,
-                    value: s.toLowerCase(),
-                    icon: ({ className }: { className?: string }) => (
-                      <span
-                        className={`flex size-3 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
-                        style={{ backgroundColor: statusColors[s] }}
-                      >
-                        <span className="size-1 rounded-full bg-white" />
-                      </span>
-                    ),
-                  }))}
-                  defaultValue="open"
+                  items={[
+                    { label: "Status", value: ALL },
+                    ...Object.keys(statusColors).map((s) => ({
+                      label: s,
+                      value: s,
+                      icon: ({ className }: { className?: string }) => (
+                        <span
+                          className={`flex size-3 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+                          style={{ backgroundColor: statusColors[s] }}
+                        >
+                          <span className="size-1 rounded-full bg-white" />
+                        </span>
+                      ),
+                    })),
+                  ]}
+                  value={getFilterValue("status")}
+                  onValueChange={(v) => setFilterValue("status", v)}
                   variant="subtle"
                   size="sm"
                 >
@@ -1328,8 +1416,10 @@ export default function CrmDataGridPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value={ALL}>Status</SelectItem>
+                    <SelectSeparator />
                     {Object.keys(statusColors).map((s) => (
-                      <SelectItem key={s} value={s.toLowerCase()}>
+                      <SelectItem key={s} value={s}>
                         <span
                           className="flex size-3 shrink-0 items-center justify-center rounded-full"
                           style={{ backgroundColor: statusColors[s] }}
@@ -1345,64 +1435,76 @@ export default function CrmDataGridPage() {
             }
             rightControls={
               <>
-                <Select
-                  items={columnSelectItems}
-                  defaultValue="column"
-                  variant="subtle"
+                <Button
+                  variant="secondary"
                   size="sm"
+                  onClick={() =>
+                    setDirection((d) => (d === "ltr" ? "rtl" : "ltr"))
+                  }
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const item = columnSelectItems.find(
-                          (i) => i.value === value
-                        )
+                  <AlignJustify />
+                  {direction === "ltr" ? "LTR" : "RTL"}
+                </Button>
+                <Popover>
+                  <PopoverTrigger
+                    render={<Button variant="secondary" size="sm" />}
+                  >
+                    <EyeOff />
+                    View
+                  </PopoverTrigger>
+                  <PopoverContent
+                    align="end"
+                    className="flex w-72 flex-col gap-1 p-2"
+                  >
+                    <Input
+                      variant="outline"
+                      size="sm"
+                      placeholder="Search columns..."
+                      value={columnSearch}
+                      onChange={(e) => setColumnSearch(e.target.value)}
+                    />
+                    <label className="flex h-8 cursor-pointer items-center gap-2 rounded-md px-2 hover:bg-secondary">
+                      <Checkbox
+                        checked={isAllVisible}
+                        indeterminate={isSomeVisible}
+                        onCheckedChange={(checked) =>
+                          table.toggleAllColumnsVisible(!!checked)
+                        }
+                      />
+                      <span className="text-base text-secondary-foreground">
+                        Select all
+                      </span>
+                    </label>
+                    <Separator />
+                    <div className="flex max-h-72 flex-col overflow-auto">
+                      {filteredColumnList.map((col) => {
+                        const visible = col.getIsVisible()
                         return (
-                          <>
-                            <Columns3 className="size-4" />
-                            {item?.label ?? "Column"}
-                          </>
+                          <label
+                            key={col.id}
+                            className="flex h-8 cursor-pointer items-center gap-2 rounded-md px-2 hover:bg-secondary"
+                          >
+                            <Checkbox
+                              checked={visible}
+                              onCheckedChange={() => col.toggleVisibility()}
+                            />
+                            <span className="flex-1 text-base text-secondary-foreground">
+                              {columnLabels[col.id] ?? col.id}
+                            </span>
+                            {visible && (
+                              <Check className="size-4 text-muted-foreground" />
+                            )}
+                          </label>
                         )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    {columnSelectItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={groupSelectItems}
-                  defaultValue="group"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const item = groupSelectItems.find(
-                          (i) => i.value === value
-                        )
-                        return (
-                          <>
-                            <Group className="size-4" />
-                            {item?.label ?? "Group"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    {groupSelectItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                      })}
+                      {filteredColumnList.length === 0 && (
+                        <span className="px-2 py-1.5 text-base text-muted-foreground">
+                          No columns
+                        </span>
+                      )}
+                    </div>
+                  </PopoverContent>
+                </Popover>
                 <Select
                   items={filterSelectItems}
                   defaultValue="filter"
@@ -1434,7 +1536,8 @@ export default function CrmDataGridPage() {
                 </Select>
                 <Select
                   items={sortSelectItems}
-                  defaultValue="short"
+                  value={sortValue}
+                  onValueChange={(v) => setSortValue(v)}
                   variant="subtle"
                   size="sm"
                 >
@@ -1463,36 +1566,37 @@ export default function CrmDataGridPage() {
                 </Select>
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    render={<Button variant="secondary" size="icon-sm" />}
+                    render={<Button variant="secondary" size="sm" />}
                   >
-                    <Ellipsis />
+                    <DensityIcon />
+                    {currentDensity.label}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Import</DropdownMenuItem>
-                    <DropdownMenuItem>User Permissions</DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Role Permissions Manager
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Customize
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+Y
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Toggle Sidebar
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+G
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>List Settings</DropdownMenuItem>
+                    {densityOptions.map((opt) => {
+                      const Icon = opt.icon
+                      return (
+                        <DropdownMenuItem
+                          key={opt.value}
+                          onClick={() => setDensity(opt.value)}
+                        >
+                          <Icon />
+                          {opt.label}
+                          {density === opt.value && (
+                            <Check className="ml-auto size-4 text-muted-foreground" />
+                          )}
+                        </DropdownMenuItem>
+                      )
+                    })}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
             }
           />
 
-          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+          <div
+            dir={direction}
+            className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5"
+          >
             <div className="[&>[data-slot=table-container]]:overflow-visible">
               <Table
                 className="table-fixed"
@@ -1553,7 +1657,7 @@ export default function CrmDataGridPage() {
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
-                          className="p-1"
+                          className={`px-1 ${cellPadClass}`}
                           style={{ width: cell.column.getSize() }}
                         >
                           {flexRender(
@@ -1579,7 +1683,7 @@ export default function CrmDataGridPage() {
               </TabsList>
             </Tabs>
             <span className="text-base text-muted-foreground">
-              {data.length} of {data.length}
+              {filteredCount} of {totalCount}
             </span>
           </div>
         </div>
