@@ -56,7 +56,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table"
-import { useState, useRef, useCallback } from "react"
+import { useState } from "react"
 import { ArrowUp, ArrowDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -335,65 +335,194 @@ const leads = [
     assigneeAvatar: "https://i.pravatar.cc/32?u=henry",
     lastModified: "14 days ago",
   },
-  { name: "Ravi Kumar", avatar: "https://i.pravatar.cc/32?u=ravi", organisation: "Gumroad", status: "Open", email: "ravi@example.com", mobile: "+91 9876543210", assignee: "Avinash Goel", assigneeAvatar: "https://i.pravatar.cc/32?u=avinash2", lastModified: "15 days ago" },
-  { name: "Priya Menon", avatar: "https://i.pravatar.cc/32?u=priyam", organisation: "Attentive", status: "Contacted", email: "priya.m@example.com", mobile: "+91 8765432109", assignee: "Rahul Sharma", assigneeAvatar: "https://i.pravatar.cc/32?u=rahul2", lastModified: "16 days ago" },
-  { name: "Arjun Patel", avatar: "https://i.pravatar.cc/32?u=arjun", organisation: "Dropbox", status: "Nurture", email: "arjun@example.com", mobile: "+91 7654321098", assignee: "Elena Petrova", assigneeAvatar: "https://i.pravatar.cc/32?u=elena2", lastModified: "17 days ago" },
-  { name: "Meera Joshi", avatar: "https://i.pravatar.cc/32?u=meera", organisation: "Figma", status: "Qualified", email: "meera@example.com", mobile: "+91 6543210987", assignee: "Priya Patel", assigneeAvatar: "https://i.pravatar.cc/32?u=priya2", lastModified: "18 days ago" },
-  { name: "Vikram Singh", avatar: "https://i.pravatar.cc/32?u=vikram", organisation: "Miro", status: "Unqualified", email: "vikram@example.com", mobile: "+91 5432109876", assignee: "James Smith", assigneeAvatar: "https://i.pravatar.cc/32?u=james2", lastModified: "19 days ago" },
-  { name: "Ananya Rao", avatar: "https://i.pravatar.cc/32?u=ananya", organisation: "Cooper", status: "Open", email: "ananya@example.com", mobile: "+91 4321098765", assignee: "Mark Johnson", assigneeAvatar: "https://i.pravatar.cc/32?u=mark2", lastModified: "20 days ago" },
-  { name: "Karthik Nair", avatar: "https://i.pravatar.cc/32?u=karthik", organisation: "Github", status: "Contacted", email: "karthik@example.com", mobile: "+91 3210987654", assignee: "Olivia Martinez", assigneeAvatar: "https://i.pravatar.cc/32?u=olivia2", lastModified: "21 days ago" },
-  { name: "Deepa Iyer", avatar: "https://i.pravatar.cc/32?u=deepa", organisation: "Zapier", status: "Junk", email: "deepa@example.com", mobile: "+91 2109876543", assignee: "Isabella Davis", assigneeAvatar: "https://i.pravatar.cc/32?u=isabella2", lastModified: "22 days ago" },
-  { name: "Rohit Verma", avatar: "https://i.pravatar.cc/32?u=rohit", organisation: "Evergreen", status: "Nurture", email: "rohit@example.com", mobile: "+91 1098765432", assignee: "Ethan Wilson", assigneeAvatar: "https://i.pravatar.cc/32?u=ethan2", lastModified: "23 days ago" },
-  { name: "Sneha Gupta", avatar: "https://i.pravatar.cc/32?u=sneha", organisation: "Hourglass", status: "Qualified", email: "sneha@example.com", mobile: "+91 9988776655", assignee: "Mia Thompson", assigneeAvatar: "https://i.pravatar.cc/32?u=mia2", lastModified: "24 days ago" },
-  { name: "Aditya Reddy", avatar: "https://i.pravatar.cc/32?u=aditya", organisation: "1password", status: "Open", email: "aditya@example.com", mobile: "+91 8877665544", assignee: "Ella Hill", assigneeAvatar: "https://i.pravatar.cc/32?u=ella2", lastModified: "25 days ago" },
-  { name: "Kavya Sharma", avatar: "https://i.pravatar.cc/32?u=kavya", organisation: "ChatGpt", status: "Contacted", email: "kavya@example.com", mobile: "+91 7766554433", assignee: "Noah Scott", assigneeAvatar: "https://i.pravatar.cc/32?u=noah2", lastModified: "26 days ago" },
-  { name: "Siddharth Das", avatar: "https://i.pravatar.cc/32?u=siddharth", organisation: "Metalab", status: "Unqualified", email: "siddharth@example.com", mobile: "+91 6655443322", assignee: "Alexander King", assigneeAvatar: "https://i.pravatar.cc/32?u=alexander2", lastModified: "27 days ago" },
-  { name: "Tanya Bose", avatar: "https://i.pravatar.cc/32?u=tanya", organisation: "Adobe Express", status: "Junk", email: "tanya@example.com", mobile: "+91 5544332211", assignee: "Sofia Walker", assigneeAvatar: "https://i.pravatar.cc/32?u=sofia2", lastModified: "28 days ago" },
-  { name: "Nikhil Chopra", avatar: "https://i.pravatar.cc/32?u=nikhil", organisation: "Spotify", status: "Nurture", email: "nikhil@example.com", mobile: "+91 4433221100", assignee: "Henry Allen", assigneeAvatar: "https://i.pravatar.cc/32?u=henry2", lastModified: "29 days ago" },
-  { name: "Pooja Mehta", avatar: "https://i.pravatar.cc/32?u=pooja", organisation: "Gumroad", status: "Qualified", email: "pooja@example.com", mobile: "+91 3322110099", assignee: "Avinash Goel", assigneeAvatar: "https://i.pravatar.cc/32?u=avinash3", lastModified: "30 days ago" },
-  { name: "Amit Saxena", avatar: "https://i.pravatar.cc/32?u=amit", organisation: "Attentive", status: "Open", email: "amit@example.com", mobile: "+91 2211009988", assignee: "Rahul Sharma", assigneeAvatar: "https://i.pravatar.cc/32?u=rahul3", lastModified: "1 month ago" },
+  {
+    name: "Ravi Kumar",
+    avatar: "https://i.pravatar.cc/32?u=ravi",
+    organisation: "Gumroad",
+    status: "Open",
+    email: "ravi@example.com",
+    mobile: "+91 9876543210",
+    assignee: "Avinash Goel",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash2",
+    lastModified: "15 days ago",
+  },
+  {
+    name: "Priya Menon",
+    avatar: "https://i.pravatar.cc/32?u=priyam",
+    organisation: "Attentive",
+    status: "Contacted",
+    email: "priya.m@example.com",
+    mobile: "+91 8765432109",
+    assignee: "Rahul Sharma",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul2",
+    lastModified: "16 days ago",
+  },
+  {
+    name: "Arjun Patel",
+    avatar: "https://i.pravatar.cc/32?u=arjun",
+    organisation: "Dropbox",
+    status: "Nurture",
+    email: "arjun@example.com",
+    mobile: "+91 7654321098",
+    assignee: "Elena Petrova",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=elena2",
+    lastModified: "17 days ago",
+  },
+  {
+    name: "Meera Joshi",
+    avatar: "https://i.pravatar.cc/32?u=meera",
+    organisation: "Figma",
+    status: "Qualified",
+    email: "meera@example.com",
+    mobile: "+91 6543210987",
+    assignee: "Priya Patel",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=priya2",
+    lastModified: "18 days ago",
+  },
+  {
+    name: "Vikram Singh",
+    avatar: "https://i.pravatar.cc/32?u=vikram",
+    organisation: "Miro",
+    status: "Unqualified",
+    email: "vikram@example.com",
+    mobile: "+91 5432109876",
+    assignee: "James Smith",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=james2",
+    lastModified: "19 days ago",
+  },
+  {
+    name: "Ananya Rao",
+    avatar: "https://i.pravatar.cc/32?u=ananya",
+    organisation: "Cooper",
+    status: "Open",
+    email: "ananya@example.com",
+    mobile: "+91 4321098765",
+    assignee: "Mark Johnson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=mark2",
+    lastModified: "20 days ago",
+  },
+  {
+    name: "Karthik Nair",
+    avatar: "https://i.pravatar.cc/32?u=karthik",
+    organisation: "Github",
+    status: "Contacted",
+    email: "karthik@example.com",
+    mobile: "+91 3210987654",
+    assignee: "Olivia Martinez",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=olivia2",
+    lastModified: "21 days ago",
+  },
+  {
+    name: "Deepa Iyer",
+    avatar: "https://i.pravatar.cc/32?u=deepa",
+    organisation: "Zapier",
+    status: "Junk",
+    email: "deepa@example.com",
+    mobile: "+91 2109876543",
+    assignee: "Isabella Davis",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=isabella2",
+    lastModified: "22 days ago",
+  },
+  {
+    name: "Rohit Verma",
+    avatar: "https://i.pravatar.cc/32?u=rohit",
+    organisation: "Evergreen",
+    status: "Nurture",
+    email: "rohit@example.com",
+    mobile: "+91 1098765432",
+    assignee: "Ethan Wilson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=ethan2",
+    lastModified: "23 days ago",
+  },
+  {
+    name: "Sneha Gupta",
+    avatar: "https://i.pravatar.cc/32?u=sneha",
+    organisation: "Hourglass",
+    status: "Qualified",
+    email: "sneha@example.com",
+    mobile: "+91 9988776655",
+    assignee: "Mia Thompson",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=mia2",
+    lastModified: "24 days ago",
+  },
+  {
+    name: "Aditya Reddy",
+    avatar: "https://i.pravatar.cc/32?u=aditya",
+    organisation: "1password",
+    status: "Open",
+    email: "aditya@example.com",
+    mobile: "+91 8877665544",
+    assignee: "Ella Hill",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=ella2",
+    lastModified: "25 days ago",
+  },
+  {
+    name: "Kavya Sharma",
+    avatar: "https://i.pravatar.cc/32?u=kavya",
+    organisation: "ChatGpt",
+    status: "Contacted",
+    email: "kavya@example.com",
+    mobile: "+91 7766554433",
+    assignee: "Noah Scott",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=noah2",
+    lastModified: "26 days ago",
+  },
+  {
+    name: "Siddharth Das",
+    avatar: "https://i.pravatar.cc/32?u=siddharth",
+    organisation: "Metalab",
+    status: "Unqualified",
+    email: "siddharth@example.com",
+    mobile: "+91 6655443322",
+    assignee: "Alexander King",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=alexander2",
+    lastModified: "27 days ago",
+  },
+  {
+    name: "Tanya Bose",
+    avatar: "https://i.pravatar.cc/32?u=tanya",
+    organisation: "Adobe Express",
+    status: "Junk",
+    email: "tanya@example.com",
+    mobile: "+91 5544332211",
+    assignee: "Sofia Walker",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=sofia2",
+    lastModified: "28 days ago",
+  },
+  {
+    name: "Nikhil Chopra",
+    avatar: "https://i.pravatar.cc/32?u=nikhil",
+    organisation: "Spotify",
+    status: "Nurture",
+    email: "nikhil@example.com",
+    mobile: "+91 4433221100",
+    assignee: "Henry Allen",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=henry2",
+    lastModified: "29 days ago",
+  },
+  {
+    name: "Pooja Mehta",
+    avatar: "https://i.pravatar.cc/32?u=pooja",
+    organisation: "Gumroad",
+    status: "Qualified",
+    email: "pooja@example.com",
+    mobile: "+91 3322110099",
+    assignee: "Avinash Goel",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash3",
+    lastModified: "30 days ago",
+  },
+  {
+    name: "Amit Saxena",
+    avatar: "https://i.pravatar.cc/32?u=amit",
+    organisation: "Attentive",
+    status: "Open",
+    email: "amit@example.com",
+    mobile: "+91 2211009988",
+    assignee: "Rahul Sharma",
+    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul3",
+    lastModified: "1 month ago",
+  },
 ]
-
-function ScrollShadow({
-  className,
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [shadowTop, setShadowTop] = useState(false)
-  const [shadowBottom, setShadowBottom] = useState(true)
-
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current
-    if (!el) return
-    setShadowTop(el.scrollTop > 0)
-    setShadowBottom(el.scrollTop + el.clientHeight < el.scrollHeight - 1)
-  }, [])
-
-  return (
-    <div className={`relative ${className ?? ""}`}>
-      <div
-        className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-background to-transparent transition-opacity duration-200 ${
-          shadowTop ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="scrollbar-hide size-full overflow-auto px-5 pt-2 pb-5"
-      >
-        {children}
-      </div>
-      <div
-        className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-background to-transparent transition-opacity duration-200 ${
-          shadowBottom ? "opacity-100" : "opacity-0"
-        }`}
-      />
-    </div>
-  )
-}
 
 function CrmSidebar() {
   return (
@@ -454,7 +583,7 @@ function CrmSidebar() {
                           className="size-4"
                         />
                       </div>
-CRM
+                      CRM
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/crm-data-grid" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
@@ -1231,79 +1360,81 @@ export default function CrmPage() {
             }
           />
 
-          <ScrollShadow className="min-h-0 min-w-0 flex-1">
-            <Table
-              className="table-fixed"
-              style={{
-                width: Math.max(table.getTotalSize(), 0),
-                minWidth: "100%",
-              }}
-            >
-              <TableHeader className="group/thead">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <TableHead
-                        key={header.id}
-                        className="relative"
-                        style={{ width: header.getSize() }}
-                      >
-                        {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                          <div
-                            className="flex cursor-pointer items-center gap-1 select-none"
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {flexRender(
+          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+            <div className="[&>[data-slot=table-container]]:overflow-visible">
+              <Table
+                className="table-fixed"
+                style={{
+                  width: Math.max(table.getTotalSize(), 0),
+                  minWidth: "100%",
+                }}
+              >
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead
+                          key={header.id}
+                          className="relative"
+                          style={{ width: header.getSize() }}
+                        >
+                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                            <div
+                              className="flex cursor-pointer items-center gap-1 select-none"
+                              onClick={header.column.getToggleSortingHandler()}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {{
+                                asc: <ArrowUp className="size-3.5" />,
+                                desc: <ArrowDown className="size-3.5" />,
+                              }[header.column.getIsSorted() as string] ?? null}
+                            </div>
+                          ) : (
+                            flexRender(
                               header.column.columnDef.header,
                               header.getContext()
-                            )}
-                            {{
-                              asc: <ArrowUp className="size-3.5" />,
-                              desc: <ArrowDown className="size-3.5" />,
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </div>
-                        ) : (
-                          flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )
-                        )}
-                        {header.column.getCanResize() && (
-                          <div
-                            onDoubleClick={() => header.column.resetSize()}
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                              header.column.getIsResizing()
-                                ? "opacity-100 before:bg-primary"
-                                : "opacity-0 before:bg-border"
-                            }`}
-                          />
-                        )}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        style={{ width: cell.column.getSize() }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollShadow>
+                            )
+                          )}
+                          {header.column.getCanResize() && (
+                            <div
+                              onDoubleClick={() => header.column.resetSize()}
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                                header.column.getIsResizing()
+                                  ? "opacity-100 before:bg-primary"
+                                  : "opacity-0 before:bg-border"
+                              }`}
+                            />
+                          )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.map((row) => (
+                    <TableRow key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
 
           <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
             <Tabs defaultValue="20">

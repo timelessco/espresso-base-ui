@@ -45,7 +45,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table"
-import { useState, useRef, useCallback } from "react"
+import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -586,7 +586,11 @@ const columns: ColumnDef<Ticket>[] = [
     size: 80,
     minSize: 60,
     cell: ({ row }) => (
-      <span className={`text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}>{row.original.id}</span>
+      <span
+        className={`text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}
+      >
+        {row.original.id}
+      </span>
     ),
   },
   {
@@ -595,7 +599,11 @@ const columns: ColumnDef<Ticket>[] = [
     size: 300,
     minSize: 150,
     cell: ({ row }) => (
-      <span className={`truncate text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}>{row.original.ticket}</span>
+      <span
+        className={`truncate text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}
+      >
+        {row.original.ticket}
+      </span>
     ),
   },
   {
@@ -624,9 +632,29 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 80,
     cell: ({ row }) => {
       const val = row.original.firstDue
-      if (val === "Fulfilled") return <Badge variant="secondary" size="md">{val}</Badge>
-      if (val === "Failed") return <Badge size="md" className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">{val}</Badge>
-      return <Badge size="md" className="border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-400">{val}</Badge>
+      if (val === "Fulfilled")
+        return (
+          <Badge variant="secondary" size="md">
+            {val}
+          </Badge>
+        )
+      if (val === "Failed")
+        return (
+          <Badge
+            size="md"
+            className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400"
+          >
+            {val}
+          </Badge>
+        )
+      return (
+        <Badge
+          size="md"
+          className="border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-400"
+        >
+          {val}
+        </Badge>
+      )
     },
   },
   {
@@ -636,9 +664,29 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 80,
     cell: ({ row }) => {
       const val = row.original.resolution
-      if (val === "Fulfilled") return <Badge variant="secondary" size="md">{val}</Badge>
-      if (val === "Failed") return <Badge size="md" className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">{val}</Badge>
-      return <Badge size="md" className="border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-800 dark:bg-violet-950 dark:text-violet-400">{val}</Badge>
+      if (val === "Fulfilled")
+        return (
+          <Badge variant="secondary" size="md">
+            {val}
+          </Badge>
+        )
+      if (val === "Failed")
+        return (
+          <Badge
+            size="md"
+            className="border-red-200 bg-red-50 text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400"
+          >
+            {val}
+          </Badge>
+        )
+      return (
+        <Badge
+          size="md"
+          className="border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-800 dark:bg-violet-950 dark:text-violet-400"
+        >
+          {val}
+        </Badge>
+      )
     },
   },
   {
@@ -652,9 +700,30 @@ const columns: ColumnDef<Ticket>[] = [
       return (
         <div className="flex min-w-0 items-center gap-1.5">
           <svg width="14" height="14" viewBox="0 0 14 14" className="shrink-0">
-            <rect x="1" y="9" width="3" height="4" rx="0.5" fill={level >= 1 ? "#6B7280" : "#D1D5DB"} />
-            <rect x="5.5" y="5" width="3" height="8" rx="0.5" fill={level >= 2 ? "#6B7280" : "#D1D5DB"} />
-            <rect x="10" y="1" width="3" height="12" rx="0.5" fill={level >= 3 ? "#6B7280" : "#D1D5DB"} />
+            <rect
+              x="1"
+              y="9"
+              width="3"
+              height="4"
+              rx="0.5"
+              fill={level >= 1 ? "#6B7280" : "#D1D5DB"}
+            />
+            <rect
+              x="5.5"
+              y="5"
+              width="3"
+              height="8"
+              rx="0.5"
+              fill={level >= 2 ? "#6B7280" : "#D1D5DB"}
+            />
+            <rect
+              x="10"
+              y="1"
+              width="3"
+              height="12"
+              rx="0.5"
+              fill={level >= 3 ? "#6B7280" : "#D1D5DB"}
+            />
           </svg>
           <span className="truncate">{p}</span>
         </div>
@@ -712,47 +781,6 @@ const columns: ColumnDef<Ticket>[] = [
     ),
   },
 ]
-
-function ScrollShadow({
-  className,
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [shadowTop, setShadowTop] = useState(false)
-  const [shadowBottom, setShadowBottom] = useState(true)
-
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current
-    if (!el) return
-    setShadowTop(el.scrollTop > 0)
-    setShadowBottom(el.scrollTop + el.clientHeight < el.scrollHeight - 1)
-  }, [])
-
-  return (
-    <div className={`relative ${className ?? ""}`}>
-      <div
-        className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-background to-transparent transition-opacity duration-200 ${
-          shadowTop ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="scrollbar-hide size-full overflow-auto px-5 pt-2 pb-5"
-      >
-        {children}
-      </div>
-      <div
-        className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-background to-transparent transition-opacity duration-200 ${
-          shadowBottom ? "opacity-100" : "opacity-0"
-        }`}
-      />
-    </div>
-  )
-}
 
 function HelpdeskSidebar() {
   return (
@@ -817,7 +845,11 @@ function HelpdeskSidebar() {
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/crm-data-grid" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
@@ -1239,79 +1271,81 @@ export default function HelpdeskPage() {
             }
           />
 
-          <ScrollShadow className="min-h-0 min-w-0 flex-1">
-            <Table
-              className="table-fixed"
-              style={{
-                width: Math.max(table.getTotalSize(), 0),
-                minWidth: "100%",
-              }}
-            >
-              <TableHeader className="group/thead">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <TableHead
-                        key={header.id}
-                        className="relative"
-                        style={{ width: header.getSize() }}
-                      >
-                        {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                          <div
-                            className="flex cursor-pointer items-center gap-1 select-none"
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {flexRender(
+          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+            <div className="[&>[data-slot=table-container]]:overflow-visible">
+              <Table
+                className="table-fixed"
+                style={{
+                  width: Math.max(table.getTotalSize(), 0),
+                  minWidth: "100%",
+                }}
+              >
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <TableHead
+                          key={header.id}
+                          className="relative"
+                          style={{ width: header.getSize() }}
+                        >
+                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                            <div
+                              className="flex cursor-pointer items-center gap-1 select-none"
+                              onClick={header.column.getToggleSortingHandler()}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {{
+                                asc: <ArrowUp className="size-3.5" />,
+                                desc: <ArrowDown className="size-3.5" />,
+                              }[header.column.getIsSorted() as string] ?? null}
+                            </div>
+                          ) : (
+                            flexRender(
                               header.column.columnDef.header,
                               header.getContext()
-                            )}
-                            {{
-                              asc: <ArrowUp className="size-3.5" />,
-                              desc: <ArrowDown className="size-3.5" />,
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </div>
-                        ) : (
-                          flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )
-                        )}
-                        {header.column.getCanResize() && (
-                          <div
-                            onDoubleClick={() => header.column.resetSize()}
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                              header.column.getIsResizing()
-                                ? "opacity-100 before:bg-primary"
-                                : "opacity-0 before:bg-border"
-                            }`}
-                          />
-                        )}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        style={{ width: cell.column.getSize() }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollShadow>
+                            )
+                          )}
+                          {header.column.getCanResize() && (
+                            <div
+                              onDoubleClick={() => header.column.resetSize()}
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                                header.column.getIsResizing()
+                                  ? "opacity-100 before:bg-primary"
+                                  : "opacity-0 before:bg-border"
+                              }`}
+                            />
+                          )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.map((row) => (
+                    <TableRow key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
 
           <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
             <Tabs defaultValue="20">

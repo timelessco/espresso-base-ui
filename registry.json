@@ -700,6 +700,100 @@
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A card container component.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/card/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A collapsible content section with trigger.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/collapsible/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "A scroll area component with custom scrollbar.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/scroll-area/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "A sidebar layout component with collapsible, rail, and menu support.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json",
+        "https://espresso-base-ui.vercel.app/r/separator.json",
+        "https://espresso-base-ui.vercel.app/r/sheet.json",
+        "https://espresso-base-ui.vercel.app/r/tooltip.json",
+        "https://espresso-base-ui.vercel.app/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/sidebar/sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sub-header",
+      "type": "registry:ui",
+      "title": "Sub Header",
+      "description": "A sub-header bar with left and right content slots.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/sub-header/sub-header.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

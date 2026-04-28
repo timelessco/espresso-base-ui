@@ -45,7 +45,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table"
-import { useState, useRef, useCallback } from "react"
+import { useState } from "react"
 import { ArrowUp, ArrowDown } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -571,41 +571,6 @@ const emailColumns: ColumnDef<Email>[] = [
     ),
   },
 ]
-
-function ScrollShadow({
-  className,
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [shadowTop, setShadowTop] = useState(false)
-  const [shadowBottom, setShadowBottom] = useState(true)
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current
-    if (!el) return
-    setShadowTop(el.scrollTop > 0)
-    setShadowBottom(el.scrollTop + el.clientHeight < el.scrollHeight - 1)
-  }, [])
-  return (
-    <div className={`relative ${className ?? ""}`}>
-      <div
-        className={`pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-background to-transparent transition-opacity duration-200 ${shadowTop ? "opacity-100" : "opacity-0"}`}
-      />
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="scrollbar-hide size-full overflow-auto pt-2 pb-5"
-      >
-        {children}
-      </div>
-      <div
-        className={`pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-background to-transparent transition-opacity duration-200 ${shadowBottom ? "opacity-100" : "opacity-0"}`}
-      />
-    </div>
-  )
-}
 
 function MailSidebar() {
   return (
@@ -1219,83 +1184,85 @@ export default function MailPage() {
           />
 
           {/* Email list */}
-          <ScrollShadow className="min-h-0 min-w-0 flex-1">
-            <Table
-              className="table-fixed"
-              style={{
-                width: Math.max(table.getTotalSize(), 0),
-                minWidth: "100%",
-              }}
-            >
-              <TableHeader className="group/thead">
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header, index) => (
-                      <TableHead
-                        key={header.id}
-                        className={`relative ${index === 0 ? "px-5" : ""}`}
-                        style={{ width: header.getSize() }}
-                      >
-                        {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                          <div
-                            className="flex cursor-pointer items-center gap-1 select-none"
-                            onClick={header.column.getToggleSortingHandler()}
-                          >
-                            {flexRender(
+          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto pb-5">
+            <div className="[&>[data-slot=table-container]]:overflow-visible">
+              <Table
+                className="table-fixed"
+                style={{
+                  width: Math.max(table.getTotalSize(), 0),
+                  minWidth: "100%",
+                }}
+              >
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header, index) => (
+                        <TableHead
+                          key={header.id}
+                          className={`relative ${index === 0 ? "px-5" : ""}`}
+                          style={{ width: header.getSize() }}
+                        >
+                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                            <div
+                              className="flex cursor-pointer items-center gap-1 select-none"
+                              onClick={header.column.getToggleSortingHandler()}
+                            >
+                              {flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                              {{
+                                asc: <ArrowUp className="size-3.5" />,
+                                desc: <ArrowDown className="size-3.5" />,
+                              }[header.column.getIsSorted() as string] ?? null}
+                            </div>
+                          ) : (
+                            flexRender(
                               header.column.columnDef.header,
                               header.getContext()
-                            )}
-                            {{
-                              asc: <ArrowUp className="size-3.5" />,
-                              desc: <ArrowDown className="size-3.5" />,
-                            }[header.column.getIsSorted() as string] ?? null}
-                          </div>
-                        ) : (
-                          flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )
-                        )}
-                        {header.column.getCanResize() && (
-                          <div
-                            onDoubleClick={() => header.column.resetSize()}
-                            onMouseDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                            className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                              header.column.getIsResizing()
-                                ? "opacity-100 before:bg-primary"
-                                : "opacity-0 before:bg-border"
-                            }`}
-                          />
-                        )}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    className="cursor-pointer [&>*:first-child]:rounded-l-none [&>*:last-child]:rounded-r-none"
-                  >
-                    {row.getVisibleCells().map((cell, index) => (
-                      <TableCell
-                        key={cell.id}
-                        className={index === 0 ? "pl-5" : ""}
-                        style={{ width: cell.column.getSize() }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollShadow>
+                            )
+                          )}
+                          {header.column.getCanResize() && (
+                            <div
+                              onDoubleClick={() => header.column.resetSize()}
+                              onMouseDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                                header.column.getIsResizing()
+                                  ? "opacity-100 before:bg-primary"
+                                  : "opacity-0 before:bg-border"
+                              }`}
+                            />
+                          )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      className="cursor-pointer [&>*:first-child]:rounded-l-none [&>*:last-child]:rounded-r-none"
+                    >
+                      {row.getVisibleCells().map((cell, index) => (
+                        <TableCell
+                          key={cell.id}
+                          className={index === 0 ? "pl-5" : ""}
+                          style={{ width: cell.column.getSize() }}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>
