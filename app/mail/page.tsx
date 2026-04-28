@@ -36,6 +36,7 @@ import {
   Pencil,
   Grid3X3,
   Sparkles,
+  Plus,
 } from "lucide-react"
 import {
   useReactTable,
@@ -860,14 +861,10 @@ function MailSidebar() {
 
         <SidebarSeparator />
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Labels</SidebarGroupLabel>
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
-              <Collapsible
-                defaultOpen
-                className="group/collapsible group-data-[collapsible=icon]:hidden"
-              >
+              <Collapsible defaultOpen className="group/collapsible">
                 <SidebarMenuItem>
                   <CollapsibleTrigger
                     render={
@@ -875,22 +872,125 @@ function MailSidebar() {
                     }
                   >
                     <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
-                    <span>Fashion</span>
+                    <span>Labels</span>
+                    <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenu className="gap-0.5 pl-4">
-                      <SidebarMenuItem>
-                        <SidebarMenuButton className="h-7 text-base font-normal!">
-                          <span className="size-3 rounded-sm bg-orange-400" />
-                          <span>Projects</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton className="h-7 text-base font-normal!">
-                          <span className="size-3 rounded-sm bg-green-400" />
-                          <span>Events</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
+                    <SidebarMenu className="mt-0.5 gap-0.5">
+                      {/* Fashion */}
+                      <Collapsible className="group/fashion">
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger
+                            render={
+                              <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/fashion:bg-sidebar-accent" />
+                            }
+                          >
+                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/fashion:rotate-0" />
+                            <Zap className="size-4 text-purple-500" />
+                            <span>Fashion</span>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenu className="gap-0.5">
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>General</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Standups</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Training</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Update</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                            </SidebarMenu>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                      {/* Projects */}
+                      <Collapsible className="group/projects">
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger
+                            render={
+                              <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/projects:bg-sidebar-accent" />
+                            }
+                          >
+                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/projects:rotate-0" />
+                            <Zap className="size-4 text-orange-400" />
+                            <span>Projects</span>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenu className="gap-0.5">
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>General</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Standups</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Training</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Update</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                            </SidebarMenu>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                      {/* Events */}
+                      <Collapsible className="group/events">
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger
+                            render={
+                              <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/events:bg-sidebar-accent" />
+                            }
+                          >
+                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/events:rotate-0" />
+                            <Zap className="size-4 text-green-500" />
+                            <span>Events</span>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenu className="gap-0.5">
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>General</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Standups</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Training</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                              <SidebarMenuItem>
+                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                  <span>Update</span>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                            </SidebarMenu>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
                     </SidebarMenu>
                   </CollapsibleContent>
                 </SidebarMenuItem>
