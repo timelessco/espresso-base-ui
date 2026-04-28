@@ -883,7 +883,7 @@ function HelpdeskSidebar() {
                       </div>
                       Mail
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/gameplan" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
                         <img
                           src="/images/svg/logo-gameplan.svg"
