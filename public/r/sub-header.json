@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sub-header",
+  "title": "Sub Header",
+  "description": "A sub-header bar with left and right content slots.",
+  "registryDependencies": [
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+  ],
+  "files": [
+    {
+      "path": "registry/espresso/sub-header/sub-header.tsx",
+      "content": "import * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\ntype SubHeaderProps = React.ComponentProps<\"div\"> & {\n  leftControls?: React.ReactNode\n  rightControls?: React.ReactNode\n}\n\nfunction SubHeader({\n  className,\n  leftControls,\n  rightControls,\n  children,\n  ...props\n}: SubHeaderProps) {\n  return (\n    <div\n      data-slot=\"sub-header\"\n      className={cn(\n        \"flex shrink-0 items-center justify-between gap-3 bg-background px-5 py-3\",\n        className\n      )}\n      {...props}\n    >\n      {leftControls !== undefined && (\n        <div\n          data-slot=\"sub-header-left\"\n          className=\"flex min-w-0 items-center gap-2\"\n        >\n          {leftControls}\n        </div>\n      )}\n      {rightControls !== undefined && (\n        <div data-slot=\"sub-header-right\" className=\"flex items-center gap-2\">\n          {rightControls}\n        </div>\n      )}\n      {children}\n    </div>\n  )\n}\n\nexport { SubHeader, type SubHeaderProps }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
