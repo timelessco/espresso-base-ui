@@ -129,7 +129,7 @@ function SelectValue({
 
 const selectTriggerVariants = cva(
   [
-    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-filled:text-secondary-foreground data-invalid:text-secondary-foreground data-placeholder:text-card-foreground data-valid:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    "flex w-fit items-center justify-between gap-2 border leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs active:text-secondary-foreground data-filled:text-secondary-foreground data-invalid:text-secondary-foreground data-placeholder:text-card-foreground data-valid:text-secondary-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
@@ -174,6 +174,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-variant={variant}
       data-size={size}
+      suppressHydrationWarning
       className={cn(selectTriggerVariants({ variant, size, className }))}
       {...props}
     >
