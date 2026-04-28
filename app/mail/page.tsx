@@ -1003,48 +1003,48 @@ function MailSidebar() {
 
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupContent>
-            <div className="flex flex-col gap-2 px-2">
+            <div className="flex flex-col gap-3 px-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-foreground">
+                <span className="text-base font-medium text-muted-foreground">
                   Upcoming events
                 </span>
-                <span className="text-xs text-muted-foreground">5</span>
+                <span className="text-xs text-accent-foreground">5</span>
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="rounded-lg border border-border-soft bg-background px-3 py-2 shadow-xs">
-                  <div className="flex items-start gap-2">
+              <div className="flex flex-col gap-1.5">
+                <div className="rounded-md bg-background p-2 shadow-md">
+                  <div className="flex items-center gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-blue-500" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="pb-1 text-xs font-medium text-accent-foreground">
                         4:00 - 4:30PM
                       </span>
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-sm font-medium text-secondary-foreground">
                         Branding changes
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="rounded-lg border border-border-soft bg-background px-3 py-2 shadow-xs">
-                  <div className="flex items-start gap-2">
+                <div className="rounded-md bg-background p-2 shadow-md">
+                  <div className="flex items-center gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-red-500" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="pb-1 text-xs font-medium text-accent-foreground">
                         4:00 - 4:30PM
                       </span>
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-sm font-medium text-secondary-foreground">
                         Website design meeting
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="rounded-lg border border-border-soft bg-background px-3 py-2 shadow-xs">
-                  <div className="flex items-start gap-2">
+                <div className="rounded-md bg-background p-2 shadow-md">
+                  <div className="flex items-center gap-2">
                     <div className="mt-0.5 h-8 w-0.5 shrink-0 rounded-full bg-orange-400" />
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="pb-1 text-xs font-medium text-accent-foreground">
                         4:00 - 4:30PM
                       </span>
-                      <p className="text-sm font-medium text-foreground">
+                      <p className="text-sm font-medium text-secondary-foreground">
                         Feedback loops within the...
                       </p>
                     </div>
