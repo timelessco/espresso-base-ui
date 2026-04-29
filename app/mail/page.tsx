@@ -890,7 +890,7 @@ function MailSidebar() {
                             <span>Fashion</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="gap-0.5">
+                            <SidebarMenu className="mt-0.5 gap-0.5">
                               <SidebarMenuItem>
                                 <SidebarMenuButton className="h-7 text-base font-normal!">
                                   <span>General</span>
@@ -928,7 +928,7 @@ function MailSidebar() {
                             <span>Projects</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="gap-0.5">
+                            <SidebarMenu className="mt-0.5 gap-0.5">
                               <SidebarMenuItem>
                                 <SidebarMenuButton className="h-7 text-base font-normal!">
                                   <span>General</span>
@@ -966,7 +966,7 @@ function MailSidebar() {
                             <span>Events</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="gap-0.5">
+                            <SidebarMenu className="mt-0.5 gap-0.5">
                               <SidebarMenuItem>
                                 <SidebarMenuButton className="h-7 text-base font-normal!">
                                   <span>General</span>
@@ -1293,7 +1293,7 @@ export default function MailPage() {
                   minWidth: "100%",
                 }}
               >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_tr]:border-b-0 [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent">
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
                       {headerGroup.headers.map((header, index) => (
