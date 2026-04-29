@@ -211,7 +211,7 @@ function DataGridRowImpl<TData>({
       {...props}
       ref={rowRef}
       className={cn(
-        "absolute flex w-full border-b [content-visibility:auto]",
+        "group/row absolute flex w-full border-b border-border-soft [content-visibility:auto]",
         !adjustLayout && "will-change-transform",
         className,
       )}
@@ -255,10 +255,8 @@ function DataGridRowImpl<TData>({
             data-highlighted={isCellFocused ? "" : undefined}
             data-slot="grid-cell"
             tabIndex={-1}
-            className={cn({
+            className={cn("min-w-0", {
               grow: stretchColumns && columnId !== "select",
-              "border-e": showEndBorder && columnId !== "select",
-              "border-s": showStartBorder && columnId !== "select",
             })}
             style={{
               ...getColumnPinningStyle({ column: cell.column, dir }),
@@ -267,9 +265,12 @@ function DataGridRowImpl<TData>({
           >
             {typeof cell.column.columnDef.header === "function" ? (
               <div
-                className={cn("size-full px-3 py-1.5", {
-                  "bg-primary/10": isRowSelected,
-                })}
+                className={cn(
+                  "flex size-full items-center px-3 py-1.5 transition-colors group-hover/row:bg-secondary",
+                  {
+                    "bg-secondary": isRowSelected,
+                  }
+                )}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </div>

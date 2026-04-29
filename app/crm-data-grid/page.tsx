@@ -35,10 +35,6 @@ import {
   Anchor,
   PinOff,
   MapPin,
-  Columns3,
-  Group,
-  ListFilter,
-  ArrowUpDown,
   Ellipsis,
 } from "lucide-react"
 import * as React from "react"
@@ -104,7 +100,12 @@ import {
 } from "@/components/ui/sidebar"
 
 import { DataGrid } from "@/components/data-grid/data-grid"
+import { DataGridViewMenu } from "@/components/data-grid/data-grid-view-menu"
+import { DataGridFilterMenu } from "@/components/data-grid/data-grid-filter-menu"
+import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
+import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
 import { useDataGrid } from "@/hooks/use-data-grid"
+import { Checkbox } from "@/components/ui-radix/checkbox"
 import { TooltipProvider } from "@/components/ui-radix/tooltip"
 
 const views = [
@@ -754,6 +755,39 @@ export default function CrmDataGridPage() {
   const columns = React.useMemo<ColumnDef<Lead>[]>(
     () => [
       {
+        id: "select",
+        size: 40,
+        minSize: 40,
+        maxSize: 40,
+        enableResizing: false,
+        enableSorting: false,
+        enableHiding: false,
+        header: ({ table }) => (
+          <div className="flex h-full items-center justify-center">
+            <Checkbox
+              checked={
+                table.getIsAllRowsSelected()
+                  ? true
+                  : table.getIsSomeRowsSelected()
+                    ? "indeterminate"
+                    : false
+              }
+              onCheckedChange={(v) => table.toggleAllRowsSelected(!!v)}
+              aria-label="Select all"
+            />
+          </div>
+        ),
+        cell: ({ row }) => (
+          <div className="flex h-full items-center justify-center">
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={(v) => row.toggleSelected(!!v)}
+              aria-label="Select row"
+            />
+          </div>
+        ),
+      },
+      {
         id: "name",
         accessorKey: "name",
         header: "Name",
@@ -814,6 +848,20 @@ export default function CrmDataGridPage() {
     columns,
     onDataChange: setData,
     getRowId: (row) => row.id,
+    onRowAdd: () => {
+      const newRow: Lead = {
+        id: crypto.randomUUID(),
+        name: "",
+        organisation: "",
+        status: "Open",
+        email: "",
+        mobile: "",
+        assignee: "",
+        lastModified: "just now",
+      }
+      setData((prev) => [...prev, newRow])
+      return { rowIndex: data.length, columnId: "name" }
+    },
   })
 
   return (
@@ -932,183 +980,11 @@ export default function CrmDataGridPage() {
               </>
             }
             rightControls={
-              <>
-                <Select
-                  items={[
-                    { label: "Column", value: "column" },
-                    { label: "Name", value: "name" },
-                    { label: "Organisation", value: "organisation" },
-                    { label: "Start Date", value: "start-date" },
-                    { label: "Status", value: "status" },
-                    { label: "Email", value: "email" },
-                    { label: "Mobile No", value: "mobile" },
-                    { label: "Assigned To", value: "assigned" },
-                  ]}
-                  defaultValue="column"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const item = [
-                          { label: "Column", value: "column" },
-                          { label: "Name", value: "name" },
-                          { label: "Organisation", value: "organisation" },
-                          { label: "Start Date", value: "start-date" },
-                          { label: "Status", value: "status" },
-                          { label: "Email", value: "email" },
-                          { label: "Mobile No", value: "mobile" },
-                          { label: "Assigned To", value: "assigned" },
-                        ].find((i) => i.value === value)
-                        return (
-                          <>
-                            <Columns3 className="size-4" />
-                            {item?.label ?? "Column"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="column">Column</SelectItem>
-                    <SelectItem value="name">Name</SelectItem>
-                    <SelectItem value="organisation">Organisation</SelectItem>
-                    <SelectItem value="start-date">Start Date</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="mobile">Mobile No</SelectItem>
-                    <SelectItem value="assigned">Assigned To</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Group", value: "group" },
-                    { label: "Options", value: "option-1" },
-                    { label: "Options", value: "option-2" },
-                    { label: "Options", value: "option-3" },
-                  ]}
-                  defaultValue="group"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Group", value: "group" },
-                          { label: "Options", value: "option-1" },
-                          { label: "Options", value: "option-2" },
-                          { label: "Options", value: "option-3" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <Group className="size-4" />
-                            {item?.label ?? "Group"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="group">Group</SelectItem>
-                    <SelectItem value="option-1">Options</SelectItem>
-                    <SelectItem value="option-2">Options</SelectItem>
-                    <SelectItem value="option-3">Options</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Filter", value: "filter" },
-                    { label: "Title", value: "title" },
-                    { label: "Priority", value: "priority" },
-                    { label: "Start Date", value: "start-date" },
-                    { label: "Reference Document Type", value: "ref-doc-type" },
-                    { label: "Reference Doc", value: "ref-doc" },
-                    { label: "Assigned To", value: "assigned" },
-                    { label: "Status", value: "status" },
-                  ]}
-                  defaultValue="filter"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Filter", value: "filter" },
-                          { label: "Title", value: "title" },
-                          { label: "Priority", value: "priority" },
-                          { label: "Start Date", value: "start-date" },
-                          {
-                            label: "Reference Document Type",
-                            value: "ref-doc-type",
-                          },
-                          { label: "Reference Doc", value: "ref-doc" },
-                          { label: "Assigned To", value: "assigned" },
-                          { label: "Status", value: "status" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ListFilter className="size-4" />
-                            {item?.label ?? "Filter"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="filter">Filter</SelectItem>
-                    <SelectItem value="title">Title</SelectItem>
-                    <SelectItem value="priority">Priority</SelectItem>
-                    <SelectItem value="start-date">Start Date</SelectItem>
-                    <SelectItem value="ref-doc-type">
-                      Reference Document Type
-                    </SelectItem>
-                    <SelectItem value="ref-doc">Reference Doc</SelectItem>
-                    <SelectItem value="assigned">Assigned To</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Sort", value: "short" },
-                    { label: "Status", value: "status" },
-                    { label: "Name", value: "name" },
-                    { label: "Created", value: "created" },
-                  ]}
-                  defaultValue="short"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Sort", value: "short" },
-                          { label: "Status", value: "status" },
-                          { label: "Name", value: "name" },
-                          { label: "Created", value: "created" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ArrowUpDown className="size-4" />
-                            {item?.label ?? "Sort"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value="short">Sort</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="name">Name</SelectItem>
-                    <SelectItem value="created">Created</SelectItem>
-                  </SelectContent>
-                </Select>
+              <TooltipProvider>
+                <DataGridViewMenu table={table} />
+                <DataGridFilterMenu table={table} />
+                <DataGridSortMenu table={table} />
+                <DataGridRowHeightMenu table={table} />
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     render={<Button variant="secondary" size="icon-sm" />}
@@ -1136,13 +1012,13 @@ export default function CrmDataGridPage() {
                     <DropdownMenuItem>List Settings</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </>
+              </TooltipProvider>
             }
           />
 
           <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5">
             <TooltipProvider>
-              <DataGrid table={table} {...dataGridProps} height={600} />
+              <DataGrid table={table} {...dataGridProps} stretchColumns />
             </TooltipProvider>
           </div>
 

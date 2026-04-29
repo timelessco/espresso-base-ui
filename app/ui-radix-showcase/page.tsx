@@ -203,7 +203,7 @@ export default function UiRadixShowcasePage() {
           </Section>
 
           <Section title="Select">
-            <Select>
+            <Select open={true}>
               <SelectTrigger className="w-[220px]">
                 <SelectValue placeholder="Select a fruit" />
               </SelectTrigger>

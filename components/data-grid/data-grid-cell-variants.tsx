@@ -197,7 +197,7 @@ export function ShortTextCell<TData>({
         onBlur={onBlur}
         onInput={onInput}
         suppressContentEditableWarning
-        className={cn("size-full overflow-hidden outline-none", {
+        className={cn("w-full overflow-hidden outline-none", {
           "whitespace-nowrap **:inline **:whitespace-nowrap [&_br]:hidden":
             isEditing,
         })}
@@ -717,7 +717,7 @@ export function UrlCell<TData>({
       {!isEditing && displayValue ? (
         <div
           data-slot="grid-cell-content"
-          className="size-full overflow-hidden"
+          className="w-full overflow-hidden"
         >
           <a
             data-focused={isFocused && !isDangerousUrl ? "" : undefined}
@@ -741,7 +741,7 @@ export function UrlCell<TData>({
           onBlur={onBlur}
           onInput={onInput}
           suppressContentEditableWarning
-          className={cn("size-full overflow-hidden outline-none", {
+          className={cn("w-full overflow-hidden outline-none", {
             "whitespace-nowrap **:inline **:whitespace-nowrap [&_br]:hidden":
               isEditing,
           })}

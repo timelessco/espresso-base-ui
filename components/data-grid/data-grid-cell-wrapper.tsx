@@ -173,13 +173,13 @@ export function DataGridCellWrapper<TData>({
       {...props}
       ref={composedRef}
       className={cn(
-        "size-full px-2 py-1.5 text-start text-sm outline-none has-data-[slot=checkbox]:pt-2.5",
+        "flex size-full items-center border-x border-transparent px-2 py-1.5 text-start text-sm outline-none transition-colors group-hover/row:bg-secondary has-data-[slot=checkbox]:pt-2.5",
         {
-          "ring-1 ring-ring ring-inset": isFocused,
+          "border-ring": isFocused,
           "bg-yellow-100 dark:bg-yellow-900/30":
             isSearchMatch && !isActiveSearchMatch,
           "bg-orange-200 dark:bg-orange-900/50": isActiveSearchMatch,
-          "bg-primary/10": isSelected && !isEditing,
+          "bg-secondary": isSelected && !isEditing,
           "cursor-default": !isEditing,
           "**:data-[slot=grid-cell-content]:line-clamp-1":
             !isEditing && rowHeight === "short",

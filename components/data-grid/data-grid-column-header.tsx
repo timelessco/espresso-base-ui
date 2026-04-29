@@ -25,12 +25,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui-radix/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui-radix/tooltip";
-import { getColumnVariant } from "@/lib/data-grid";
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipTrigger,
+// } from "@/components/ui-radix/tooltip";
+// import { getColumnVariant } from "@/lib/data-grid";
 import { cn } from "@/lib/utils";
 
 interface DataGridColumnHeaderProps<TData, TValue>
@@ -56,8 +56,8 @@ export function DataGridColumnHeader<TData, TValue>({
   const isAnyColumnResizing =
     table.getState().columnSizingInfo.isResizingColumn;
 
-  const cellVariant = column.columnDef.meta?.cell;
-  const columnVariant = getColumnVariant(cellVariant?.variant);
+  // const cellVariant = column.columnDef.meta?.cell;
+  // const columnVariant = getColumnVariant(cellVariant?.variant);
 
   const pinnedPosition = column.getIsPinned();
   const isPinnedLeft = pinnedPosition === "left";
@@ -130,7 +130,7 @@ export function DataGridColumnHeader<TData, TValue>({
           {...props}
         >
           <div className="flex min-w-0 flex-1 items-center gap-1.5">
-            {columnVariant && (
+            {/* {columnVariant && (
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <columnVariant.icon className="size-3.5 shrink-0 text-muted-foreground" />
@@ -139,10 +139,10 @@ export function DataGridColumnHeader<TData, TValue>({
                   <p>{columnVariant.label}</p>
                 </TooltipContent>
               </Tooltip>
-            )}
+            )} */}
             <span className="truncate">{label}</span>
           </div>
-          <ChevronDownIcon className="shrink-0 text-muted-foreground" />
+          {/* <ChevronDownIcon className="shrink-0 text-muted-foreground" /> */}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" sideOffset={0} className="w-60">
           {column.getCanSort() && (
