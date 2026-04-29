@@ -946,14 +946,9 @@ const columns: ColumnDef<Lead>[] = [
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
         <span
-          className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
+          className="flex size-2 shrink-0 items-center justify-center rounded-full"
           style={{ backgroundColor: statusColors[row.original.status] }}
-        >
-          <span
-            className="size-1.5 rounded-full"
-            style={{ backgroundColor: "white" }}
-          />
-        </span>
+        ></span>
         <span className="truncate">{row.original.status}</span>
       </div>
     ),
@@ -1369,7 +1364,7 @@ export default function CrmPage() {
                   minWidth: "100%",
                 }}
               >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_tr]:border-b-0 [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent">
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
                       {headerGroup.headers.map((header) => (
