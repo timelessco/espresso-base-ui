@@ -1116,11 +1116,9 @@ export default function CrmPage() {
                     value: s.toLowerCase(),
                     icon: ({ className }: { className?: string }) => (
                       <span
-                        className="flex size-3 shrink-0 items-center justify-center rounded-full"
+                        className="flex size-2 shrink-0 items-center justify-center rounded-full"
                         style={{ backgroundColor: statusColors[s] }}
-                      >
-                        <span className="size-1 rounded-full bg-white" />
-                      </span>
+                      ></span>
                     ),
                   }))}
                   defaultValue="open"
@@ -1134,11 +1132,9 @@ export default function CrmPage() {
                     {Object.keys(statusColors).map((s) => (
                       <SelectItem key={s} value={s.toLowerCase()}>
                         <span
-                          className="flex size-3 shrink-0 items-center justify-center rounded-full"
+                          className="my-auto flex size-2 shrink-0 items-center justify-center rounded-full"
                           style={{ backgroundColor: statusColors[s] }}
-                        >
-                          <span className="size-1 rounded-full bg-white" />
-                        </span>
+                        ></span>
                         {s}
                       </SelectItem>
                     ))}
