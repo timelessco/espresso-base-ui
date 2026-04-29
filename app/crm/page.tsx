@@ -58,6 +58,7 @@ import {
 } from "@tanstack/react-table"
 import { useState } from "react"
 import { ArrowUp, ArrowDown } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -151,6 +152,20 @@ const statusColors: Record<string, string> = {
   Junk: "#4F3DA1",
 }
 
+const statusItems = Object.keys(statusColors).map((s) => ({
+  label: s,
+  value: s.toLowerCase(),
+  icon: ({ className }: { className?: string }) => (
+    <span
+      className={cn(
+        className,
+        "flex size-2 shrink-0 items-center justify-center rounded-full"
+      )}
+      style={{ backgroundColor: statusColors[s] }}
+    ></span>
+  ),
+}))
+
 const organisations = [
   { name: "Gumroad", image: "/images/svg/gumroad.svg" },
   { name: "Attentive", image: "/images/svg/attentive.svg" },
@@ -168,6 +183,17 @@ const organisations = [
   { name: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
   { name: "Spotify", image: "/images/svg/spotify.svg" },
 ]
+
+const organisationItems = organisations.map((o) => ({
+  label: o.name,
+  value: o.name.toLowerCase(),
+  icon: ({ className }: { className?: string }) => (
+    <Avatar size="xs" variant="square" className={className}>
+      <AvatarImage src={o.image} />
+      <AvatarFallback>{o.name[0]}</AvatarFallback>
+    </Avatar>
+  ),
+}))
 
 const leads = [
   {
@@ -1081,16 +1107,7 @@ export default function CrmPage() {
                   </SelectContent>
                 </Select>
                 <Select
-                  items={organisations.map((o) => ({
-                    label: o.name,
-                    value: o.name.toLowerCase(),
-                    icon: ({ className }: { className?: string }) => (
-                      <Avatar size="xs" variant="square" className={className}>
-                        <AvatarImage src={o.image} />
-                        <AvatarFallback>{o.name[0]}</AvatarFallback>
-                      </Avatar>
-                    ),
-                  }))}
+                  items={organisationItems}
                   defaultValue="gumroad"
                   variant="subtle"
                   size="sm"
@@ -1099,28 +1116,16 @@ export default function CrmPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    {organisations.map((o) => (
-                      <SelectItem key={o.name} value={o.name.toLowerCase()}>
-                        <Avatar size="xs" variant="square">
-                          <AvatarImage src={o.image} />
-                          <AvatarFallback>{o.name[0]}</AvatarFallback>
-                        </Avatar>
-                        {o.name}
+                    {organisationItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.icon && <item.icon />}
+                        {item.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <Select
-                  items={Object.keys(statusColors).map((s) => ({
-                    label: s,
-                    value: s.toLowerCase(),
-                    icon: ({ className }: { className?: string }) => (
-                      <span
-                        className="flex size-2 shrink-0 items-center justify-center rounded-full"
-                        style={{ backgroundColor: statusColors[s] }}
-                      ></span>
-                    ),
-                  }))}
+                  items={statusItems}
                   defaultValue="open"
                   variant="subtle"
                   size="sm"
@@ -1129,13 +1134,10 @@ export default function CrmPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    {Object.keys(statusColors).map((s) => (
-                      <SelectItem key={s} value={s.toLowerCase()}>
-                        <span
-                          className="my-auto flex size-2 shrink-0 items-center justify-center rounded-full"
-                          style={{ backgroundColor: statusColors[s] }}
-                        ></span>
-                        {s}
+                    {statusItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.icon && <item.icon className="my-auto" />}
+                        {item.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
