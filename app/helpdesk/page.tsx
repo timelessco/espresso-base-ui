@@ -1124,9 +1124,12 @@ export default function HelpdeskPage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <span className="text-lg leading-base font-semibold tracking-normal text-foreground">
-                Tickets
-              </span>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <span className="text-lg leading-base font-semibold tracking-normal text-foreground">
+                  Tickets
+                </span>
+              </>
             }
             rightControls={
               <Button size="sm">
@@ -1136,6 +1139,7 @@ export default function HelpdeskPage() {
             }
           />
           <SubHeader
+            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <div className="relative">
                 <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />

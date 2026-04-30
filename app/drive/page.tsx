@@ -734,9 +734,12 @@ export default function DrivePage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <span className="text-lg font-medium text-foreground">
-                My drive
-              </span>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <span className="text-lg font-medium text-foreground">
+                  My drive
+                </span>
+              </>
             }
             rightControls={
               <Button size="sm">
@@ -747,6 +750,7 @@ export default function DrivePage() {
             }
           />
           <SubHeader
+            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <span className="text-sm font-medium text-foreground">All</span>
             }

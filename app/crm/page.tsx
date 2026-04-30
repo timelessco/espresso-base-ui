@@ -1037,41 +1037,44 @@ export default function CrmPage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <Breadcrumb size="md">
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                  <BreadcrumbItem>
-                    <Select
-                      items={[...views, ...savedViews]}
-                      defaultValue="list-view"
-                      variant="ghost"
-                      size="sm"
-                    >
-                      <SelectTrigger suffixIcon={<ChevronDown />}>
-                        <SelectValue className="text-lg font-medium text-foreground" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {views.map((item) => (
-                          <SelectItem key={item.value} value={item.value}>
-                            <item.icon className="size-4" />
-                            {item.label}
-                          </SelectItem>
-                        ))}
-                        <SelectSeparator />
-                        {savedViews.map((item) => (
-                          <SelectItem key={item.value} value={item.value}>
-                            <item.icon className="size-4" />
-                            {item.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <Breadcrumb size="md">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <Select
+                        items={[...views, ...savedViews]}
+                        defaultValue="list-view"
+                        variant="ghost"
+                        size="sm"
+                      >
+                        <SelectTrigger suffixIcon={<ChevronDown />}>
+                          <SelectValue className="text-lg font-medium text-foreground" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {views.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              <item.icon className="size-4" />
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                          <SelectSeparator />
+                          {savedViews.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              <item.icon className="size-4" />
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </>
             }
             rightControls={
               <Button size="sm">
@@ -1081,6 +1084,7 @@ export default function CrmPage() {
             }
           />
           <SubHeader
+            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <>
                 <Select
