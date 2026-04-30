@@ -1126,9 +1126,14 @@ export default function MailPage() {
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
-            className="px-5"
+            className="px-5 overflow-x-auto scrollbar-hide [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
             leftControls={
-              <span className="text-lg font-medium text-foreground">Inbox</span>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <span className="text-lg font-medium text-foreground">
+                  Inbox
+                </span>
+              </>
             }
             centerControls={
               <Tabs defaultValue="primary">
@@ -1188,6 +1193,7 @@ export default function MailPage() {
           />
 
           <SubHeader
+            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <>
                 <Checkbox />

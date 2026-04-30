@@ -602,27 +602,30 @@ export default function GameplanPage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <Breadcrumb size="md">
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink
-                      href="/gameplan"
-                      className="flex items-center gap-1.5"
-                    >
-                      <Zap className="size-4" />
-                      Products
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/gameplan">General</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Task</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <Breadcrumb size="md">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="/gameplan"
+                        className="flex items-center gap-1.5"
+                      >
+                        <Zap className="size-4" />
+                        Products
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/gameplan">General</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Task</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </>
             }
             rightControls={
               <>
@@ -668,6 +671,7 @@ export default function GameplanPage() {
           />
           <div className="mx-auto max-w-4xl">
             <SubHeader
+              className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
               leftControls={
                 <span className="text-base font-medium text-foreground">
                   Tasks

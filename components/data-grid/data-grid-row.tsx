@@ -257,6 +257,7 @@ function DataGridRowImpl<TData>({
             tabIndex={-1}
             className={cn("min-w-0", {
               grow: stretchColumns && columnId !== "select",
+              "shrink-0": !stretchColumns,
             })}
             style={{
               ...getColumnPinningStyle({ column: cell.column, dir }),
