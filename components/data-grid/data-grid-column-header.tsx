@@ -122,7 +122,7 @@ export function DataGridColumnHeader<TData, TValue>({
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           className={cn(
-            "flex size-full items-center justify-between gap-2 p-2 text-sm font-normal text-accent-foreground [&_svg]:size-4",
+            "flex size-full items-center justify-between gap-2 p-2 text-sm font-normal text-accent-foreground outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0 [&_svg]:size-4",
             isAnyColumnResizing && "pointer-events-none",
             className,
           )}
@@ -144,7 +144,7 @@ export function DataGridColumnHeader<TData, TValue>({
           </div>
           {/* <ChevronDownIcon className="shrink-0 text-muted-foreground" /> */}
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" sideOffset={0} className="w-60">
+        <DropdownMenuContent align="start" sideOffset={0} className="w-fit">
           {column.getCanSort() && (
             <>
               <DropdownMenuCheckboxItem
