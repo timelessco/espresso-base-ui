@@ -27,7 +27,6 @@ import {
   ArrowRight,
   ArrowRightFromLine,
   Zap,
-  Phone as PhoneIcon,
   Plus,
   AlignJustify,
   Columns2,
@@ -36,30 +35,10 @@ import {
   Anchor,
   PinOff,
   MapPin,
-  ListFilter,
-  ArrowUpDown,
-  ArrowUp,
-  ArrowDown,
-  EyeOff,
-  Minus,
-  Equal,
-  RectangleHorizontal,
-  X,
-  Check,
+  Ellipsis,
 } from "lucide-react"
-import {
-  useReactTable,
-  getCoreRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-  flexRender,
-  type ColumnDef,
-  type ColumnFiltersState,
-  type SortingState,
-  type RowData,
-  type VisibilityState,
-} from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import * as React from "react"
+import { type ColumnDef } from "@tanstack/react-table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -69,9 +48,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Header } from "@/components/ui/header"
-import { Input } from "@/components/ui/input"
 import { SubHeader } from "@/components/ui/sub-header"
 import {
   Tabs,
@@ -88,24 +65,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { Separator } from "@/components/ui/separator"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -136,6 +99,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
+import { DataGrid } from "@/components/data-grid/data-grid"
+import { DataGridViewMenu } from "@/components/data-grid/data-grid-view-menu"
+import { DataGridFilterMenu } from "@/components/data-grid/data-grid-filter-menu"
+import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
+import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
+import { useDataGrid } from "@/hooks/use-data-grid"
+import { Checkbox } from "@/components/ui-radix/checkbox"
+import { TooltipProvider } from "@/components/ui-radix/tooltip"
+
 const views = [
   { label: "List view", value: "list-view", icon: AlignJustify },
   { label: "Kanban view", value: "kanban-view", icon: Columns2 },
@@ -158,387 +130,334 @@ const statusColors: Record<string, string> = {
   Junk: "#4F3DA1",
 }
 
-const organisations = [
-  { name: "Gumroad", image: "/images/svg/gumroad.svg" },
-  { name: "Attentive", image: "/images/svg/attentive.svg" },
-  { name: "Evergreen", image: "/images/svg/evergreen.svg" },
-  { name: "Dropbox", image: "/images/svg/dropbox.svg" },
-  { name: "Hourglass", image: "/images/svg/hourglass.svg" },
-  { name: "Miro", image: "/images/svg/miro.svg" },
-  { name: "Zapier", image: "/images/svg/zapier.svg" },
-  { name: "Figma", image: "/images/svg/figma.svg" },
-  { name: "1password", image: "/images/svg/1password.svg" },
-  { name: "Cooper", image: "/images/svg/cooper.svg" },
-  { name: "ChatGpt", image: "/images/svg/chatgpt.svg" },
-  { name: "Github", image: "/images/svg/github.svg" },
-  { name: "Metalab", image: "/images/svg/metalab.svg" },
-  { name: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
-  { name: "Spotify", image: "/images/svg/spotify.svg" },
-]
+const dataLists = {
+  names: [
+    { label: "Jenny Wilson", image: "https://i.pravatar.cc/40?u=jenny" },
+    { label: "Mariana Rodriguez", image: "https://i.pravatar.cc/40?u=mariana" },
+    { label: "Sophie Chen", image: "https://i.pravatar.cc/40?u=sophie" },
+    { label: "David Lee", image: "https://i.pravatar.cc/40?u=david" },
+    { label: "Maria Gomez", image: "https://i.pravatar.cc/40?u=maria" },
+    { label: "Anika Sharma", image: "https://i.pravatar.cc/40?u=anika" },
+    { label: "Liam Brown", image: "https://i.pravatar.cc/40?u=liam" },
+    { label: "Daniel Kim", image: "https://i.pravatar.cc/40?u=daniel" },
+    { label: "Nina Lee", image: "https://i.pravatar.cc/40?u=nina" },
+    { label: "Avery Clark", image: "https://i.pravatar.cc/40?u=avery" },
+    { label: "Lucas White", image: "https://i.pravatar.cc/40?u=lucas" },
+    { label: "Chloe Allen", image: "https://i.pravatar.cc/40?u=chloe" },
+    { label: "Evelyn Young", image: "https://i.pravatar.cc/40?u=evelyn" },
+    { label: "Nathan Green", image: "https://i.pravatar.cc/40?u=nathan" },
+    { label: "Grace Roberts", image: "https://i.pravatar.cc/40?u=grace" },
+    { label: "Ravi Kumar", image: "https://i.pravatar.cc/40?u=ravi" },
+    { label: "Priya Menon", image: "https://i.pravatar.cc/40?u=priyam" },
+    { label: "Arjun Patel", image: "https://i.pravatar.cc/40?u=arjun" },
+    { label: "Meera Joshi", image: "https://i.pravatar.cc/40?u=meera" },
+    { label: "Vikram Singh", image: "https://i.pravatar.cc/40?u=vikram" },
+  ],
+  organisations: [
+    { label: "Gumroad", image: "/images/svg/gumroad.svg" },
+    { label: "Attentive", image: "/images/svg/attentive.svg" },
+    { label: "Evergreen", image: "/images/svg/evergreen.svg" },
+    { label: "Dropbox", image: "/images/svg/dropbox.svg" },
+    { label: "Hourglass", image: "/images/svg/hourglass.svg" },
+    { label: "Miro", image: "/images/svg/miro.svg" },
+    { label: "Zapier", image: "/images/svg/zapier.svg" },
+    { label: "Figma", image: "/images/svg/figma.svg" },
+    { label: "1password", image: "/images/svg/1password.svg" },
+    { label: "Cooper", image: "/images/svg/cooper.svg" },
+    { label: "ChatGpt", image: "/images/svg/chatgpt.svg" },
+    { label: "Github", image: "/images/svg/github.svg" },
+    { label: "Metalab", image: "/images/svg/metalab.svg" },
+    { label: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
+    { label: "Spotify", image: "/images/svg/spotify.svg" },
+  ],
+  assigned: [
+    { label: "Avinash Goel", image: "https://i.pravatar.cc/40?u=avinash" },
+    { label: "Rahul Sharma", image: "https://i.pravatar.cc/40?u=rahul" },
+    { label: "Elena Petrova", image: "https://i.pravatar.cc/40?u=elena" },
+    { label: "Priya Patel", image: "https://i.pravatar.cc/40?u=priya" },
+    { label: "James Smith", image: "https://i.pravatar.cc/40?u=james" },
+    { label: "Mark Johnson", image: "https://i.pravatar.cc/40?u=mark" },
+    { label: "Olivia Martinez", image: "https://i.pravatar.cc/40?u=olivia" },
+    { label: "Isabella Davis", image: "https://i.pravatar.cc/40?u=isabella" },
+    { label: "Ethan Wilson", image: "https://i.pravatar.cc/40?u=ethan" },
+    { label: "Mia Thompson", image: "https://i.pravatar.cc/40?u=mia" },
+    { label: "Ella Hill", image: "https://i.pravatar.cc/40?u=ella" },
+    { label: "Noah Scott", image: "https://i.pravatar.cc/40?u=noah" },
+    { label: "Alexander King", image: "https://i.pravatar.cc/40?u=alexander" },
+    { label: "Sofia Walker", image: "https://i.pravatar.cc/40?u=sofia" },
+    { label: "Henry Allen", image: "https://i.pravatar.cc/40?u=henry" },
+  ],
+}
 
-const initialLeads = [
+const nameOptions = dataLists.names.map((n) => ({
+  label: n.label,
+  value: n.label,
+  images: n.image,
+}))
+
+const organisationOptions = dataLists.organisations.map((o) => ({
+  label: o.label,
+  value: o.label,
+  images: o.image,
+}))
+
+const assignedOptions = dataLists.assigned.map((a) => ({
+  label: a.label,
+  value: a.label,
+  images: a.image,
+}))
+
+const statusOptions = Object.keys(statusColors).map((s) => ({
+  label: s,
+  value: s,
+  icon: ({ className }: { className?: string }) => (
+    <span
+      className={`flex size-2 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+      style={{ backgroundColor: statusColors[s] }}
+    />
+  ),
+}))
+
+const organisations = dataLists.organisations.map((o) => ({
+  name: o.label,
+  image: o.image,
+}))
+
+const organisationItems = organisations.map((o) => ({
+  label: o.name,
+  value: o.name.toLowerCase(),
+  icon: ({ className }: { className?: string }) => (
+    <Avatar size="xs" variant="square" className={className}>
+      <AvatarImage src={o.image} />
+      <AvatarFallback>{o.name[0]}</AvatarFallback>
+    </Avatar>
+  ),
+}))
+
+const statusFilterItems = Object.keys(statusColors).map((s) => ({
+  label: s,
+  value: s.toLowerCase(),
+  icon: ({ className }: { className?: string }) => (
+    <span
+      className={`flex size-2 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+      style={{ backgroundColor: statusColors[s] }}
+    />
+  ),
+}))
+
+type Lead = {
+  id: string
+  name: string
+  organisation: string
+  status: string
+  email: string
+  mobile: string
+  assignee: string
+  lastModified: string
+}
+
+const initialLeads: Lead[] = [
   {
+    id: "1",
     name: "Jenny Wilson",
-    avatar: "https://i.pravatar.cc/32?u=jenny",
     organisation: "Gumroad",
     status: "Open",
     email: "stacy@example.com",
     mobile: "+91 9994445678",
     assignee: "Avinash Goel",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash",
     lastModified: "2 days ago",
   },
   {
+    id: "2",
     name: "Mariana Rodriguez",
-    avatar: "https://i.pravatar.cc/32?u=mariana",
     organisation: "Attentive",
     status: "Contacted",
     email: "mariana@example.com",
     mobile: "+91 8885556789",
     assignee: "Rahul Sharma",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul",
     lastModified: "1 week ago",
   },
   {
+    id: "3",
     name: "Sophie Chen",
-    avatar: "https://i.pravatar.cc/32?u=sophie",
     organisation: "Evergreen",
     status: "Nurture",
     email: "sophie@example.com",
     mobile: "+91 7773335678",
     assignee: "Elena Petrova",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=elena",
     lastModified: "3 days ago",
   },
   {
+    id: "4",
     name: "David Lee",
-    avatar: "https://i.pravatar.cc/32?u=david",
     organisation: "Dropbox",
     status: "Qualified",
     email: "david@example.com",
     mobile: "+91 6662225678",
     assignee: "Priya Patel",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=priya",
     lastModified: "4 days ago",
   },
   {
+    id: "5",
     name: "Maria Gomez",
-    avatar: "https://i.pravatar.cc/32?u=maria",
     organisation: "Hourglass",
     status: "Unqualified",
     email: "maria@example.com",
     mobile: "+91 5554445678",
     assignee: "James Smith",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=james",
     lastModified: "5 days ago",
   },
   {
+    id: "6",
     name: "Anika Sharma",
-    avatar: "https://i.pravatar.cc/32?u=anika",
     organisation: "Miro",
     status: "Nurture",
     email: "anika@example.com",
     mobile: "+91 4443335678",
     assignee: "Mark Johnson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=mark",
     lastModified: "6 days ago",
   },
   {
+    id: "7",
     name: "Liam Brown",
-    avatar: "https://i.pravatar.cc/32?u=liam",
     organisation: "Zapier",
     status: "Junk",
     email: "liam@example.com",
     mobile: "+91 3332225678",
     assignee: "Olivia Martinez",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=olivia",
     lastModified: "1 week ago",
   },
   {
+    id: "8",
     name: "Daniel Kim",
-    avatar: "https://i.pravatar.cc/32?u=daniel",
     organisation: "Figma",
     status: "Contacted",
     email: "daniel@example.com",
     mobile: "+91 2221115678",
     assignee: "Isabella Davis",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=isabella",
     lastModified: "1 week ago",
   },
   {
+    id: "9",
     name: "Nina Lee",
-    avatar: "https://i.pravatar.cc/32?u=nina",
     organisation: "1password",
     status: "Open",
     email: "nina@example.com",
     mobile: "+91 1110005678",
     assignee: "Ethan Wilson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=ethan",
     lastModified: "8 days ago",
   },
   {
+    id: "10",
     name: "Avery Clark",
-    avatar: "https://i.pravatar.cc/32?u=avery",
     organisation: "Cooper",
     status: "Qualified",
     email: "avery@example.com",
     mobile: "+91 9998885678",
     assignee: "Mia Thompson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=mia",
     lastModified: "9 days ago",
   },
   {
+    id: "11",
     name: "Lucas White",
-    avatar: "https://i.pravatar.cc/32?u=lucas",
     organisation: "ChatGpt",
     status: "Junk",
     email: "lucas@example.com",
     mobile: "+91 8887775678",
     assignee: "Ella Hill",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=ella",
     lastModified: "10 days ago",
   },
   {
+    id: "12",
     name: "Chloe Allen",
-    avatar: "https://i.pravatar.cc/32?u=chloe",
     organisation: "Github",
     status: "Contacted",
     email: "chloe@example.com",
     mobile: "+91 7776665678",
     assignee: "Noah Scott",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=noah",
     lastModified: "11 days ago",
   },
   {
+    id: "13",
     name: "Evelyn Young",
-    avatar: "https://i.pravatar.cc/32?u=evelyn",
     organisation: "Metalab",
     status: "Open",
     email: "evelyn@example.com",
     mobile: "+91 6665555678",
     assignee: "Alexander King",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=alexander",
     lastModified: "12 days ago",
   },
   {
+    id: "14",
     name: "Nathan Green",
-    avatar: "https://i.pravatar.cc/32?u=nathan",
     organisation: "Adobe Express",
     status: "Unqualified",
     email: "nathan@example.com",
     mobile: "+91 5554445678",
     assignee: "Sofia Walker",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=sofia",
     lastModified: "13 days ago",
   },
   {
+    id: "15",
     name: "Grace Roberts",
-    avatar: "https://i.pravatar.cc/32?u=grace",
     organisation: "Spotify",
     status: "Junk",
     email: "grace@example.com",
     mobile: "+91 4443335678",
     assignee: "Henry Allen",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=henry",
     lastModified: "14 days ago",
   },
   {
+    id: "16",
     name: "Ravi Kumar",
-    avatar: "https://i.pravatar.cc/32?u=ravi",
     organisation: "Gumroad",
     status: "Open",
     email: "ravi@example.com",
     mobile: "+91 9876543210",
     assignee: "Avinash Goel",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash2",
     lastModified: "15 days ago",
   },
   {
+    id: "17",
     name: "Priya Menon",
-    avatar: "https://i.pravatar.cc/32?u=priyam",
     organisation: "Attentive",
     status: "Contacted",
     email: "priya.m@example.com",
     mobile: "+91 8765432109",
     assignee: "Rahul Sharma",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul2",
     lastModified: "16 days ago",
   },
   {
+    id: "18",
     name: "Arjun Patel",
-    avatar: "https://i.pravatar.cc/32?u=arjun",
     organisation: "Dropbox",
     status: "Nurture",
     email: "arjun@example.com",
     mobile: "+91 7654321098",
     assignee: "Elena Petrova",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=elena2",
     lastModified: "17 days ago",
   },
   {
+    id: "19",
     name: "Meera Joshi",
-    avatar: "https://i.pravatar.cc/32?u=meera",
     organisation: "Figma",
     status: "Qualified",
     email: "meera@example.com",
     mobile: "+91 6543210987",
     assignee: "Priya Patel",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=priya2",
     lastModified: "18 days ago",
   },
   {
+    id: "20",
     name: "Vikram Singh",
-    avatar: "https://i.pravatar.cc/32?u=vikram",
     organisation: "Miro",
     status: "Unqualified",
     email: "vikram@example.com",
     mobile: "+91 5432109876",
     assignee: "James Smith",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=james2",
     lastModified: "19 days ago",
   },
-  {
-    name: "Ananya Rao",
-    avatar: "https://i.pravatar.cc/32?u=ananya",
-    organisation: "Cooper",
-    status: "Open",
-    email: "ananya@example.com",
-    mobile: "+91 4321098765",
-    assignee: "Mark Johnson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=mark2",
-    lastModified: "20 days ago",
-  },
-  {
-    name: "Karthik Nair",
-    avatar: "https://i.pravatar.cc/32?u=karthik",
-    organisation: "Github",
-    status: "Contacted",
-    email: "karthik@example.com",
-    mobile: "+91 3210987654",
-    assignee: "Olivia Martinez",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=olivia2",
-    lastModified: "21 days ago",
-  },
-  {
-    name: "Deepa Iyer",
-    avatar: "https://i.pravatar.cc/32?u=deepa",
-    organisation: "Zapier",
-    status: "Junk",
-    email: "deepa@example.com",
-    mobile: "+91 2109876543",
-    assignee: "Isabella Davis",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=isabella2",
-    lastModified: "22 days ago",
-  },
-  {
-    name: "Rohit Verma",
-    avatar: "https://i.pravatar.cc/32?u=rohit",
-    organisation: "Evergreen",
-    status: "Nurture",
-    email: "rohit@example.com",
-    mobile: "+91 1098765432",
-    assignee: "Ethan Wilson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=ethan2",
-    lastModified: "23 days ago",
-  },
-  {
-    name: "Sneha Gupta",
-    avatar: "https://i.pravatar.cc/32?u=sneha",
-    organisation: "Hourglass",
-    status: "Qualified",
-    email: "sneha@example.com",
-    mobile: "+91 9988776655",
-    assignee: "Mia Thompson",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=mia2",
-    lastModified: "24 days ago",
-  },
-  {
-    name: "Aditya Reddy",
-    avatar: "https://i.pravatar.cc/32?u=aditya",
-    organisation: "1password",
-    status: "Open",
-    email: "aditya@example.com",
-    mobile: "+91 8877665544",
-    assignee: "Ella Hill",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=ella2",
-    lastModified: "25 days ago",
-  },
-  {
-    name: "Kavya Sharma",
-    avatar: "https://i.pravatar.cc/32?u=kavya",
-    organisation: "ChatGpt",
-    status: "Contacted",
-    email: "kavya@example.com",
-    mobile: "+91 7766554433",
-    assignee: "Noah Scott",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=noah2",
-    lastModified: "26 days ago",
-  },
-  {
-    name: "Siddharth Das",
-    avatar: "https://i.pravatar.cc/32?u=siddharth",
-    organisation: "Metalab",
-    status: "Unqualified",
-    email: "siddharth@example.com",
-    mobile: "+91 6655443322",
-    assignee: "Alexander King",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=alexander2",
-    lastModified: "27 days ago",
-  },
-  {
-    name: "Tanya Bose",
-    avatar: "https://i.pravatar.cc/32?u=tanya",
-    organisation: "Adobe Express",
-    status: "Junk",
-    email: "tanya@example.com",
-    mobile: "+91 5544332211",
-    assignee: "Sofia Walker",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=sofia2",
-    lastModified: "28 days ago",
-  },
-  {
-    name: "Nikhil Chopra",
-    avatar: "https://i.pravatar.cc/32?u=nikhil",
-    organisation: "Spotify",
-    status: "Nurture",
-    email: "nikhil@example.com",
-    mobile: "+91 4433221100",
-    assignee: "Henry Allen",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=henry2",
-    lastModified: "29 days ago",
-  },
-  {
-    name: "Pooja Mehta",
-    avatar: "https://i.pravatar.cc/32?u=pooja",
-    organisation: "Gumroad",
-    status: "Qualified",
-    email: "pooja@example.com",
-    mobile: "+91 3322110099",
-    assignee: "Avinash Goel",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=avinash3",
-    lastModified: "30 days ago",
-  },
-  {
-    name: "Amit Saxena",
-    avatar: "https://i.pravatar.cc/32?u=amit",
-    organisation: "Attentive",
-    status: "Open",
-    email: "amit@example.com",
-    mobile: "+91 2211009988",
-    assignee: "Rahul Sharma",
-    assigneeAvatar: "https://i.pravatar.cc/32?u=rahul3",
-    lastModified: "1 month ago",
-  },
 ]
-
-type Lead = (typeof initialLeads)[number]
-
-declare module "@tanstack/react-table" {
-  interface TableMeta<TData extends RowData> {
-    updateData: (rowIndex: number, columnId: keyof Lead, value: string) => void
-    _tdata?: TData
-  }
-}
 
 function CrmSidebar() {
   return (
@@ -593,37 +512,61 @@ function CrmSidebar() {
                   <DropdownMenuSubContent>
                     <DropdownMenuItem render={<a href="/crm" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/crm-data-grid" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img src="/images/svg/logo-crm.svg" alt="CRM" className="size-4" />
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/helpdesk" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
-                        <img src="/images/svg/logo-helpDesk.svg" alt="Helpdesk" className="size-4" />
+                        <img
+                          src="/images/svg/logo-helpDesk.svg"
+                          alt="Helpdesk"
+                          className="size-4"
+                        />
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/drive" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
-                        <img src="/images/svg/logo-drive.svg" alt="Drive" className="size-4" />
+                        <img
+                          src="/images/svg/logo-drive.svg"
+                          alt="Drive"
+                          className="size-4"
+                        />
                       </div>
                       Drive
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/mail" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
-                        <img src="/images/svg/logo-mail.svg" alt="Mail" className="size-4" />
+                        <img
+                          src="/images/svg/logo-mail.svg"
+                          alt="Mail"
+                          className="size-4"
+                        />
                       </div>
                       Mail
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/gameplan" />}>
                       <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
-                        <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" className="size-4" />
+                        <img
+                          src="/images/svg/logo-gameplan.svg"
+                          alt="Game Plan"
+                          className="size-4"
+                        />
                       </div>
                       Gameplan
                     </DropdownMenuItem>
@@ -876,400 +819,147 @@ function CrmSidebar() {
   )
 }
 
-const orgItems = organisations.map((o) => ({
-  label: o.name,
-  value: o.name,
-  icon: ({ className }: { className?: string }) => (
-    <Avatar size="xs" variant="square" className={className}>
-      <AvatarImage src={o.image} />
-      <AvatarFallback>{o.name[0]}</AvatarFallback>
-    </Avatar>
-  ),
-}))
-
-const statusItems = Object.keys(statusColors).map((s) => ({
-  label: s,
-  value: s,
-  icon: ({ className }: { className?: string }) => (
-    <span
-      className={`flex size-3.5 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
-      style={{ backgroundColor: statusColors[s] }}
-    >
-      <span className="size-1.5 rounded-full bg-white" />
-    </span>
-  ),
-}))
-
-const assigneeMap = new Map<string, string>()
-for (const lead of initialLeads) {
-  if (!assigneeMap.has(lead.assignee)) {
-    assigneeMap.set(lead.assignee, lead.assigneeAvatar)
-  }
-}
-const assigneeItems = Array.from(assigneeMap.entries()).map(([name, av]) => ({
-  label: name,
-  value: name,
-  icon: ({ className }: { className?: string }) => (
-    <Avatar size="xs" className={className}>
-      <AvatarImage src={av} />
-      <AvatarFallback>{name.slice(0, 2)}</AvatarFallback>
-    </Avatar>
-  ),
-}))
-
-const cellInputClass =
-  "h-7 border-transparent bg-transparent px-2 hover:border-border-normal focus:border-primary-foreground"
-
-const cellSelectTriggerClass = "h-7 w-full justify-between border-transparent"
-
-const columnLabels: Record<string, string> = {
-  name: "Name",
-  organisation: "Organisation",
-  status: "Status",
-  email: "Email",
-  mobile: "Mobile no.",
-  assignee: "Assigned to",
-  lastModified: "Last modified/Created",
-}
-
-type Density = "short" | "medium" | "tall" | "extra-tall"
-
-const densityOptions: { value: Density; label: string; icon: typeof Minus }[] = [
-  { value: "short", label: "Short", icon: Minus },
-  { value: "medium", label: "Medium", icon: Equal },
-  { value: "tall", label: "Tall", icon: RectangleHorizontal },
-  { value: "extra-tall", label: "Extra Tall", icon: X },
-]
-
-const densityCellClass: Record<Density, string> = {
-  short: "h-9 py-1",
-  medium: "h-11 py-2",
-  tall: "h-14 py-3",
-  "extra-tall": "h-16 py-4",
-}
-
-const columns: ColumnDef<Lead>[] = [
-  {
-    id: "select",
-    size: 40,
-    minSize: 40,
-    maxSize: 40,
-    enableResizing: false,
-    enableSorting: false,
-    header: () => <Checkbox />,
-    cell: () => <Checkbox />,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    size: 220,
-    cell: ({ row, column, table }) => (
-      <div className="flex min-w-0 items-center gap-2">
-        <Avatar size="sm" className="shrink-0">
-          <AvatarImage src={row.original.avatar} />
-          <AvatarFallback>{row.original.name.slice(0, 2)}</AvatarFallback>
-        </Avatar>
-        <Input
-          variant="subtle"
-          size="sm"
-          className={cellInputClass}
-          value={row.original.name}
-          onChange={(e) =>
-            table.options.meta?.updateData(
-              row.index,
-              column.id as keyof Lead,
-              e.target.value
-            )
-          }
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "organisation",
-    header: "Organisation",
-    size: 180,
-    cell: ({ row, column, table }) => (
-      <Select
-        items={orgItems}
-        value={row.original.organisation}
-        onValueChange={(v) => v &&
-          table.options.meta?.updateData(
-            row.index,
-            column.id as keyof Lead,
-            v
-          )
-        }
-        variant="ghost"
-        size="sm"
-      >
-        <SelectTrigger
-          suffixIcon={<ChevronDown />}
-          className={cellSelectTriggerClass}
-        >
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent alignItemWithTrigger={false}>
-          {organisations.map((o) => (
-            <SelectItem key={o.name} value={o.name}>
-              <Avatar size="xs" variant="square">
-                <AvatarImage src={o.image} />
-                <AvatarFallback>{o.name[0]}</AvatarFallback>
-              </Avatar>
-              {o.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    size: 150,
-    cell: ({ row, column, table }) => (
-      <Select
-        items={statusItems}
-        value={row.original.status}
-        onValueChange={(v) => v &&
-          table.options.meta?.updateData(
-            row.index,
-            column.id as keyof Lead,
-            v
-          )
-        }
-        variant="ghost"
-        size="sm"
-      >
-        <SelectTrigger
-          suffixIcon={<ChevronDown />}
-          className={cellSelectTriggerClass}
-        >
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent alignItemWithTrigger={false}>
-          {Object.keys(statusColors).map((s) => (
-            <SelectItem key={s} value={s}>
-              <span
-                className="flex size-3.5 shrink-0 items-center justify-center rounded-full"
-                style={{ backgroundColor: statusColors[s] }}
-              >
-                <span className="size-1.5 rounded-full bg-white" />
-              </span>
-              {s}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-    size: 220,
-    cell: ({ row, column, table }) => (
-      <Input
-        variant="subtle"
-        size="sm"
-        className={cellInputClass}
-        type="email"
-        value={row.original.email}
-        onChange={(e) =>
-          table.options.meta?.updateData(
-            row.index,
-            column.id as keyof Lead,
-            e.target.value
-          )
-        }
-      />
-    ),
-  },
-  {
-    accessorKey: "mobile",
-    header: "Mobile no.",
-    size: 180,
-    cell: ({ row, column, table }) => (
-      <div className="flex min-w-0 items-center gap-1">
-        <PhoneIcon className="size-3.5 shrink-0 text-muted-foreground" />
-        <Input
-          variant="subtle"
-          size="sm"
-          className={cellInputClass}
-          value={row.original.mobile}
-          onChange={(e) =>
-            table.options.meta?.updateData(
-              row.index,
-              column.id as keyof Lead,
-              e.target.value
-            )
-          }
-        />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "assignee",
-    header: "Assigned to",
-    size: 200,
-    cell: ({ row, column, table }) => (
-      <Select
-        items={assigneeItems}
-        value={row.original.assignee}
-        onValueChange={(v) => v &&
-          table.options.meta?.updateData(
-            row.index,
-            column.id as keyof Lead,
-            v
-          )
-        }
-        variant="ghost"
-        size="sm"
-      >
-        <SelectTrigger
-          suffixIcon={<ChevronDown />}
-          className={cellSelectTriggerClass}
-        >
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent alignItemWithTrigger={false}>
-          {assigneeItems.map((a) => (
-            <SelectItem key={a.value} value={a.value}>
-              <Avatar size="xs">
-                <AvatarImage src={assigneeMap.get(a.value) ?? ""} />
-                <AvatarFallback>{a.label.slice(0, 2)}</AvatarFallback>
-              </Avatar>
-              {a.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    ),
-  },
-  {
-    accessorKey: "lastModified",
-    header: "Last modified",
-    size: 140,
-    cell: ({ row, column, table }) => (
-      <Input
-        variant="subtle"
-        size="sm"
-        className={cellInputClass}
-        value={row.original.lastModified}
-        onChange={(e) =>
-          table.options.meta?.updateData(
-            row.index,
-            column.id as keyof Lead,
-            e.target.value
-          )
-        }
-      />
-    ),
-  },
-]
-
-const ALL = "__all__"
-
 export default function CrmDataGridPage() {
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [data, setData] = useState<Lead[]>(initialLeads)
-  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr")
-  const [density, setDensity] = useState<Density>("medium")
-  const [columnSearch, setColumnSearch] = useState("")
+  const [data, setData] = React.useState<Lead[]>(initialLeads)
 
-  const table = useReactTable({
+  const columns = React.useMemo<ColumnDef<Lead>[]>(
+    () => [
+      {
+        id: "select",
+        size: 40,
+        minSize: 40,
+        maxSize: 40,
+        enableResizing: false,
+        enableSorting: false,
+        enableHiding: false,
+        header: ({ table }) => (
+          <div className="flex h-full items-center justify-center">
+            <Checkbox
+              checked={
+                table.getIsAllRowsSelected()
+                  ? true
+                  : table.getIsSomeRowsSelected()
+                    ? "indeterminate"
+                    : false
+              }
+              onCheckedChange={(v) => table.toggleAllRowsSelected(!!v)}
+              aria-label="Select all"
+            />
+          </div>
+        ),
+        cell: ({ row }) => (
+          <div className="flex h-full items-center justify-center">
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={(v) => row.toggleSelected(!!v)}
+              aria-label="Select row"
+            />
+          </div>
+        ),
+      },
+      {
+        id: "name",
+        accessorKey: "name",
+        header: "Name",
+        size: 220,
+        meta: {
+          label: "Name",
+          cell: {
+            variant: "select",
+            options: nameOptions,
+            imageSize: "size-5",
+          },
+        },
+      },
+      {
+        id: "organisation",
+        accessorKey: "organisation",
+        header: "Organisation",
+        size: 200,
+        meta: {
+          label: "Organisation",
+          cell: {
+            variant: "select",
+            options: organisationOptions,
+            imageSize: "size-5",
+            className: "rounded-md",
+          },
+        },
+      },
+      {
+        id: "status",
+        accessorKey: "status",
+        header: "Status",
+        size: 140,
+        meta: {
+          label: "Status",
+          cell: {
+            variant: "select",
+            options: statusOptions,
+            imageSize: "size-2",
+            className: "gap-1.5",
+          },
+        },
+      },
+      {
+        id: "email",
+        accessorKey: "email",
+        header: "Email",
+        size: 220,
+        meta: { label: "Email", cell: { variant: "short-text" } },
+      },
+      {
+        id: "mobile",
+        accessorKey: "mobile",
+        header: "Mobile no.",
+        size: 160,
+        meta: { label: "Mobile no.", cell: { variant: "short-text" } },
+      },
+      {
+        id: "assignee",
+        accessorKey: "assignee",
+        header: "Assigned to",
+        size: 200,
+        meta: {
+          label: "Assigned to",
+          cell: {
+            variant: "select",
+            options: assignedOptions,
+            imageSize: "size-5",
+          },
+        },
+      },
+      {
+        id: "lastModified",
+        accessorKey: "lastModified",
+        header: "Last modified",
+        size: 160,
+        meta: { label: "Last modified", cell: { variant: "short-text" } },
+      },
+    ],
+    []
+  )
+
+  const { table, ...dataGridProps } = useDataGrid({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
-    state: { sorting, columnFilters, columnVisibility },
-    columnResizeMode: "onChange",
-    meta: {
-      updateData: (rowIndex, columnId, value) => {
-        setData((old) =>
-          old.map((row, i) =>
-            i === rowIndex ? { ...row, [columnId]: value } : row
-          )
-        )
-      },
+    onDataChange: setData,
+    getRowId: (row) => row.id,
+    onRowAdd: () => {
+      const newRow: Lead = {
+        id: crypto.randomUUID(),
+        name: "",
+        organisation: "",
+        status: "Open",
+        email: "",
+        mobile: "",
+        assignee: "",
+        lastModified: "just now",
+      }
+      setData((prev) => [...prev, newRow])
+      return { rowIndex: data.length, columnId: "name" }
     },
   })
-
-  const toggleableColumns = table
-    .getAllLeafColumns()
-    .filter((c) => c.id !== "select")
-
-  const visibleColumnsCount = toggleableColumns.filter((c) =>
-    c.getIsVisible()
-  ).length
-  const isAllVisible = visibleColumnsCount === toggleableColumns.length
-  const isSomeVisible = visibleColumnsCount > 0 && !isAllVisible
-
-  const filteredColumnList = toggleableColumns.filter((c) =>
-    (columnLabels[c.id] ?? c.id)
-      .toLowerCase()
-      .includes(columnSearch.toLowerCase())
-  )
-
-  const currentDensity =
-    densityOptions.find((d) => d.value === density) ?? densityOptions[1]
-  const DensityIcon = currentDensity.icon
-
-  const cellPadClass = densityCellClass[density]
-
-  const getFilterValue = (columnId: string): string =>
-    (columnFilters.find((f) => f.id === columnId)?.value as string) ?? ALL
-
-  const setFilterValue = (columnId: string, value: string | null) => {
-    setColumnFilters((prev) => {
-      const others = prev.filter((f) => f.id !== columnId)
-      if (!value || value === ALL) return others
-      return [...others, { id: columnId, value }]
-    })
-  }
-
-  const sortValue = sorting[0]?.id ?? ALL
-
-  const setSortValue = (value: string | null) => {
-    if (!value || value === ALL) {
-      setSorting([])
-      return
-    }
-    setSorting([{ id: value, desc: false }])
-  }
-
-  const filteredCount = table.getFilteredRowModel().rows.length
-  const totalCount = data.length
-
-  const filterSelectItems = useMemo(
-    () => [
-      { label: "Filter", value: "filter" },
-      { label: "Title", value: "title" },
-      { label: "Priority", value: "priority" },
-      { label: "Start Date", value: "start-date" },
-      { label: "Reference Document Type", value: "ref-doc-type" },
-      { label: "Reference Doc", value: "ref-doc" },
-      { label: "Assigned To", value: "assigned" },
-      { label: "Status", value: "status" },
-    ],
-    []
-  )
-
-  const sortSelectItems = useMemo(
-    () => [
-      { label: "Sort", value: ALL },
-      { label: "Name", value: "name" },
-      { label: "Organisation", value: "organisation" },
-      { label: "Status", value: "status" },
-      { label: "Last modified", value: "lastModified" },
-    ],
-    []
-  )
 
   return (
     <SidebarProvider>
@@ -1282,7 +972,7 @@ export default function CrmDataGridPage() {
               <Breadcrumb size="md">
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
+                    <BreadcrumbLink href="/crm-data-grid">Leads</BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator>/</BreadcrumbSeparator>
                   <BreadcrumbItem>
@@ -1327,14 +1017,13 @@ export default function CrmDataGridPage() {
               <>
                 <Select
                   items={[
-                    { label: "Lead owner", value: ALL },
-                    ...assigneeItems.map((a) => ({
-                      label: a.label,
-                      value: a.value,
-                    })),
+                    { label: "Lead owner", value: "lead-owner" },
+                    { label: "Jenny Wilson", value: "jenny-wilson" },
+                    { label: "Mariana Rodriguez", value: "mariana" },
+                    { label: "Sophie Chen", value: "sophie-chen" },
+                    { label: "David Lee", value: "david-lee" },
                   ]}
-                  value={getFilterValue("assignee")}
-                  onValueChange={(v) => setFilterValue("assignee", v)}
+                  defaultValue="lead-owner"
                   variant="subtle"
                   size="sm"
                 >
@@ -1342,35 +1031,34 @@ export default function CrmDataGridPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value={ALL}>Lead owner</SelectItem>
-                    <SelectSeparator />
-                    {assigneeItems.map((a) => (
-                      <SelectItem key={a.value} value={a.value}>
-                        <Avatar size="xs">
-                          <AvatarImage src={assigneeMap.get(a.value) ?? ""} />
-                          <AvatarFallback>{a.label.slice(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        {a.label}
+                    <SelectItem value="lead-owner">Lead owner</SelectItem>
+                    <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
+                    <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
+                    <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
+                    <SelectItem value="david-lee">David Lee</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={organisationItems}
+                  defaultValue="gumroad"
+                  variant="subtle"
+                  size="sm"
+                >
+                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    {organisationItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.icon && <item.icon />}
+                        {item.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 <Select
-                  items={[
-                    { label: "Organisation", value: ALL },
-                    ...organisations.map((o) => ({
-                      label: o.name,
-                      value: o.name,
-                      icon: ({ className }: { className?: string }) => (
-                        <Avatar size="xs" variant="square" className={className}>
-                          <AvatarImage src={o.image} />
-                          <AvatarFallback>{o.name[0]}</AvatarFallback>
-                        </Avatar>
-                      ),
-                    })),
-                  ]}
-                  value={getFilterValue("organisation")}
-                  onValueChange={(v) => setFilterValue("organisation", v)}
+                  items={statusFilterItems}
+                  defaultValue="open"
                   variant="subtle"
                   size="sm"
                 >
@@ -1378,55 +1066,10 @@ export default function CrmDataGridPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value={ALL}>Organisation</SelectItem>
-                    <SelectSeparator />
-                    {organisations.map((o) => (
-                      <SelectItem key={o.name} value={o.name}>
-                        <Avatar size="xs" variant="square">
-                          <AvatarImage src={o.image} />
-                          <AvatarFallback>{o.name[0]}</AvatarFallback>
-                        </Avatar>
-                        {o.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Status", value: ALL },
-                    ...Object.keys(statusColors).map((s) => ({
-                      label: s,
-                      value: s,
-                      icon: ({ className }: { className?: string }) => (
-                        <span
-                          className={`flex size-3 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
-                          style={{ backgroundColor: statusColors[s] }}
-                        >
-                          <span className="size-1 rounded-full bg-white" />
-                        </span>
-                      ),
-                    })),
-                  ]}
-                  value={getFilterValue("status")}
-                  onValueChange={(v) => setFilterValue("status", v)}
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    <SelectItem value={ALL}>Status</SelectItem>
-                    <SelectSeparator />
-                    {Object.keys(statusColors).map((s) => (
-                      <SelectItem key={s} value={s}>
-                        <span
-                          className="flex size-3 shrink-0 items-center justify-center rounded-full"
-                          style={{ backgroundColor: statusColors[s] }}
-                        >
-                          <span className="size-1 rounded-full bg-white" />
-                        </span>
-                        {s}
+                    {statusFilterItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.icon && <item.icon className="my-auto" />}
+                        {item.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -1434,243 +1077,51 @@ export default function CrmDataGridPage() {
               </>
             }
             rightControls={
-              <>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() =>
-                    setDirection((d) => (d === "ltr" ? "rtl" : "ltr"))
-                  }
-                >
-                  <AlignJustify />
-                  {direction === "ltr" ? "LTR" : "RTL"}
-                </Button>
-                <Popover>
-                  <PopoverTrigger
-                    render={<Button variant="secondary" size="sm" />}
-                  >
-                    <EyeOff />
-                    View
-                  </PopoverTrigger>
-                  <PopoverContent
-                    align="end"
-                    className="flex w-72 flex-col gap-1 p-2"
-                  >
-                    <Input
-                      variant="outline"
-                      size="sm"
-                      placeholder="Search columns..."
-                      value={columnSearch}
-                      onChange={(e) => setColumnSearch(e.target.value)}
-                    />
-                    <label className="flex h-8 cursor-pointer items-center gap-2 rounded-md px-2 hover:bg-secondary">
-                      <Checkbox
-                        checked={isAllVisible}
-                        indeterminate={isSomeVisible}
-                        onCheckedChange={(checked) =>
-                          table.toggleAllColumnsVisible(!!checked)
-                        }
-                      />
-                      <span className="text-base text-secondary-foreground">
-                        Select all
-                      </span>
-                    </label>
-                    <Separator />
-                    <div className="flex max-h-72 flex-col overflow-auto">
-                      {filteredColumnList.map((col) => {
-                        const visible = col.getIsVisible()
-                        return (
-                          <label
-                            key={col.id}
-                            className="flex h-8 cursor-pointer items-center gap-2 rounded-md px-2 hover:bg-secondary"
-                          >
-                            <Checkbox
-                              checked={visible}
-                              onCheckedChange={() => col.toggleVisibility()}
-                            />
-                            <span className="flex-1 text-base text-secondary-foreground">
-                              {columnLabels[col.id] ?? col.id}
-                            </span>
-                            {visible && (
-                              <Check className="size-4 text-muted-foreground" />
-                            )}
-                          </label>
-                        )
-                      })}
-                      {filteredColumnList.length === 0 && (
-                        <span className="px-2 py-1.5 text-base text-muted-foreground">
-                          No columns
-                        </span>
-                      )}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                <Select
-                  items={filterSelectItems}
-                  defaultValue="filter"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const item = filterSelectItems.find(
-                          (i) => i.value === value
-                        )
-                        return (
-                          <>
-                            <ListFilter className="size-4" />
-                            {item?.label ?? "Filter"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    {filterSelectItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={sortSelectItems}
-                  value={sortValue}
-                  onValueChange={(v) => setSortValue(v)}
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
-                    <SelectValue>
-                      {(value) => {
-                        const item = sortSelectItems.find(
-                          (i) => i.value === value
-                        )
-                        return (
-                          <>
-                            <ArrowUpDown className="size-4" />
-                            {item?.label ?? "Sort"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
-                    {sortSelectItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <TooltipProvider>
+                <DataGridViewMenu table={table} />
+                <DataGridFilterMenu table={table} />
+                <DataGridSortMenu table={table} />
+                <DataGridRowHeightMenu table={table} />
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    render={<Button variant="secondary" size="sm" />}
+                    render={<Button variant="secondary" size="icon-sm" />}
                   >
-                    <DensityIcon />
-                    {currentDensity.label}
+                    <Ellipsis />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    {densityOptions.map((opt) => {
-                      const Icon = opt.icon
-                      return (
-                        <DropdownMenuItem
-                          key={opt.value}
-                          onClick={() => setDensity(opt.value)}
-                        >
-                          <Icon />
-                          {opt.label}
-                          {density === opt.value && (
-                            <Check className="ml-auto size-4 text-muted-foreground" />
-                          )}
-                        </DropdownMenuItem>
-                      )
-                    })}
+                    <DropdownMenuItem>Import</DropdownMenuItem>
+                    <DropdownMenuItem>User Permissions</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Role Permissions Manager
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Customize
+                      <span className="ml-auto text-xs text-muted-foreground">
+                        ⌘+Y
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Toggle Sidebar
+                      <span className="ml-auto text-xs text-muted-foreground">
+                        ⌘+G
+                      </span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>List Settings</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </>
+              </TooltipProvider>
             }
           />
 
-          <div
-            dir={direction}
-            className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5"
-          >
-            <div className="[&>[data-slot=table-container]]:overflow-visible">
-              <Table
-                className="table-fixed"
-                style={{
-                  width: Math.max(table.getTotalSize(), 0),
-                  minWidth: "100%",
-                }}
-              >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead
-                          key={header.id}
-                          className="relative"
-                          style={{ width: header.getSize() }}
-                        >
-                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                            <div
-                              className="flex cursor-pointer items-center gap-1 select-none"
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: <ArrowUp className="size-3.5" />,
-                                desc: <ArrowDown className="size-3.5" />,
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          ) : (
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                          )}
-                          {header.column.getCanResize() && (
-                            <div
-                              onDoubleClick={() => header.column.resetSize()}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                                header.column.getIsResizing()
-                                  ? "opacity-100 before:bg-primary"
-                                  : "opacity-0 before:bg-border"
-                              }`}
-                            />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          className={`px-1 ${cellPadClass}`}
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+          <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5">
+            <TooltipProvider>
+              <DataGrid
+                table={table}
+                {...dataGridProps}
+                stretchColumns
+                className='[&_[data-slot=grid-cell]]:font-normal [&_[data-slot=grid-cell]]:text-muted-foreground [&_[data-slot=grid-cell][aria-colindex="2"]]:font-medium [&_[data-slot=grid-cell][aria-colindex="2"]]:text-foreground [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:first-child>div]:rounded-l-md [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:last-child>div]:rounded-r-md'
+              />
+            </TooltipProvider>
           </div>
 
           <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
@@ -1683,7 +1134,7 @@ export default function CrmDataGridPage() {
               </TabsList>
             </Tabs>
             <span className="text-base text-muted-foreground">
-              {filteredCount} of {totalCount}
+              {data.length} of {data.length}
             </span>
           </div>
         </div>
