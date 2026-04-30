@@ -933,7 +933,33 @@ export function SelectCell<TData>({
     [isEditing, isFocused, initialValue, tableMeta],
   );
 
-  const displayLabel = optionByValue.get(value)?.label ?? value;
+  const selectedOption = optionByValue.get(value);
+  const displayLabel = selectedOption?.label ?? value;
+  const cellClassName =
+    cellOpts?.variant === "select" ? cellOpts.className : undefined;
+  const imageSize =
+    (cellOpts?.variant === "select" ? cellOpts.imageSize : undefined) ??
+    "h-5 w-5";
+
+  const renderOptionMedia = (
+    option: typeof selectedOption | undefined,
+  ): React.ReactNode => {
+    if (!option) return null;
+    if (option.images) {
+      return (
+        <img
+          src={option.images}
+          alt=""
+          className={cn("shrink-0 rounded-full object-cover", imageSize)}
+        />
+      );
+    }
+    if (option.icon) {
+      const Icon = option.icon;
+      return <Icon className={cn("shrink-0", imageSize)} />;
+    }
+    return null;
+  };
 
   return (
     <DataGridCellWrapper<TData>
@@ -960,15 +986,18 @@ export function SelectCell<TData>({
         >
           <SelectTrigger
             size="sm"
-            className="size-full items-start border-none p-0 shadow-none focus-visible:ring-0 dark:bg-transparent [&_svg]:hidden"
+            className="size-full items-center border-none bg-transparent p-0 shadow-none focus-visible:ring-0 dark:bg-transparent [&_svg]:hidden"
           >
             {displayLabel ? (
-              <Badge
-                variant="secondary"
-                className="whitespace-pre-wrap px-1.5 py-px"
+              <div
+                className={cn(
+                  "inline-flex items-center gap-2 whitespace-pre-wrap",
+                  cellClassName,
+                )}
               >
+                {renderOptionMedia(selectedOption)}
                 <SelectValue />
-              </Badge>
+              </div>
             ) : (
               <SelectValue />
             )}
@@ -983,19 +1012,22 @@ export function SelectCell<TData>({
           >
             {options.map((option) => (
               <SelectItem key={option.value} value={option.value}>
+                {renderOptionMedia(option)}
                 {option.label}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       ) : displayLabel ? (
-        <Badge
-          data-slot="grid-cell-content"
-          variant="secondary"
-          className="whitespace-pre-wrap px-1.5 py-px"
+        <div
+          className={cn(
+            "flex items-center gap-2 whitespace-pre-wrap",
+            cellClassName,
+          )}
         >
-          {displayLabel}
-        </Badge>
+          {renderOptionMedia(selectedOption)}
+          <span data-slot="grid-cell-content">{displayLabel}</span>
+        </div>
       ) : null}
     </DataGridCellWrapper>
   );

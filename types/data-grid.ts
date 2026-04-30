@@ -7,8 +7,9 @@ export type RowHeightValue = "short" | "medium" | "tall" | "extra-tall";
 export interface CellSelectOption {
   label: string;
   value: string;
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon?: React.ComponentType<{ className?: string }>;
   count?: number;
+  images?: string;
 }
 
 export type CellOpts =
@@ -27,10 +28,14 @@ export type CellOpts =
   | {
       variant: "select";
       options: CellSelectOption[];
+      className?: string;
+      imageSize?: string;
     }
   | {
       variant: "multi-select";
       options: CellSelectOption[];
+      className?: string;
+      imageSize?: string;
     }
   | {
       variant: "checkbox";

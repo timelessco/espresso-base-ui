@@ -130,28 +130,98 @@ const statusColors: Record<string, string> = {
   Junk: "#4F3DA1",
 }
 
+const dataLists = {
+  names: [
+    { label: "Jenny Wilson", image: "https://i.pravatar.cc/40?u=jenny" },
+    { label: "Mariana Rodriguez", image: "https://i.pravatar.cc/40?u=mariana" },
+    { label: "Sophie Chen", image: "https://i.pravatar.cc/40?u=sophie" },
+    { label: "David Lee", image: "https://i.pravatar.cc/40?u=david" },
+    { label: "Maria Gomez", image: "https://i.pravatar.cc/40?u=maria" },
+    { label: "Anika Sharma", image: "https://i.pravatar.cc/40?u=anika" },
+    { label: "Liam Brown", image: "https://i.pravatar.cc/40?u=liam" },
+    { label: "Daniel Kim", image: "https://i.pravatar.cc/40?u=daniel" },
+    { label: "Nina Lee", image: "https://i.pravatar.cc/40?u=nina" },
+    { label: "Avery Clark", image: "https://i.pravatar.cc/40?u=avery" },
+    { label: "Lucas White", image: "https://i.pravatar.cc/40?u=lucas" },
+    { label: "Chloe Allen", image: "https://i.pravatar.cc/40?u=chloe" },
+    { label: "Evelyn Young", image: "https://i.pravatar.cc/40?u=evelyn" },
+    { label: "Nathan Green", image: "https://i.pravatar.cc/40?u=nathan" },
+    { label: "Grace Roberts", image: "https://i.pravatar.cc/40?u=grace" },
+    { label: "Ravi Kumar", image: "https://i.pravatar.cc/40?u=ravi" },
+    { label: "Priya Menon", image: "https://i.pravatar.cc/40?u=priyam" },
+    { label: "Arjun Patel", image: "https://i.pravatar.cc/40?u=arjun" },
+    { label: "Meera Joshi", image: "https://i.pravatar.cc/40?u=meera" },
+    { label: "Vikram Singh", image: "https://i.pravatar.cc/40?u=vikram" },
+  ],
+  organisations: [
+    { label: "Gumroad", image: "/images/svg/gumroad.svg" },
+    { label: "Attentive", image: "/images/svg/attentive.svg" },
+    { label: "Evergreen", image: "/images/svg/evergreen.svg" },
+    { label: "Dropbox", image: "/images/svg/dropbox.svg" },
+    { label: "Hourglass", image: "/images/svg/hourglass.svg" },
+    { label: "Miro", image: "/images/svg/miro.svg" },
+    { label: "Zapier", image: "/images/svg/zapier.svg" },
+    { label: "Figma", image: "/images/svg/figma.svg" },
+    { label: "1password", image: "/images/svg/1password.svg" },
+    { label: "Cooper", image: "/images/svg/cooper.svg" },
+    { label: "ChatGpt", image: "/images/svg/chatgpt.svg" },
+    { label: "Github", image: "/images/svg/github.svg" },
+    { label: "Metalab", image: "/images/svg/metalab.svg" },
+    { label: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
+    { label: "Spotify", image: "/images/svg/spotify.svg" },
+  ],
+  assigned: [
+    { label: "Avinash Goel", image: "https://i.pravatar.cc/40?u=avinash" },
+    { label: "Rahul Sharma", image: "https://i.pravatar.cc/40?u=rahul" },
+    { label: "Elena Petrova", image: "https://i.pravatar.cc/40?u=elena" },
+    { label: "Priya Patel", image: "https://i.pravatar.cc/40?u=priya" },
+    { label: "James Smith", image: "https://i.pravatar.cc/40?u=james" },
+    { label: "Mark Johnson", image: "https://i.pravatar.cc/40?u=mark" },
+    { label: "Olivia Martinez", image: "https://i.pravatar.cc/40?u=olivia" },
+    { label: "Isabella Davis", image: "https://i.pravatar.cc/40?u=isabella" },
+    { label: "Ethan Wilson", image: "https://i.pravatar.cc/40?u=ethan" },
+    { label: "Mia Thompson", image: "https://i.pravatar.cc/40?u=mia" },
+    { label: "Ella Hill", image: "https://i.pravatar.cc/40?u=ella" },
+    { label: "Noah Scott", image: "https://i.pravatar.cc/40?u=noah" },
+    { label: "Alexander King", image: "https://i.pravatar.cc/40?u=alexander" },
+    { label: "Sofia Walker", image: "https://i.pravatar.cc/40?u=sofia" },
+    { label: "Henry Allen", image: "https://i.pravatar.cc/40?u=henry" },
+  ],
+}
+
+const nameOptions = dataLists.names.map((n) => ({
+  label: n.label,
+  value: n.label,
+  images: n.image,
+}))
+
+const organisationOptions = dataLists.organisations.map((o) => ({
+  label: o.label,
+  value: o.label,
+  images: o.image,
+}))
+
+const assignedOptions = dataLists.assigned.map((a) => ({
+  label: a.label,
+  value: a.label,
+  images: a.image,
+}))
+
 const statusOptions = Object.keys(statusColors).map((s) => ({
   label: s,
   value: s,
+  icon: ({ className }: { className?: string }) => (
+    <span
+      className={`flex size-2 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+      style={{ backgroundColor: statusColors[s] }}
+    />
+  ),
 }))
 
-const organisations = [
-  { name: "Gumroad", image: "/images/svg/gumroad.svg" },
-  { name: "Attentive", image: "/images/svg/attentive.svg" },
-  { name: "Evergreen", image: "/images/svg/evergreen.svg" },
-  { name: "Dropbox", image: "/images/svg/dropbox.svg" },
-  { name: "Hourglass", image: "/images/svg/hourglass.svg" },
-  { name: "Miro", image: "/images/svg/miro.svg" },
-  { name: "Zapier", image: "/images/svg/zapier.svg" },
-  { name: "Figma", image: "/images/svg/figma.svg" },
-  { name: "1password", image: "/images/svg/1password.svg" },
-  { name: "Cooper", image: "/images/svg/cooper.svg" },
-  { name: "ChatGpt", image: "/images/svg/chatgpt.svg" },
-  { name: "Github", image: "/images/svg/github.svg" },
-  { name: "Metalab", image: "/images/svg/metalab.svg" },
-  { name: "Adobe Express", image: "/images/svg/adobeexpress.svg" },
-  { name: "Spotify", image: "/images/svg/spotify.svg" },
-]
+const organisations = dataLists.organisations.map((o) => ({
+  name: o.label,
+  image: o.image,
+}))
 
 const organisationItems = organisations.map((o) => ({
   label: o.name,
@@ -791,15 +861,30 @@ export default function CrmDataGridPage() {
         id: "name",
         accessorKey: "name",
         header: "Name",
-        size: 200,
-        meta: { label: "Name", cell: { variant: "short-text" } },
+        size: 220,
+        meta: {
+          label: "Name",
+          cell: {
+            variant: "select",
+            options: nameOptions,
+            imageSize: "size-5",
+          },
+        },
       },
       {
         id: "organisation",
         accessorKey: "organisation",
         header: "Organisation",
-        size: 180,
-        meta: { label: "Organisation", cell: { variant: "short-text" } },
+        size: 200,
+        meta: {
+          label: "Organisation",
+          cell: {
+            variant: "select",
+            options: organisationOptions,
+            imageSize: "size-5",
+            className: "rounded-md",
+          },
+        },
       },
       {
         id: "status",
@@ -808,7 +893,12 @@ export default function CrmDataGridPage() {
         size: 140,
         meta: {
           label: "Status",
-          cell: { variant: "select", options: statusOptions },
+          cell: {
+            variant: "select",
+            options: statusOptions,
+            imageSize: "size-2",
+            className: "gap-1.5",
+          },
         },
       },
       {
@@ -829,14 +919,21 @@ export default function CrmDataGridPage() {
         id: "assignee",
         accessorKey: "assignee",
         header: "Assigned to",
-        size: 180,
-        meta: { label: "Assigned to", cell: { variant: "short-text" } },
+        size: 200,
+        meta: {
+          label: "Assigned to",
+          cell: {
+            variant: "select",
+            options: assignedOptions,
+            imageSize: "size-5",
+          },
+        },
       },
       {
         id: "lastModified",
         accessorKey: "lastModified",
         header: "Last modified",
-        size: 140,
+        size: 160,
         meta: { label: "Last modified", cell: { variant: "short-text" } },
       },
     ],
@@ -1018,7 +1115,12 @@ export default function CrmDataGridPage() {
 
           <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5">
             <TooltipProvider>
-              <DataGrid table={table} {...dataGridProps} stretchColumns />
+              <DataGrid
+                table={table}
+                {...dataGridProps}
+                stretchColumns
+                className='[&_[data-slot=grid-cell]]:font-normal [&_[data-slot=grid-cell]]:text-muted-foreground [&_[data-slot=grid-cell][aria-colindex="2"]]:font-medium [&_[data-slot=grid-cell][aria-colindex="2"]]:text-foreground [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:first-child>div]:rounded-l-md [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:last-child>div]:rounded-r-md'
+              />
             </TooltipProvider>
           </div>
 

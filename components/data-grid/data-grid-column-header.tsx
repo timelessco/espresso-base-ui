@@ -122,7 +122,7 @@ export function DataGridColumnHeader<TData, TValue>({
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger
           className={cn(
-            "flex size-full items-center justify-between gap-2 p-2 text-sm hover:bg-accent/40 data-[state=open]:bg-accent/40 [&_svg]:size-4",
+            "flex size-full items-center justify-between gap-2 p-2 text-base hover:bg-accent/40 data-[state=open]:bg-accent/40 [&_svg]:size-4",
             isAnyColumnResizing && "pointer-events-none",
             className,
           )}

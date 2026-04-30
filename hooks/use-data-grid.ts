@@ -33,6 +33,7 @@ import {
   parseTsv,
   scrollCellIntoView,
 } from "@/lib/data-grid";
+import { getFilterFn } from "@/lib/data-grid-filters";
 import type {
   CellPosition,
   CellUpdate,
@@ -2034,6 +2035,7 @@ function useDataGrid<TData>({
       // unstable cell.getContext() (see TanStack Table issue #4794)
       minSize: MIN_COLUMN_SIZE,
       maxSize: MAX_COLUMN_SIZE,
+      filterFn: getFilterFn<TData>(),
     }),
     [],
   );
