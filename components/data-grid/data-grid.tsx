@@ -112,7 +112,7 @@ export function DataGrid<TData>({
         data-slot="grid"
         tabIndex={0}
         ref={dataGridRef}
-        className="relative grid h-full grid-cols-1 overflow-x-hidden overflow-y-auto select-none focus:outline-none [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+        className="relative flex h-full flex-col overflow-x-hidden overflow-y-auto select-none focus:outline-none [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
         style={{
           ...columnSizeVars,
           // maxHeight: `${height}px`,
@@ -123,7 +123,7 @@ export function DataGrid<TData>({
           role="rowgroup"
           data-slot="grid-header"
           ref={headerRef}
-          className="group/header sticky top-0 z-10 grid grid-cols-1 border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
+          className="group/header sticky top-0 z-10 grid border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
         >
           {table.getHeaderGroups().map((headerGroup, rowIndex) => (
             <div
@@ -198,7 +198,7 @@ export function DataGrid<TData>({
         <div
           role="rowgroup"
           data-slot="grid-body"
-          className="relative grid grid-cols-1"
+          className="relative grid shrink-0"
           style={{
             height: `${virtualTotalSize}px`,
             contain: adjustLayout ? "layout paint" : "strict",
@@ -246,7 +246,7 @@ export function DataGrid<TData>({
             role="rowgroup"
             data-slot="grid-footer"
             ref={footerRef}
-            className="sticky bottom-0 z-10 grid grid-cols-1 bg-background"
+            className="sticky bottom-0 z-10 grid bg-background"
           >
             <div
               role="row"
