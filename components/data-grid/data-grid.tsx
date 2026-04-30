@@ -123,7 +123,7 @@ export function DataGrid<TData>({
           role="rowgroup"
           data-slot="grid-header"
           ref={headerRef}
-          className="sticky top-0 z-10 grid border-b border-border-soft bg-background"
+          className="group/header sticky top-0 z-10 grid border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
         >
           {table.getHeaderGroups().map((headerGroup, rowIndex) => (
             <div
@@ -167,9 +167,12 @@ export function DataGrid<TData>({
                     }
                     data-slot="grid-header-cell"
                     tabIndex={-1}
-                    className={cn("relative min-w-0", {
-                      grow: stretchColumns && header.column.id !== "select",
-                    })}
+                    className={cn(
+                      "relative min-w-0 text-sm font-normal text-accent-foreground",
+                      {
+                        grow: stretchColumns && header.column.id !== "select",
+                      }
+                    )}
                     style={{
                       ...getColumnPinningStyle({ column: header.column, dir }),
                       width: `calc(var(--header-${header.id}-size) * 1px)`,
@@ -243,7 +246,7 @@ export function DataGrid<TData>({
             role="rowgroup"
             data-slot="grid-footer"
             ref={footerRef}
-            className="sticky bottom-0 z-10 grid border-t border-border-soft bg-background"
+            className="sticky bottom-0 z-10 grid bg-background"
           >
             <div
               role="row"
@@ -255,7 +258,7 @@ export function DataGrid<TData>({
               <div
                 role="gridcell"
                 tabIndex={0}
-                className="relative flex h-9 grow items-center bg-muted/30 transition-colors hover:bg-muted/50 focus:bg-muted/50 focus:outline-none"
+                className="relative flex h-9 grow items-center bg-secondary transition-colors hover:rounded-md hover:bg-secondary focus:rounded-md focus:bg-secondary focus:outline-none"
                 style={{
                   width: table.getTotalSize(),
                   minWidth: table.getTotalSize(),

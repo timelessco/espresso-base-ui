@@ -35,10 +35,12 @@ import {
   Anchor,
   PinOff,
   MapPin,
-  Ellipsis,
+  AlignLeft,
+  AlignRight,
 } from "lucide-react"
 import * as React from "react"
 import { type ColumnDef } from "@tanstack/react-table"
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -106,7 +108,9 @@ import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
 import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
 import { useDataGrid } from "@/hooks/use-data-grid"
 import { Checkbox } from "@/components/ui-radix/checkbox"
+import { Button as RadixButton } from "@/components/ui-radix/button"
 import { TooltipProvider } from "@/components/ui-radix/tooltip"
+import { DirectionProvider } from "@radix-ui/react-direction"
 
 const views = [
   { label: "List view", value: "list-view", icon: AlignJustify },
@@ -239,7 +243,10 @@ const statusFilterItems = Object.keys(statusColors).map((s) => ({
   value: s.toLowerCase(),
   icon: ({ className }: { className?: string }) => (
     <span
-      className={`flex size-2 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+      className={cn(
+        "flex size-2! shrink-0 items-center justify-center rounded-full",
+        className
+      )}
       style={{ backgroundColor: statusColors[s] }}
     />
   ),
@@ -821,6 +828,7 @@ function CrmSidebar() {
 
 export default function CrmDataGridPage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
+  const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
 
   const columns = React.useMemo<ColumnDef<Lead>[]>(
     () => [
@@ -897,7 +905,7 @@ export default function CrmDataGridPage() {
             variant: "select",
             options: statusOptions,
             imageSize: "size-2",
-            className: "gap-1.5",
+            className: "gap-2",
           },
         },
       },
@@ -1078,49 +1086,35 @@ export default function CrmDataGridPage() {
             }
             rightControls={
               <TooltipProvider>
+                <RadixButton
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    setDirection((prev) => (prev === "ltr" ? "rtl" : "ltr"))
+                  }
+                >
+                  {direction === "ltr" ? <AlignLeft /> : <AlignRight />}
+                  {direction === "ltr" ? "LTR" : "RTL"}
+                </RadixButton>
                 <DataGridViewMenu table={table} />
                 <DataGridFilterMenu table={table} />
                 <DataGridSortMenu table={table} />
                 <DataGridRowHeightMenu table={table} />
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    render={<Button variant="secondary" size="icon-sm" />}
-                  >
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Import</DropdownMenuItem>
-                    <DropdownMenuItem>User Permissions</DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Role Permissions Manager
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Customize
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+Y
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Toggle Sidebar
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+G
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>List Settings</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </TooltipProvider>
             }
           />
 
           <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5">
             <TooltipProvider>
-              <DataGrid
-                table={table}
-                {...dataGridProps}
-                stretchColumns
-                className='[&_[data-slot=grid-cell]]:font-normal [&_[data-slot=grid-cell]]:text-muted-foreground [&_[data-slot=grid-cell][aria-colindex="2"]]:font-medium [&_[data-slot=grid-cell][aria-colindex="2"]]:text-foreground [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:first-child>div]:rounded-l-md [&_[data-slot=grid-row]:hover_[data-slot=grid-cell]:last-child>div]:rounded-r-md'
-              />
+              <DirectionProvider dir={direction}>
+                <DataGrid
+                  table={table}
+                  {...dataGridProps}
+                  dir={direction}
+                  stretchColumns
+                  className='[&_[data-slot=grid-cell]]:font-normal [&_[data-slot=grid-cell]]:text-muted-foreground [&_[data-slot=grid-cell][aria-colindex="2"]]:font-medium [&_[data-slot=grid-cell][aria-colindex="2"]]:text-foreground'
+                />
+              </DirectionProvider>
             </TooltipProvider>
           </div>
 

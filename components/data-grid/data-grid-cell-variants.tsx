@@ -986,7 +986,7 @@ export function SelectCell<TData>({
         >
           <SelectTrigger
             size="sm"
-            className="size-full items-center border-none bg-transparent p-0 shadow-none focus-visible:ring-0 dark:bg-transparent [&_svg]:hidden"
+            className="size-full items-center border-none bg-transparent p-0 text-base! shadow-none focus-visible:ring-0 dark:bg-transparent [&_svg]:hidden **:data-[slot=select-value]:line-clamp-none **:data-[slot=select-value]:flex! **:data-[slot=select-value]:items-center! **:data-[slot=select-value]:gap-2!"
           >
             {displayLabel ? (
               <div
@@ -995,7 +995,6 @@ export function SelectCell<TData>({
                   cellClassName,
                 )}
               >
-                {renderOptionMedia(selectedOption)}
                 <SelectValue />
               </div>
             ) : (
@@ -1004,11 +1003,12 @@ export function SelectCell<TData>({
           </SelectTrigger>
           <SelectContent
             data-grid-cell-editor=""
-            // compensate for the wrapper padding
+            position="popper"
+            side="bottom"
             align="start"
             alignOffset={-8}
-            sideOffset={-8}
-            className="min-w-[calc(var(--radix-select-trigger-width)+16px)]"
+            sideOffset={4}
+            className="max-h-72 min-w-[calc(var(--radix-select-trigger-width)+16px)] [&_[data-slot=select-item]]:text-base"
           >
             {options.map((option) => (
               <SelectItem key={option.value} value={option.value}>
