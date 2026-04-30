@@ -107,6 +107,7 @@ import { DataGridFilterMenu } from "@/components/data-grid/data-grid-filter-menu
 import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
 import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
 import { useDataGrid } from "@/hooks/use-data-grid"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { Checkbox } from "@/components/ui-radix/checkbox"
 import { Button as RadixButton } from "@/components/ui-radix/button"
 import { TooltipProvider } from "@/components/ui-radix/tooltip"
@@ -829,6 +830,7 @@ function CrmSidebar() {
 export default function CrmDataGridPage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
   const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
+  const isMobile = useIsMobile()
 
   const columns = React.useMemo<ColumnDef<Lead>[]>(
     () => [
@@ -977,41 +979,46 @@ export default function CrmDataGridPage() {
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
             leftControls={
-              <Breadcrumb size="md">
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/crm-data-grid">Leads</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                  <BreadcrumbItem>
-                    <Select
-                      items={[...views, ...savedViews]}
-                      defaultValue="list-view"
-                      variant="ghost"
-                      size="sm"
-                    >
-                      <SelectTrigger suffixIcon={<ChevronDown />}>
-                        <SelectValue className="text-lg font-medium text-foreground" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {views.map((item) => (
-                          <SelectItem key={item.value} value={item.value}>
-                            <item.icon className="size-4" />
-                            {item.label}
-                          </SelectItem>
-                        ))}
-                        <SelectSeparator />
-                        {savedViews.map((item) => (
-                          <SelectItem key={item.value} value={item.value}>
-                            <item.icon className="size-4" />
-                            {item.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+              <>
+                <SidebarTrigger className="md:hidden" />
+                <Breadcrumb size="md">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="/crm-data-grid">
+                        Leads
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                    <BreadcrumbItem>
+                      <Select
+                        items={[...views, ...savedViews]}
+                        defaultValue="list-view"
+                        variant="ghost"
+                        size="sm"
+                      >
+                        <SelectTrigger suffixIcon={<ChevronDown />}>
+                          <SelectValue className="text-lg font-medium text-foreground" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {views.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              <item.icon className="size-4" />
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                          <SelectSeparator />
+                          {savedViews.map((item) => (
+                            <SelectItem key={item.value} value={item.value}>
+                              <item.icon className="size-4" />
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </>
             }
             rightControls={
               <Button size="sm">
@@ -1021,6 +1028,7 @@ export default function CrmDataGridPage() {
             }
           />
           <SubHeader
+            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <>
                 <Select
@@ -1111,7 +1119,7 @@ export default function CrmDataGridPage() {
                   table={table}
                   {...dataGridProps}
                   dir={direction}
-                  stretchColumns
+                  stretchColumns={!isMobile}
                   className='[&_[data-slot=grid-cell]]:font-normal [&_[data-slot=grid-cell]]:text-muted-foreground [&_[data-slot=grid-cell][aria-colindex="2"]]:font-medium [&_[data-slot=grid-cell][aria-colindex="2"]]:text-foreground'
                 />
               </DirectionProvider>

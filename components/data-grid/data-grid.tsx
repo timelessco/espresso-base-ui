@@ -112,7 +112,10 @@ export function DataGrid<TData>({
         data-slot="grid"
         tabIndex={0}
         ref={dataGridRef}
-        className="relative flex h-full flex-col overflow-x-hidden overflow-y-auto select-none focus:outline-none [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+        className={cn(
+          "relative flex h-full flex-col overflow-y-auto select-none focus:outline-none [&::-webkit-scrollbar]:hidden [scrollbar-width:none]",
+          stretchColumns ? "overflow-x-hidden" : "overflow-x-auto"
+        )}
         style={{
           ...columnSizeVars,
           // maxHeight: `${height}px`,
@@ -124,6 +127,9 @@ export function DataGrid<TData>({
           data-slot="grid-header"
           ref={headerRef}
           className="group/header sticky top-0 z-10 grid border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
+          style={
+            stretchColumns ? undefined : { width: table.getTotalSize() }
+          }
         >
           {table.getHeaderGroups().map((headerGroup, rowIndex) => (
             <div
@@ -171,6 +177,7 @@ export function DataGrid<TData>({
                       "relative min-w-0 text-sm font-normal text-accent-foreground",
                       {
                         grow: stretchColumns && header.column.id !== "select",
+                        "shrink-0": !stretchColumns,
                       }
                     )}
                     style={{
@@ -201,6 +208,7 @@ export function DataGrid<TData>({
           className="relative grid shrink-0"
           style={{
             height: `${virtualTotalSize}px`,
+            width: stretchColumns ? undefined : table.getTotalSize(),
             contain: adjustLayout ? "layout paint" : "strict",
           }}
         >
