@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  ArrowRight,
-  FileText,
-  Inbox,
-  Plus,
-  Search,
-  Users,
-} from "lucide-react"
+import { ArrowRight, FileText, Inbox, Plus, Search, Users } from "lucide-react"
 import {
   Empty,
   EmptyContent,
@@ -16,6 +9,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   InputGroup,
@@ -180,6 +174,60 @@ export default function EmptyPage() {
             <EmptyTitle>All clear</EmptyTitle>
             <EmptyDescription>
               You have no pending notifications.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      </div>
+
+      {/* Avatar Media */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Avatar Media</SectionTitle>
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia>
+              <Avatar size="3xl">
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </EmptyMedia>
+            <EmptyTitle>No teammates yet</EmptyTitle>
+            <EmptyDescription>
+              Invite people to collaborate with you in this workspace.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button size="sm">
+              <Plus />
+              Invite teammate
+            </Button>
+          </EmptyContent>
+        </Empty>
+      </div>
+
+      {/* Avatar Group Media */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Avatar Group Media</SectionTitle>
+        <Empty className="border">
+          <EmptyHeader>
+            <EmptyMedia>
+              <div className="flex -space-x-2">
+                <Avatar size="lg" className="ring-2 ring-background">
+                  <AvatarImage src="https://i.pravatar.cc/80?u=1" />
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+                <Avatar size="lg" className="ring-2 ring-background">
+                  <AvatarImage src="https://i.pravatar.cc/80?u=2" />
+                  <AvatarFallback>B</AvatarFallback>
+                </Avatar>
+                <Avatar size="lg" className="ring-2 ring-background">
+                  <AvatarImage src="https://i.pravatar.cc/80?u=3" />
+                  <AvatarFallback>C</AvatarFallback>
+                </Avatar>
+              </div>
+            </EmptyMedia>
+            <EmptyTitle>No shared projects</EmptyTitle>
+            <EmptyDescription>
+              Projects you share with others will show up here.
             </EmptyDescription>
           </EmptyHeader>
         </Empty>
