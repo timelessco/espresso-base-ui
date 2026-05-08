@@ -1185,7 +1185,7 @@ export default function HelpdeskPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="title">Title</SelectItem>
                     <SelectItem value="id">Id</SelectItem>
                     <SelectItem value="status">Status</SelectItem>
@@ -1205,7 +1205,7 @@ export default function HelpdeskPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="name">Name</SelectItem>
                     <SelectItem value="assignee">Assignee</SelectItem>
                     <SelectItem value="customer">Customer</SelectItem>
@@ -1255,7 +1255,7 @@ export default function HelpdeskPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="column">Column</SelectItem>
                     <SelectItem value="id">Id</SelectItem>
                     <SelectItem value="ticket">Ticket</SelectItem>

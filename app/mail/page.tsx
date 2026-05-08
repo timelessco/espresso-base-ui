@@ -1126,7 +1126,7 @@ export default function MailPage() {
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
-            className="px-5 overflow-x-auto scrollbar-hide [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
+            className="scrollbar-hide overflow-x-auto px-5 [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
             leftControls={
               <>
                 <SidebarTrigger className="md:hidden" />
@@ -1193,11 +1193,10 @@ export default function MailPage() {
           />
 
           <SubHeader
-            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <>
                 <Checkbox />
-                <ChevronDown className="size-3.5 text-muted-foreground" />
                 <Button variant="outline" size="sm">
                   <CheckCircle2 className="size-3" />
                   Has attachment
@@ -1222,7 +1221,7 @@ export default function MailPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="from">From</SelectItem>
                     <SelectItem value="anyone">Anyone</SelectItem>
                     <SelectItem value="me">Me</SelectItem>
@@ -1243,7 +1242,7 @@ export default function MailPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="anytime">Any time</SelectItem>
                     <SelectItem value="today">Today</SelectItem>
                     <SelectItem value="week">This week</SelectItem>
@@ -1264,7 +1263,7 @@ export default function MailPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="to">To</SelectItem>
                     <SelectItem value="me-to">Me</SelectItem>
                     <SelectItem value="anyone-to">Anyone</SelectItem>

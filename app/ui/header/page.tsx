@@ -28,6 +28,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
 import { Header, HeaderSeparator } from "@/components/ui/header"
 import {
   Select,
@@ -179,25 +180,42 @@ export default function HeaderPage() {
             leftControls={
               <>
                 <AppIcon />
-                <Button variant="ghost" size="icon-sm">
-                  <ChevronDown />
-                </Button>
-                <HeaderSeparator />
-                <Button variant="ghost" size="icon-sm">
-                  <Square />
-                </Button>
-                <Button variant="secondary" size="icon-sm">
-                  <MousePointer2 />
-                </Button>
-                <Button variant="ghost" size="icon-sm">
-                  <Type />
-                </Button>
-                <Button variant="ghost" size="icon-sm">
-                  <ImageIcon />
-                </Button>
-                <Button variant="ghost" size="icon-sm">
-                  <LayoutTemplate />
-                </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <Button variant="ghost" size="icon-sm">
+                        <ChevronDown />
+                      </Button>
+                    }
+                  />
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuItem>Duplicate task</DropdownMenuItem>
+                    <DropdownMenuItem>Archive</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <ButtonGroup>
+                  <Button variant="ghost" size="icon-sm">
+                    <Square />
+                  </Button>
+                  <Button variant="ghost" size="icon-sm">
+                    <MousePointer2 />
+                  </Button>
+                  <Button variant="ghost" size="icon-sm">
+                    <Type />
+                  </Button>
+                  <Button variant="ghost" size="icon-sm">
+                    <ImageIcon />
+                  </Button>
+                  <Button variant="ghost" size="icon-sm">
+                    <LayoutTemplate />
+                  </Button>
+                </ButtonGroup>
               </>
             }
             centerControls={
@@ -231,7 +249,6 @@ export default function HeaderPage() {
           />
         </div>
       </div>
-
     </div>
   )
 }

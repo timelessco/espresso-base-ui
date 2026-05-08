@@ -1046,7 +1046,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="lead-owner">Lead owner</SelectItem>
                     <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
                     <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
@@ -1063,7 +1063,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {organisationItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon />}
@@ -1081,7 +1081,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {statusFilterItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon className="my-auto" />}
