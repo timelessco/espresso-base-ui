@@ -1102,7 +1102,7 @@ export default function CrmPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="lead-owner">Lead owner</SelectItem>
                     <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
                     <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
@@ -1119,7 +1119,7 @@ export default function CrmPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {organisationItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon />}
@@ -1137,7 +1137,7 @@ export default function CrmPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {statusItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon className="my-auto" />}
@@ -1187,7 +1187,7 @@ export default function CrmPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="column">Column</SelectItem>
                     <SelectItem value="name">Name</SelectItem>
                     <SelectItem value="organisation">Organisation</SelectItem>
@@ -1228,7 +1228,7 @@ export default function CrmPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="group">Group</SelectItem>
                     <SelectItem value="option-1">Options</SelectItem>
                     <SelectItem value="option-2">Options</SelectItem>
@@ -1276,7 +1276,7 @@ export default function CrmPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="filter">Filter</SelectItem>
                     <SelectItem value="title">Title</SelectItem>
                     <SelectItem value="priority">Priority</SelectItem>
@@ -1319,7 +1319,7 @@ export default function CrmPage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="short">Sort</SelectItem>
                     <SelectItem value="status">Status</SelectItem>
                     <SelectItem value="name">Name</SelectItem>
@@ -1332,7 +1332,7 @@ export default function CrmPage() {
                   >
                     <Ellipsis />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="start">
                     <DropdownMenuItem>Import</DropdownMenuItem>
                     <DropdownMenuItem>User Permissions</DropdownMenuItem>
                     <DropdownMenuItem>

@@ -1028,7 +1028,7 @@ export default function CrmDataGridPage() {
             }
           />
           <SubHeader
-            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <>
                 <Select
@@ -1046,7 +1046,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="lead-owner">Lead owner</SelectItem>
                     <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
                     <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
@@ -1063,7 +1063,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {organisationItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon />}
@@ -1081,7 +1081,7 @@ export default function CrmDataGridPage() {
                   <SelectTrigger suffixIcon={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     {statusFilterItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.icon && <item.icon className="my-auto" />}
@@ -1104,9 +1104,9 @@ export default function CrmDataGridPage() {
                   {direction === "ltr" ? <AlignLeft /> : <AlignRight />}
                   {direction === "ltr" ? "LTR" : "RTL"}
                 </RadixButton>
-                <DataGridViewMenu table={table} />
-                <DataGridFilterMenu table={table} />
-                <DataGridSortMenu table={table} />
+                <DataGridViewMenu table={table} align="start" />
+                <DataGridFilterMenu table={table} align="end" />
+                <DataGridSortMenu table={table} align="end" />
                 <DataGridRowHeightMenu table={table} />
               </TooltipProvider>
             }

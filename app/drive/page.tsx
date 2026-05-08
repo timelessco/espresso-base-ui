@@ -784,7 +784,7 @@ export default function DrivePage() {
                       }}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false}>
+                  <SelectContent alignItemWithTrigger={false} align="start">
                     <SelectItem value="open">Open</SelectItem>
                     <SelectItem value="preview">Preview</SelectItem>
                     <SelectItem value="download">Download</SelectItem>
