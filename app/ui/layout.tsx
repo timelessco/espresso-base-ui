@@ -1,114 +1,495 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import {
+  AlertCircle,
+  AlignLeft,
+  AppWindow,
+  ArrowRight,
+  ArrowRightFromLine,
+  Asterisk,
+  BadgeCheck,
+  Bell,
+  BellPlus,
+  BellRing,
+  Box,
+  BoxSelect,
+  Boxes,
+  Calendar,
+  CalendarClock,
+  CaseSensitive,
+  ChevronDown,
+  ChevronRight,
+  ChevronsUpDown,
+  CircleAlert,
+  CircleHelp,
+  Columns3,
+  Divide,
+  Ellipsis,
+  Folder,
+  FormInput,
+  Home,
+  Inbox,
+  Keyboard,
+  Layout,
+  Link2,
+  List,
+  LoaderCircle,
+  LogOut,
+  MessageCircle,
+  Moon,
+  PanelLeft,
+  PanelRight,
+  PanelTop,
+  Plane,
+  Plus,
+  Radio,
+  Search,
+  SlidersHorizontal,
+  SquareCheckBig,
+  SquareDashed,
+  Star,
+  Table as TableIcon,
+  Tags,
+  TextCursorInput,
+  ToggleLeft,
+  Tornado,
+  User,
+  Workflow,
+  Zap,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Header } from "@/components/header"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
 
-const sidebarItems = [
-  { label: "Alert", href: "/ui/alert" },
-  { label: "Avatar", href: "/ui/avatar" },
-  { label: "Badge", href: "/ui/badge" },
-  { label: "Breadcrumb", href: "/ui/breadcrumb" },
-  { label: "Button", href: "/ui/button" },
-  { label: "Button Group", href: "/ui/button-group" },
-  { label: "Calendar", href: "/ui/calendar" },
-  { label: "Checkbox", href: "/ui/checkbox" },
-  { label: "Dialog", href: "/ui/dialog" },
-  { label: "Dropdown Menu", href: "/ui/dropdown-menu" },
-  { label: "Empty", href: "/ui/empty" },
-  { label: "Field", href: "/ui/field" },
-  { label: "Header", href: "/ui/header" },
-  { label: "Input", href: "/ui/input" },
-  { label: "Input Group", href: "/ui/input-group" },
-  { label: "Item", href: "/ui/item" },
-  { label: "Kanban", href: "/ui/kanban" },
-  { label: "Kbd", href: "/ui/kbd" },
-  { label: "Notification", href: "/ui/notification" },
-  { label: "Popover", href: "/ui/popover" },
-  { label: "Progress", href: "/ui/progress" },
-  { label: "Radio", href: "/ui/radio" },
-  { label: "Rating", href: "/ui/rating" },
-  { label: "Select", href: "/ui/select" },
-  { label: "Sonner", href: "/ui/sonner" },
-  { label: "Separator", href: "/ui/separator" },
-  { label: "Sidebar", href: "/sidebar" },
-  { label: "Slider", href: "/ui/slider" },
-  { label: "Spinner", href: "/ui/spinner" },
-  { label: "Switch", href: "/ui/switch" },
-  { label: "Table", href: "/ui/table" },
-  { label: "Tag", href: "/ui/tag" },
-  { label: "Tabs", href: "/ui/tabs" },
-  { label: "Textarea", href: "/ui/textarea" },
-  { label: "Tooltip", href: "/ui/tooltip" },
+const quickLinks = [
+  { label: "Home", href: "#", icon: Home },
+  { label: "Travel", href: "#", icon: Plane },
 ]
 
-function Sidebar() {
-  const pathname = usePathname()
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [shadowTop, setShadowTop] = useState(false)
-  const [shadowBottom, setShadowBottom] = useState(true)
+const teams = [
+  {
+    name: "Form Components",
+    icon: Folder,
+    items: ["Input", "Select", "Checkbox", "Radio"],
+  },
+  {
+    name: "Product",
+    icon: CalendarClock,
+    count: 5,
+    items: ["Roadmap", "Releases", "Backlog", "Sprints", "Reports"],
+  },
+]
 
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current
-    if (!el) return
-    setShadowTop(el.scrollTop > 0)
-    setShadowBottom(el.scrollTop + el.clientHeight < el.scrollHeight - 1)
-  }, [])
+const components = [
+  { label: "Alert", href: "/ui/alert", icon: AlertCircle },
+  { label: "Avatar", href: "/ui/avatar", icon: User },
+  { label: "Badge", href: "/ui/badge", icon: BadgeCheck },
+  { label: "Breadcrumb", href: "/ui/breadcrumb", icon: Link2 },
+  { label: "Button", href: "/ui/button", icon: Asterisk },
+  { label: "Button Group", href: "/ui/button-group", icon: Inbox },
+  { label: "Calendar", href: "/ui/calendar", icon: Calendar },
+  { label: "Checkbox", href: "/ui/checkbox", icon: SquareCheckBig },
+  { label: "Dialog", href: "/ui/dialog", icon: AppWindow },
+  { label: "Divider", href: "/ui/separator", icon: Divide },
+  { label: "Dropdown Menu", href: "/ui/dropdown-menu", icon: ChevronDown },
+  { label: "Empty", href: "/ui/empty", icon: Box },
+  { label: "Field", href: "/ui/field", icon: FormInput },
+  { label: "Header", href: "/ui/header", icon: PanelTop },
+  { label: "Input", href: "/ui/input", icon: TextCursorInput },
+  { label: "Input Group", href: "/ui/input-group", icon: AlignLeft },
+  { label: "Item", href: "/ui/item", icon: List },
+  { label: "Kanban", href: "/ui/kanban", icon: Columns3 },
+  { label: "Kbd", href: "/ui/kbd", icon: Keyboard },
+  { label: "Notification", href: "/ui/notification", icon: BellRing },
+  { label: "Popover", href: "/ui/popover", icon: MessageCircle },
+  { label: "Progress Bar", href: "/ui/progress", icon: LoaderCircle },
+  { label: "Radio Group", href: "/ui/radio", icon: Radio },
+  { label: "Rating", href: "/ui/rating", icon: Star },
+  { label: "Select", href: "/ui/select", icon: SquareDashed },
+  { label: "Sidebar", href: "/sidebar", icon: PanelLeft },
+  { label: "Slider", href: "/ui/slider", icon: SlidersHorizontal },
+  { label: "Sonner", href: "/ui/sonner", icon: BellPlus },
+  { label: "Spinner", href: "/ui/spinner", icon: Tornado },
+  { label: "Switch", href: "/ui/switch", icon: ToggleLeft },
+  { label: "Table", href: "/ui/table", icon: TableIcon },
+  { label: "Tabs", href: "/ui/tabs", icon: Layout },
+  { label: "Tags", href: "/ui/tag", icon: Tags },
+  { label: "Text Area", href: "/ui/textarea", icon: CaseSensitive },
+  { label: "Tooltip", href: "/ui/tooltip", icon: BoxSelect },
+]
+
+function UISidebar() {
+  const pathname = usePathname()
 
   return (
-    <aside className="relative flex w-48 shrink-0 flex-col rounded-2xl border border-border bg-background shadow-sm shadow-black/5 dark:shadow-black/20">
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 z-10 h-12 rounded-t-2xl bg-gradient-to-b from-background to-transparent transition-opacity duration-200",
-          shadowTop ? "opacity-100" : "opacity-0"
-        )}
-      />
-      <div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        className="scrollbar-hide flex-1 overflow-y-auto p-3"
-      >
-        <nav className="flex flex-col gap-1">
-          {sidebarItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-muted",
-                pathname === item.href
-                  ? "bg-muted text-foreground"
-                  : "text-muted-foreground"
-              )}
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <SidebarMenuButton
+                    size="lg"
+                    className="data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
+                  />
+                }
+              >
+                <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#FF8F26]">
+                  <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Gameplan</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    Sally Potter
+                  </span>
+                </div>
+                <ChevronsUpDown className="ml-auto" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-[--anchor-width] min-w-56"
+                align="start"
+                sideOffset={4}
+              >
+                <div className="flex items-center gap-3 px-2 py-2">
+                  <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#FF8F26]">
+                    <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                  </div>
+                  <div className="grid text-left text-sm leading-tight">
+                    <span className="truncate font-semibold text-foreground">
+                      Gameplan
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      Sally Potter
+                    </span>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <AppWindow />
+                    App
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem render={<a href="/crm" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
+                      </div>
+                      CRM
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm-data-grid" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
+                        <img
+                          src="/images/svg/logo-crm.svg"
+                          alt="CRM"
+                          className="size-4"
+                        />
+                      </div>
+                      CRM Data Grid
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/helpdesk" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
+                        <img
+                          src="/images/svg/logo-helpDesk.svg"
+                          alt="Helpdesk"
+                          className="size-4"
+                        />
+                      </div>
+                      Helpdesk
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/drive" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
+                        <img
+                          src="/images/svg/logo-drive.svg"
+                          alt="Drive"
+                          className="size-4"
+                        />
+                      </div>
+                      Drive
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/mail" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
+                        <img
+                          src="/images/svg/logo-mail.svg"
+                          alt="Mail"
+                          className="size-4"
+                        />
+                      </div>
+                      Mail
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/gameplan" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
+                        <img
+                          src="/images/svg/logo-gameplan.svg"
+                          alt="Gameplan"
+                          className="size-4"
+                        />
+                      </div>
+                      Gameplan
+                    </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/ui" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md bg-[#84B346] text-white">
+                        <Boxes className="size-4" />
+                      </div>
+                      UI
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuItem>
+                  <User />
+                  My Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Moon />
+                  Dark Mode
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CircleAlert />
+                  Notifications
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogOut />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-0.5">
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                  <Search />
+                  <span>Search</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Notification"
+                  className="h-7 text-base"
+                >
+                  <Bell />
+                  <span>Notification</span>
+                </SidebarMenuButton>
+                <SidebarMenuBadge>2</SidebarMenuBadge>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-0.5">
+              {quickLinks.map((item) => (
+                <SidebarMenuItem key={item.label}>
+                  <SidebarMenuButton
+                    tooltip={item.label}
+                    className="h-7 text-base font-normal!"
+                  >
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuAction showOnHover>
+                    <Ellipsis className="size-3.5" />
+                  </SidebarMenuAction>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupContent>
+            <div className="flex items-center justify-between px-2 pb-1">
+              <span className="text-xs font-medium text-muted-foreground">
+                Teams
+              </span>
+              <Plus className="size-3.5 cursor-pointer text-muted-foreground" />
+            </div>
+            <SidebarMenu className="gap-0.5">
+              {teams.map((team) => (
+                <Collapsible key={team.name} className="group/team">
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger
+                      render={
+                        <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/team:bg-sidebar-accent" />
+                      }
+                    >
+                      <ChevronRight className="size-3! shrink-0 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/team:rotate-90" />
+                      <team.icon className="size-4" />
+                      <span>{team.name}</span>
+                    </CollapsibleTrigger>
+                    {team.count !== undefined && (
+                      <SidebarMenuBadge>{team.count}</SidebarMenuBadge>
+                    )}
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {team.items.map((item) => (
+                          <SidebarMenuSubItem key={item}>
+                            <SidebarMenuSubButton
+                              href="#"
+                              className="text-base!"
+                            >
+                              <span>{item}</span>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarSeparator />
+
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-0.5">
+              {components.map((item) => {
+                const isActive = pathname === item.href
+                return (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      tooltip={item.label}
+                      isActive={isActive}
+                      className={cn(
+                        "h-7 text-base font-normal!",
+                        isActive &&
+                          "bg-background shadow-sm shadow-black/5 data-[active=true]:bg-background data-[active=true]:hover:bg-background"
+                      )}
+                      render={<Link href={item.href} />}
+                    >
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter className="gap-3 pb-4">
+        <div className="mx-2 flex flex-col gap-3 rounded-lg border border-border-soft bg-background px-3 pt-2.5 pb-3 group-data-[collapsible=icon]:hidden">
+          <div className="flex gap-2">
+            <Workflow className="size-4 text-muted-foreground" />
+            <div className="flex flex-col gap-2">
+              <span className="text-sm leading-base font-medium tracking-normal text-foreground">
+                Getting Started
+              </span>
+              <span className="text-xs leading-base font-normal tracking-normal text-muted-foreground">
+                0/4
+              </span>
+            </div>
+          </div>
+          <Button variant="secondary" size="sm" className="w-full">
+            Continue <ArrowRight />
+          </Button>
+        </div>
+
+        <div className="flex items-center justify-between px-2 group-data-[collapsible=icon]:justify-center">
+          <div className="flex items-center gap-1 group-data-[collapsible=icon]:hidden">
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="text-muted-foreground"
             >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 rounded-b-2xl bg-gradient-to-t from-background to-transparent transition-opacity duration-200",
-          shadowBottom ? "opacity-100" : "opacity-0"
-        )}
-      />
-    </aside>
+              <Zap className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className="text-muted-foreground"
+            >
+              <CircleHelp className="size-4" />
+            </Button>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="text-muted-foreground"
+            onClick={() =>
+              document
+                .querySelector<HTMLButtonElement>('[data-sidebar="trigger"]')
+                ?.click()
+            }
+          >
+            <PanelRight className="size-4 group-data-[collapsible=icon]:hidden" />
+            <ArrowRightFromLine className="hidden size-4 group-data-[collapsible=icon]:block" />
+          </Button>
+        </div>
+      </SidebarFooter>
+
+      <SidebarRail />
+    </Sidebar>
   )
 }
 
 export default function UILayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen flex-col gap-3 bg-background px-5 pt-3 pb-5">
-      <Header />
-      <div className="flex min-h-0 flex-1 gap-5">
-        <Sidebar />
-        <main className="scrollbar-hide flex-1 overflow-auto rounded-2xl border border-border bg-background shadow-sm shadow-black/5 dark:shadow-black/20">
+    <SidebarProvider>
+      <UISidebar />
+      <SidebarInset className="h-screen min-w-0 overflow-hidden">
+        <SidebarTrigger className="sr-only" />
+        <main className="scrollbar-hide h-full min-h-0 min-w-0 flex-1 overflow-auto">
           {children}
         </main>
-      </div>
-      <Toaster />
-    </div>
+        <Toaster />
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
