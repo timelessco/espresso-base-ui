@@ -261,7 +261,7 @@ function DataGridRowImpl<TData>({
             })}
             style={{
               ...getColumnPinningStyle({ column: cell.column, dir }),
-              width: `calc(var(--col-${columnId}-size) * 1px)`,
+              width: `calc(var(--header-${columnId}-size) * 1px)`,
             }}
           >
             {typeof cell.column.columnDef.header === "function" ? (

@@ -892,7 +892,7 @@ export default function CrmDataGridPage() {
             variant: "select",
             options: organisationOptions,
             imageSize: "size-5",
-            className: "rounded-md",
+            className: "rounded-xs",
           },
         },
       },
