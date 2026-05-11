@@ -126,9 +126,11 @@ export function DataGrid<TData>({
           role="rowgroup"
           data-slot="grid-header"
           ref={headerRef}
-          className="group/header sticky top-0 z-10 grid border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
+          className="group/header sticky top-0 z-10 flex flex-col border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
           style={
-            stretchColumns ? undefined : { width: table.getTotalSize() }
+            stretchColumns
+              ? { width: "100%", maxWidth: "100%", contain: "layout paint" }
+              : { width: table.getTotalSize() }
           }
         >
           {table.getHeaderGroups().map((headerGroup, rowIndex) => (
@@ -208,7 +210,8 @@ export function DataGrid<TData>({
           className="relative grid shrink-0"
           style={{
             height: `${virtualTotalSize}px`,
-            width: stretchColumns ? undefined : table.getTotalSize(),
+            width: stretchColumns ? "100%" : table.getTotalSize(),
+            maxWidth: stretchColumns ? "100%" : undefined,
             contain: adjustLayout ? "layout paint" : "strict",
           }}
         >

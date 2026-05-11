@@ -197,9 +197,10 @@ export function ShortTextCell<TData>({
         onBlur={onBlur}
         onInput={onInput}
         suppressContentEditableWarning
-        className={cn("w-full overflow-hidden outline-none", {
+        className={cn("w-full min-w-0 overflow-hidden outline-none", {
           "whitespace-nowrap **:inline **:whitespace-nowrap [&_br]:hidden":
             isEditing,
+          "block! truncate!": !isEditing,
         })}
       >
         {displayValue}
@@ -741,9 +742,10 @@ export function UrlCell<TData>({
           onBlur={onBlur}
           onInput={onInput}
           suppressContentEditableWarning
-          className={cn("w-full overflow-hidden outline-none", {
+          className={cn("w-full min-w-0 overflow-hidden outline-none", {
             "whitespace-nowrap **:inline **:whitespace-nowrap [&_br]:hidden":
               isEditing,
+            "block! truncate!": !isEditing,
           })}
         >
           {displayValue}
@@ -950,7 +952,11 @@ export function SelectCell<TData>({
         <img
           src={option.images}
           alt=""
-          className={cn("shrink-0 rounded-full object-cover", imageSize)}
+          className={cn(
+            "shrink-0 rounded-full object-cover",
+            imageSize,
+            cellClassName,
+          )}
         />
       );
     }
@@ -1021,12 +1027,17 @@ export function SelectCell<TData>({
       ) : displayLabel ? (
         <div
           className={cn(
-            "flex items-center gap-2 whitespace-pre-wrap",
+            "flex min-w-0 items-center gap-2 overflow-hidden whitespace-pre-wrap",
             cellClassName,
           )}
         >
           {renderOptionMedia(selectedOption)}
-          <span data-slot="grid-cell-content">{displayLabel}</span>
+          <span
+            data-slot="grid-cell-content"
+            className="min-w-0 flex-1 truncate"
+          >
+            {displayLabel}
+          </span>
         </div>
       ) : null}
     </DataGridCellWrapper>
