@@ -13,7 +13,7 @@ function PopoverTrigger({ ...props }: PopoverPrimitive.Trigger.Props) {
   return (
     <PopoverPrimitive.Trigger
       data-slot="popover-trigger"
-      className={"w-fit"}
+      className={"w-fit tracking-wider"}
       {...props}
     />
   )
@@ -43,7 +43,7 @@ function PopoverContent({
         <PopoverPrimitive.Popup
           data-slot="popover-content"
           className={cn(
-            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl bg-card px-3.5 py-3 text-base leading-base tracking-normal text-secondary-foreground shadow-6xs outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl bg-card px-3.5 py-3 text-base leading-base tracking-wider! text-secondary-foreground shadow-6xs outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             className
           )}
           {...props}
@@ -57,7 +57,7 @@ function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="popover-header"
-      className={cn("flex flex-col gap-0.5 text-sm", className)}
+      className={cn("flex flex-col gap-0.5 text-sm tracking-wider", className)}
       {...props}
     />
   )
@@ -68,7 +68,7 @@ function PopoverTitle({ className, ...props }: PopoverPrimitive.Title.Props) {
     <PopoverPrimitive.Title
       data-slot="popover-title"
       className={cn(
-        "text-base leading-base font-medium tracking-normal text-secondary-foreground",
+        "text-base leading-base font-medium tracking-wider text-secondary-foreground",
         className
       )}
       {...props}
@@ -84,7 +84,7 @@ function PopoverDescription({
     <PopoverPrimitive.Description
       data-slot="popover-description"
       className={cn(
-        "pt-1 text-base leading-base font-normal tracking-normal text-secondary-foreground",
+        "pt-1 text-base leading-base font-normal tracking-wider text-secondary-foreground",
         className
       )}
       {...props}
