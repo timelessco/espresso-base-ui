@@ -9,7 +9,8 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+    "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+    "https://espresso-base-ui.vercel.app/r/button.json"
   ],
   "files": [
     {
