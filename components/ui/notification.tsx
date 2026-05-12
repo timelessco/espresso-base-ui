@@ -201,7 +201,7 @@ function DefaultLayout({
             </span>
           )}
           {timestamp && (
-            <span className="mt-0.5 text-xs leading-base font-normal tracking-wider text-muted-foreground">
+            <span className="mt-0.5 text-xs leading-base font-normal tracking-normal text-muted-foreground">
               {timestamp}
             </span>
           )}
