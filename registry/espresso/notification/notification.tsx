@@ -212,7 +212,7 @@ function DefaultLayout({
               {actions.map((a, i) => (
                 <Button
                   key={i}
-                  variant={a.variant ?? "outline"}
+                  variant={a.variant ?? (i === 0 ? "secondary" : "outline")}
                   size="sm"
                   onClick={() => {
                     a.onClick()
@@ -363,7 +363,14 @@ function ModalLayout({
           {actions.map((a, i) => (
             <Button
               key={i}
-              variant={a.variant ?? "secondary"}
+              variant={
+                a.variant ??
+                (actions.length > 1
+                  ? i === 0
+                    ? "secondary"
+                    : "outline"
+                  : "secondary")
+              }
               size="sm"
               className={actionType === "single" ? "w-full" : "flex-1"}
               onClick={() => {
