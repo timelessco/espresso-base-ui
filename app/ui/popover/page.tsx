@@ -148,11 +148,11 @@ export default function PopoverPage() {
               </PopoverDescription>
             </PopoverHeader>
             <Field>
-              <FieldLabel className="tracking-wider">Width</FieldLabel>
+              <FieldLabel>Width</FieldLabel>
               <Input defaultValue="100%" />
             </Field>
             <Field>
-              <FieldLabel className="tracking-wider">Height</FieldLabel>
+              <FieldLabel>Height</FieldLabel>
               <Input defaultValue="25px" />
             </Field>
           </PopoverContent>
