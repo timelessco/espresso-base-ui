@@ -554,7 +554,7 @@ const leads = [
 function CrmSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="px-1 pt-1 pb-2">
+      <SidebarHeader className="">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
