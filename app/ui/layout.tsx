@@ -88,9 +88,6 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
@@ -375,7 +372,7 @@ function UISidebar() {
                         <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/team:bg-sidebar-accent" />
                       }
                     >
-                      <ChevronRight className="size-3! shrink-0 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/team:rotate-90" />
+                      <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/team:rotate-90" />
                       <team.icon className="size-4" />
                       <span>{team.name}</span>
                     </CollapsibleTrigger>
@@ -383,18 +380,15 @@ function UISidebar() {
                       <SidebarMenuBadge>{team.count}</SidebarMenuBadge>
                     )}
                     <CollapsibleContent>
-                      <SidebarMenuSub>
+                      <SidebarMenu className="gap-0.5 pt-0.5 pl-6">
                         {team.items.map((item) => (
-                          <SidebarMenuSubItem key={item}>
-                            <SidebarMenuSubButton
-                              href="#"
-                              className="text-base!"
-                            >
+                          <SidebarMenuItem key={item}>
+                            <SidebarMenuButton className="h-7 text-base font-normal!">
                               <span>{item}</span>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
                         ))}
-                      </SidebarMenuSub>
+                      </SidebarMenu>
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
