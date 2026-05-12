@@ -52,12 +52,12 @@ export default function PopoverPage() {
             <Button variant="ghost" size="sm" className="gap-1">
               Text
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="sm" className="gap-1.5">
               <MessageCircle />
               Comment
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="icon-sm">
               <Bold />
             </Button>
@@ -70,14 +70,14 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <Underline />
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="icon-sm">
               <Quote />
             </Button>
             <Button variant="ghost" size="icon-sm">
               <Code />
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="icon-sm">
               <Link />
             </Button>
@@ -87,7 +87,7 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <Table />
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="icon-sm">
               <ListOrdered />
             </Button>
@@ -97,14 +97,14 @@ export default function PopoverPage() {
             <Button variant="ghost" size="icon-sm">
               <AlignLeft />
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="sm" className="gap-2">
               Text
             </Button>
             <Button variant="ghost" size="sm" className="gap-2">
               Highlight
             </Button>
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="mx-1" />
             <Button variant="ghost" size="icon-sm">
               <MoreHorizontal />
             </Button>
@@ -148,11 +148,11 @@ export default function PopoverPage() {
               </PopoverDescription>
             </PopoverHeader>
             <Field>
-              <FieldLabel>Width</FieldLabel>
+              <FieldLabel className="tracking-wider">Width</FieldLabel>
               <Input defaultValue="100%" />
             </Field>
             <Field>
-              <FieldLabel>Height</FieldLabel>
+              <FieldLabel className="tracking-wider">Height</FieldLabel>
               <Input defaultValue="25px" />
             </Field>
           </PopoverContent>
