@@ -20,7 +20,7 @@ function Header({
     <header
       data-slot="header"
       className={cn(
-        "relative flex shrink-0 items-center justify-between gap-3 border-b border-border-soft bg-background px-3 py-2",
+        "flex shrink-0 items-center gap-3 border-b border-border-soft bg-background px-3 py-2",
         className
       )}
       {...props}
@@ -36,7 +36,7 @@ function Header({
       {centerControls !== undefined && (
         <div
           data-slot="header-center"
-          className="pointer-events-none absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 [&>*]:pointer-events-auto"
+          className="flex flex-1 items-center justify-center gap-2"
         >
           {centerControls}
         </div>
@@ -44,7 +44,7 @@ function Header({
       {rightControls !== undefined && (
         <div
           data-slot="header-right"
-          className="flex items-center gap-2"
+          className="ml-auto flex items-center gap-2"
         >
           {rightControls}
         </div>
