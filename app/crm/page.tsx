@@ -4,6 +4,7 @@ import {
   Bell,
   CalendarDays,
   ChevronDown,
+  ChevronRight,
   ClipboardList,
   Contact,
   FileText,
@@ -47,6 +48,9 @@ import {
   ListFilter,
   ArrowUpDown,
   Ellipsis,
+  Headset,
+  HeartHandshake,
+  ShieldCheck,
 } from "lucide-react"
 import {
   useReactTable,
@@ -121,9 +125,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
@@ -831,34 +832,41 @@ function CrmSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
-              <Collapsible className="group/collapsible group-data-[collapsible=icon]:hidden">
+              <Collapsible
+                defaultOpen
+                className="group/collapsible group-data-[collapsible=icon]:hidden"
+              >
                 <SidebarMenuItem>
                   <CollapsibleTrigger
                     render={
                       <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
                     }
                   >
-                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/collapsible:rotate-90" />
                     <span>Saved views</span>
+                    <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
-                          <span>All Leads</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
-                          <span>Active Leads</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuSubButton href="#" className="text-base!">
-                          <span>My Leads</span>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
+                    <SidebarMenu className="mt-0.5 gap-0.5">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <Headset />
+                          <span>My leads</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <HeartHandshake />
+                          <span>Deals flow</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <ShieldCheck />
+                          <span>Qualified Deals</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
