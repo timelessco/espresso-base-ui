@@ -129,7 +129,7 @@ export default function SelectPage() {
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent alignItemWithTrigger={false} align="start">
               {fruits.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.icon && <item.icon className="size-4" />}
@@ -142,7 +142,7 @@ export default function SelectPage() {
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent alignItemWithTrigger={false} align="start">
               {fruits.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.icon && <item.icon className="size-4" />}
@@ -155,7 +155,7 @@ export default function SelectPage() {
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent alignItemWithTrigger={false} align="start">
               {fruits.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.icon && <item.icon className="size-4" />}
