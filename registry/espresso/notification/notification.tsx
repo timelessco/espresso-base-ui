@@ -94,8 +94,8 @@ function notify(options: NotificationOptions) {
         data-variant={variant}
         className={cn(
           notificationVariants({ variant }),
-          suffix && "pr-10",
-          isSplit && "flex-row! items-stretch! gap-0! p-0!"
+          suffix && "pr-10 tracking-wider",
+          isSplit && "flex-row! items-stretch! gap-0! p-0! tracking-wider"
         )}
       >
         {isSplit ? (
@@ -201,7 +201,7 @@ function DefaultLayout({
             </span>
           )}
           {timestamp && (
-            <span className="mt-0.5 text-xs leading-base font-normal tracking-wider text-muted-foreground">
+            <span className="mt-0.5 text-xs leading-base font-normal tracking-normal text-muted-foreground">
               {timestamp}
             </span>
           )}
@@ -211,6 +211,7 @@ function DefaultLayout({
             <div className="mt-1 flex flex-row gap-2">
               {actions.map((a, i) => (
                 <Button
+                  className="tracking-wider"
                   key={i}
                   variant={a.variant ?? (i === 0 ? "secondary" : "outline")}
                   size="sm"
@@ -231,7 +232,7 @@ function DefaultLayout({
               <Button
                 variant={actions[0].variant ?? "outline"}
                 size="sm"
-                className="w-full"
+                className="w-full tracking-wider"
                 onClick={() => {
                   actions[0].onClick()
                   toast.dismiss(id)
@@ -248,7 +249,7 @@ function DefaultLayout({
           <Button
             variant={actions[0].variant ?? "ghost"}
             size="sm"
-            className="shrink-0"
+            className="shrink-0 tracking-wider"
             onClick={() => {
               actions[0].onClick()
               toast.dismiss(id)
@@ -312,7 +313,8 @@ function SplitLayout({
               size="sm"
               className={cn(
                 "flex-1 rounded-none px-4",
-                i > 0 && "border-t border-border"
+                i > 0 && "border-t border-border",
+                "tracking-wider"
               )}
               onClick={() => {
                 a.onClick()
@@ -372,7 +374,10 @@ function ModalLayout({
                   : "secondary")
               }
               size="sm"
-              className={actionType === "single" ? "w-full" : "flex-1"}
+              className={cn(
+                actionType === "single" ? "w-full" : "flex-1",
+                "tracking-wider"
+              )}
               onClick={() => {
                 a.onClick()
                 toast.dismiss(id)
