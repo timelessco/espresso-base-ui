@@ -5,7 +5,6 @@ import {
   ChevronDown,
   ChevronRight,
   Search,
-  ChevronsUpDown,
   LogOut,
   AppWindow,
   User,
@@ -288,7 +287,7 @@ const subItems = ["General", "Standups", "Training", "Update"]
 function GameplanSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="px-1 pt-1 pb-2">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -300,31 +299,42 @@ function GameplanSidebar() {
                   />
                 }
               >
-                <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#FF8F26]">
-                  <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-[#FF8F26]">
+                  <img
+                    src="/images/svg/logo-gameplan.svg"
+                    alt="Gameplan"
+                    className="size-4"
+                  />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Gameplan</span>
-                  <span className="truncate text-xs text-muted-foreground">
+                <div className="grid flex-1 text-left">
+                  <span className="truncate pb-0.5 text-base font-medium text-foreground">
+                    Gameplan
+                  </span>
+                  <span className="truncate text-sm font-normal text-muted-foreground">
                     James fenimore
                   </span>
                 </div>
-                <ChevronsUpDown className="ml-auto" />
+                <ChevronDown className="ml-auto" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--anchor-width] min-w-56"
                 align="start"
+                alignOffset={2}
                 sideOffset={4}
               >
                 <div className="flex items-center gap-3 px-2 py-2">
-                  <div className="flex aspect-square size-7 items-center justify-center rounded-md bg-[#FF8F26]">
-                    <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-[#FF8F26]">
+                    <img
+                      src="/images/svg/logo-gameplan.svg"
+                      alt="Gameplan"
+                      className="size-4"
+                    />
                   </div>
-                  <div className="grid text-left text-sm leading-tight">
-                    <span className="truncate font-semibold text-foreground">
+                  <div className="grid text-left">
+                    <span className="truncate pb-0.5 text-base font-medium text-foreground">
                       Gameplan
                     </span>
-                    <span className="truncate text-xs text-muted-foreground">
+                    <span className="truncate text-sm font-normal text-muted-foreground">
                       James fenimore
                     </span>
                   </div>

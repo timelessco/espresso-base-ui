@@ -375,7 +375,8 @@
         }
       ],
       "registryDependencies": [
-        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ]
     },
     {
@@ -443,6 +444,9 @@
       "type": "registry:ui",
       "title": "Rating",
       "description": "Star rating component with keyboard navigation.",
+      "dependencies": [
+        "lucide-react"
+      ],
       "files": [
         {
           "path": "registry/espresso/rating/rating.tsx",
@@ -501,7 +505,8 @@
       "title": "Sheet",
       "description": "Slide-out sheet/drawer panel.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "files": [
         {
@@ -510,7 +515,8 @@
         }
       ],
       "registryDependencies": [
-        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ]
     },
     {
@@ -762,7 +768,9 @@
       "title": "Sidebar",
       "description": "A sidebar layout component with collapsible, rail, and menu support.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority",
+        "lucide-react"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -770,7 +778,8 @@
         "https://espresso-base-ui.vercel.app/r/separator.json",
         "https://espresso-base-ui.vercel.app/r/sheet.json",
         "https://espresso-base-ui.vercel.app/r/tooltip.json",
-        "https://espresso-base-ui.vercel.app/r/input.json"
+        "https://espresso-base-ui.vercel.app/r/input.json",
+        "https://espresso-base-ui.vercel.app/r/skeleton.json"
       ],
       "files": [
         {

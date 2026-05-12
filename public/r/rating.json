@@ -3,6 +3,9 @@
   "name": "rating",
   "title": "Rating",
   "description": "Star rating component with keyboard navigation.",
+  "dependencies": [
+    "lucide-react"
+  ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
   ],

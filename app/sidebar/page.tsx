@@ -4,7 +4,6 @@ import {
   AudioWaveform,
   BookOpen,
   Bot,
-  ChevronsUpDown,
   Command,
   GalleryVerticalEnd,
   Home,
@@ -65,7 +64,7 @@ import {
 function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>
+      <SidebarHeader className="px-1 pt-1 pb-2">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -80,17 +79,20 @@ function AppSidebar() {
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <Command className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Espresso UI</span>
-                  <span className="truncate text-xs text-muted-foreground">
+                <div className="grid flex-1 text-left">
+                  <span className="truncate pb-0.5 text-base font-medium text-foreground">
+                    Espresso UI
+                  </span>
+                  <span className="truncate text-sm font-normal text-muted-foreground">
                     Pro Plan
                   </span>
                 </div>
-                <ChevronsUpDown className="ml-auto" />
+                <ChevronDown className="ml-auto" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--anchor-width] min-w-56"
                 align="start"
+                alignOffset={2}
                 sideOffset={4}
               >
                 <DropdownMenuItem>
