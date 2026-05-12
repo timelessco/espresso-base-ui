@@ -36,7 +36,6 @@ import {
   Infinity,
   Users,
   Compass,
-  Code,
   Coffee,
   Palmtree,
   LineChart,
@@ -46,6 +45,7 @@ import {
   Archive,
   ClipboardCopy,
   Trash2,
+  Workflow,
 } from "lucide-react"
 import {
   useReactTable,
@@ -279,7 +279,7 @@ const teams = [
   { name: "Quality", icon: Infinity, count: 3 },
   { name: "Team out", icon: Users, count: 0 },
   { name: "Adventure", icon: Compass, count: 0 },
-  { name: "DevOps", icon: Code, count: 0 },
+  { name: "DevOps", icon: Workflow, count: 0 },
 ]
 
 const subItems = ["General", "Standups", "Training", "Update"]
@@ -517,11 +517,13 @@ function GameplanSidebar() {
 
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupContent>
-            <div className="flex items-center justify-between px-2 pb-1">
-              <span className="text-xs font-medium text-muted-foreground">
+            <div className="flex items-center justify-between pr-0 pb-1 pl-2">
+              <span className="text-acccent-foreground text-base font-normal">
                 Teams
               </span>
-              <Plus className="size-3.5" />
+              <Button variant="ghost" size="sm">
+                <Plus className="size-3.5" />
+              </Button>
             </div>
             <SidebarMenu className="gap-0.5">
               {teams.map((team) => (
@@ -532,7 +534,7 @@ function GameplanSidebar() {
                         <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/team:bg-sidebar-accent" />
                       }
                     >
-                      <ChevronRight className="size-3! shrink-0 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/team:rotate-90" />
+                      <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/team:rotate-90" />
                       <team.icon className="size-4" />
                       <span>{team.name}</span>
                     </CollapsibleTrigger>
@@ -681,7 +683,7 @@ export default function GameplanPage() {
           />
           <div className="mx-auto max-w-4xl">
             <SubHeader
-              className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+              className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
               leftControls={
                 <span className="text-base font-medium text-foreground">
                   Tasks
@@ -734,7 +736,7 @@ export default function GameplanPage() {
                     minWidth: "100%",
                   }}
                 >
-                  <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_tr]:border-b-0 [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent">
+                  <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
                     {table.getHeaderGroups().map((headerGroup) => (
                       <TableRow key={headerGroup.id}>
                         {headerGroup.headers.map((header) => (

@@ -3,6 +3,7 @@
 import {
   Bell,
   ChevronDown,
+  ChevronRight,
   Search,
   LogOut,
   AppWindow,
@@ -649,12 +650,12 @@ function DriveSidebar() {
                       <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
                     }
                   >
-                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
-                    <span>views</span>
+                    <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/collapsible:rotate-90" />
+                    <span>Views</span>
                     <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenu className="gap-0.5">
+                    <SidebarMenu className="mt-0.5 gap-0.5">
                       <SidebarMenuItem>
                         <SidebarMenuButton className="h-7 text-base font-normal!">
                           <Heart />
@@ -760,7 +761,7 @@ export default function DrivePage() {
             }
           />
           <SubHeader
-            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <span className="text-sm font-medium text-foreground">All</span>
             }
@@ -827,7 +828,7 @@ export default function DrivePage() {
                   minWidth: "100%",
                 }}
               >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_tr]:border-b-0 [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent">
+                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>
                       {headerGroup.headers.map((header) => (

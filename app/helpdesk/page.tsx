@@ -3,6 +3,7 @@
 import {
   Bell,
   ChevronDown,
+  ChevronRight,
   ClipboardList,
   Search,
   Users,
@@ -1024,12 +1025,12 @@ function HelpdeskSidebar() {
                       <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
                     }
                   >
-                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/collapsible:rotate-90" />
                     <span>Saved views</span>
                     <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <SidebarMenu className="gap-0.5">
+                    <SidebarMenu className="mt-0.5 gap-0.5">
                       <SidebarMenuItem>
                         <SidebarMenuButton className="h-7 text-base font-normal!">
                           <TicketCheck />
@@ -1149,7 +1150,7 @@ export default function HelpdeskPage() {
             }
           />
           <SubHeader
-            className="overflow-x-auto scrollbar-hide [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
               <div className="relative">
                 <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />

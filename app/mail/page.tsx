@@ -3,6 +3,7 @@
 import {
   Bell,
   ChevronDown,
+  ChevronRight,
   ChevronUp,
   Search,
   LogOut,
@@ -881,7 +882,7 @@ function MailSidebar() {
                       <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/collapsible:bg-sidebar-accent" />
                     }
                   >
-                    <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/collapsible:rotate-0" />
+                    <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/collapsible:rotate-90" />
                     <span>Labels</span>
                     <Plus className="ml-auto size-3.5" />
                   </CollapsibleTrigger>
@@ -895,7 +896,7 @@ function MailSidebar() {
                               <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/fashion:bg-sidebar-accent" />
                             }
                           >
-                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/fashion:rotate-0" />
+                            <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/fashion:rotate-90" />
                             <Zap className="size-4 text-purple-500" />
                             <span>Fashion</span>
                           </CollapsibleTrigger>
@@ -933,7 +934,7 @@ function MailSidebar() {
                               <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/projects:bg-sidebar-accent" />
                             }
                           >
-                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/projects:rotate-0" />
+                            <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/projects:rotate-90" />
                             <Zap className="size-4 text-orange-400" />
                             <span>Projects</span>
                           </CollapsibleTrigger>
@@ -971,7 +972,7 @@ function MailSidebar() {
                               <SidebarMenuButton className="h-7 text-base leading-base font-normal tracking-normal text-sidebar-accent-foreground group-data-open/events:bg-sidebar-accent" />
                             }
                           >
-                            <ChevronDown className="size-3! shrink-0 -rotate-90 stroke-[2.25] text-sidebar-accent-foreground transition-all duration-200 ease-in-out group-data-open/events:rotate-0" />
+                            <ChevronRight className="shrink-0 transition-transform duration-200 ease-in-out group-data-open/events:rotate-90" />
                             <Zap className="size-4 text-green-500" />
                             <span>Events</span>
                           </CollapsibleTrigger>
