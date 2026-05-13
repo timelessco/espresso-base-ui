@@ -19,6 +19,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -350,6 +356,184 @@ export default function SelectPage() {
             </SelectGroup>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Data States */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Data States</SectionTitle>
+
+        <div className="flex gap-32">
+          {/* Invalid — via Field (group-data-[invalid=true]/field) */}
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground">
+              Invalid (Field)
+            </span>
+            <div className="flex w-48 flex-col gap-3">
+              <Field data-invalid="true">
+                <Select items={fruits}>
+                  <SelectTrigger variant="outline" className="w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {fruits.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field data-invalid="true">
+                <Select items={fruits}>
+                  <SelectTrigger variant="subtle" className="w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {fruits.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field data-invalid="true">
+                <Select items={fruits}>
+                  <SelectTrigger variant="ghost" className="w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {fruits.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </div>
+          </div>
+
+          {/* Valid — via data-valid on trigger */}
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground">
+              Valid
+            </span>
+            <div className="flex flex-col gap-3">
+              <Select items={fruits} defaultValue="apple">
+                <SelectTrigger
+                  variant="outline"
+                  data-valid="true"
+                  className="w-48"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Select items={fruits} defaultValue="apple">
+                <SelectTrigger
+                  variant="subtle"
+                  data-valid="true"
+                  className="w-48"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Select items={fruits} defaultValue="apple">
+                <SelectTrigger
+                  variant="ghost"
+                  data-valid="true"
+                  className="w-48"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Disabled */}
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-medium text-muted-foreground">
+              Disabled
+            </span>
+            <div className="flex flex-col gap-3">
+              <Select items={fruits} disabled>
+                <SelectTrigger variant="outline" className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Select items={fruits} disabled>
+                <SelectTrigger variant="subtle" className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Select items={fruits} disabled>
+                <SelectTrigger variant="ghost" className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {fruits.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Sides */}
