@@ -344,9 +344,6 @@ function UISidebar() {
                     <item.icon />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
-                  <SidebarMenuAction showOnHover>
-                    <Ellipsis className="size-3.5" />
-                  </SidebarMenuAction>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
