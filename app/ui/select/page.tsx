@@ -136,6 +136,58 @@ export default function SelectPage() {
         </Select>
       </div>
 
+      {/* Variants */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Variants</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Select items={fruits}>
+            <SelectTrigger variant="outline" className="w-48">
+              <SelectValue placeholder="Outline" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger variant="subtle" className="w-48">
+              <SelectValue placeholder="Subtle" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger variant="ghost" className="w-48">
+              <SelectValue placeholder="Ghost" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
       {/* Sizes */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Sizes</SectionTitle>
@@ -157,6 +209,21 @@ export default function SelectPage() {
           </Select>
           <Select items={fruits}>
             <SelectTrigger size="default" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger size="lg" className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
