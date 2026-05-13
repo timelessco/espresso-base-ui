@@ -114,11 +114,7 @@ export default function SelectPage() {
       {/* With Icons */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Icons</SectionTitle>
-        <p className="text-sm text-muted-foreground">
-          Pass an <code className="rounded bg-muted px-1">icon</code> on each
-          entry in the <code className="rounded bg-muted px-1">items</code>{" "}
-          array — the trigger value and items render it automatically.
-        </p>
+
         <Select items={fruitsWithIcons}>
           <SelectTrigger className="w-48">
             <SelectValue />
@@ -294,10 +290,7 @@ export default function SelectPage() {
       {/* Scrollable (timezones — based on shadcn example) */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Scrollable</SectionTitle>
-        <p className="text-sm text-muted-foreground">
-          With a long list, scroll-up and scroll-down chevrons appear at the
-          popup edges.
-        </p>
+
         <Select items={timezones} defaultValue="ist">
           <SelectTrigger className="w-72">
             <SelectValue />
@@ -362,10 +355,7 @@ export default function SelectPage() {
       {/* Sides */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Sides</SectionTitle>
-        <p className="text-sm text-muted-foreground">
-          Pass <code className="rounded bg-muted px-1">side</code> to control
-          which side of the trigger the popup opens on.
-        </p>
+
         <div className="flex items-center gap-4">
           <Select items={fruits}>
             <SelectTrigger className="w-32">
@@ -417,66 +407,6 @@ export default function SelectPage() {
               <SelectValue placeholder="Left" />
             </SelectTrigger>
             <SelectContent side="left" alignItemWithTrigger={false}>
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                {fruits.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Alignments */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Alignments</SectionTitle>
-        <p className="text-sm text-muted-foreground">
-          With{" "}
-          <code className="rounded bg-muted px-1">
-            alignItemWithTrigger=&#123;false&#125;
-          </code>
-          , the popup aligns to the trigger edge instead of centering the
-          selected item.
-        </p>
-        <div className="flex items-center gap-4">
-          <Select items={fruits}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Start" />
-            </SelectTrigger>
-            <SelectContent align="start" alignItemWithTrigger={false}>
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                {fruits.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select items={fruits}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="Center" />
-            </SelectTrigger>
-            <SelectContent align="start" alignItemWithTrigger={false}>
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                {fruits.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select items={fruits}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder="End" />
-            </SelectTrigger>
-            <SelectContent align="start" alignItemWithTrigger={false}>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
                 {fruits.map((item) => (
