@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -82,11 +83,13 @@ function DateTimePresetPicker() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {monthNames.map((mName) => (
-                      <SelectItem key={mName} value={mName}>
-                        {mName}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {monthNames.map((mName) => (
+                        <SelectItem key={mName} value={mName}>
+                          {mName}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -102,14 +105,16 @@ function DateTimePresetPicker() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {Array.from({ length: 14 }, (_, i) => {
-                      const y = 2017 + i
-                      return (
-                        <SelectItem key={y} value={String(y)}>
-                          {y}
-                        </SelectItem>
-                      )
-                    })}
+                    <SelectGroup>
+                      {Array.from({ length: 14 }, (_, i) => {
+                        const y = 2017 + i
+                        return (
+                          <SelectItem key={y} value={String(y)}>
+                            {y}
+                          </SelectItem>
+                        )
+                      })}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
@@ -131,14 +136,16 @@ function DateTimePresetPicker() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {Array.from({ length: 12 }, (_, i) => {
-              const v = String(i + 1).padStart(2, "0")
-              return (
-                <SelectItem key={v} value={v}>
-                  {v}
-                </SelectItem>
-              )
-            })}
+            <SelectGroup>
+              {Array.from({ length: 12 }, (_, i) => {
+                const v = String(i + 1).padStart(2, "0")
+                return (
+                  <SelectItem key={v} value={v}>
+                    {v}
+                  </SelectItem>
+                )
+              })}
+            </SelectGroup>
           </SelectContent>
         </Select>
         <Select value={minute} onValueChange={(v) => v && setMinute(v)}>
@@ -146,14 +153,16 @@ function DateTimePresetPicker() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent alignItemWithTrigger={false} className="max-h-60">
-            {Array.from({ length: 60 }, (_, i) => {
-              const v = String(i).padStart(2, "0")
-              return (
-                <SelectItem key={v} value={v}>
-                  {v}
-                </SelectItem>
-              )
-            })}
+            <SelectGroup>
+              {Array.from({ length: 60 }, (_, i) => {
+                const v = String(i).padStart(2, "0")
+                return (
+                  <SelectItem key={v} value={v}>
+                    {v}
+                  </SelectItem>
+                )
+              })}
+            </SelectGroup>
           </SelectContent>
         </Select>
         <Select value={period} onValueChange={(v) => v && setPeriod(v)}>
@@ -161,8 +170,10 @@ function DateTimePresetPicker() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="AM">AM</SelectItem>
-            <SelectItem value="PM">PM</SelectItem>
+            <SelectGroup>
+              <SelectItem value="AM">AM</SelectItem>
+              <SelectItem value="PM">PM</SelectItem>
+            </SelectGroup>
           </SelectContent>
         </Select>
       </div>
@@ -406,11 +417,13 @@ export default function CalendarPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {monthNames.map((mName) => (
-                        <SelectItem key={mName} value={mName}>
-                          {mName}
-                        </SelectItem>
-                      ))}
+                      <SelectGroup>
+                        {monthNames.map((mName) => (
+                          <SelectItem key={mName} value={mName}>
+                            {mName}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                   <Select
@@ -426,14 +439,16 @@ export default function CalendarPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {Array.from({ length: 14 }, (_, i) => {
-                        const y = 2017 + i
-                        return (
-                          <SelectItem key={y} value={String(y)}>
-                            {y}
-                          </SelectItem>
-                        )
-                      })}
+                      <SelectGroup>
+                        {Array.from({ length: 14 }, (_, i) => {
+                          const y = 2017 + i
+                          return (
+                            <SelectItem key={y} value={String(y)}>
+                              {y}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </div>

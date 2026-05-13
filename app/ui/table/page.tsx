@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -596,11 +597,13 @@ export default function TablePage() {
                       <span className="ml-1 text-muted-foreground">team</span>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">1</SelectItem>
-                      <SelectItem value="2">2</SelectItem>
-                      <SelectItem value="3">3</SelectItem>
-                      <SelectItem value="4">4</SelectItem>
-                      <SelectItem value="5">5</SelectItem>
+                      <SelectGroup>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="2">2</SelectItem>
+                        <SelectItem value="3">3</SelectItem>
+                        <SelectItem value="4">4</SelectItem>
+                        <SelectItem value="5">5</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </TableCell>
@@ -610,9 +613,11 @@ export default function TablePage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Owner">Owner</SelectItem>
-                      <SelectItem value="Member">Member</SelectItem>
-                      <SelectItem value="Guest">Guest</SelectItem>
+                      <SelectGroup>
+                        <SelectItem value="Owner">Owner</SelectItem>
+                        <SelectItem value="Member">Member</SelectItem>
+                        <SelectItem value="Guest">Guest</SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </TableCell>

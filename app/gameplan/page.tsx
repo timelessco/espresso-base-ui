@@ -73,6 +73,7 @@ import { Kbd } from "@/components/ui/kbd"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -697,10 +698,12 @@ export default function GameplanPage() {
                     { label: "All", value: "all" },
                   ]}
                   defaultValue="open"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -719,9 +722,11 @@ export default function GameplanPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="open">Open</SelectItem>
-                    <SelectItem value="closed">Closed</SelectItem>
-                    <SelectItem value="all">All</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="open">Open</SelectItem>
+                      <SelectItem value="closed">Closed</SelectItem>
+                      <SelectItem value="all">All</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               }
