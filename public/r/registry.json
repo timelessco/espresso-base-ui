@@ -459,27 +459,6 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-      "name": "select",
-      "type": "registry:ui",
-      "title": "Select",
-      "description": "Select with variants, sizes, suffix icon, and icon value rendering.",
-      "dependencies": [
-        "@base-ui/react",
-        "class-variance-authority",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "registry/espresso/select/select.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "registryDependencies": [
-        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
-      ]
-    },
-    {
-      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
