@@ -64,6 +64,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectSeparator,
   SelectTrigger,
@@ -1011,26 +1012,28 @@ export default function CrmDataGridPage() {
                       <Select
                         items={[...views, ...savedViews]}
                         defaultValue="list-view"
-                        variant="ghost"
-                        size="sm"
                       >
-                        <SelectTrigger suffixIcon={<ChevronDown />}>
+                        <SelectTrigger
+                          variant="ghost"
+                          size="sm"
+                          suffix={<ChevronDown />}
+                        >
                           <SelectValue className="text-lg font-medium text-foreground" />
                         </SelectTrigger>
-                        <SelectContent>
-                          {views.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              <item.icon className="size-4" />
-                              {item.label}
-                            </SelectItem>
-                          ))}
-                          <SelectSeparator />
-                          {savedViews.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              <item.icon className="size-4" />
-                              {item.label}
-                            </SelectItem>
-                          ))}
+                        <SelectContent align="start">
+                          <SelectGroup>
+                            {views.map((item) => (
+                              <SelectItem key={item.value} value={item.value}>
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                            <SelectSeparator />
+                            {savedViews.map((item) => (
+                              <SelectItem key={item.value} value={item.value}>
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
                     </BreadcrumbItem>
@@ -1058,54 +1061,58 @@ export default function CrmDataGridPage() {
                     { label: "David Lee", value: "david-lee" },
                   ]}
                   defaultValue="lead-owner"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="lead-owner">Lead owner</SelectItem>
-                    <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
-                    <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
-                    <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
-                    <SelectItem value="david-lee">David Lee</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="lead-owner">Lead owner</SelectItem>
+                      <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
+                      <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
+                      <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
+                      <SelectItem value="david-lee">David Lee</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select
-                  items={organisationItems}
-                  defaultValue="gumroad"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                <Select items={organisationItems} defaultValue="gumroad">
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    {organisationItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.icon && <item.icon />}
-                        {item.label}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {organisationItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select
-                  items={statusFilterItems}
-                  defaultValue="open"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                <Select items={statusFilterItems} defaultValue="open">
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    {statusFilterItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.icon && <item.icon className="my-auto" />}
-                        {item.label}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {statusFilterItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </>

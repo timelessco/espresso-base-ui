@@ -55,6 +55,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -1226,16 +1227,16 @@ export default function MailPage() {
                     { label: "Me", value: "me" },
                   ]}
                   defaultValue="from"
-                  variant="outline"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="from">From</SelectItem>
-                    <SelectItem value="anyone">Anyone</SelectItem>
-                    <SelectItem value="me">Me</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="from">From</SelectItem>
+                      <SelectItem value="anyone">Anyone</SelectItem>
+                      <SelectItem value="me">Me</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1247,18 +1248,18 @@ export default function MailPage() {
                     { label: "This year", value: "year" },
                   ]}
                   defaultValue="anytime"
-                  variant="outline"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="anytime">Any time</SelectItem>
-                    <SelectItem value="today">Today</SelectItem>
-                    <SelectItem value="week">This week</SelectItem>
-                    <SelectItem value="month">This month</SelectItem>
-                    <SelectItem value="year">This year</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="anytime">Any time</SelectItem>
+                      <SelectItem value="today">Today</SelectItem>
+                      <SelectItem value="week">This week</SelectItem>
+                      <SelectItem value="month">This month</SelectItem>
+                      <SelectItem value="year">This year</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1268,16 +1269,16 @@ export default function MailPage() {
                     { label: "Anyone", value: "anyone-to" },
                   ]}
                   defaultValue="to"
-                  variant="outline"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="to">To</SelectItem>
-                    <SelectItem value="me-to">Me</SelectItem>
-                    <SelectItem value="anyone-to">Anyone</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="to">To</SelectItem>
+                      <SelectItem value="me-to">Me</SelectItem>
+                      <SelectItem value="anyone-to">Anyone</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Button variant="outline" size="sm">

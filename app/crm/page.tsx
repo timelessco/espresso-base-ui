@@ -85,6 +85,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectSeparator,
   SelectTrigger,
@@ -1068,26 +1069,28 @@ export default function CrmPage() {
                       <Select
                         items={[...views, ...savedViews]}
                         defaultValue="list-view"
-                        variant="ghost"
-                        size="sm"
                       >
-                        <SelectTrigger suffixIcon={<ChevronDown />}>
+                        <SelectTrigger
+                          variant="ghost"
+                          size="sm"
+                          suffix={<ChevronDown />}
+                        >
                           <SelectValue className="text-lg font-medium text-foreground" />
                         </SelectTrigger>
-                        <SelectContent>
-                          {views.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              <item.icon className="size-4" />
-                              {item.label}
-                            </SelectItem>
-                          ))}
-                          <SelectSeparator />
-                          {savedViews.map((item) => (
-                            <SelectItem key={item.value} value={item.value}>
-                              <item.icon className="size-4" />
-                              {item.label}
-                            </SelectItem>
-                          ))}
+                        <SelectContent align="start">
+                          <SelectGroup>
+                            {views.map((item) => (
+                              <SelectItem key={item.value} value={item.value}>
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                            <SelectSeparator />
+                            {savedViews.map((item) => (
+                              <SelectItem key={item.value} value={item.value}>
+                                {item.label}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
                     </BreadcrumbItem>
@@ -1115,54 +1118,58 @@ export default function CrmPage() {
                     { label: "David Lee", value: "david-lee" },
                   ]}
                   defaultValue="lead-owner"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="lead-owner">Lead owner</SelectItem>
-                    <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
-                    <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
-                    <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
-                    <SelectItem value="david-lee">David Lee</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="lead-owner">Lead owner</SelectItem>
+                      <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
+                      <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
+                      <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
+                      <SelectItem value="david-lee">David Lee</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select
-                  items={organisationItems}
-                  defaultValue="gumroad"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                <Select items={organisationItems} defaultValue="gumroad">
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    {organisationItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.icon && <item.icon />}
-                        {item.label}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {organisationItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select
-                  items={statusItems}
-                  defaultValue="open"
-                  variant="subtle"
-                  size="sm"
-                >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                <Select items={statusItems} defaultValue="open">
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    {statusItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.icon && <item.icon className="my-auto" />}
-                        {item.label}
-                      </SelectItem>
-                    ))}
+                    <SelectGroup>
+                      {statusItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </>
@@ -1181,10 +1188,12 @@ export default function CrmPage() {
                     { label: "Assigned To", value: "assigned" },
                   ]}
                   defaultValue="column"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const item = [
@@ -1207,14 +1216,16 @@ export default function CrmPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="column">Column</SelectItem>
-                    <SelectItem value="name">Name</SelectItem>
-                    <SelectItem value="organisation">Organisation</SelectItem>
-                    <SelectItem value="start-date">Start Date</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                    <SelectItem value="mobile">Mobile No</SelectItem>
-                    <SelectItem value="assigned">Assigned To</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="column">Column</SelectItem>
+                      <SelectItem value="name">Name</SelectItem>
+                      <SelectItem value="organisation">Organisation</SelectItem>
+                      <SelectItem value="start-date">Start Date</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                      <SelectItem value="email">Email</SelectItem>
+                      <SelectItem value="mobile">Mobile No</SelectItem>
+                      <SelectItem value="assigned">Assigned To</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1225,10 +1236,12 @@ export default function CrmPage() {
                     { label: "Options", value: "option-3" },
                   ]}
                   defaultValue="group"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1248,10 +1261,12 @@ export default function CrmPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="group">Group</SelectItem>
-                    <SelectItem value="option-1">Options</SelectItem>
-                    <SelectItem value="option-2">Options</SelectItem>
-                    <SelectItem value="option-3">Options</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="group">Group</SelectItem>
+                      <SelectItem value="option-1">Options</SelectItem>
+                      <SelectItem value="option-2">Options</SelectItem>
+                      <SelectItem value="option-3">Options</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1266,10 +1281,12 @@ export default function CrmPage() {
                     { label: "Status", value: "status" },
                   ]}
                   defaultValue="filter"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1296,16 +1313,18 @@ export default function CrmPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="filter">Filter</SelectItem>
-                    <SelectItem value="title">Title</SelectItem>
-                    <SelectItem value="priority">Priority</SelectItem>
-                    <SelectItem value="start-date">Start Date</SelectItem>
-                    <SelectItem value="ref-doc-type">
-                      Reference Document Type
-                    </SelectItem>
-                    <SelectItem value="ref-doc">Reference Doc</SelectItem>
-                    <SelectItem value="assigned">Assigned To</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="filter">Filter</SelectItem>
+                      <SelectItem value="title">Title</SelectItem>
+                      <SelectItem value="priority">Priority</SelectItem>
+                      <SelectItem value="start-date">Start Date</SelectItem>
+                      <SelectItem value="ref-doc-type">
+                        Reference Document Type
+                      </SelectItem>
+                      <SelectItem value="ref-doc">Reference Doc</SelectItem>
+                      <SelectItem value="assigned">Assigned To</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1316,10 +1335,12 @@ export default function CrmPage() {
                     { label: "Created", value: "created" },
                   ]}
                   defaultValue="short"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1339,10 +1360,12 @@ export default function CrmPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="short">Sort</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="name">Name</SelectItem>
-                    <SelectItem value="created">Created</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="short">Sort</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                      <SelectItem value="name">Name</SelectItem>
+                      <SelectItem value="created">Created</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <DropdownMenu>

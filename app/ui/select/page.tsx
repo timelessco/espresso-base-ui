@@ -7,7 +7,7 @@ import {
   Citrus,
   Diamond,
   Grape,
-  Users,
+  ChevronsUpDown,
 } from "lucide-react"
 import {
   Select,
@@ -19,33 +19,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Field, FieldError } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
-function ChevronUpDownIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M5.85355 10.6464C5.65829 10.4512 5.34171 10.4512 5.14645 10.6464C4.95118 10.8417 4.95118 11.1583 5.14645 11.3536L7.64645 13.8536C7.84171 14.0488 8.15829 14.0488 8.35355 13.8536L10.8536 11.3536C11.0488 11.1583 11.0488 10.8417 10.8536 10.6464C10.6583 10.4512 10.3417 10.4512 10.1464 10.6464L8 12.7929L5.85355 10.6464ZM5.85355 5.35355C5.65829 5.54882 5.34171 5.54882 5.14645 5.35355C4.95118 5.15829 4.95118 4.84171 5.14645 4.64645L7.64645 2.14645C7.84171 1.95118 8.15829 1.95118 8.35355 2.14645L10.8536 4.64645C11.0488 4.84171 11.0488 5.15829 10.8536 5.35355C10.6583 5.54882 10.3417 5.54882 10.1464 5.35355L8 3.20711L5.85355 5.35355Z"
-        fill="currentColor"
-      />
-    </svg>
-  )
-}
-
 const fruits = [
+  { label: "Select a fruit", value: null },
+  { label: "Apple", value: "apple" },
+  { label: "Banana", value: "banana" },
+  { label: "Blueberry", value: "blueberry" },
+  { label: "Grapes", value: "grapes" },
+  { label: "Pineapple", value: "pineapple" },
+]
+
+const vegetables = [
+  { label: "Carrot", value: "carrot" },
+  { label: "Broccoli", value: "broccoli" },
+  { label: "Spinach", value: "spinach" },
+  { label: "Kale", value: "kale" },
+]
+
+const fruitsWithIcons = [
   { label: "Select fruit", value: null, icon: Diamond },
   { label: "Apple", value: "apple", icon: Apple },
   { label: "Banana", value: "banana", icon: Banana },
@@ -54,506 +49,444 @@ const fruits = [
   { label: "Grape", value: "grape", icon: Grape },
 ]
 
-const options = [
-  { label: "Select an option", value: null },
-  { label: "Option 1", value: "option-1" },
-  { label: "Option 2", value: "option-2" },
-  { label: "Option 3", value: "option-3" },
-]
-
-const groupedItems = [
-  ...fruits,
-  { label: "Carrot", value: "carrot" },
-  { label: "Broccoli", value: "broccoli" },
-  { label: "Spinach", value: "spinach" },
-]
-
-const members = [
-  {
-    label: "Select member",
-    value: null,
-    icon: ({ className }: { className?: string }) => (
-      <Users className={className} />
-    ),
-  },
-  {
-    label: "Sarah Chen",
-    value: "sarah",
-    icon: ({ className }: { className?: string }) => (
-      <Avatar className={className} size="xs">
-        <AvatarImage src="https://i.pravatar.cc/32?u=sarah" />
-        <AvatarFallback>SC</AvatarFallback>
-      </Avatar>
-    ),
-  },
-  {
-    label: "James Wilson",
-    value: "james",
-    icon: ({ className }: { className?: string }) => (
-      <Avatar className={className} size="xs">
-        <AvatarImage src="https://i.pravatar.cc/32?u=james" />
-        <AvatarFallback>JW</AvatarFallback>
-      </Avatar>
-    ),
-  },
-  {
-    label: "Emily Park",
-    value: "emily",
-    icon: ({ className }: { className?: string }) => (
-      <Avatar className={className} size="xs">
-        <AvatarImage src="https://i.pravatar.cc/32?u=emily" />
-        <AvatarFallback>EP</AvatarFallback>
-      </Avatar>
-    ),
-  },
-  {
-    label: "Alex Rivera",
-    value: "alex",
-    icon: ({ className }: { className?: string }) => (
-      <Avatar className={className} size="xs">
-        <AvatarImage src="https://i.pravatar.cc/32?u=alex" />
-        <AvatarFallback>AR</AvatarFallback>
-      </Avatar>
-    ),
-  },
+const timezones = [
+  { label: "Select a timezone", value: null },
+  // North America
+  { label: "Eastern Standard Time (EST)", value: "est" },
+  { label: "Central Standard Time (CST)", value: "cst" },
+  { label: "Mountain Standard Time (MST)", value: "mst" },
+  { label: "Pacific Standard Time (PST)", value: "pst" },
+  { label: "Alaska Standard Time (AKST)", value: "akst" },
+  { label: "Hawaii Standard Time (HST)", value: "hst" },
+  // Europe & Africa
+  { label: "Greenwich Mean Time (GMT)", value: "gmt" },
+  { label: "Central European Time (CET)", value: "cet" },
+  { label: "Eastern European Time (EET)", value: "eet" },
+  { label: "Western European Summer Time (WEST)", value: "west" },
+  { label: "Central Africa Time (CAT)", value: "cat" },
+  { label: "Eastern Africa Time (EAT)", value: "eat" },
+  // Asia
+  { label: "Moscow Time (MSK)", value: "msk" },
+  { label: "India Standard Time (IST)", value: "ist" },
+  { label: "China Standard Time (CST_CN)", value: "cst_cn" },
+  { label: "Japan Standard Time (JST)", value: "jst" },
+  { label: "Korea Standard Time (KST)", value: "kst" },
+  { label: "Indonesia Central Standard Time (WITA)", value: "ist_id" },
+  // Australia & Pacific
+  { label: "Australian Western Standard Time (AWST)", value: "awst" },
+  { label: "Australian Central Standard Time (ACST)", value: "acst" },
+  { label: "Australian Eastern Standard Time (AEST)", value: "aest" },
+  { label: "New Zealand Standard Time (NZST)", value: "nzst" },
+  { label: "Fiji Time (FJT)", value: "fjt" },
+  // South America
+  { label: "Argentina Time (ART)", value: "art" },
+  { label: "Bolivia Time (BOT)", value: "bot" },
+  { label: "Brasilia Time (BRT)", value: "brt" },
+  { label: "Chile Standard Time (CLT)", value: "clt" },
 ]
 
 export default function SelectPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
-      {/* Outline — Sizes */}
+      {/* Default */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Outline — Sizes</SectionTitle>
+        <SectionTitle>Default</SectionTitle>
+        <Select items={fruits}>
+          <SelectTrigger
+            className="w-full max-w-48"
+            suffix={<ChevronsUpDown />}
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* With Icons */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>With Icons</SectionTitle>
+        <p className="text-sm text-muted-foreground">
+          Pass an <code className="rounded bg-muted px-1">icon</code> on each
+          entry in the <code className="rounded bg-muted px-1">items</code>{" "}
+          array — the trigger value and items render it automatically.
+        </p>
+        <Select items={fruitsWithIcons}>
+          <SelectTrigger className="w-48">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruitsWithIcons.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Variants */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Variants</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select items={fruits} variant="outline" size="sm">
-            <SelectTrigger>
-              <SelectValue />
+          <Select items={fruits}>
+            <SelectTrigger variant="outline" className="w-48">
+              <SelectValue placeholder="Outline" />
             </SelectTrigger>
-            <SelectContent alignItemWithTrigger={false} align="start">
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
-          <Select items={fruits} variant="outline" size="default">
-            <SelectTrigger>
-              <SelectValue />
+          <Select items={fruits}>
+            <SelectTrigger variant="subtle" className="w-48">
+              <SelectValue placeholder="Subtle" />
             </SelectTrigger>
-            <SelectContent alignItemWithTrigger={false} align="start">
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
-          <Select items={fruits} variant="outline" size="lg">
-            <SelectTrigger>
-              <SelectValue />
+          <Select items={fruits}>
+            <SelectTrigger variant="ghost" className="w-48">
+              <SelectValue placeholder="Ghost" />
             </SelectTrigger>
-            <SelectContent alignItemWithTrigger={false} align="start">
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>
       </div>
 
-      {/* Subtle — Sizes */}
+      {/* Sizes */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Subtle — Sizes</SectionTitle>
+        <SectionTitle>Sizes</SectionTitle>
         <div className="flex items-center gap-4">
-          <Select items={fruits} variant="subtle" size="sm">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} variant="subtle" size="default">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} variant="subtle" size="lg">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Ghost — Sizes */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Ghost — Sizes</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={fruits} variant="ghost" size="sm">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} variant="ghost" size="default">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} variant="ghost" size="lg">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Suffix Icon */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Suffix Icon</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={options}>
-            <SelectTrigger variant="outline" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={options}>
-            <SelectTrigger variant="subtle" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={options}>
-            <SelectTrigger variant="ghost" suffixIcon={<ChevronUpDownIcon />}>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* With Default Value */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>With Default Value</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={fruits} defaultValue="cherry">
-            <SelectTrigger variant="outline">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} defaultValue="cherry">
-            <SelectTrigger variant="subtle">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={fruits} defaultValue="cherry">
-            <SelectTrigger variant="ghost">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {fruits.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.icon && <item.icon className="size-4" />}
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* With Groups */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>With Groups</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={groupedItems}>
-            <SelectTrigger variant="outline">
+          <Select items={fruits}>
+            <SelectTrigger size="sm" className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
-                {fruits
-                  .filter((f) => f.value)
-                  .map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.icon && <item.icon className="size-4" />}
-                      {item.label}
-                    </SelectItem>
-                  ))}
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectGroup>
-              <SelectSeparator />
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger size="default" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
               <SelectGroup>
-                <SelectLabel>Vegetables</SelectLabel>
-                <SelectItem value="carrot">Carrot</SelectItem>
-                <SelectItem value="broccoli">Broccoli</SelectItem>
-                <SelectItem value="spinach">Spinach</SelectItem>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger size="lg" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
       </div>
 
-      {/* With Avatar */}
+      {/* With default value */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>With Avatar</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={members} variant="outline" defaultValue="sarah">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {members
-                .filter((m) => m.value)
-                .map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-          <Select items={members} variant="subtle" defaultValue="james">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {members
-                .filter((m) => m.value)
-                .map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-          <Select items={members} variant="ghost" defaultValue="emily">
-            <SelectTrigger>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {members
-                .filter((m) => m.value)
-                .map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.icon && <item.icon className="size-4" />}
-                    {item.label}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Disabled */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Disabled</SectionTitle>
-        <div className="flex items-center gap-4">
-          <Select items={options} disabled>
-            <SelectTrigger variant="outline">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={options} disabled>
-            <SelectTrigger variant="subtle">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select items={options} disabled>
-            <SelectTrigger variant="ghost">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Disabled Items */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Disabled Items</SectionTitle>
-        <Select items={fruits}>
-          <SelectTrigger variant="outline">
+        <SectionTitle>With Default Value</SectionTitle>
+        <Select items={fruits} defaultValue="blueberry">
+          <SelectTrigger className="w-48">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="apple">
-              <Apple className="size-4" /> Apple
-            </SelectItem>
-            <SelectItem value="banana" disabled>
-              <Banana className="size-4" /> Banana
-            </SelectItem>
-            <SelectItem value="cherry">
-              <Cherry className="size-4" /> Cherry
-            </SelectItem>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
           </SelectContent>
         </Select>
       </div>
 
-      {/* Invalid via Field */}
+      {/* With groups */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Invalid via Field</SectionTitle>
-        <div className="flex items-start gap-4">
-          <Field data-invalid="true">
-            <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="outline">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {fruits
-                  .filter((f) => f.value)
-                  .map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.icon && <item.icon className="size-4" />}
-                      {item.label}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FieldError>Please select a valid option.</FieldError>
-          </Field>
-          <Field data-invalid="true">
-            <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="subtle">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {fruits
-                  .filter((f) => f.value)
-                  .map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.icon && <item.icon className="size-4" />}
-                      {item.label}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FieldError>Please select a valid option.</FieldError>
-          </Field>
-          <Field data-invalid="true">
-            <Select items={fruits} defaultValue="apple">
-              <SelectTrigger variant="ghost">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {fruits
-                  .filter((f) => f.value)
-                  .map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.icon && <item.icon className="size-4" />}
-                      {item.label}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FieldError>Please select a valid option.</FieldError>
-          </Field>
+        <SectionTitle>With Groups</SectionTitle>
+        <Select items={[...fruits, ...vegetables]}>
+          <SelectTrigger className="w-48">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruits
+                .filter((f) => f.value !== null)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+            </SelectGroup>
+            <SelectSeparator />
+            <SelectGroup>
+              <SelectLabel>Vegetables</SelectLabel>
+              {vegetables.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Scrollable (timezones — based on shadcn example) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Scrollable</SectionTitle>
+        <p className="text-sm text-muted-foreground">
+          With a long list, scroll-up and scroll-down chevrons appear at the
+          popup edges.
+        </p>
+        <Select items={timezones} defaultValue="ist">
+          <SelectTrigger className="w-72">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Timezones</SelectLabel>
+              {timezones.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Disabled trigger */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Disabled</SectionTitle>
+        <Select items={fruits} disabled>
+          <SelectTrigger className="w-48">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruits.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Disabled items */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Disabled Items</SectionTitle>
+        <Select items={fruits}>
+          <SelectTrigger className="w-48">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              {fruits.map((item) => (
+                <SelectItem
+                  key={item.value}
+                  value={item.value}
+                  disabled={item.value === "banana" || item.value === "grapes"}
+                >
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Sides */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sides</SectionTitle>
+        <p className="text-sm text-muted-foreground">
+          Pass <code className="rounded bg-muted px-1">side</code> to control
+          which side of the trigger the popup opens on.
+        </p>
+        <div className="flex items-center gap-4">
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Top" />
+            </SelectTrigger>
+            <SelectContent side="top" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Right" />
+            </SelectTrigger>
+            <SelectContent side="right" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Bottom" />
+            </SelectTrigger>
+            <SelectContent side="bottom" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Left" />
+            </SelectTrigger>
+            <SelectContent side="left" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Alignments */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Alignments</SectionTitle>
+        <p className="text-sm text-muted-foreground">
+          With{" "}
+          <code className="rounded bg-muted px-1">
+            alignItemWithTrigger=&#123;false&#125;
+          </code>
+          , the popup aligns to the trigger edge instead of centering the
+          selected item.
+        </p>
+        <div className="flex items-center gap-4">
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Start" />
+            </SelectTrigger>
+            <SelectContent align="start" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Center" />
+            </SelectTrigger>
+            <SelectContent align="start" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="End" />
+            </SelectTrigger>
+            <SelectContent align="start" alignItemWithTrigger={false}>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

@@ -69,6 +69,7 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectSeparator,
   SelectTrigger,
@@ -1174,10 +1175,8 @@ export default function HelpdeskPage() {
                     { label: "Priority", value: "priority" },
                   ]}
                   defaultValue="title"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1197,10 +1196,12 @@ export default function HelpdeskPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="title">Title</SelectItem>
-                    <SelectItem value="id">Id</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="priority">Priority</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="title">Title</SelectItem>
+                      <SelectItem value="id">Id</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                      <SelectItem value="priority">Priority</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1210,16 +1211,16 @@ export default function HelpdeskPage() {
                     { label: "Customer", value: "customer" },
                   ]}
                   defaultValue="name"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="name">Name</SelectItem>
-                    <SelectItem value="assignee">Assignee</SelectItem>
-                    <SelectItem value="customer">Customer</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="name">Name</SelectItem>
+                      <SelectItem value="assignee">Assignee</SelectItem>
+                      <SelectItem value="customer">Customer</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Select
@@ -1237,10 +1238,8 @@ export default function HelpdeskPage() {
                     { label: "Customer", value: "customer" },
                   ]}
                   defaultValue="column"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1267,17 +1266,19 @@ export default function HelpdeskPage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="column">Column</SelectItem>
-                    <SelectItem value="id">Id</SelectItem>
-                    <SelectItem value="ticket">Ticket</SelectItem>
-                    <SelectItem value="status">Status</SelectItem>
-                    <SelectItem value="first-due">First due</SelectItem>
-                    <SelectItem value="resolution">Resolution</SelectItem>
-                    <SelectItem value="priority">Priority</SelectItem>
-                    <SelectItem value="type">Type</SelectItem>
-                    <SelectItem value="assignee">Assignee</SelectItem>
-                    <SelectItem value="team">Team</SelectItem>
-                    <SelectItem value="customer">Customer</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="column">Column</SelectItem>
+                      <SelectItem value="id">Id</SelectItem>
+                      <SelectItem value="ticket">Ticket</SelectItem>
+                      <SelectItem value="status">Status</SelectItem>
+                      <SelectItem value="first-due">First due</SelectItem>
+                      <SelectItem value="resolution">Resolution</SelectItem>
+                      <SelectItem value="priority">Priority</SelectItem>
+                      <SelectItem value="type">Type</SelectItem>
+                      <SelectItem value="assignee">Assignee</SelectItem>
+                      <SelectItem value="team">Team</SelectItem>
+                      <SelectItem value="customer">Customer</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </>

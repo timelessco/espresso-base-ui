@@ -33,6 +33,7 @@ import { Header, HeaderSeparator } from "@/components/ui/header"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -136,14 +137,20 @@ export default function HeaderPage() {
             leftControls={
               <>
                 <AppIcon />
-                <Select defaultValue="builder" variant="ghost" size="sm">
-                  <SelectTrigger className="border-none px-2 font-medium">
+                <Select defaultValue="Builder">
+                  <SelectTrigger
+                    variant="ghost"
+                    size="sm"
+                    className="border-none px-2 font-medium"
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="builder">Builder</SelectItem>
-                    <SelectItem value="editor">Editor</SelectItem>
-                    <SelectItem value="frappe">Frappe</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="Builder">Builder</SelectItem>
+                      <SelectItem value="Editor">Editor</SelectItem>
+                      <SelectItem value="Frappe">Frappe</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </>

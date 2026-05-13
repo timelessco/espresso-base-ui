@@ -67,6 +67,7 @@ import { Progress } from "@/components/ui/progress"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -774,10 +775,12 @@ export default function DrivePage() {
                     { label: "Download", value: "download" },
                   ]}
                   defaultValue="open"
-                  variant="subtle"
-                  size="sm"
                 >
-                  <SelectTrigger suffixIcon={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -796,9 +799,11 @@ export default function DrivePage() {
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectItem value="open">Open</SelectItem>
-                    <SelectItem value="preview">Preview</SelectItem>
-                    <SelectItem value="download">Download</SelectItem>
+                    <SelectGroup>
+                      <SelectItem value="open">Open</SelectItem>
+                      <SelectItem value="preview">Preview</SelectItem>
+                      <SelectItem value="download">Download</SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <Button variant="secondary" size="icon-sm">
