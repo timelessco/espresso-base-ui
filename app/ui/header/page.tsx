@@ -138,11 +138,7 @@ export default function HeaderPage() {
               <>
                 <AppIcon />
                 <Select defaultValue="Builder">
-                  <SelectTrigger
-                    variant="ghost"
-                    size="sm"
-                    className="border-none px-2 font-medium"
-                  >
+                  <SelectTrigger variant="ghost" size="sm">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
