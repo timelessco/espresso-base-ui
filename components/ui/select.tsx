@@ -74,16 +74,16 @@ function SelectValue({
 }
 
 const selectTriggerVariants = cva(
-  "flex w-fit items-center justify-between gap-2 rounded-md p-2 text-base leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground transition-colors outline-none select-none focus-visible:border-ring focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs data-disabled:cursor-not-allowed data-disabled:opacity-50 aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-8 data-[size=lg]:h-10 data-[size=lg]:rounded-lg data-[size=lg]:px-3 data-[size=lg]:text-lg data-[size=sm]:h-7 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "flex w-fit items-center justify-between gap-2 rounded-md p-2 text-base leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-popover-foreground! data-placeholder:text-card-foreground data-[size=default]:h-8 data-[size=lg]:h-10 data-[size=lg]:rounded-lg data-[size=lg]:px-3 data-[size=lg]:text-lg data-[size=sm]:h-7 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground not-data-disabled:hover:border-border-normal aria-invalid:border-destructive",
+          "border border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border data-disabled:bg-input",
         subtle:
-          "border border-transparent bg-secondary not-data-disabled:hover:bg-muted aria-invalid:bg-destructive/10",
+          "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-input",
         ghost:
-          "border border-transparent bg-transparent not-data-disabled:hover:bg-muted",
+          "border border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent",
       },
     },
     defaultVariants: {
@@ -116,7 +116,7 @@ function SelectTrigger({
       <SelectPrimitive.Icon
         render={
           suffix ?? (
-            <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+            <ChevronDownIcon className="pointer-events-none size-4" />
           )
         }
       />
