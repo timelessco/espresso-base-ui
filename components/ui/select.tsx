@@ -79,7 +79,7 @@ const selectTriggerVariants = cva(
     variants: {
       variant: {
         outline:
-          "border border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border data-disabled:bg-input",
+          "border border-border bg-background group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border data-disabled:bg-input",
         subtle:
           "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-input",
         ghost:
