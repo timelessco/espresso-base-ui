@@ -461,7 +461,7 @@ export default function SelectPage() {
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Center" />
             </SelectTrigger>
-            <SelectContent align="center" alignItemWithTrigger={false}>
+            <SelectContent align="start" alignItemWithTrigger={false}>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
                 {fruits.map((item) => (
@@ -476,7 +476,7 @@ export default function SelectPage() {
             <SelectTrigger className="w-32">
               <SelectValue placeholder="End" />
             </SelectTrigger>
-            <SelectContent align="end" alignItemWithTrigger={false}>
+            <SelectContent align="start" alignItemWithTrigger={false}>
               <SelectGroup>
                 <SelectLabel>Fruits</SelectLabel>
                 {fruits.map((item) => (
