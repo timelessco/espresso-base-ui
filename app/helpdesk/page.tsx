@@ -50,8 +50,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -1138,9 +1140,13 @@ export default function HelpdeskPage() {
             leftControls={
               <>
                 <SidebarTrigger className="md:hidden" />
-                <span className="text-lg leading-base font-semibold tracking-normal text-foreground">
-                  Tickets
-                </span>
+                <Breadcrumb size="md">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Tickets</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
               </>
             }
             rightControls={

@@ -111,6 +111,12 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb"
 
 const files = [
   {
@@ -748,9 +754,13 @@ export default function DrivePage() {
             leftControls={
               <>
                 <SidebarTrigger className="md:hidden" />
-                <span className="text-lg font-medium text-foreground">
-                  My drive
-                </span>
+                <Breadcrumb size="md">
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>My Drive</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
               </>
             }
             rightControls={
