@@ -84,7 +84,7 @@ function PopoverDescription({
     <PopoverPrimitive.Description
       data-slot="popover-description"
       className={cn(
-        "pt-1 text-base leading-base font-normal tracking-normal text-secondary-foreground",
+        "pt-1 text-base leading-lg font-normal tracking-normal text-secondary-foreground",
         className
       )}
       {...props}
