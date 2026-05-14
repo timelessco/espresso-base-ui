@@ -445,7 +445,7 @@ function DriveSidebar() {
                     James fenimore
                   </span>
                 </div>
-                <ChevronDown className="ml-auto" />
+                <ChevronDown className="relative right-2 ml-auto" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--anchor-width] min-w-56"

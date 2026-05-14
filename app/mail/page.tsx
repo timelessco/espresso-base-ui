@@ -604,7 +604,7 @@ function MailSidebar() {
                     Aditi Sharma
                   </span>
                 </div>
-                <ChevronDown className="ml-auto" />
+                <ChevronDown className="relative right-2 ml-auto" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--anchor-width] min-w-56"
@@ -1228,7 +1228,11 @@ export default function MailPage() {
                   ]}
                   defaultValue="from"
                 >
-                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="outline"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
@@ -1249,7 +1253,11 @@ export default function MailPage() {
                   ]}
                   defaultValue="anytime"
                 >
-                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="outline"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
@@ -1270,7 +1278,11 @@ export default function MailPage() {
                   ]}
                   defaultValue="to"
                 >
-                  <SelectTrigger variant="outline" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="outline"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
