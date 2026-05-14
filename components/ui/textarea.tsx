@@ -5,17 +5,17 @@ import { cn } from "@/lib/utils"
 
 const textareaVariants = cva(
   [
-    "flex field-sizing-content w-full border leading-base font-normal tracking-normal text-secondary-foreground transition-colors outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground",
+    "flex field-sizing-content w-full border leading-base font-normal tracking-normal text-secondary-foreground transition-colors outline-none placeholder:text-card-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input disabled:text-popover-foreground",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground not-data-disabled:hover:border-border-normal not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger data-disabled:bg-input data-disabled:text-popover-foreground data-valid:border-success-outline data-invalid:border-error-outline data-filled:border-border",
+          "border-border bg-primary-foreground not-disabled:hover:border-border-normal not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-border-stronger disabled:bg-input disabled:text-popover-foreground data-valid:border-success-outline data-invalid:border-error-outline data-filled:border-border",
         subtle:
-          "border-transparent bg-secondary not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-border-stronger not-data-disabled:active:bg-primary-foreground data-disabled:bg-input data-disabled:text-popover-foreground data-valid:bg-success data-invalid:bg-error data-filled:bg-secondary",
+          "border-transparent bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-border-stronger not-disabled:active:bg-primary-foreground disabled:bg-input disabled:text-popover-foreground data-valid:bg-success data-invalid:bg-error data-filled:bg-secondary",
         ghost:
-          "border-transparent bg-transparent not-data-disabled:hover:bg-muted not-data-disabled:focus:border-transparent not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs not-data-disabled:active:border-transparent! not-data-disabled:active:bg-primary-foreground data-disabled:bg-transparent data-disabled:text-popover-foreground data-valid:bg-success data-invalid:bg-error data-filled:bg-secondary",
+          "border-transparent bg-transparent not-disabled:hover:bg-muted not-disabled:focus:border-transparent not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-transparent! not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-popover-foreground data-valid:bg-success data-invalid:bg-error data-filled:bg-secondary",
       },
       size: {
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",

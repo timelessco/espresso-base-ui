@@ -235,7 +235,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpArrow
       data-slot="select-scroll-up-button"
       className={cn(
-        "sticky top-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-b from-popover from-30% to-transparent [&_svg]:hidden",
+        "sticky top-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-b from-popover from-2% to-transparent [&_svg]:hidden",
         className
       )}
       {...props}
@@ -253,7 +253,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownArrow
       data-slot="select-scroll-down-button"
       className={cn(
-        "sticky bottom-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-t from-popover from-30% to-transparent [&_svg]:hidden",
+        "sticky bottom-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-t from-popover from-2% to-transparent [&_svg]:hidden",
         className
       )}
       {...props}
