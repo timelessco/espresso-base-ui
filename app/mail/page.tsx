@@ -1138,7 +1138,7 @@ export default function MailPage() {
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
           <Header
-            className="scrollbar-hide overflow-x-auto px-5 [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
+            className="scrollbar-hide relative overflow-x-auto border-b-0 px-5 py-0 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border-soft after:content-[''] [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
             leftControls={
               <>
                 <SidebarTrigger className="md:hidden" />
@@ -1148,7 +1148,7 @@ export default function MailPage() {
               </>
             }
             centerControls={
-              <Tabs defaultValue="primary">
+              <Tabs defaultValue="primary" className="relative z-10">
                 <TabsList
                   variant="line"
                   className="py-2.25 group-data-horizontal/tabs:h-auto"
