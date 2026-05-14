@@ -9,26 +9,23 @@ import { cn } from "@/lib/utils"
 const separatorLineClasses =
   "shrink-0 bg-border-soft data-horizontal:h-px data-horizontal:w-full data-vertical:w-px data-vertical:self-stretch"
 
-const separatorSlotVariants = cva(
-  "flex h-7 w-max shrink-0 items-center gap-2 rounded-md bg-primary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-primary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  {
-    variants: {
-      orientation: {
-        horizontal: "",
-        vertical: "",
-      },
-      slotAlign: {
-        start: "",
-        center: "",
-        end: "",
-      },
+const separatorSlotVariants = cva("", {
+  variants: {
+    orientation: {
+      horizontal: "",
+      vertical: "",
     },
-    defaultVariants: {
-      orientation: "horizontal",
-      slotAlign: "center",
+    slotAlign: {
+      start: "",
+      center: "",
+      end: "",
     },
-  }
-)
+  },
+  defaultVariants: {
+    orientation: "horizontal",
+    slotAlign: "center",
+  },
+})
 
 type SeparatorProps = Omit<
   React.ComponentProps<typeof SeparatorPrimitive>,

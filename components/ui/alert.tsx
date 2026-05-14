@@ -114,7 +114,7 @@ const alertTitleVariants = cva(
 )
 
 const alertDescriptionVariants = cva(
-  "leading-base font-normal tracking-normal text-balance opacity-80 md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
+  "leading-lg font-normal tracking-normal text-balance opacity-80 md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
   {
     variants: {
       type: {

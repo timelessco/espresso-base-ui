@@ -811,7 +811,7 @@ function HelpdeskSidebar() {
                     James fenimore
                   </span>
                 </div>
-                <ChevronDown className="ml-auto" />
+                <ChevronDown className="relative right-2 ml-auto" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--anchor-width] min-w-56"
@@ -1176,7 +1176,11 @@ export default function HelpdeskPage() {
                   ]}
                   defaultValue="title"
                 >
-                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [
@@ -1212,7 +1216,11 @@ export default function HelpdeskPage() {
                   ]}
                   defaultValue="name"
                 >
-                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent alignItemWithTrigger={false} align="start">
@@ -1239,7 +1247,11 @@ export default function HelpdeskPage() {
                   ]}
                   defaultValue="column"
                 >
-                  <SelectTrigger variant="subtle" size="sm" suffix={<ChevronDown />}>
+                  <SelectTrigger
+                    variant="subtle"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
                     <SelectValue>
                       {(value) => {
                         const items = [

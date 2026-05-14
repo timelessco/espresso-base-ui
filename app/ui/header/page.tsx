@@ -182,12 +182,11 @@ export default function HeaderPage() {
           <Header
             leftControls={
               <>
-                <AppIcon />
-
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     render={
-                      <Button variant="ghost" size="icon-sm">
+                      <Button variant="ghost" className="h-auto p-1">
+                        <AppIcon />
                         <ChevronDown />
                       </Button>
                     }

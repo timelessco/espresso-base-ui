@@ -1,6 +1,7 @@
 "use client"
 
 import { Check } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -65,20 +66,24 @@ export default function SeparatorPage() {
       <div className="flex max-w-lg flex-col gap-6">
         <SectionTitle>Horizontal — With Slot</SectionTitle>
         <Separator slot slotAlign="start">
-          Continue
+          <Button size="sm">Continue</Button>
         </Separator>
         <Separator slot slotAlign="center">
-          Continue
+          <Button size="sm">Continue</Button>
         </Separator>
         <Separator slot slotAlign="end">
-          Continue
+          <Button size="sm">Continue</Button>
         </Separator>
         <Separator slot slotAlign="center">
-          <Check />
-          Continue
+          <Button size="sm">
+            <Check />
+            Continue
+          </Button>
         </Separator>
         <Separator slot slotAlign="center">
-          <Check />
+          <Button size="sm">
+            <Check />
+          </Button>
         </Separator>
       </div>
 
@@ -91,22 +96,24 @@ export default function SeparatorPage() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <Separator slot slotAlign="start">
-            Section 1
+            <Button size="sm">Section 1</Button>
           </Separator>
           <p className="text-sm text-muted-foreground">
             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
             nisi ut aliquip ex ea commodo consequat.
           </p>
           <Separator slot slotAlign="center">
-            Continue reading
+            <Button size="sm">Continue reading</Button>
           </Separator>
           <p className="text-sm text-muted-foreground">
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur.
           </p>
           <Separator slot slotAlign="end">
-            <Check />
-            Finished
+            <Button size="sm">
+              <Check />
+              Finished
+            </Button>
           </Separator>
           <p className="text-sm text-muted-foreground">
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
@@ -120,17 +127,19 @@ export default function SeparatorPage() {
         <SectionTitle>Vertical — With Slot</SectionTitle>
         <div className="flex h-72 items-stretch gap-20">
           <Separator orientation="vertical" slot slotAlign="start">
-            Continue
+            <Button size="sm">Continue</Button>
           </Separator>
           <Separator orientation="vertical" slot slotAlign="center">
-            Continue
+            <Button size="sm">Continue</Button>
           </Separator>
           <Separator orientation="vertical" slot slotAlign="end">
-            Continue
+            <Button size="sm">Continue</Button>
           </Separator>
           <Separator orientation="vertical" slot slotAlign="center">
-            <Check />
-            Continue
+            <Button size="sm">
+              <Check />
+              Continue
+            </Button>
           </Separator>
         </div>
       </div>
