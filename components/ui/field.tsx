@@ -112,7 +112,7 @@ function FieldLabel({
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:px-1.5 has-[>[data-slot=field]]:py-1.75 *:data-[slot=field]:p-1.5",
         // interactive styles only when wrapping a Field (choice card)
         "has-[>[data-slot=field]]:group-data-[disabled=true]/field:pointer-events-none",
-        "has-[>[data-slot=field]]:has-[:focus-visible]:bg-secondary has-[>[data-slot=field]]:has-[:focus-visible]:shadow-3xs has-[>[data-slot=field]]:hover:bg-muted has-[>[data-slot=field]]:active:bg-accent",
+        "has-[>[data-slot=field]]:hover:bg-muted has-[>[data-slot=field]]:active:bg-accent has-[>[data-slot=field]]:has-[:focus-visible]:bg-secondary has-[>[data-slot=field]]:has-[:focus-visible]:shadow-3xs",
         // checkbox hover/active from FieldLabel (choice card only)
         "has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-unchecked]]:shadow-sm",
         "has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-checked]]:bg-primary/86 has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-checked]]:shadow-sm",
@@ -154,7 +154,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="field-description"
       className={cn(
-        "pt-1 text-left text-sm leading-base font-normal tracking-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
+        "pt-1 text-left text-sm leading-lg font-normal tracking-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
         "last:mt-0 nth-last-2:-mt-1",
         "[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
         className
