@@ -90,6 +90,9 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
@@ -312,7 +315,7 @@ function UISidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="group-data-[collapsible=icon]:overflow-y-auto!">
+      <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
@@ -360,11 +363,13 @@ function UISidebar() {
 
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupContent>
-            <div className="flex items-center justify-between px-2 pb-1">
+            <div className="flex items-center justify-between pr-0.5 pb-1 pl-2">
               <span className="text-xs font-medium text-muted-foreground">
                 Teams
               </span>
-              <Plus className="size-3.5 cursor-pointer text-muted-foreground" />
+              <Button variant="ghost" size="icon-xs">
+                <Plus className="size-3.5" />
+              </Button>
             </div>
             <SidebarMenu className="gap-0.5">
               {teams.map((team) => (
@@ -383,15 +388,18 @@ function UISidebar() {
                       <SidebarMenuBadge>{team.count}</SidebarMenuBadge>
                     )}
                     <CollapsibleContent>
-                      <SidebarMenu className="gap-0.5 pt-0.5 pl-6">
+                      <SidebarMenuSub>
                         {team.items.map((item) => (
-                          <SidebarMenuItem key={item}>
-                            <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <SidebarMenuSubItem key={item}>
+                            <SidebarMenuSubButton
+                              href="#"
+                              className="text-base!"
+                            >
                               <span>{item}</span>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
                         ))}
-                      </SidebarMenu>
+                      </SidebarMenuSub>
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
