@@ -1310,6 +1310,56 @@
     mask-image: linear-gradient(
       to bottom,
       black 0%,
+      black calc(100% - 10px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 10px),
+      transparent 100%
+    );
+  }
+
+  1%,
+  99% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10px,
+      black calc(100% - 10px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10px,
+      black calc(100% - 10px),
+      transparent 100%
+    );
+  }
+
+  100% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10px,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10px,
+      black 100%
+    );
+  }
+}
+
+@keyframes sidebar-scroll-shadow-mask {
+  0% {
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
       black calc(100% - 32px),
       transparent 100%
     );
