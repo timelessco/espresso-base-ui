@@ -178,8 +178,12 @@ export function DataGrid<TData>({
                     className={cn(
                       "relative min-w-0 text-sm font-normal text-accent-foreground",
                       {
-                        grow: stretchColumns && header.column.id !== "select",
-                        "shrink-0": !stretchColumns,
+                        grow:
+                          stretchColumns &&
+                          header.column.id !== "select" &&
+                          !header.column.getIsPinned(),
+                        "shrink-0":
+                          !stretchColumns || !!header.column.getIsPinned(),
                       }
                     )}
                     style={{

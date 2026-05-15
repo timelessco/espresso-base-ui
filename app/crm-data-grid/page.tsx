@@ -958,6 +958,9 @@ export default function CrmDataGridPage() {
   const { table, ...dataGridProps } = useDataGrid({
     data,
     columns,
+    initialState: {
+      columnPinning: { left: ["select"] },
+    },
     onDataChange: setData,
     getRowId: (row) => row.id,
     onRowAdd: () => {
