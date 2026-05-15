@@ -107,6 +107,9 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
@@ -914,28 +917,40 @@ function MailSidebar() {
                             <span>Fashion</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="mt-0.5 gap-0.5">
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                            <SidebarMenuSub>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>General</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Standups</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Training</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Update</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                            </SidebarMenu>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            </SidebarMenuSub>
                           </CollapsibleContent>
                         </SidebarMenuItem>
                       </Collapsible>
@@ -952,28 +967,40 @@ function MailSidebar() {
                             <span>Projects</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="mt-0.5 gap-0.5">
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                            <SidebarMenuSub>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>General</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Standups</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Training</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Update</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                            </SidebarMenu>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            </SidebarMenuSub>
                           </CollapsibleContent>
                         </SidebarMenuItem>
                       </Collapsible>
@@ -990,28 +1017,40 @@ function MailSidebar() {
                             <span>Events</span>
                           </CollapsibleTrigger>
                           <CollapsibleContent>
-                            <SidebarMenu className="mt-0.5 gap-0.5">
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                            <SidebarMenuSub>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>General</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Standups</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Training</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                              <SidebarMenuItem>
-                                <SidebarMenuButton className="h-7 text-base font-normal!">
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                              <SidebarMenuSubItem>
+                                <SidebarMenuSubButton
+                                  href="#"
+                                  className="text-base!"
+                                >
                                   <span>Update</span>
-                                </SidebarMenuButton>
-                              </SidebarMenuItem>
-                            </SidebarMenu>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            </SidebarMenuSub>
                           </CollapsibleContent>
                         </SidebarMenuItem>
                       </Collapsible>
