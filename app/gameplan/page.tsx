@@ -116,6 +116,9 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarSeparator,
@@ -549,15 +552,18 @@ function GameplanSidebar() {
                       <SidebarMenuBadge>{team.count}</SidebarMenuBadge>
                     )}
                     <CollapsibleContent>
-                      <SidebarMenu className="gap-0.5 pt-0.5 pl-6">
+                      <SidebarMenuSub>
                         {subItems.map((item) => (
-                          <SidebarMenuItem key={item}>
-                            <SidebarMenuButton className="h-7 text-base font-normal!">
+                          <SidebarMenuSubItem key={item}>
+                            <SidebarMenuSubButton
+                              href="#"
+                              className="text-base!"
+                            >
                               <span>{item}</span>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
                         ))}
-                      </SidebarMenu>
+                      </SidebarMenuSub>
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
