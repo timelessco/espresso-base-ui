@@ -11,11 +11,11 @@ const textareaVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground not-disabled:hover:border-border-normal not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-border-stronger disabled:bg-input disabled:text-popover-foreground data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline",
+          "border-border bg-background not-disabled:hover:border-border-normal not-disabled:focus:bg-background not-disabled:focus:shadow-3xs disabled:bg-input disabled:text-popover-foreground data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline",
         subtle:
-          "border-transparent bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-border-stronger not-disabled:active:bg-primary-foreground disabled:bg-input disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
+          "border-transparent bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-3xs not-disabled:active:bg-background disabled:bg-input disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
         ghost:
-          "border-transparent bg-transparent not-disabled:hover:bg-muted not-disabled:focus:border-transparent not-disabled:focus:bg-primary-foreground not-disabled:focus:shadow-3xs not-disabled:active:border-transparent! not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
+          "border-transparent bg-transparent not-disabled:hover:bg-muted not-disabled:focus:border-transparent not-disabled:focus:bg-background not-disabled:focus:shadow-3xs not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
       },
       size: {
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",
