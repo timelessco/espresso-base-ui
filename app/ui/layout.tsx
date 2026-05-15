@@ -49,6 +49,7 @@ import {
   SquareCheckBig,
   SquareDashed,
   Star,
+  Sun,
   Table as TableIcon,
   Tags,
   TextCursorInput,
@@ -58,6 +59,7 @@ import {
   Workflow,
   Zap,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import {
@@ -154,6 +156,8 @@ const components = [
 
 function UISidebar() {
   const pathname = usePathname()
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
 
   return (
     <Sidebar collapsible="icon">
@@ -288,9 +292,11 @@ function UISidebar() {
                   <User />
                   My Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Moon />
-                  Dark Mode
+                <DropdownMenuItem
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                  {isDark ? "Light Mode" : "Dark Mode"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CircleAlert />

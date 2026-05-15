@@ -36,7 +36,9 @@ import {
   TicketCheck,
   TicketX,
   TicketPlus,
+  Sun,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import {
   useReactTable,
   getCoreRowModel,
@@ -784,6 +786,8 @@ const columns: ColumnDef<Ticket>[] = [
 ]
 
 function HelpdeskSidebar() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -917,9 +921,11 @@ function HelpdeskSidebar() {
                   <User />
                   My Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Moon />
-                  Dark Mode
+                <DropdownMenuItem
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                  {isDark ? "Light Mode" : "Dark Mode"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CircleAlert />

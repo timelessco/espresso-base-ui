@@ -52,6 +52,7 @@ import {
   HeartHandshake,
   ShieldCheck,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import {
   useReactTable,
   getCoreRowModel,
@@ -553,6 +554,8 @@ const leads = [
 ]
 
 function CrmSidebar() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="">
@@ -686,9 +689,11 @@ function CrmSidebar() {
                   <User />
                   My Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Moon />
-                  Dark Mode
+                <DropdownMenuItem
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                  {isDark ? "Light Mode" : "Dark Mode"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CircleAlert />
