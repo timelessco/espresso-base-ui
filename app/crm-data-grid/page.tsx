@@ -219,7 +219,7 @@ const statusOptions = Object.keys(statusColors).map((s) => ({
   value: s,
   icon: ({ className }: { className?: string }) => (
     <span
-      className={`flex size-2 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
+      className={`flex size-1.75 shrink-0 items-center justify-center rounded-full ${className ?? ""}`}
       style={{ backgroundColor: statusColors[s] }}
     />
   ),
@@ -911,7 +911,7 @@ export default function CrmDataGridPage() {
           cell: {
             variant: "select",
             options: statusOptions,
-            imageSize: "size-2",
+            imageSize: "size-1.75",
             className: "gap-2",
           },
         },
@@ -1109,8 +1109,9 @@ export default function CrmDataGridPage() {
             rightControls={
               <TooltipProvider>
                 <RadixButton
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
+                  className="h-7 focus-visible:border-transparent focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs focus-visible:ring-0"
                   onClick={() =>
                     setDirection((prev) => (prev === "ltr" ? "rtl" : "ltr"))
                   }
