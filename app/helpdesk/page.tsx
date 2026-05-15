@@ -699,35 +699,15 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 80,
     cell: ({ row }) => {
       const p = row.original.priority
-      const level = p === "High" ? 3 : p === "Medium" ? 2 : 1
+      const icon =
+        p === "High"
+          ? "/images/svg/priority-high.svg"
+          : p === "Medium"
+            ? "/images/svg/priority-medium.svg"
+            : "/images/svg/priority-low.svg"
       return (
         <div className="flex min-w-0 items-center gap-1.5">
-          <svg width="14" height="14" viewBox="0 0 14 14" className="shrink-0">
-            <rect
-              x="1"
-              y="9"
-              width="3"
-              height="4"
-              rx="0.5"
-              fill={level >= 1 ? "#6B7280" : "#D1D5DB"}
-            />
-            <rect
-              x="5.5"
-              y="5"
-              width="3"
-              height="8"
-              rx="0.5"
-              fill={level >= 2 ? "#6B7280" : "#D1D5DB"}
-            />
-            <rect
-              x="10"
-              y="1"
-              width="3"
-              height="12"
-              rx="0.5"
-              fill={level >= 3 ? "#6B7280" : "#D1D5DB"}
-            />
-          </svg>
+          <img src={icon} alt={p} className="size-4 shrink-0" />
           <span className="truncate">{p}</span>
         </div>
       )
