@@ -440,12 +440,8 @@ function DriveSidebar() {
                   />
                 }
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-[#016E7D]">
-                  <img
-                    src="/images/svg/logo-drive.svg"
-                    alt="Drive"
-                    className="size-4"
-                  />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-md">
+                  <img src="/images/svg/logo-drive.svg" alt="Drive" />
                 </div>
                 <div className="grid flex-1 text-left">
                   <span className="truncate pb-0.5 text-base font-medium text-foreground">
@@ -464,12 +460,8 @@ function DriveSidebar() {
                 sideOffset={4}
               >
                 <div className="flex items-center gap-3 px-2 py-2">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-[#016E7D]">
-                    <img
-                      src="/images/svg/logo-drive.svg"
-                      alt="Drive"
-                      className="size-4"
-                    />
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-md">
+                    <img src="/images/svg/logo-drive.svg" alt="Drive" />
                   </div>
                   <div className="grid text-left">
                     <span className="truncate pb-0.5 text-base font-medium text-foreground">
@@ -488,61 +480,43 @@ function DriveSidebar() {
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem render={<a href="/crm" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img
-                          src="/images/svg/logo-crm.svg"
-                          alt="CRM"
-                          className="size-4"
-                        />
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" />
                       </div>
                       CRM
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/crm-data-grid" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#DB4EE0] text-white">
-                        <img
-                          src="/images/svg/logo-crm.svg"
-                          alt="CRM"
-                          className="size-4"
-                        />
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" />
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/helpdesk" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#7D42FB] text-white">
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
                         <img
                           src="/images/svg/logo-helpDesk.svg"
                           alt="Helpdesk"
-                          className="size-4"
                         />
                       </div>
                       Helpdesk
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/drive" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#016E7D] text-white">
-                        <img
-                          src="/images/svg/logo-drive.svg"
-                          alt="Drive"
-                          className="size-4"
-                        />
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
+                        <img src="/images/svg/logo-drive.svg" alt="Drive" />
                       </div>
                       Drive
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/mail" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#0466DC] text-white">
-                        <img
-                          src="/images/svg/logo-mail.svg"
-                          alt="Mail"
-                          className="size-4"
-                        />
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
+                        <img src="/images/svg/logo-mail.svg" alt="Mail" />
                       </div>
                       Mail
                     </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/gameplan" />}>
-                      <div className="flex size-7 items-center justify-center rounded-md bg-[#FF8F26] text-white">
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
                         <img
                           src="/images/svg/logo-gameplan.svg"
                           alt="Gameplan"
-                          className="size-4"
                         />
                       </div>
                       Gameplan
