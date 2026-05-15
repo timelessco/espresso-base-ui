@@ -372,7 +372,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
       data-sidebar="content"
       className={cn(
         "no-scrollbar flex min-h-0 flex-1 flex-col gap-0 overflow-y-auto group-data-[collapsible=icon]:overflow-y-auto",
-        "[animation:scroll-shadow-mask_linear_both] [animation-timeline:scroll(self)]",
+        "[animation:sidebar-scroll-shadow-mask_linear_both] [animation-timeline:scroll(self)]",
         className
       )}
       {...props}
