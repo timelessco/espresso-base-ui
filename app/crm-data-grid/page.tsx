@@ -41,6 +41,7 @@ import {
   HeartHandshake,
   ShieldCheck,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import * as React from "react"
 import { type ColumnDef } from "@tanstack/react-table"
 import { cn } from "@/lib/utils"
@@ -469,6 +470,8 @@ const initialLeads: Lead[] = [
 ]
 
 function CrmSidebar() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -602,9 +605,11 @@ function CrmSidebar() {
                   <User />
                   My Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Moon />
-                  Dark Mode
+                <DropdownMenuItem
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                  {isDark ? "Light Mode" : "Dark Mode"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CircleAlert />

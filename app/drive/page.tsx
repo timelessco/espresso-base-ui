@@ -42,7 +42,9 @@ import {
   CircleAlert as InfoIcon,
   MessageCircle,
   History,
+  Sun,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import {
   useReactTable,
   getCoreRowModel,
@@ -422,6 +424,8 @@ const columns: ColumnDef<DriveFile>[] = [
 ]
 
 function DriveSidebar() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -555,9 +559,11 @@ function DriveSidebar() {
                   <User />
                   My Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Moon />
-                  Dark Mode
+                <DropdownMenuItem
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                >
+                  {isDark ? <Sun /> : <Moon />}
+                  {isDark ? "Light Mode" : "Dark Mode"}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <CircleAlert />
