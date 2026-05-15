@@ -1109,8 +1109,9 @@ export default function CrmDataGridPage() {
             rightControls={
               <TooltipProvider>
                 <RadixButton
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
+                  className="h-7 focus-visible:border-transparent focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs focus-visible:ring-0"
                   onClick={() =>
                     setDirection((prev) => (prev === "ltr" ? "rtl" : "ltr"))
                   }

@@ -52,9 +52,9 @@ export function DataGridViewMenu<TData>({
           aria-label="Toggle columns"
           role="combobox"
           dir={dir}
-          variant="outline"
+          variant="secondary"
           size="sm"
-          className="ms-auto hidden h-8 font-normal lg:flex"
+          className="ms-auto hidden h-7 font-normal focus-visible:border-transparent focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs focus-visible:ring-0 lg:flex"
           disabled={disabled}
         >
           <Settings2 className="text-muted-foreground" />
