@@ -605,7 +605,7 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 150,
     cell: ({ row }) => (
       <span
-        className={`truncate text-foreground ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal" : "font-medium"}`}
+        className={`truncate ${row.original.status === "Resolved" || row.original.status === "Closed" ? "font-normal text-muted-foreground" : "font-medium text-secondary-foreground"}`}
       >
         {row.original.ticket}
       </span>
