@@ -978,7 +978,7 @@ const columns: ColumnDef<Lead>[] = [
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
         <span
-          className="flex size-2 shrink-0 items-center justify-center rounded-full"
+          className="flex size-1.75 shrink-0 items-center justify-center rounded-full"
           style={{ backgroundColor: statusColors[row.original.status] }}
         ></span>
         <span className="truncate">{row.original.status}</span>
