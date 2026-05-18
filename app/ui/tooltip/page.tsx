@@ -32,6 +32,29 @@ export default function TooltipPage() {
           </div>
         </div>
 
+        {/* Variants */}
+        <div className="flex flex-col gap-4">
+          <SectionTitle>Variants</SectionTitle>
+          <div className="flex items-center gap-4">
+            <Tooltip>
+              <TooltipTrigger render={<Button variant="outline" />}>
+                With arrow
+              </TooltipTrigger>
+              <TooltipContent variant="default">
+                Default variant <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger render={<Button variant="outline" />}>
+                Without arrow
+              </TooltipTrigger>
+              <TooltipContent variant="plain">
+                Plain variant <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </div>
+
         {/* Positions */}
         <div className="flex flex-col gap-4">
           <SectionTitle>Positions</SectionTitle>
