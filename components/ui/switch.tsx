@@ -36,9 +36,9 @@ const switchThumbVariants = cva(
   {
     variants: {
       size: {
-        sm: "top-px size-3 group-active/switch:w-[13px] data-checked:left-[11px] group-active/switch:data-checked:left-[10px] data-unchecked:left-px",
+        sm: "top-px size-3 group-active/switch:w-[15px] data-checked:left-[11px] group-active/switch:data-checked:left-[8px] data-unchecked:left-px",
         default:
-          "top-0.5 size-3.5 group-active/switch:w-[15px] data-checked:left-[14px] group-active/switch:data-checked:left-[13px] data-unchecked:left-0.5",
+          "top-0.5 size-3.5 group-active/switch:w-[18px] data-checked:left-[14px] group-active/switch:data-checked:left-[10px] data-unchecked:left-0.5",
       },
     },
     defaultVariants: {
