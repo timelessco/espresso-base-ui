@@ -365,10 +365,7 @@ function UISidebar() {
                       <SidebarMenuSub>
                         {team.items.map((item) => (
                           <SidebarMenuSubItem key={item}>
-                            <SidebarMenuSubButton
-                              href="#"
-                              className="text-base!"
-                            >
+                            <SidebarMenuSubButton className="cursor-default text-base! select-none">
                               <span>{item}</span>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
