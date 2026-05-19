@@ -1305,6 +1305,18 @@
   display: none;
 }
 
+button {
+  transition:
+    transform 0.25s ease,
+    background-color 0.1s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.1s cubic-bezier(0, 0, 0.2, 1);
+}
+
+button:active,
+button[data-pressed="true"] {
+  transform: scale(0.97);
+}
+
 @keyframes scroll-shadow-mask {
   0% {
     mask-image: linear-gradient(
