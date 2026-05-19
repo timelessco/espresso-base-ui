@@ -1422,6 +1422,11 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
   transform: scale(0.97);
 }
 
+[data-slot="button-group"]:not([data-detached="true"]) button:active,
+[data-slot="button-group"]:not([data-detached="true"]) button[data-pressed="true"] {
+  transform: none;
+}
+
 @keyframes scroll-shadow-mask {
   0% {
     mask-image: linear-gradient(
