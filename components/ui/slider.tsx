@@ -13,10 +13,10 @@ const trackSizeMap = {
 }
 
 const thumbSizeMap = {
-  sm: "size-3.5 active:w-5",
-  default: "size-4 active:w-5.5",
-  lg: "size-5 active:w-6.5",
-  xl: "size-6 active:w-7.5",
+  sm: "size-3.5 data-horizontal:active:w-5 data-vertical:active:h-5",
+  default: "size-4 data-horizontal:active:w-5.5 data-vertical:active:h-5.5",
+  lg: "size-5 data-horizontal:active:w-6.5 data-vertical:active:h-6.5",
+  xl: "size-6 data-horizontal:active:w-7.5 data-vertical:active:h-7.5",
 }
 
 function Slider({
