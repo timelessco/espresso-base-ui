@@ -71,7 +71,7 @@ function Slider({
             data-slot="slider-thumb"
             key={index}
             className={cn(
-              "relative block shrink-0 origin-center rounded-full bg-white shadow-6xs ring-ring/70 select-none after:absolute after:-inset-2 hover:shadow-3xl hover:ring-3 active:shadow-3xl active:ring-3 has-[:focus-visible]:shadow-3xl has-[:focus-visible]:ring-3 has-[:focus-visible]:outline-hidden data-disabled:pointer-events-none data-disabled:bg-accent data-disabled:shadow-none data-disabled:ring-0",
+              "relative block shrink-0 origin-center rounded-full bg-white shadow-6xs ring-ring/70 [transition:width_0.4s_var(--slider-thumb-spring),height_0.4s_var(--slider-thumb-spring),color_0.2s_ease-out,box-shadow_0.2s_ease-out] select-none after:absolute after:-inset-2 hover:shadow-3xl hover:ring-3 active:shadow-3xl active:ring-3 has-[:focus-visible]:shadow-3xl has-[:focus-visible]:ring-3 has-[:focus-visible]:outline-hidden data-disabled:pointer-events-none data-disabled:bg-accent data-disabled:shadow-none data-disabled:ring-0",
               thumbSizeMap[size ?? "default"]
             )}
           />
