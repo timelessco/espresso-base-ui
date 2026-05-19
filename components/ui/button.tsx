@@ -11,20 +11,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/86 active:bg-primary/75 disabled:bg-secondary disabled:text-card-foreground",
+          "bg-primary text-primary-foreground hover:bg-primary/86 [@media(hover:none)]:active:bg-primary/75 in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 disabled:bg-secondary disabled:text-card-foreground",
         outline:
-          "active:card-foreground border border-border bg-background text-secondary-foreground hover:border-border-normal focus-visible:bg-secondary active:border-border-strong active:bg-accent disabled:border-border disabled:bg-secondary disabled:text-card-foreground",
+          "border border-border bg-background text-secondary-foreground hover:border-border-normal focus-visible:bg-secondary [@media(hover:none)]:active:border-border-strong [@media(hover:none)]:active:bg-accent in-[[data-slot=button-group]:not([data-detached])]:active:border-border-strong in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent disabled:border-border disabled:bg-secondary disabled:text-card-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted active:bg-accent disabled:bg-secondary disabled:text-card-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-muted [@media(hover:none)]:active:bg-accent in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent disabled:bg-secondary disabled:text-card-foreground",
         ghost:
-          "text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-accent disabled:text-card-foreground",
+          "text-secondary-foreground hover:bg-muted focus-visible:bg-secondary [@media(hover:none)]:active:bg-accent in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent disabled:text-card-foreground",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
+          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 [@media(hover:none)]:active:bg-destructive-active in-[[data-slot=button-group]:not([data-detached])]:active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
         link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground",
         inverted:
-          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-md hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
+          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-md hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
         "inverted-ghost":
-          "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
+          "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted focus-visible:bg-secondary [@media(hover:none)]:active:bg-accent in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
       },
       size: {
         xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
