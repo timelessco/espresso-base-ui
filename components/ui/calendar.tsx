@@ -216,7 +216,23 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-medium tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-(--cell-radius) data-[range-middle=true]:bg-muted data-[range-middle=true]:text-secondary-foreground data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground [&>span]:text-xs [&>span]:opacity-70",
+        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-medium tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        // range start
+        "data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:rounded-r-none data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground",
+        "data-[range-start=true]:after:absolute data-[range-start=true]:after:top-0 data-[range-start=true]:after:bottom-0 data-[range-start=true]:after:-right-2.5 data-[range-start=true]:after:-z-10 data-[range-start=true]:after:w-2.5 data-[range-start=true]:after:bg-primary data-[range-start=true]:after:content-['']",
+        // range middle
+        "data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-primary data-[range-middle=true]:text-primary-foreground",
+        "data-[range-middle=true]:before:absolute data-[range-middle=true]:before:top-0 data-[range-middle=true]:before:bottom-0 data-[range-middle=true]:before:-left-2.5 data-[range-middle=true]:before:-z-10 data-[range-middle=true]:before:w-2.5 data-[range-middle=true]:before:bg-primary data-[range-middle=true]:before:content-['']",
+        "data-[range-middle=true]:after:absolute data-[range-middle=true]:after:top-0 data-[range-middle=true]:after:bottom-0 data-[range-middle=true]:after:-right-2.5 data-[range-middle=true]:after:-z-10 data-[range-middle=true]:after:w-2.5 data-[range-middle=true]:after:bg-primary data-[range-middle=true]:after:content-['']",
+        // range end
+        "data-[range-end=true]:rounded-l-none data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground",
+        "data-[range-end=true]:before:absolute data-[range-end=true]:before:top-0 data-[range-end=true]:before:bottom-0 data-[range-end=true]:before:-left-2.5 data-[range-end=true]:before:-z-10 data-[range-end=true]:before:w-2.5 data-[range-end=true]:before:bg-primary data-[range-end=true]:before:content-['']",
+        // hide pseudo-element bridges at row edges and round the range edges
+        "[:first-child>&]:before:hidden [:first-child>&]:rounded-l-(--cell-radius)",
+        "[:last-child>&]:after:hidden [:last-child>&]:rounded-r-(--cell-radius)",
+        // single selected
+        "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground",
+        "[&>span]:text-xs [&>span]:opacity-70",
         defaultClassNames.day,
         className
       )}
