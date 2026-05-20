@@ -35,8 +35,14 @@ function Checkbox({
       {...props}
     >
       <CheckboxPrimitive.Indicator
+        forceMount
         data-slot="checkbox-indicator"
-        className="grid place-content-center text-current transition-none"
+        className={cn(
+          "grid place-content-center text-current transition-[clip-path] duration-200 ease-out",
+          "data-[state=unchecked]:[clip-path:inset(0_100%_0_0)]",
+          "data-[state=checked]:[clip-path:inset(0_0_0_0)]",
+          "data-[state=indeterminate]:[clip-path:inset(0_0_0_0)]"
+        )}
       >
         <CheckIcon className="size-3.5" />
       </CheckboxPrimitive.Indicator>
