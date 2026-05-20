@@ -32,13 +32,13 @@ const buttonGroupVariants = cva(
         orientation: "horizontal",
         detached: false,
         className:
-          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:ml-px [&>[data-slot]~[data-slot]]:rounded-l-none",
+          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:-ml-px [&>[data-slot]~[data-slot]]:rounded-l-none has-[>[data-slot=button][data-variant=outline]]:[&>[data-slot]~[data-slot]]:ml-px",
       },
       {
         orientation: "vertical",
         detached: false,
         className:
-          "*:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg! [&>[data-slot]~[data-slot]]:mt-px [&>[data-slot]~[data-slot]]:rounded-t-none",
+          "*:data-slot:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg! [&>[data-slot]~[data-slot]]:-mt-px [&>[data-slot]~[data-slot]]:rounded-t-none has-[>[data-slot=button][data-variant=outline]]:[&>[data-slot]~[data-slot]]:mt-px",
       },
       { detached: true, size: "sm", className: "gap-1" },
       { detached: true, size: "default", className: "gap-1.5" },
