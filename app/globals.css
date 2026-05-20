@@ -832,9 +832,7 @@
   --shadow-3xs: 0 0 0 2px rgba(201, 201, 201, 0.9);
   --shadow-xs: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-
   --shadow-lg: 0 0 0 2px #c7c7c7;
-
   --shadow-4xl:
     0 0 2px 0 rgba(0, 0, 0, 0.2), 0 2px 7px 0 rgba(0, 0, 0, 0.1),
     0 0 0 2px #383838;
@@ -845,22 +843,23 @@
   --border-stronger: var(--color-gray-800); /* #383838 */ /*outline/gray-5*/
 
   --shadow-6xs:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f; /* elevation/light/base */
+    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f; /* elevation/light/base */
   --shadow-md:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f; /* elevation/light/sm */
+    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f; /* elevation/light/sm */
   --shadow-3xl:
     0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f; /* elevation/light/md */
+    0 6px 6px -3px #0000000f; /* elevation/light/md */
+  --shadow-7xl:
+    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
+    0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f; /* elevation/light/lg */
   --shadow-5xs:
     0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
     0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f,
-    0 24px 24px -12px #0000000f, 0 48px 48px -24px #0000000f; /* elevation/light/xl */
+    0 24px 24px -12px #0000000f; /* elevation/light/xl */
   --shadow-5xl:
     0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
     0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f,
-    0 24px 24px -12px #0000000f, 0 48px 48px -24px #0000000f,
-    0 96px 96px -48px #0000000f; /* elevation/light/2xl */
+    0 24px 24px -12px #0000000f, 0 48px 48px -24px #0000000f; /* elevation/light/2xl */
   /* end custom variables */
 
   --spacing: 0.25rem; /* 4px */
@@ -1017,27 +1016,29 @@
   --selection-foreground: lab(100% 0 0);
 
   --shadow-6xs:
-    inset 0 1px 0 0 #ffffff05, inset 0 0 0 1px #ffffff05, 0 0 0 1px #0000001f,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e; /* elevation/dark/base */
+    inset 0 1px 0 0 #ffffff03, inset 0 0 0 1px #ffffff05,
+    0 1px 1px -0.5px #0000002e; /* elevation/dark/base */
   --shadow-md:
+    inset 0 1px 0 0 #ffffff05, inset 0 0 0 1px #ffffff05, 0 0 0 1px #0000001f,
+    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e; /* elevation/dark/sm */
+  --shadow-3xl:
     inset 0 1px 0 0 #ffffff05, inset 0 0 0 1px #ffffff0a, 0 0 0 1px #00000024,
     0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e; /* elevation/dark/sm */
-  --shadow-3xl:
+    0 6px 6px -3px #0000002e; /* elevation/dark/md */
+  --shadow-7xl:
     inset 0 1px 0 0 #ffffff0a, inset 0 0 0 1px #ffffff0a, 0 0 0 1px #00000029,
     0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e; /* elevation/dark/md */
+    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e; /* elevation/dark/lg */
   --shadow-5xs:
+    inset 0 1px 0 0 #ffffff0a, inset 0 0 0 1px #ffffff0f, 0 0 0 1px #0000002e,
+    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
+    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e,
+    0 24px 24px -12px #0000002e; /* elevation/dark/xl */
+  --shadow-5xl:
     inset 0 1px 0 0 #ffffff0f, inset 0 0 0 1px #ffffff0f, 0 0 0 1px #0003,
     0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
     0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e,
-    0 24px 24px -12px #0000002e, 0 48px 48px -24px #0000002e; /* elevation/dark/xl */
-  --shadow-5xl:
-    inset 0 1px 0 0 #ffffff0f, inset 0 0 0 1px #ffffff0f, 0 0 0 1px #00000038,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e,
-    0 24px 24px -12px #0000002e, 0 48px 48px -24px #0000002e,
-    0 96px 96px -48px #0000002e; /* elevation/dark/2xl */
+    0 24px 24px -12px #0000002e, 0 48px 48px -24px #0000002e; /* elevation/dark/2xl */
 }
 
 @theme inline {
@@ -1129,6 +1130,7 @@
   --shadow-3xl: var(--shadow-3xl);
   --shadow-4xl: var(--shadow-4xl);
   --shadow-5xl: var(--shadow-5xl);
+  --shadow-7xl: var(--shadow-7xl);
 
   /* font sizes */
   --text-tiny: var(--text-tiny);
