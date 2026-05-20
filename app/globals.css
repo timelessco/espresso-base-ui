@@ -1453,6 +1453,21 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
   transform: scale(0.97);
 }
 
+[data-slot="sidebar-menu-sub-button"],
+[data-slot="sidebar-menu-button"] {
+  transition:
+    transform 0.25s ease,
+    background-color 0.1s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.1s cubic-bezier(0, 0, 0.2, 1);
+}
+
+[data-slot="sidebar-menu-sub-button"]:active,
+[data-slot="sidebar-menu-button"]:active,
+[data-slot="sidebar-menu-sub-button"][data-pressed="true"],
+[data-slot="sidebar-menu-button"][data-pressed="true"] {
+  transform: scale(0.97);
+}
+
 [data-slot="button-group"]:not([data-detached="true"]) button:active,
 [data-slot="button-group"]:not([data-detached="true"])
   button[data-pressed="true"] {
