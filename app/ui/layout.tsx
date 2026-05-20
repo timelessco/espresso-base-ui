@@ -97,6 +97,7 @@ import {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
 
@@ -161,6 +162,10 @@ function UISidebar() {
   const pathname = usePathname()
   const { resolvedTheme, setTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
+  const { isMobile, setOpenMobile } = useSidebar()
+  const closeMobileSidebar = () => {
+    if (isMobile) setOpenMobile(false)
+  }
 
   return (
     <Sidebar collapsible="icon">
@@ -391,6 +396,7 @@ function UISidebar() {
                     <SidebarMenuButton
                       tooltip={item.label}
                       isActive={isActive}
+                      onClick={closeMobileSidebar}
                       className={cn(
                         "h-7 text-base font-normal!",
                         isActive &&
@@ -469,8 +475,8 @@ export default function UILayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <UISidebar />
-      <SidebarInset className="h-screen min-w-0 overflow-hidden">
-        <SidebarTrigger className="sr-only" />
+      <SidebarInset className="relative h-screen min-w-0 overflow-hidden">
+        <SidebarTrigger className="absolute top-3 right-3 z-50 md:hidden" />
         <main className="scrollbar-hide h-full min-h-0 min-w-0 flex-1 overflow-auto">
           {children}
         </main>
