@@ -828,38 +828,32 @@
     81.04% 0.102 56.49
   ); /* #F4B07F */ /*outline/orange-3*/
 
+  --shadow-6xs:
+    0 0 1.5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.14); /* elevation/light/base */
+  --shadow-5xs:
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 10px 2px rgba(0, 0, 0, 0.04),
+    0 24px 30px -8px rgba(0, 0, 0, 0.1);
   --shadow-4xs: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   --shadow-3xs: 0 0 0 2px rgba(201, 201, 201, 0.9);
   --shadow-xs: 0 3px 3px 0 rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 0 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.14);
   --shadow-lg: 0 0 0 2px #c7c7c7;
+  --shadow-3xl:
+    0 0 1.5px 0 rgba(0, 0, 0, 0.15), 0 0 6px 2px rgba(0, 0, 0, 0.03),
+    0 6px 12px -2px rgba(0, 0, 0, 0.12); /* elevation/light/md */
   --shadow-4xl:
     0 0 2px 0 rgba(0, 0, 0, 0.2), 0 2px 7px 0 rgba(0, 0, 0, 0.1),
     0 0 0 2px #383838;
+  --shadow-5xl:
+    0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
+    0 44px 52px -10px rgba(0, 0, 0, 0.1); /* elevation/light/2xl */
 
   --border-soft: var(--color-gray-200); /* #EDEDED */ /*outline/gray-1*/
   --border-normal: var(--color-gray-400); /* #C7C7C7 */ /*outline/gray-3*/
   --border-strong: var(--color-gray-500); /* #999999 */ /*outline/gray-4*/
   --border-stronger: var(--color-gray-800); /* #383838 */ /*outline/gray-5*/
 
-  --shadow-6xs:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f; /* elevation/light/base */
-  --shadow-md:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f; /* elevation/light/sm */
-  --shadow-3xl:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f; /* elevation/light/md */
-  --shadow-7xl:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f; /* elevation/light/lg */
-  --shadow-5xs:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f,
-    0 24px 24px -12px #0000000f; /* elevation/light/xl */
-  --shadow-5xl:
-    0 0 0 1px #0000000f, 0 1px 1px -0.5px #0000000f, 0 3px 3px -1.5px #0000000f,
-    0 6px 6px -3px #0000000f, 0 12px 12px -6px #0000000f,
-    0 24px 24px -12px #0000000f, 0 48px 48px -24px #0000000f; /* elevation/light/2xl */
   /* end custom variables */
 
   --spacing: 0.25rem; /* 4px */
@@ -982,6 +976,10 @@
     38.04% 0.093 50.98
   ); /* #683108 */ /*outline/orange-3*/
 
+  --shadow-5xs:
+    0 0.5px 1.5px 0.5px rgba(255, 255, 255, 0.04) inset,
+    0 0 14px 2px rgba(0, 0, 0, 0.12), 0 26px 34px -6px rgba(0, 0, 0, 0.42);
+
   --border-soft: var(--color-gray-800); /* #242424 */ /*outline/gray-1*/
   --border-normal: var(--color-gray-500); /* #424242 */ /*outline/gray-3*/
   --border-strong: var(--color-gray-450); /* #575757 */ /*outline/gray-4*/
@@ -1014,31 +1012,6 @@
   --code-number: lab(48.96% 0 0);
   --selection: lab(2.75381% 0 0);
   --selection-foreground: lab(100% 0 0);
-
-  --shadow-6xs:
-    inset 0 1px 0 0 #ffffff03, inset 0 0 0 1px #ffffff05,
-    0 1px 1px -0.5px #0000002e; /* elevation/dark/base */
-  --shadow-md:
-    inset 0 1px 0 0 #ffffff05, inset 0 0 0 1px #ffffff05, 0 0 0 1px #0000001f,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e; /* elevation/dark/sm */
-  --shadow-3xl:
-    inset 0 1px 0 0 #ffffff05, inset 0 0 0 1px #ffffff0a, 0 0 0 1px #00000024,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e; /* elevation/dark/md */
-  --shadow-7xl:
-    inset 0 1px 0 0 #ffffff0a, inset 0 0 0 1px #ffffff0a, 0 0 0 1px #00000029,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e; /* elevation/dark/lg */
-  --shadow-5xs:
-    inset 0 1px 0 0 #ffffff0a, inset 0 0 0 1px #ffffff0f, 0 0 0 1px #0000002e,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e,
-    0 24px 24px -12px #0000002e; /* elevation/dark/xl */
-  --shadow-5xl:
-    inset 0 1px 0 0 #ffffff0f, inset 0 0 0 1px #ffffff0f, 0 0 0 1px #0003,
-    0 1px 1px -0.5px #0000002e, 0 3px 3px -1.5px #0000002e,
-    0 6px 6px -3px #0000002e, 0 12px 12px -6px #0000002e,
-    0 24px 24px -12px #0000002e, 0 48px 48px -24px #0000002e; /* elevation/dark/2xl */
 }
 
 @theme inline {
@@ -1130,7 +1103,6 @@
   --shadow-3xl: var(--shadow-3xl);
   --shadow-4xl: var(--shadow-4xl);
   --shadow-5xl: var(--shadow-5xl);
-  --shadow-7xl: var(--shadow-7xl);
 
   /* font sizes */
   --text-tiny: var(--text-tiny);
