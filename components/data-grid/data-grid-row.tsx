@@ -211,7 +211,7 @@ function DataGridRowImpl<TData>({
       {...props}
       ref={rowRef}
       className={cn(
-        "group/row absolute flex w-full border-b border-border-soft [content-visibility:auto] last:border-transparent hover:border-transparent has-[+[data-slot=grid-row]:hover]:border-transparent hover:[&_[data-slot=grid-cell]:first-child>div]:rounded-l-md hover:[&_[data-slot=grid-cell]:last-child>div]:rounded-r-md",
+        "group/row absolute flex w-full border-b border-border-soft [content-visibility:auto] last:border-transparent [@media(hover:hover)]:hover:border-transparent [@media(hover:hover)]:has-[+[data-slot=grid-row]:hover]:border-transparent hover:[&_[data-slot=grid-cell]:first-child>div]:rounded-l-md hover:[&_[data-slot=grid-cell]:last-child>div]:rounded-r-md",
         !adjustLayout && "will-change-transform",
         className,
       )}

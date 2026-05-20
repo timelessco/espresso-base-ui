@@ -126,7 +126,7 @@ export function DataGrid<TData>({
           role="rowgroup"
           data-slot="grid-header"
           ref={headerRef}
-          className="group/header sticky top-0 z-10 flex flex-col border-b border-border-soft bg-background has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
+          className="group/header sticky top-0 z-10 flex flex-col border-b border-border-soft bg-background [@media(hover:hover)]:has-[+[data-slot=grid-body]_[data-slot=grid-row]:first-child:hover]:border-transparent"
           style={
             stretchColumns
               ? { width: "100%", maxWidth: "100%", contain: "layout paint" }
