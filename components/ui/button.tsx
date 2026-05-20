@@ -45,11 +45,27 @@ const buttonVariants = cva(
         "icon-lg":
           "size-10 rounded-lg [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
         "icon-xl":
-          "size-[46px] rounded-xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+          "size-11.5 rounded-xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
         "icon-2xl":
           "size-13 rounded-2xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "xs", className: "h-5.5!" },
+      { variant: "outline", size: "sm", className: "h-6.5!" },
+      { variant: "outline", size: "default", className: "h-7.5!" },
+      { variant: "outline", size: "lg", className: "h-9.5!" },
+      { variant: "outline", size: "xl", className: "h-11!" },
+      { variant: "outline", size: "2xl", className: "h-12.5!" },
+      // outline variant: icon sizes reduced by 2px (both dimensions to stay square)
+      { variant: "outline", size: "icon-xs", className: "size-5.5!" },
+      { variant: "outline", size: "icon-sm", className: "size-6.5!" },
+      { variant: "outline", size: "icon", className: "size-7.5!" },
+      { variant: "outline", size: "icon-lg", className: "size-9.5!" },
+      { variant: "outline", size: "icon-xl", className: "size-11!" },
+      { variant: "outline", size: "icon-2xl", className: "size-12.5!" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

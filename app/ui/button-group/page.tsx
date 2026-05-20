@@ -70,7 +70,9 @@ export default function ButtonGroupPage() {
           <Button variant="outline" size="icon">
             <Minus />
           </Button>
-          <ButtonGroupText>10</ButtonGroupText>
+          <ButtonGroupText className="bg-transparent shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(0,0,0,0.05)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)]">
+            10
+          </ButtonGroupText>
           <Button variant="outline" size="icon">
             <Plus />
           </Button>
