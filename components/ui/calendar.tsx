@@ -56,7 +56,7 @@ function Calendar({
           defaultClassNames.months
         ),
         month: cn(
-          "flex h-[-webkit-fill-available] w-full flex-col gap-4 overflow-visible",
+          "flex w-full flex-col gap-4 overflow-visible",
           defaultClassNames.month
         ),
         nav: cn(
