@@ -32,7 +32,7 @@ const buttonGroupVariants = cva(
         orientation: "horizontal",
         detached: false,
         className:
-          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:-ml-px [&>[data-slot]~[data-slot]]:rounded-l-none",
+          "*:data-slot:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&>[data-slot]~[data-slot]]:ml-px [&>[data-slot]~[data-slot]]:rounded-l-none",
       },
       {
         orientation: "vertical",

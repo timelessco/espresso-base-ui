@@ -63,32 +63,6 @@ export default function ButtonGroupPage() {
         </ButtonGroup>
       </div>
 
-      {/* With separator */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>With Separator</SectionTitle>
-        <ButtonGroup>
-          <Button variant="outline" size="icon">
-            <AlignLeft />
-          </Button>
-          <Button variant="outline" size="icon">
-            <AlignCenter />
-          </Button>
-          <Button variant="outline" size="icon">
-            <AlignRight />
-          </Button>
-          <ButtonGroupSeparator />
-          <Button variant="outline" size="icon">
-            <Bold />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Italic />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Underline />
-          </Button>
-        </ButtonGroup>
-      </div>
-
       {/* With text */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Text</SectionTitle>
