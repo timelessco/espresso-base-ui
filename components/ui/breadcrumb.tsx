@@ -136,7 +136,7 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex size-7 items-center justify-center rounded-md transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-muted hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-input active:text-foreground group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        "flex size-7 items-center justify-center rounded-md transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground group-data-[size=md]/breadcrumb:[&>svg]:size-4",
         className
       )}
       {...props}
