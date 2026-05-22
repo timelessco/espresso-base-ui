@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
   [
-    "w-full min-w-0 border leading-base font-normal tracking-normal text-secondary-foreground transition-all outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground",
+    "w-full min-w-0 border leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline",
+          "border-border bg-background group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline",
         subtle:
-          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:bg-primary-foreground not-data-disabled:focus:shadow-3xs data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled",
+          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-3xs data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled",
       },
       size: {
         sm: "h-7 rounded-md px-2 py-1.5 text-base",

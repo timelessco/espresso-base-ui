@@ -32,7 +32,7 @@ const checkboxVariants = cva(
 )
 
 const checkboxIndicatorVariants = cva(
-  "grid place-content-center text-current transition-none",
+  "grid place-content-center text-current [clip-path:inset(0_0_0_0)] transition-[clip-path] duration-200 ease-out data-starting-style:[clip-path:inset(0_100%_0_0)]",
   {
     variants: {
       size: {

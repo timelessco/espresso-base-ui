@@ -6,25 +6,25 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center bg-clip-padding text-sm whitespace-nowrap transition-all outline-none select-none focus-visible:shadow-3xs disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 transform-gpu items-center justify-center bg-clip-padding text-sm whitespace-nowrap outline-none select-none focus-visible:shadow-3xs disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/86 active:bg-primary/75 disabled:bg-secondary disabled:text-card-foreground",
+          "bg-primary text-primary-foreground hover:bg-primary/86 disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 [@media(hover:none)]:active:bg-primary/75",
         outline:
-          "active:card-foreground border border-border bg-background text-secondary-foreground hover:border-border-normal focus-visible:bg-secondary active:border-border-strong active:bg-accent disabled:border-border disabled:bg-secondary disabled:text-card-foreground",
+          "bg-background text-secondary-foreground shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(0,0,0,0.05)] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] [@media(hover:none)]:active:bg-secondary",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted active:bg-accent disabled:bg-secondary disabled:text-card-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-muted disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent [@media(hover:none)]:active:bg-accent",
         ghost:
-          "text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-accent disabled:text-card-foreground",
+          "text-secondary-foreground hover:bg-muted disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 active:bg-destructive-active disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground",
-        link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground",
+          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-destructive-active [@media(hover:none)]:active:bg-destructive-active",
+        link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
         inverted:
-          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-md hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
+          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-md hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
         "inverted-ghost":
-          "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
+          "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)] [@media(hover:none)]:active:bg-accent dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
       },
       size: {
         xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
@@ -45,11 +45,27 @@ const buttonVariants = cva(
         "icon-lg":
           "size-10 rounded-lg [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
         "icon-xl":
-          "size-[46px] rounded-xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+          "size-11.5 rounded-xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
         "icon-2xl":
           "size-13 rounded-2xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "xs", className: "h-5.5!" },
+      { variant: "outline", size: "sm", className: "h-6.5!" },
+      { variant: "outline", size: "default", className: "h-7.5!" },
+      { variant: "outline", size: "lg", className: "h-9.5!" },
+      { variant: "outline", size: "xl", className: "h-11!" },
+      { variant: "outline", size: "2xl", className: "h-12.5!" },
+      // outline variant: icon sizes reduced by 2px (both dimensions to stay square)
+      { variant: "outline", size: "icon-xs", className: "size-5.5!" },
+      { variant: "outline", size: "icon-sm", className: "size-6.5!" },
+      { variant: "outline", size: "icon", className: "size-7.5!" },
+      { variant: "outline", size: "icon-lg", className: "size-9.5!" },
+      { variant: "outline", size: "icon-xl", className: "size-11!" },
+      { variant: "outline", size: "icon-2xl", className: "size-12.5!" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
@@ -66,6 +82,7 @@ function Button({
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-variant={variant}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />

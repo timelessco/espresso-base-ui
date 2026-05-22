@@ -32,13 +32,13 @@ const switchVariants = cva(
 )
 
 const switchThumbVariants = cva(
-  "pointer-events-none block rounded-full bg-background shadow-xs ring-0 transition-transform",
+  "pointer-events-none absolute rounded-full bg-background shadow-xs ring-0 drop-shadow-[0_3px_3px_rgba(0,0,0,0.05)] transition-all duration-150 ease-out",
   {
     variants: {
       size: {
-        sm: "size-3 data-checked:translate-x-[11px] data-unchecked:translate-x-px",
+        sm: "top-px size-3 group-active/switch:w-[15px] data-checked:left-[11px] group-active/switch:data-checked:left-[8px] data-unchecked:left-px",
         default:
-          "size-3.5 data-checked:translate-x-[14px] data-unchecked:translate-x-0.5",
+          "top-0.5 size-3.5 group-active/switch:w-[18px] data-checked:left-[14px] group-active/switch:data-checked:left-[10px] data-unchecked:left-0.5",
       },
     },
     defaultVariants: {
