@@ -127,6 +127,11 @@ function FieldLabel({
         "has-[>[data-slot=field]]:[&:hover_[data-slot=switch][data-checked]]:bg-primary/86",
         "has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-unchecked]]:bg-card-foreground",
         "has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-checked]]:bg-primary/74",
+        // switch thumb stretch on FieldLabel press (works for choice card AND simple label)
+        "[&:active_[data-slot=switch][data-size=sm]_[data-slot=switch-thumb]]:w-[15px]",
+        "[&:active_[data-slot=switch][data-size=default]_[data-slot=switch-thumb]]:w-[18px]",
+        "[&:active_[data-slot=switch][data-size=sm][data-checked]_[data-slot=switch-thumb]]:left-[8px]",
+        "[&:active_[data-slot=switch][data-size=default][data-checked]_[data-slot=switch-thumb]]:left-[10px]",
         // suppress child focus ring when FieldLabel has focus-within (choice card only)
         "has-[>[data-slot=field]]:[&:has(:focus-visible)_[data-slot=checkbox]]:ring-0 has-[>[data-slot=field]]:[&:has(:focus-visible)_[data-slot=radio-group-item]]:ring-0 has-[>[data-slot=field]]:[&:has(:focus-visible)_[data-slot=switch]]:ring-0",
         className

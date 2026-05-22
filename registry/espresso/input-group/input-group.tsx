@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 const inputGroupVariants = cva(
   [
-    "group/input-group relative flex w-full min-w-0 items-center border transition-colors outline-none",
+    "group/input-group relative flex w-full min-w-0 items-center border outline-none",
     // disabled
     "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground",
     // focus-within
@@ -24,9 +24,9 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-primary-foreground group-data-[invalid=true]/field:border-error-outline! not-has-disabled:hover:border-border-normal has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground data-[filled=true]:border-border data-[invalid=true]:border-error-outline! data-[valid=true]:border-success-outline!",
+          "border-border bg-background group-data-[invalid=true]/field:border-error-outline! not-has-disabled:hover:border-border-normal has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground data-[filled=true]:border-border data-[invalid=true]:border-error-outline! data-[valid=true]:border-success-outline!",
         subtle:
-          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground has-[[data-slot=input-group-control]:focus-visible]:bg-primary-foreground data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
+          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:border-primary-foreground has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
