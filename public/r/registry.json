@@ -28,8 +28,7 @@
         "class-variance-authority"
       ],
       "registryDependencies": [
-        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
-        "https://espresso-base-ui.vercel.app/r/button-group.json"
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ],
       "files": [
         {
