@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "espresso-font",
+  "title": "Inter",
+  "description": "Inter variable font used by Espresso UI.",
+  "type": "registry:font",
+  "font": {
+    "family": "Inter, sans-serif",
+    "provider": "google",
+    "import": "Inter",
+    "variable": "--font-sans",
+    "subsets": [
+      "latin"
+    ],
+    "dependency": "@fontsource-variable/inter"
+  }
+}
