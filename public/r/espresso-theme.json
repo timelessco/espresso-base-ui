@@ -3,6 +3,9 @@
   "name": "espresso-theme",
   "title": "Espresso Theme",
   "description": "Espresso UI design tokens and color system.",
+  "registryDependencies": [
+    "https://espresso-base-ui.vercel.app/r/espresso-font.json"
+  ],
   "files": [
     {
       "path": "registry/espresso/espresso-theme/globals.css",
