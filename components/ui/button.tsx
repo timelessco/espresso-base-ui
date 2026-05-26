@@ -13,7 +13,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground hover:bg-primary/86 disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 [@media(hover:none)]:active:bg-primary/75",
         outline:
-          "bg-background text-secondary-foreground shadow-[0px_1px_1px_#00000014,0px_0px_0px_1px_#00000014] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] [@media(hover:none)]:active:bg-secondary",
+          "bg-background text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] [@media(hover:none)]:active:bg-secondary",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-muted disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent [@media(hover:none)]:active:bg-accent",
         ghost:
