@@ -39,25 +39,25 @@ const alertVariants = cva(
         type: "default",
         variant: "success",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:bg-success/80! [&_[data-slot=alert-button]>button]:active:bg-success/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--success),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--success),white_10%)]!",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success/80! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:bg-success! [&_[data-slot=alert-button]>button]:active:bg-success/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--success),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--success),white_10%)]!",
       },
       {
         type: "default",
         variant: "destructive",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:bg-error/80! [&_[data-slot=alert-button]>button]:active:bg-error/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--error),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--error),white_10%)]!",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error/80! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:bg-error! [&_[data-slot=alert-button]>button]:active:bg-error/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--error),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--error),white_10%)]!",
       },
       {
         type: "default",
         variant: "warning",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:bg-warning/80! [&_[data-slot=alert-button]>button]:active:bg-warning/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--warning),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--warning),white_10%)]!",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning/80! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:bg-warning! [&_[data-slot=alert-button]>button]:active:bg-warning/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--warning),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--warning),white_10%)]!",
       },
       {
         type: "default",
         variant: "info",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info/80! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
+          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info/80! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
       },
       // banner type — variant bg colors
       {
