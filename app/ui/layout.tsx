@@ -138,6 +138,7 @@ const components = [
   { label: "Header", href: "/ui/header", icon: PanelTop },
   { label: "Input", href: "/ui/input", icon: TextCursorInput },
   { label: "Input Group", href: "/ui/input-group", icon: AlignLeft },
+  { label: "Input OTP", href: "/ui/input-otp", icon: Keyboard },
   { label: "Item", href: "/ui/item", icon: List },
   { label: "Kanban", href: "/ui/kanban", icon: Columns3 },
   { label: "Kbd", href: "/ui/kbd", icon: Keyboard },

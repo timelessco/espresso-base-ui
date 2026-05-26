@@ -1,9 +1,14 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
@@ -13,7 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { DateRange } from "react-day-picker"
-import { addDays } from "date-fns"
+import { addDays, format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -33,6 +39,60 @@ const monthNames = [
   "Nov",
   "Dec",
 ]
+
+function DatePicker() {
+  const [date, setDate] = useState<Date | undefined>(undefined)
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            className="w-56 justify-between font-normal"
+          >
+            {date ? format(date, "PPP") : "Pick a date"}
+            <CalendarIcon className="size-4" />
+          </Button>
+        }
+      />
+      <PopoverContent
+        className="w-auto p-0"
+        align="start"
+        sideOffset={4}
+      >
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={(d) => {
+            setDate(d)
+            setOpen(false)
+          }}
+          className="border-0 shadow-none"
+        />
+      </PopoverContent>
+    </Popover>
+  )
+}
+
+function TimeInput() {
+  const [time, setTime] = useState<string>("")
+
+  useEffect(() => {
+    setTime(format(new Date(), "HH:mm:ss"))
+  }, [])
+
+  return (
+    <Input
+      type="time"
+      step="1"
+      value={time}
+      onChange={(e) => setTime(e.target.value)}
+      className="w-fit [&::-webkit-calendar-picker-indicator]:hidden"
+    />
+  )
+}
 
 function DateTimePresetPicker() {
   const [date, setDate] = useState<Date | undefined>(new Date())
@@ -379,6 +439,18 @@ export default function CalendarPage() {
           selected={multipleDates}
           onSelect={setMultipleDates}
         />
+      </div>
+
+      {/* Date Picker */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Date Picker</SectionTitle>
+        <DatePicker />
+      </div>
+
+      {/* Time Input */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Time Input</SectionTitle>
+        <TimeInput />
       </div>
 
       {/* Date Time Picker with Presets */}
