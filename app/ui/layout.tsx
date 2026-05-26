@@ -129,6 +129,7 @@ const components = [
   { label: "Button Group", href: "/ui/button-group", icon: Inbox },
   { label: "Calendar", href: "/ui/calendar", icon: Calendar },
   { label: "Checkbox", href: "/ui/checkbox", icon: SquareCheckBig },
+  { label: "Combobox", href: "/ui/combobox", icon: Search },
   { label: "Dialog", href: "/ui/dialog", icon: AppWindow },
   { label: "Divider", href: "/ui/separator", icon: Divide },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu", icon: ChevronDown },
