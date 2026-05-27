@@ -12,7 +12,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         outline:
-          "border-border bg-background group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:shadow-3xs data-filled:border-border data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border [&:-webkit-autofill]:border-filled-outline",
+          "border-transparent bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:border-error-outline! hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] not-data-disabled:focus:border-primary-foreground! not-data-disabled:focus:shadow-3xs! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] [&:-webkit-autofill]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--filled-outline)]",
         subtle:
           "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:border-primary-foreground not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-3xs data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled",
       },
