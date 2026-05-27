@@ -81,7 +81,9 @@ const timezones = [
 export default function ComboboxPage() {
   const [singleValue, setSingleValue] = React.useState<string | null>(null)
   const [chipsValue, setChipsValue] = React.useState<string[]>([])
+  const [chipsSubtleValue, setChipsSubtleValue] = React.useState<string[]>([])
   const anchorRef = useComboboxAnchor()
+  const anchorSubtleRef = useComboboxAnchor()
 
   return (
     <div className="flex flex-col gap-12 p-8">
@@ -89,6 +91,46 @@ export default function ComboboxPage() {
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
         <Combobox items={fruits}>
+          <ComboboxInput placeholder="Pick a fruit..." />
+          <ComboboxContent>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No results found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+      </div>
+
+      {/* Outline variant (default) */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Outline (default)</SectionTitle>
+        <Combobox variant="outline" items={fruits}>
+          <ComboboxInput placeholder="Pick a fruit..." />
+          <ComboboxContent>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No results found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+      </div>
+
+      {/* Subtle variant */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Subtle</SectionTitle>
+        <Combobox variant="subtle" items={fruits}>
           <ComboboxInput placeholder="Pick a fruit..." />
           <ComboboxContent>
             <ComboboxList>
@@ -136,7 +178,7 @@ export default function ComboboxPage() {
         <Combobox
           items={timezones}
           value={singleValue ?? ""}
-          onValueChange={(v) => setSingleValue(v as string)}
+          onValueChange={(v: unknown) => setSingleValue(v as string)}
         >
           <ComboboxInput
             placeholder="Search timezones..."
@@ -243,14 +285,15 @@ export default function ComboboxPage() {
         </Combobox>
       </div>
 
-      {/* Multi-select with Chips */}
+      {/* Multi-select with Chips — Outline */}
       <div className="flex max-w-md flex-col gap-4">
-        <SectionTitle>Multi-select (Chips)</SectionTitle>
+        <SectionTitle>Multi-select Chips — Outline</SectionTitle>
         <Combobox
+          variant="outline"
           multiple
           items={fruits}
           value={chipsValue}
-          onValueChange={(v) => setChipsValue(v as string[])}
+          onValueChange={(v: unknown) => setChipsValue(v as string[])}
         >
           <ComboboxChips ref={anchorRef}>
             {chipsValue.map((v) => {
@@ -280,6 +323,48 @@ export default function ComboboxPage() {
           Selected:{" "}
           <span className="font-medium">
             {chipsValue.length ? chipsValue.join(", ") : "none"}
+          </span>
+        </p>
+      </div>
+
+      {/* Multi-select with Chips — Subtle */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Multi-select Chips — Subtle</SectionTitle>
+        <Combobox
+          variant="subtle"
+          multiple
+          items={fruits}
+          value={chipsSubtleValue}
+          onValueChange={(v: unknown) => setChipsSubtleValue(v as string[])}
+        >
+          <ComboboxChips ref={anchorSubtleRef}>
+            {chipsSubtleValue.map((v) => {
+              const item = fruits.find((f) => f.value === v)
+              return (
+                <ComboboxChip key={v}>
+                  <ComboboxValue>{item?.label ?? v}</ComboboxValue>
+                </ComboboxChip>
+              )
+            })}
+            <ComboboxChipsInput placeholder="Add fruits..." />
+          </ComboboxChips>
+          <ComboboxContent anchor={anchorSubtleRef}>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+        <p className="text-sm text-muted-foreground">
+          Selected:{" "}
+          <span className="font-medium">
+            {chipsSubtleValue.length ? chipsSubtleValue.join(", ") : "none"}
           </span>
         </p>
       </div>

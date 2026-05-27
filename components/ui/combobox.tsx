@@ -13,7 +13,28 @@ import {
 } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
-const Combobox = ComboboxPrimitive.Root
+type ComboboxVariant = "outline" | "subtle"
+
+const ComboboxContext = React.createContext<{ variant: ComboboxVariant }>({
+  variant: "outline",
+})
+
+function useComboboxVariant() {
+  return React.useContext(ComboboxContext).variant
+}
+
+function Combobox<TItem, TMultiple extends boolean | undefined = undefined>({
+  variant = "outline",
+  ...props
+}: ComboboxPrimitive.Root.Props<TItem, TMultiple> & {
+  variant?: ComboboxVariant
+}) {
+  return (
+    <ComboboxContext.Provider value={{ variant }}>
+      <ComboboxPrimitive.Root {...props} />
+    </ComboboxContext.Provider>
+  )
+}
 
 function ComboboxValue({ ...props }: ComboboxPrimitive.Value.Props) {
   return <ComboboxPrimitive.Value data-slot="combobox-value" {...props} />
@@ -63,8 +84,9 @@ function ComboboxInput({
   showTrigger?: boolean
   showClear?: boolean
 }) {
+  const variant = useComboboxVariant()
   return (
-    <InputGroup className={cn("w-auto", className)}>
+    <InputGroup variant={variant} className={cn("w-auto", className)}>
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
         {...props}
@@ -125,11 +147,13 @@ function ComboboxContent({
 }
 
 function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
+  const variant = useComboboxVariant()
   return (
     <ComboboxPrimitive.List
       data-slot="combobox-list"
+      data-variant={variant}
       className={cn(
-        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] [animation:scroll-shadow-mask_linear_both] scroll-py-1 overflow-y-auto overscroll-contain p-1 [animation-timeline:scroll(self)] data-empty:p-0",
+        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] [animation:scroll-shadow-mask_linear_both] scroll-py-1 overflow-y-auto overscroll-contain p-1 [animation-timeline:scroll(self)] data-empty:p-0 data-[variant=outline]:rounded-lg data-[variant=outline]:border data-[variant=outline]:border-border",
         className
       )}
       {...props}
@@ -226,11 +250,17 @@ function ComboboxChips({
   ...props
 }: React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips> &
   ComboboxPrimitive.Chips.Props) {
+  const variant = useComboboxVariant()
   return (
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
+      data-variant={variant}
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-lg bg-secondary bg-clip-padding px-2.5 py-1 text-sm transition-colors has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+        "flex min-h-8 flex-wrap items-center gap-1 rounded-lg bg-clip-padding px-2.5 py-1 text-sm transition-colors has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:has-aria-invalid:ring-destructive/40",
+        // outline variant
+        "data-[variant=outline]:bg-background data-[variant=outline]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] data-[variant=outline]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] dark:data-[variant=outline]:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:data-[variant=outline]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
+        // subtle variant
+        "data-[variant=subtle]:bg-secondary data-[variant=subtle]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] dark:data-[variant=subtle]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         className
       )}
       {...props}
@@ -246,11 +276,13 @@ function ComboboxChip({
 }: ComboboxPrimitive.Chip.Props & {
   showRemove?: boolean
 }) {
+  const variant = useComboboxVariant()
   return (
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
+      data-variant={variant}
       className={cn(
-        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm bg-white px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
+        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         className
       )}
       {...props}
