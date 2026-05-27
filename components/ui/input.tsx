@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
   [
-    "w-full min-w-0 border leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground",
+    "w-full min-w-0 leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-input data-disabled:text-popover-foreground",
   ],
   {
     variants: {
       variant: {
         outline:
-          "border-transparent bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:border-error-outline! hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] not-data-disabled:focus:border-primary-foreground! not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! [&:-webkit-autofill]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--filled-outline)]",
+          "bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! [&:-webkit-autofill]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--filled-outline)]",
         subtle:
-          "border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! dark:not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled",
+          "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! dark:not-data-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success [&:-webkit-autofill]:bg-filled",
       },
       size: {
         sm: "h-7 rounded-md px-2 py-1.5 text-base",
