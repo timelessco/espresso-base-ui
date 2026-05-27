@@ -27,7 +27,10 @@ function ComboboxTrigger({
   return (
     <ComboboxPrimitive.Trigger
       data-slot="combobox-trigger"
-      className={cn("[&_svg:not([class*='size-'])]:size-4", className)}
+      className={cn(
+        "data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
       {...props}
     >
       {children}
@@ -126,7 +129,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
     <ComboboxPrimitive.List
       data-slot="combobox-list"
       className={cn(
-        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0",
+        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] [animation:scroll-shadow-mask_linear_both] scroll-py-1 overflow-y-auto overscroll-contain p-1 [animation-timeline:scroll(self)] data-empty:p-0",
         className
       )}
       {...props}
@@ -178,7 +181,7 @@ function ComboboxLabel({
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
       className={cn(
-        "px-2 py-1.5 text-sm leading-base font-medium tracking-normal text-accent-foreground",
+        "py-1.5 pr-2 pl-1.5 text-sm leading-base font-medium tracking-normal text-accent-foreground",
         className
       )}
       {...props}
@@ -227,7 +230,7 @@ function ComboboxChips({
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-lg bg-secondary bg-clip-padding px-2.5 py-1 text-sm transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
+        "flex min-h-8 flex-wrap items-center gap-1 rounded-lg bg-secondary bg-clip-padding px-2.5 py-1 text-sm transition-colors has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40",
         className
       )}
       {...props}
@@ -247,7 +250,7 @@ function ComboboxChip({
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
       className={cn(
-        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm bg-white px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5",
+        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm bg-white px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         className
       )}
       {...props}
@@ -273,7 +276,7 @@ function ComboboxChipsInput({
   return (
     <ComboboxPrimitive.Input
       data-slot="combobox-chip-input"
-      className={cn("min-w-16 flex-1 pl-1.5 outline-none", className)}
+      className={cn("h-6.25 min-w-16 flex-1 outline-none", className)}
       {...props}
     />
   )
