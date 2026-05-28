@@ -176,7 +176,10 @@ export default function ComboboxPage() {
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Controlled with Clear Button</SectionTitle>
         <Combobox
-          items={timezones}
+          items={timezones.map((t) => t.value)}
+          itemToStringLabel={(v: unknown) =>
+            timezones.find((t) => t.value === (v as string))?.label ?? ""
+          }
           value={singleValue ?? ""}
           onValueChange={(v: unknown) => setSingleValue(v as string)}
         >
@@ -188,11 +191,15 @@ export default function ComboboxPage() {
           <ComboboxContent>
             <ComboboxList>
               <ComboboxCollection>
-                {(item: { label: string; value: string }) => (
-                  <ComboboxItem key={item.value} value={item.value}>
-                    {item.label}
-                  </ComboboxItem>
-                )}
+                {(value: unknown) => {
+                  const v = value as string
+                  const item = timezones.find((t) => t.value === v)
+                  return (
+                    <ComboboxItem key={v} value={v}>
+                      {item?.label ?? v}
+                    </ComboboxItem>
+                  )
+                }}
               </ComboboxCollection>
             </ComboboxList>
             <ComboboxEmpty>No timezones found.</ComboboxEmpty>

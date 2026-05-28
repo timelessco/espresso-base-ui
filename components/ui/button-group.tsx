@@ -15,7 +15,8 @@ const buttonGroupVariants = cva(
       },
       detached: {
         true: "",
-        false: "",
+        false:
+          "[&>[data-slot=button][data-variant=outline]]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] [&>[data-slot=button][data-variant=outline]]:hover:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] dark:[&>[data-slot=button][data-variant=outline]]:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] dark:[&>[data-slot=button][data-variant=outline]]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]",
       },
       wrapLayout: {
         true: "flex-wrap justify-center",
