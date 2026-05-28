@@ -130,6 +130,7 @@ const components = [
   { label: "Calendar", href: "/ui/calendar", icon: Calendar },
   { label: "Checkbox", href: "/ui/checkbox", icon: SquareCheckBig },
   { label: "Combobox", href: "/ui/combobox", icon: Search },
+  { label: "Command", href: "/ui/command", icon: SquareDashed },
   { label: "Dialog", href: "/ui/dialog", icon: AppWindow },
   { label: "Divider", href: "/ui/separator", icon: Divide },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu", icon: ChevronDown },
