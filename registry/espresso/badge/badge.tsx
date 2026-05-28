@@ -12,7 +12,8 @@ const badgeVariants = cva(
         default: "bg-primary text-primary-foreground",
         secondary: "bg-secondary text-muted-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-border bg-background text-muted-foreground",
+        outline:
+          "bg-background text-muted-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)]",
         ghost: "text-muted-foreground",
         link: "overflow-visible text-muted-foreground underline-offset-4 hover:underline",
       },
