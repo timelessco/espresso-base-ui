@@ -125,60 +125,69 @@ function DateTimePresetPicker() {
           onMonthChange={setMonth}
           className="w-full border-0 shadow-none"
           classNames={{
-            nav: "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
+            nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
           }}
           components={{
-            MonthCaption: () => (
-              <div className="flex h-(--cell-size) items-center gap-1.5">
-                <Select
-                  value={monthNames[month.getMonth()]}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setMonth(monthNames.indexOf(v))
-                    setMonth(next)
-                  }}
-                >
-                  <SelectTrigger variant="ghost" size="sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {monthNames.map((mName) => (
-                        <SelectItem key={mName} value={mName}>
-                          {mName}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  value={String(month.getFullYear())}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setFullYear(Number(v))
-                    setMonth(next)
-                  }}
-                >
-                  <SelectTrigger variant="ghost" size="sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {Array.from({ length: 14 }, (_, i) => {
-                        const y = 2017 + i
-                        return (
-                          <SelectItem key={y} value={String(y)}>
-                            {y}
+            MonthCaption: () => {
+              const monthItems = monthNames.map((m) => ({
+                label: m,
+                value: m,
+              }))
+              const yearItems = Array.from({ length: 14 }, (_, i) => {
+                const y = String(2017 + i)
+                return { label: y, value: y }
+              })
+              return (
+                <div className="flex h-(--cell-size) items-center gap-1.5">
+                  <Select
+                    items={monthItems}
+                    value={monthNames[month.getMonth()]}
+                    onValueChange={(v) => {
+                      if (!v) return
+                      const next = new Date(month)
+                      next.setMonth(monthNames.indexOf(v))
+                      setMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {monthItems.map((m) => (
+                          <SelectItem key={m.value} value={m.value}>
+                            {m.label}
                           </SelectItem>
-                        )
-                      })}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            ),
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    items={yearItems}
+                    value={String(month.getFullYear())}
+                    onValueChange={(v) => {
+                      if (!v) return
+                      const next = new Date(month)
+                      next.setFullYear(Number(v))
+                      setMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {yearItems.map((y) => (
+                          <SelectItem key={y.value} value={y.value}>
+                            {y.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )
+            },
           }}
         />
       </div>
@@ -471,60 +480,69 @@ export default function CalendarPage() {
             onMonthChange={setPresetMonth}
             className="w-full border-0 shadow-none"
             classNames={{
-              nav: "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
+              nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
             }}
             components={{
-              MonthCaption: () => (
-                <div className="flex h-(--cell-size) items-center gap-1.5">
-                  <Select
-                    value={monthNames[presetMonth.getMonth()]}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(presetMonth)
-                      next.setMonth(monthNames.indexOf(v))
-                      setPresetMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {monthNames.map((mName) => (
-                          <SelectItem key={mName} value={mName}>
-                            {mName}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    value={String(presetMonth.getFullYear())}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(presetMonth)
-                      next.setFullYear(Number(v))
-                      setPresetMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {Array.from({ length: 14 }, (_, i) => {
-                          const y = 2017 + i
-                          return (
-                            <SelectItem key={y} value={String(y)}>
-                              {y}
+              MonthCaption: () => {
+                const monthItems = monthNames.map((m) => ({
+                  label: m,
+                  value: m,
+                }))
+                const yearItems = Array.from({ length: 14 }, (_, i) => {
+                  const y = String(2017 + i)
+                  return { label: y, value: y }
+                })
+                return (
+                  <div className="flex h-(--cell-size) items-center gap-1.5">
+                    <Select
+                      items={monthItems}
+                      value={monthNames[presetMonth.getMonth()]}
+                      onValueChange={(v) => {
+                        if (!v) return
+                        const next = new Date(presetMonth)
+                        next.setMonth(monthNames.indexOf(v))
+                        setPresetMonth(next)
+                      }}
+                    >
+                      <SelectTrigger variant="ghost" size="sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {monthItems.map((m) => (
+                            <SelectItem key={m.value} value={m.value}>
+                              {m.label}
                             </SelectItem>
-                          )
-                        })}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              ),
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      items={yearItems}
+                      value={String(presetMonth.getFullYear())}
+                      onValueChange={(v) => {
+                        if (!v) return
+                        const next = new Date(presetMonth)
+                        next.setFullYear(Number(v))
+                        setPresetMonth(next)
+                      }}
+                    >
+                      <SelectTrigger variant="ghost" size="sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {yearItems.map((y) => (
+                            <SelectItem key={y.value} value={y.value}>
+                              {y.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )
+              },
             }}
           />
           <div className="flex items-center gap-2 border-t border-border px-4 py-3">

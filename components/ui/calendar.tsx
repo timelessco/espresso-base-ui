@@ -133,7 +133,7 @@ function Calendar({
           defaultClassNames.today
         ),
         outside: cn(
-          "[&_button]:text-card-foreground! aria-selected:[&_button]:text-foreground/50! [&_button[data-range-end=true]]:text-primary-foreground! [&_button[data-range-start=true]]:text-primary-foreground!",
+          "[&_button]:text-card-foreground! aria-selected:[&_button]:text-foreground/50! [&_button[data-range-end=true]]:text-primary-foreground! [&_button[data-range-start=true]]:text-primary-foreground! [&_button[data-selected-single=true]]:text-primary-foreground!",
           defaultClassNames.outside
         ),
         disabled: cn(
