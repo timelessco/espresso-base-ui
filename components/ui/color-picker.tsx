@@ -1099,7 +1099,11 @@ function ColorPickerEyeDropper(props: React.ComponentProps<typeof Button>) {
     }
   }, [color, store]);
 
-  const hasEyeDropper = typeof window !== "undefined" && !!window.EyeDropper;
+  const [hasEyeDropper, setHasEyeDropper] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasEyeDropper(typeof window !== "undefined" && !!window.EyeDropper);
+  }, []);
 
   if (!hasEyeDropper) return null;
 
