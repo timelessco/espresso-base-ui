@@ -598,11 +598,11 @@ function MailSidebar() {
                 render={
                   <SidebarMenuButton
                     size="lg"
-                    className="data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
+                    className="group-data-[collapsible=icon]:pl-1.5! md:pl-1.5 data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
                   />
                 }
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-md">
+                <div className="flex aspect-square size-7 items-center justify-center rounded-md">
                   <img src="/images/svg/logo-mail.svg" alt="Mail" />
                 </div>
                 <div className="grid flex-1 text-left">
@@ -622,7 +622,7 @@ function MailSidebar() {
                 sideOffset={4}
               >
                 <div className="flex items-center gap-3 px-2 py-2">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-md">
+                  <div className="flex aspect-square size-7 items-center justify-center rounded-md">
                     <img src="/images/svg/logo-mail.svg" alt="Mail" />
                   </div>
                   <div className="grid text-left">
