@@ -568,7 +568,7 @@ function ColorPicker(props: ColorPickerProps) {
         stateRef.current.open = value;
 
         if (propsRef.current.onOpenChange) {
-          propsRef.current.onOpenChange(value);
+          (propsRef.current.onOpenChange as (open: boolean) => void)(value);
         }
 
         store.notify();
@@ -724,7 +724,10 @@ function ColorPickerImpl(props: ColorPickerImplProps) {
 }
 
 function ColorPickerTrigger(
-  props: React.ComponentProps<typeof PopoverTrigger>,
+  props: React.ComponentProps<typeof PopoverTrigger> & {
+    asChild?: boolean;
+    disabled?: boolean;
+  },
 ) {
   const { asChild, disabled, ...triggerProps } = props;
 
@@ -735,12 +738,12 @@ function ColorPickerTrigger(
   const TriggerPrimitive = asChild ? SlotPrimitive.Slot : Button;
 
   return (
-    <PopoverTrigger disabled={isDisabled} render={<TriggerPrimitive data-slot="color-picker-trigger" {...triggerProps} />}></PopoverTrigger>
+    <PopoverTrigger disabled={isDisabled} render={<TriggerPrimitive data-slot="color-picker-trigger" {...(triggerProps as React.ComponentProps<"button">)} />}></PopoverTrigger>
   );
 }
 
 function ColorPickerContent(
-  props: React.ComponentProps<typeof PopoverContent>,
+  props: React.ComponentProps<typeof PopoverContent> & { asChild?: boolean },
 ) {
   const { asChild, className, children, ...popoverContentProps } = props;
 
@@ -752,7 +755,7 @@ function ColorPickerContent(
     return (
       <ContentPrimitive
         data-slot="color-picker-content"
-        {...popoverContentProps}
+        {...(popoverContentProps as React.ComponentProps<"div">)}
         className={cn("flex w-[340px] flex-col gap-4 p-4", className)}
       >
         {children}
@@ -1130,8 +1133,8 @@ function ColorPickerFormatSelect(props: ColorPickerFormatSelectProps) {
   const format = useStore((state) => state.format);
 
   const onFormatChange = React.useCallback(
-    (value: ColorFormat) => {
-      store.setFormat(value);
+    (value: string | null) => {
+      if (value) store.setFormat(value as ColorFormat);
     },
     [store],
   );
