@@ -820,6 +820,83 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "Empty state component for lists, tables, and other content areas.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/empty/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Autocomplete input with single/multi-select, chips, and grouping.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/input-group.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/combobox/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Command palette with inline and dialog modes powered by cmdk.",
+      "dependencies": [
+        "cmdk"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/dialog.json",
+        "https://espresso-base-ui.vercel.app/r/input-group.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/command/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "One-time-password input with slots and separators.",
+      "dependencies": [
+        "input-otp"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/input-otp/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
