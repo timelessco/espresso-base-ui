@@ -130,6 +130,8 @@ const components = [
   { label: "Button Group", href: "/ui/button-group", icon: Inbox },
   { label: "Calendar", href: "/ui/calendar", icon: Calendar },
   { label: "Checkbox", href: "/ui/checkbox", icon: SquareCheckBig },
+  { label: "Color Picker", href: "/ui/color-picker", icon: Sun },
+  { label: "Color Swatch", href: "/ui/color-swatch", icon: Sun },
   { label: "Combobox", href: "/ui/combobox", icon: Search },
   { label: "Command", href: "/ui/command", icon: SquareDashed },
   { label: "Dialog", href: "/ui/dialog", icon: AppWindow },
