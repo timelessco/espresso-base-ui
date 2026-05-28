@@ -256,7 +256,7 @@ function ComboboxChips({
       data-slot="combobox-chips"
       data-variant={variant}
       className={cn(
-        "flex min-h-8 flex-wrap items-center gap-1 rounded-lg bg-clip-padding px-2.5 py-1 text-sm transition-colors has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:has-aria-invalid:ring-destructive/40",
+        "flex min-h-8 flex-wrap items-center gap-1.5 rounded-lg bg-clip-padding px-2.5 py-1 text-sm transition-colors has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:has-aria-invalid:ring-destructive/40",
         // outline variant
         "data-[variant=outline]:bg-background data-[variant=outline]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] data-[variant=outline]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] dark:data-[variant=outline]:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:data-[variant=outline]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         // subtle variant
