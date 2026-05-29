@@ -72,6 +72,11 @@ function ColorSwatch({
 }: ColorSwatchProps) {
   const colorValue = color?.trim();
 
+  const [isMounted, setIsMounted] = React.useState(false);
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const backgroundStyle = React.useMemo<React.CSSProperties>(() => {
     if (!colorValue) {
       return {
@@ -80,7 +85,7 @@ function ColorSwatch({
       };
     }
 
-    if (!getIsCssColor(colorValue)) {
+    if (isMounted && !getIsCssColor(colorValue)) {
       return { backgroundColor: "transparent" };
     }
 
@@ -91,7 +96,7 @@ function ColorSwatch({
     }
 
     return { backgroundColor: colorValue };
-  }, [colorValue, withoutTransparency]);
+  }, [colorValue, withoutTransparency, isMounted]);
 
   const ariaLabel = !colorValue
     ? "No color selected"
