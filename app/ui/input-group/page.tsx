@@ -1,6 +1,6 @@
 "use client"
 
-import { Search, Mail, Eye, Copy, X, AtSign, ChevronDown, Link } from "lucide-react"
+import { Search, Mail, Eye, Copy, X, AtSign, ChevronDown, Link, CircleCheck } from "lucide-react"
 import {
   InputGroup,
   InputGroupAddon,
@@ -110,7 +110,7 @@ export default function InputGroupPage() {
           </InputGroupAddon>
           <InputGroupInput placeholder="Email" type="email" />
           <InputGroupAddon align="inline-end">
-            <InputGroupText><X /></InputGroupText>
+            <InputGroupText><CircleCheck /></InputGroupText>
           </InputGroupAddon>
         </InputGroup>
       </div>
