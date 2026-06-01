@@ -155,7 +155,6 @@ export default function ColorSwatchPage() {
               <ColorSwatch
                 color={color}
                 selected={selected === color}
-                className="rounded-full"
               />
             </button>
           ))}
