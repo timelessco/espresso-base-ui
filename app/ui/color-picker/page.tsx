@@ -121,7 +121,7 @@ export default function ColorPickerPage() {
               key={c}
               type="button"
               onClick={() => setControlled(c)}
-              className="size-6 rounded-md border outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="size-6 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
               style={{ backgroundColor: c }}
               aria-label={`Set color to ${c}`}
             />

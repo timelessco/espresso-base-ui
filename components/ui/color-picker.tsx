@@ -1069,7 +1069,7 @@ function ColorPickerSwatch(props: DivProps) {
       data-slot="color-picker-swatch"
       {...swatchProps}
       className={cn(
-        "box-border size-8 rounded-sm border shadow-sm",
+        "size-8 rounded-sm",
         context.disabled && "opacity-50",
         className
       )}

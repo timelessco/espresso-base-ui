@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { cva, type VariantProps } from "class-variance-authority";
-import { Slot as SlotPrimitive } from "radix-ui";
-import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority"
+import { Slot as SlotPrimitive } from "radix-ui"
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 const colorSwatchVariants = cva(
   "box-border rounded-sm border bg-clip-padding shadow-sm data-disabled:pointer-events-none data-disabled:opacity-50",
@@ -18,46 +18,47 @@ const colorSwatchVariants = cva(
     defaultVariants: {
       size: "default",
     },
-  },
-);
+  }
+)
 
 function getIsCssColor(v: string): boolean {
   try {
     return typeof CSS !== "undefined" && typeof CSS.supports === "function"
       ? CSS.supports("color", v)
-      : true;
+      : true
   } catch {
-    return false;
+    return false
   }
 }
 
 function getHasAlpha(v: string): boolean {
-  const s = v.trim().toLowerCase();
+  const s = v.trim().toLowerCase()
 
-  if (s === "transparent") return true;
+  if (s === "transparent") return true
 
-  if (/^#(?:[0-9a-f]{4}|[0-9a-f]{8})$/i.test(s)) return true;
+  if (/^#(?:[0-9a-f]{4}|[0-9a-f]{8})$/i.test(s)) return true
 
-  if (/\b(?:rgba|hsla)\s*\(/i.test(s)) return true;
+  if (/\b(?:rgba|hsla)\s*\(/i.test(s)) return true
 
   if (
     /\b(?:rgb|hsl|lab|lch|oklab|oklch|color)\s*\([^)]*\/\s*[\d.]+%?\s*\)/i.test(
-      s,
+      s
     )
   ) {
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }
 
 interface ColorSwatchProps
-  extends Omit<React.ComponentProps<"div">, "children">,
+  extends
+    Omit<React.ComponentProps<"div">, "children">,
     VariantProps<typeof colorSwatchVariants> {
-  color?: string;
-  asChild?: boolean;
-  disabled?: boolean;
-  withoutTransparency?: boolean;
+  color?: string
+  asChild?: boolean
+  disabled?: boolean
+  withoutTransparency?: boolean
 }
 
 function ColorSwatch({
@@ -70,39 +71,39 @@ function ColorSwatch({
   style,
   ...props
 }: ColorSwatchProps) {
-  const colorValue = color?.trim();
+  const colorValue = color?.trim()
 
-  const [isMounted, setIsMounted] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false)
   React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
   const backgroundStyle = React.useMemo<React.CSSProperties>(() => {
     if (!colorValue) {
       return {
         background:
           "linear-gradient(to bottom right, transparent calc(50% - 1px), hsl(var(--destructive)) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) no-repeat",
-      };
+      }
     }
 
     if (isMounted && !getIsCssColor(colorValue)) {
-      return { backgroundColor: "transparent" };
+      return { backgroundColor: "transparent" }
     }
 
     if (!withoutTransparency && getHasAlpha(colorValue)) {
       return {
         background: `linear-gradient(${colorValue}, ${colorValue}), repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0% 50% / 10px 10px`,
-      };
+      }
     }
 
-    return { backgroundColor: colorValue };
-  }, [colorValue, withoutTransparency, isMounted]);
+    return { backgroundColor: colorValue }
+  }, [colorValue, withoutTransparency, isMounted])
 
   const ariaLabel = !colorValue
     ? "No color selected"
-    : `Color swatch: ${colorValue}`;
+    : `Color swatch: ${colorValue}`
 
-  const Primitive = asChild ? SlotPrimitive.Slot : "div";
+  const Primitive = asChild ? SlotPrimitive.Slot : "div"
 
   return (
     <Primitive
@@ -119,7 +120,7 @@ function ColorSwatch({
         ...style,
       }}
     />
-  );
+  )
 }
 
-export { ColorSwatch };
+export { ColorSwatch }
