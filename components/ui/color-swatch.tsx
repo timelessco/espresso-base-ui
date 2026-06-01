@@ -1,12 +1,13 @@
 "use client"
 
 import { cva, type VariantProps } from "class-variance-authority"
+import { Check } from "lucide-react"
 import { Slot as SlotPrimitive } from "radix-ui"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const colorSwatchVariants = cva(
-  "box-border rounded-sm border bg-clip-padding shadow-sm data-disabled:pointer-events-none data-disabled:opacity-50",
+  "relative flex items-center justify-center rounded-sm bg-clip-padding data-disabled:pointer-events-none data-disabled:opacity-50 data-[selected=true]:outline-2 data-[selected=true]:outline-offset-2",
   {
     variants: {
       size: {
@@ -53,11 +54,12 @@ function getHasAlpha(v: string): boolean {
 
 interface ColorSwatchProps
   extends
-    Omit<React.ComponentProps<"div">, "children">,
+    React.ComponentProps<"div">,
     VariantProps<typeof colorSwatchVariants> {
   color?: string
   asChild?: boolean
   disabled?: boolean
+  selected?: boolean
   withoutTransparency?: boolean
 }
 
@@ -66,9 +68,11 @@ function ColorSwatch({
   size = "default",
   asChild = false,
   disabled = false,
+  selected = false,
   withoutTransparency = false,
   className,
   style,
+  children,
   ...props
 }: ColorSwatchProps) {
   const colorValue = color?.trim()
@@ -111,15 +115,25 @@ function ColorSwatch({
       aria-label={ariaLabel}
       aria-disabled={disabled || undefined}
       data-disabled={disabled ? "" : undefined}
+      data-selected={selected || undefined}
       data-slot="color-swatch"
       {...props}
       className={cn(colorSwatchVariants({ size }), className)}
       style={{
         ...backgroundStyle,
         forcedColorAdjust: "none",
+        ...(selected && colorValue ? { outlineColor: colorValue } : null),
         ...style,
       }}
-    />
+    >
+      {children ??
+        (selected ? (
+          <Check
+            className="size-1/2 text-white drop-shadow-sm"
+            strokeWidth={3}
+          />
+        ) : null)}
+    </Primitive>
   )
 }
 
