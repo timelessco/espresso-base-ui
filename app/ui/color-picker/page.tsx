@@ -15,11 +15,7 @@ import {
   ColorPickerTrigger,
 } from "@/components/ui/color-picker"
 import { Button } from "@/components/ui/button"
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/components/ui/field"
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -42,10 +38,8 @@ export default function ColorPickerPage() {
           <ColorPickerContent>
             <ColorPickerArea />
             <ColorPickerHueSlider />
-            <div className="flex items-center gap-2">
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
-            </div>
+            <ColorPickerFormatSelect className="w-full" />
+            <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
       </div>
@@ -66,10 +60,9 @@ export default function ColorPickerPage() {
             <ColorPickerArea />
             <ColorPickerHueSlider />
             <ColorPickerAlphaSlider />
-            <div className="flex items-center gap-2">
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
-            </div>
+
+            <ColorPickerFormatSelect className="w-full shrink-0" />
+            <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
       </div>
@@ -88,9 +81,9 @@ export default function ColorPickerPage() {
             <ColorPickerAlphaSlider />
             <div className="flex items-center gap-2">
               <ColorPickerEyeDropper />
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
+              <ColorPickerFormatSelect className="w-full" />
             </div>
+            <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
         <p className="text-xs text-muted-foreground">
@@ -110,10 +103,9 @@ export default function ColorPickerPage() {
           <ColorPickerContent>
             <ColorPickerArea />
             <ColorPickerHueSlider />
-            <div className="flex items-center gap-2">
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
-            </div>
+
+            <ColorPickerFormatSelect className="w-full" />
+            <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
         <div className="flex items-center gap-2 text-sm">
@@ -149,10 +141,9 @@ export default function ColorPickerPage() {
             <ColorPickerArea />
             <ColorPickerHueSlider />
             <ColorPickerAlphaSlider />
-            <div className="flex items-center gap-2">
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
-            </div>
+
+            <ColorPickerFormatSelect className="w-full" />
+            <ColorPickerInput className="w-full flex-1" />
           </ColorPickerContent>
         </ColorPicker>
       </div>
@@ -168,9 +159,9 @@ export default function ColorPickerPage() {
             <div className="flex items-center gap-2">
               <ColorPickerEyeDropper />
               <ColorPickerSwatch />
-              <ColorPickerFormatSelect className="w-20 shrink-0" />
-              <ColorPickerInput className="flex-1" />
+              <ColorPickerFormatSelect className="w-full flex-1" />
             </div>
+            <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
       </div>
@@ -208,10 +199,9 @@ export default function ColorPickerPage() {
               <ColorPickerArea />
               <ColorPickerHueSlider />
               <ColorPickerAlphaSlider />
-              <div className="flex items-center gap-2">
-                <ColorPickerFormatSelect className="w-20 shrink-0" />
-                <ColorPickerInput className="flex-1" />
-              </div>
+
+              <ColorPickerFormatSelect className="w-full shrink-0" />
+              <ColorPickerInput className="flex-1" />
             </ColorPickerContent>
           </ColorPicker>
           <FieldDescription>
@@ -239,10 +229,9 @@ export default function ColorPickerPage() {
             <ColorPickerContent>
               <ColorPickerArea />
               <ColorPickerHueSlider />
-              <div className="flex items-center gap-2">
-                <ColorPickerFormatSelect className="w-20 shrink-0" />
-                <ColorPickerInput className="flex-1" />
-              </div>
+
+              <ColorPickerFormatSelect className="w-full" />
+              <ColorPickerInput className="flex-1" />
             </ColorPickerContent>
           </ColorPicker>
           <Button type="submit" size="sm">
