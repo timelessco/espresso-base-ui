@@ -53,8 +53,8 @@ export default function ColorSwatchPage() {
           <ColorSwatch color="#3b82f6" size="lg" />
         </div>
         <p className="text-sm text-muted-foreground">
-          <code>sm</code> (24px) · <code>default</code> (32px) ·{" "}
-          <code>lg</code> (48px)
+          <code>sm</code> (24px) · <code>default</code> (32px) · <code>lg</code>{" "}
+          (48px)
         </p>
       </div>
 
@@ -64,23 +64,23 @@ export default function ColorSwatchPage() {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex flex-col items-center gap-1">
             <ColorSwatch color="#3b82f6" />
-            <span className="text-xs font-mono">hex</span>
+            <span className="font-mono text-xs">hex</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <ColorSwatch color="rgb(59, 130, 246)" />
-            <span className="text-xs font-mono">rgb</span>
+            <span className="font-mono text-xs">rgb</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <ColorSwatch color="hsl(217, 91%, 60%)" />
-            <span className="text-xs font-mono">hsl</span>
+            <span className="font-mono text-xs">hsl</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <ColorSwatch color="oklch(0.65 0.18 250)" />
-            <span className="text-xs font-mono">oklch</span>
+            <span className="font-mono text-xs">oklch</span>
           </div>
           <div className="flex flex-col items-center gap-1">
             <ColorSwatch color="dodgerblue" />
-            <span className="text-xs font-mono">named</span>
+            <span className="font-mono text-xs">named</span>
           </div>
         </div>
       </div>
@@ -142,21 +142,20 @@ export default function ColorSwatchPage() {
       {/* Palette Picker */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Color Palette</SectionTitle>
-        <div className="grid w-fit grid-cols-8 gap-2">
+        <div className="grid w-fit grid-cols-8 gap-3">
           {tailwindPalette.map((color) => (
             <button
               key={color}
               type="button"
               onClick={() => setSelected(color)}
-              className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label={`Pick ${color}`}
               aria-pressed={selected === color}
             >
               <ColorSwatch
                 color={color}
-                className={
-                  selected === color ? "ring-2 ring-ring ring-offset-2" : ""
-                }
+                selected={selected === color}
+                className="rounded-full"
               />
             </button>
           ))}
@@ -179,7 +178,7 @@ export default function ColorSwatchPage() {
                 type="button"
                 onClick={() => setSelected(color)}
                 aria-label={`Select ${color}`}
-                className="rounded-sm outline-none transition-transform hover:scale-110 focus-visible:scale-110 focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-sm transition-transform outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <ColorSwatch color={color} />
               </button>
