@@ -110,7 +110,7 @@ export default function ColorPickerPage() {
         </ColorPicker>
         <div className="flex items-center gap-2 text-sm">
           <span
-            className="size-6 rounded-md border"
+            className="size-6 rounded-full border"
             style={{ backgroundColor: controlled }}
           />
           <span className="font-mono">{controlled}</span>
@@ -121,7 +121,7 @@ export default function ColorPickerPage() {
               key={c}
               type="button"
               onClick={() => setControlled(c)}
-              className="size-6 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="size-6 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
               style={{ backgroundColor: c }}
               aria-label={`Set color to ${c}`}
             />
