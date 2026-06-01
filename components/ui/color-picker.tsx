@@ -1251,7 +1251,7 @@ function ColorPickerInput(props: ColorPickerInputProps) {
 }
 
 const inputGroupItemVariants = cva(
-  "h-8 [-moz-appearance:textfield] focus-visible:z-10 focus-visible:ring-1 [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none",
+  "h-8 [-moz-appearance:textfield] focus-visible:z-10 [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none",
   {
     variants: {
       position: {
@@ -1344,7 +1344,7 @@ function HexInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex items-center", className)}
+      className={cn("flex w-full items-center", className)}
     >
       <InputGroupItem
         aria-label="Hex color value"
@@ -1404,7 +1404,7 @@ function RgbInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex items-center", className)}
+      className={cn("flex w-full items-center", className)}
     >
       <InputGroupItem
         aria-label="Red color component (0-255)"
@@ -1415,7 +1415,7 @@ function RgbInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="255"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={rValue}
         onChange={onChannelChange("r", 255)}
         disabled={context.disabled}
@@ -1429,7 +1429,7 @@ function RgbInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="255"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={gValue}
         onChange={onChannelChange("g", 255)}
         disabled={context.disabled}
@@ -1443,7 +1443,7 @@ function RgbInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="255"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={bValue}
         onChange={onChannelChange("b", 255)}
         disabled={context.disabled}
@@ -1458,7 +1458,7 @@ function RgbInput(props: FormatInputProps) {
           pattern="[0-9]*"
           min="0"
           max="100"
-          className="w-14"
+          className="min-w-0 flex-1"
           value={alphaValue}
           onChange={onChannelChange("a", 100, true)}
           disabled={context.disabled}
@@ -1507,7 +1507,7 @@ function HslInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex items-center", className)}
+      className={cn("flex w-full items-center", className)}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
@@ -1518,7 +1518,7 @@ function HslInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="360"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsl.h}
         onChange={onHslChannelChange("h", 360)}
         disabled={context.disabled}
@@ -1532,7 +1532,7 @@ function HslInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="100"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsl.s}
         onChange={onHslChannelChange("s", 100)}
         disabled={context.disabled}
@@ -1546,7 +1546,7 @@ function HslInput(props: FormatInputProps) {
         pattern="[0-9]*"
         min="0"
         max="100"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsl.l}
         onChange={onHslChannelChange("l", 100)}
         disabled={context.disabled}
@@ -1561,7 +1561,7 @@ function HslInput(props: FormatInputProps) {
           pattern="[0-9]*"
           min="0"
           max="100"
-          className="w-14"
+          className="min-w-0 flex-1"
           value={alphaValue}
           onChange={onAlphaChange}
           disabled={context.disabled}
@@ -1614,7 +1614,7 @@ function HsbInput(props: HsbInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex items-center", className)}
+      className={cn("flex w-full items-center", className)}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
@@ -1625,7 +1625,7 @@ function HsbInput(props: HsbInputProps) {
         pattern="[0-9]*"
         min="0"
         max="360"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsv?.h ?? 0}
         onChange={onHsvChannelChange("h", 360)}
         disabled={context.disabled}
@@ -1639,7 +1639,7 @@ function HsbInput(props: HsbInputProps) {
         pattern="[0-9]*"
         min="0"
         max="100"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsv?.s ?? 0}
         onChange={onHsvChannelChange("s", 100)}
         disabled={context.disabled}
@@ -1653,7 +1653,7 @@ function HsbInput(props: HsbInputProps) {
         pattern="[0-9]*"
         min="0"
         max="100"
-        className="w-14"
+        className="min-w-0 flex-1"
         value={hsv?.v ?? 0}
         onChange={onHsvChannelChange("v", 100)}
         disabled={context.disabled}
@@ -1668,7 +1668,7 @@ function HsbInput(props: HsbInputProps) {
           pattern="[0-9]*"
           min="0"
           max="100"
-          className="w-14"
+          className="min-w-0 flex-1"
           value={alphaValue}
           onChange={onAlphaChange}
           disabled={context.disabled}
