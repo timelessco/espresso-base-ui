@@ -282,7 +282,7 @@ function ComboboxChip({
       data-slot="combobox-chip"
       data-variant={variant}
       className={cn(
-        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
+        "flex h-[calc(--spacing(6.25))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] data-[variant=subtle]:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] dark:data-[variant=subtle]:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:data-[variant=subtle]:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         className
       )}
       {...props}
