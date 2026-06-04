@@ -304,28 +304,24 @@ export default function EmptyPage() {
           <EmptyContent>
             <div className="flex items-center justify-center gap-4">
               {[
-                { icon: Mail, color: "bg-blue-500", size: "size-4" },
-                { icon: Ticket, color: "bg-purple-500", size: "size-6" },
-                { icon: Send, color: "bg-blue-700", size: "size-8" },
-                { icon: Cloud, color: "bg-sky-400", size: "size-10" },
-                { icon: Inbox, color: "bg-fuchsia-500", size: "size-11.5" },
-                { icon: FileText, color: "bg-foreground", size: "size-16" },
-                { icon: AtSign, color: "bg-blue-500", size: "size-11.5" },
-                {
-                  icon: MessageSquare,
-                  color: "bg-orange-500",
-                  size: "size-10",
-                },
-                { icon: Workflow, color: "bg-indigo-500", size: "size-8" },
-                { icon: Inbox, color: "bg-teal-700", size: "size-6" },
-                { icon: Mail, color: "bg-emerald-700", size: "size-4" },
-              ].map(({ icon: Icon, color, size }, i) => (
-                <div
+                { src: "/images/svg/avatar1.svg", size: "size-4" },
+                { src: "/images/svg/avatar2.svg", size: "size-6" },
+                { src: "/images/svg/avatar3.svg", size: "size-8" },
+                { src: "/images/svg/avatar4.svg", size: "size-10" },
+                { src: "/images/svg/avatar5.svg", size: "size-11.5" },
+                { src: "/images/svg/avatar6.svg", size: "size-16" },
+                { src: "/images/svg/avatar7.svg", size: "size-11.5" },
+                { src: "/images/svg/avatar8.svg", size: "size-10" },
+                { src: "/images/svg/avatar9.svg", size: "size-8" },
+                { src: "/images/svg/avatar10.svg", size: "size-6" },
+                { src: "/images/svg/avatar11.svg", size: "size-4" },
+              ].map(({ src, size }, i) => (
+                <img
                   key={i}
-                  className={`flex items-center justify-center rounded-full ${color} ${size}`}
-                >
-                  <Icon className="size-1/2 text-white" />
-                </div>
+                  src={src}
+                  alt=""
+                  className={`rounded-full ${size}`}
+                />
               ))}
             </div>
           </EmptyContent>
@@ -341,7 +337,7 @@ export default function EmptyPage() {
               <Users />
             </EmptyMedia>
             <EmptyTitle>No leads found</EmptyTitle>
-            <EmptyDescription>
+            <EmptyDescription className="max-w-[260px]">
               No leads found. Create a lead to start tracking opportunities.
             </EmptyDescription>
           </EmptyHeader>
