@@ -588,11 +588,9 @@ function PresetsContent() {
 
 export default function CalendarPage() {
   const [singleDate, setSingleDate] = useState<Date | undefined>(new Date())
-  const [multipleDates, setMultipleDates] = useState<Date[] | undefined>([
-    new Date(2026, 3, 5),
-    new Date(2026, 3, 10),
-    new Date(2026, 3, 18),
-  ])
+  const [multipleDates, setMultipleDates] = useState<Date[] | undefined>(
+    undefined
+  )
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(2023, 4, 3),
     to: new Date(2023, 4, 11),
