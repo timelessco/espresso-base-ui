@@ -133,7 +133,7 @@ function DateTimePresetContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full border-0 shadow-none [--cell-size:1.5rem]"
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem]"
         classNames={{
           nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
         }}
@@ -198,6 +198,45 @@ function DateTimePresetContent() {
               </div>
             )
           },
+          Nav: ({
+            className: navClassName,
+            onPreviousClick,
+            onNextClick,
+            previousMonth,
+            nextMonth,
+          }) => (
+            <nav className={navClassName}>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onPreviousClick?.(e)}
+                disabled={!previousMonth}
+                aria-label="Previous month"
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button
+                variant="ghost"
+                size="xs"
+                onClick={() => {
+                  const today = new Date()
+                  setDate(today)
+                  setMonth(today)
+                }}
+              >
+                Today
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onNextClick?.(e)}
+                disabled={!nextMonth}
+                aria-label="Next month"
+              >
+                <ChevronRightIcon />
+              </Button>
+            </nav>
+          ),
         }}
       />
       <div className="flex items-center justify-between border-t px-4 py-3">
@@ -256,17 +295,6 @@ function DateTimePresetContent() {
         </Select>
       </div>
       <div className="flex items-center gap-2 border-t px-4 py-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = new Date()
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Today
-        </Button>
         <Button
           variant="outline"
           size="sm"
