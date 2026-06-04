@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils"
 import type { DateRange } from "react-day-picker"
 import { addDays, format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -59,21 +59,14 @@ function CalendarPopover({
         render={
           <Button
             variant="outline"
-            className={cn(
-              "w-56 justify-between font-normal",
-              buttonClassName
-            )}
+            className={cn("w-56 justify-between font-normal", buttonClassName)}
           >
             {buttonContent}
             <CalendarIcon className="size-4" />
           </Button>
         }
       />
-      <PopoverContent
-        className="w-auto p-0"
-        align={align}
-        sideOffset={4}
-      >
+      <PopoverContent className="w-auto p-0" align={align} sideOffset={4}>
         {children({ close: () => setOpen(false) })}
       </PopoverContent>
     </Popover>
@@ -432,7 +425,7 @@ function PresetsContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full border-0 shadow-none [--cell-size:1.5rem]"
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem]"
         classNames={{
           nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
         }}
@@ -494,20 +487,48 @@ function PresetsContent() {
               </div>
             )
           },
+          Nav: ({
+            className: navClassName,
+            onPreviousClick,
+            onNextClick,
+            previousMonth,
+            nextMonth,
+          }) => (
+            <nav className={navClassName}>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onPreviousClick?.(e)}
+                disabled={!previousMonth}
+                aria-label="Previous month"
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button
+                variant="ghost"
+                size="xs"
+                onClick={() => {
+                  const today = new Date()
+                  setDate(today)
+                  setMonth(today)
+                }}
+              >
+                Today
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onNextClick?.(e)}
+                disabled={!nextMonth}
+                aria-label="Next month"
+              >
+                <ChevronRightIcon />
+              </Button>
+            </nav>
+          ),
         }}
       />
       <div className="flex items-center gap-2 border-t border-border px-4 py-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = new Date()
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Today
-        </Button>
         <Button
           variant="outline"
           size="sm"
@@ -553,9 +574,13 @@ export default function CalendarPage() {
     }
   )
   const [bookedDate, setBookedDate] = useState<Date | undefined>(undefined)
-  const [largeCellDate, setLargeCellDate] = useState<Date | undefined>(undefined)
+  const [largeCellDate, setLargeCellDate] = useState<Date | undefined>(
+    undefined
+  )
   const [weekNumDate, setWeekNumDate] = useState<Date | undefined>(undefined)
-  const [noOutsideDate, setNoOutsideDate] = useState<Date | undefined>(undefined)
+  const [noOutsideDate, setNoOutsideDate] = useState<Date | undefined>(
+    undefined
+  )
   const [weekdayDate, setWeekdayDate] = useState<Date | undefined>(undefined)
 
   const bookedDates = [
@@ -573,9 +598,7 @@ export default function CalendarPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
         <CalendarPopover
-          buttonContent={
-            singleDate ? format(singleDate, "PPP") : "Pick a date"
-          }
+          buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
         >
           {({ close }) => (
             <Calendar
@@ -616,9 +639,7 @@ export default function CalendarPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Picker</SectionTitle>
         <CalendarPopover
-          buttonContent={
-            singleDate ? format(singleDate, "PPP") : "Pick a date"
-          }
+          buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
         >
           {({ close }) => (
             <Calendar
@@ -677,9 +698,7 @@ export default function CalendarPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Booked Dates</SectionTitle>
         <CalendarPopover
-          buttonContent={
-            bookedDate ? format(bookedDate, "PPP") : "Pick a date"
-          }
+          buttonContent={bookedDate ? format(bookedDate, "PPP") : "Pick a date"}
         >
           {({ close }) => (
             <Calendar

@@ -102,7 +102,7 @@ function Calendar({
         ),
         table: "border-collapse",
         weekdays: cn(
-          "grid gap-0.5",
+          "grid justify-between gap-0.5",
           gridColsClass,
           defaultClassNames.weekdays
         ),
@@ -111,7 +111,7 @@ function Calendar({
           defaultClassNames.weekday
         ),
         week: cn(
-          "mt-0.5 grid gap-0.5 overflow-visible",
+          "mt-0.5 grid justify-between gap-0.5 overflow-visible",
           gridColsClass,
           defaultClassNames.week
         ),
