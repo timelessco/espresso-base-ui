@@ -17,9 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { cn } from "@/lib/utils"
 import type { DateRange } from "react-day-picker"
 import { addDays, format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -40,40 +41,50 @@ const monthNames = [
   "Dec",
 ]
 
-function DatePicker() {
-  const [date, setDate] = useState<Date | undefined>(undefined)
+function CalendarPopover({
+  buttonContent,
+  buttonClassName,
+  align = "start",
+  children,
+}: {
+  buttonContent: React.ReactNode
+  buttonClassName?: string
+  align?: "start" | "center" | "end"
+  children: (api: { close: () => void }) => React.ReactNode
+}) {
   const [open, setOpen] = useState(false)
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
         render={
           <Button
             variant="outline"
-            className="w-56 justify-between font-normal"
+            className={cn("w-56 justify-between font-normal", buttonClassName)}
           >
-            {date ? format(date, "PPP") : "Pick a date"}
+            {buttonContent}
             <CalendarIcon className="size-4" />
           </Button>
         }
       />
-      <PopoverContent
-        className="w-auto p-0"
-        align="start"
-        sideOffset={4}
-      >
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={(d) => {
-            setDate(d)
-            setOpen(false)
-          }}
-          className="border-0 shadow-none"
-        />
+      <PopoverContent className="w-auto p-0" align={align} sideOffset={4}>
+        {children({ close: () => setOpen(false) })}
       </PopoverContent>
     </Popover>
   )
+}
+
+function formatDateShort(date: Date | undefined) {
+  return date
+    ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    : ""
+}
+
+function formatRange(range: DateRange | undefined, fallback: string) {
+  if (range?.from && range?.to) {
+    return `${formatDateShort(range.from)} to ${formatDateShort(range.to)}`
+  }
+  if (range?.from) return formatDateShort(range.from)
+  return fallback
 }
 
 function TimeInput() {
@@ -94,7 +105,7 @@ function TimeInput() {
   )
 }
 
-function DateTimePresetPicker() {
+function DateTimePresetContent() {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [month, setMonth] = useState(new Date())
   const [hour, setHour] = useState("05")
@@ -115,82 +126,144 @@ function DateTimePresetPicker() {
   }, [])
 
   return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
-      <div className="flex">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          month={month}
-          onMonthChange={setMonth}
-          className="w-full border-0 shadow-none"
-          classNames={{
-            nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
+    <div className="flex w-max">
+      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 1)
+            setDate(d)
+            setMonth(d)
           }}
-          components={{
-            MonthCaption: () => {
-              const monthItems = monthNames.map((m) => ({
-                label: m,
-                value: m,
-              }))
-              const yearItems = Array.from({ length: 14 }, (_, i) => {
-                const y = String(2017 + i)
-                return { label: y, value: y }
-              })
-              return (
-                <div className="flex h-(--cell-size) items-center gap-1.5">
-                  <Select
-                    items={monthItems}
-                    value={monthNames[month.getMonth()]}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(month)
-                      next.setMonth(monthNames.indexOf(v))
-                      setMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {monthItems.map((m) => (
-                          <SelectItem key={m.value} value={m.value}>
-                            {m.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    items={yearItems}
-                    value={String(month.getFullYear())}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(month)
-                      next.setFullYear(Number(v))
-                      setMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {yearItems.map((y) => (
-                          <SelectItem key={y.value} value={y.value}>
-                            {y.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )
-            },
+        >
+          Tomorrow
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 7)
+            setDate(d)
+            setMonth(d)
           }}
-        />
+        >
+          Next week
+        </Button>
       </div>
+      <div className="flex flex-col">
+      <Calendar
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        month={month}
+        onMonthChange={setMonth}
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+        classNames={{
+          nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
+        }}
+        components={{
+          MonthCaption: () => {
+            const monthItems = monthNames.map((m) => ({
+              label: m,
+              value: m,
+            }))
+            const yearItems = Array.from({ length: 14 }, (_, i) => {
+              const y = String(2017 + i)
+              return { label: y, value: y }
+            })
+            return (
+              <div className="flex h-(--cell-size) items-center gap-1.5">
+                <Select
+                  items={monthItems}
+                  value={monthNames[month.getMonth()]}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    const next = new Date(month)
+                    next.setMonth(monthNames.indexOf(v))
+                    setMonth(next)
+                  }}
+                >
+                  <SelectTrigger variant="ghost" size="sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {monthItems.map((m) => (
+                        <SelectItem key={m.value} value={m.value}>
+                          {m.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={yearItems}
+                  value={String(month.getFullYear())}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    const next = new Date(month)
+                    next.setFullYear(Number(v))
+                    setMonth(next)
+                  }}
+                >
+                  <SelectTrigger variant="ghost" size="sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {yearItems.map((y) => (
+                        <SelectItem key={y.value} value={y.value}>
+                          {y.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )
+          },
+          Nav: ({
+            className: navClassName,
+            onPreviousClick,
+            onNextClick,
+            previousMonth,
+            nextMonth,
+          }) => (
+            <nav className={navClassName}>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onPreviousClick?.(e)}
+                disabled={!previousMonth}
+                aria-label="Previous month"
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button
+                variant="ghost"
+                size="xs"
+                onClick={() => {
+                  const today = new Date()
+                  setDate(today)
+                  setMonth(today)
+                }}
+              >
+                Today
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onNextClick?.(e)}
+                disabled={!nextMonth}
+                aria-label="Next month"
+              >
+                <ChevronRightIcon />
+              </Button>
+            </nav>
+          ),
+        }}
+      />
       <div className="flex items-center justify-between border-t px-4 py-3">
         <span className="text-base leading-base font-medium tracking-normal text-foreground">
           Time
@@ -246,18 +319,137 @@ function DateTimePresetPicker() {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-2 border-t px-4 py-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = new Date()
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Today
-        </Button>
+      </div>
+    </div>
+  )
+}
+
+function MultiMonthRangeContent({
+  range,
+  onRangeChange,
+  onConfirm,
+}: {
+  range: DateRange | undefined
+  onRangeChange: (r: DateRange | undefined) => void
+  onConfirm: () => void
+}) {
+  return (
+    <div className="flex w-max flex-col">
+      <Calendar
+        mode="range"
+        selected={range}
+        onSelect={onRangeChange}
+        numberOfMonths={2}
+        defaultMonth={range?.from ?? new Date(2023, 4)}
+        className="border-0 shadow-none [--cell-size:1.5rem]"
+        classNames={{
+          months:
+            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
+          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
+          root: "w-fit p-0!",
+        }}
+      />
+      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
+        <div className="flex items-center gap-2 text-sm">
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDateShort(range?.from) || (
+              <span className="text-card-foreground">Start date</span>
+            )}
+          </span>
+          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            to
+          </span>
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDateShort(range?.to) || (
+              <span className="text-card-foreground">End date</span>
+            )}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              onRangeChange(undefined)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button size="sm" onClick={onConfirm}>
+            Set date
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function DateRangeContent({
+  range,
+  onRangeChange,
+  onConfirm,
+}: {
+  range: DateRange | undefined
+  onRangeChange: (r: DateRange | undefined) => void
+  onConfirm: () => void
+}) {
+  return (
+    <div className="flex w-max flex-col">
+      <Calendar
+        mode="range"
+        selected={range}
+        onSelect={onRangeChange}
+        numberOfMonths={2}
+        defaultMonth={range?.from ?? new Date(2023, 4)}
+        className="border-0 shadow-none [--cell-size:1.5rem]"
+        classNames={{
+          months:
+            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
+          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
+          root: "w-fit p-0!",
+        }}
+      />
+      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
+        <div className="flex items-center gap-2 text-sm">
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDateShort(range?.from) || (
+              <span className="text-card-foreground">Start date</span>
+            )}
+          </span>
+          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            to
+          </span>
+          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
+            {formatDateShort(range?.to) || (
+              <span className="text-card-foreground">End date</span>
+            )}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              onRangeChange(undefined)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button size="sm" onClick={onConfirm}>
+            Set date
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PresetsContent() {
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  const [month, setMonth] = useState(new Date())
+  return (
+    <div className="flex w-max">
+      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
         <Button
           variant="outline"
           size="sm"
@@ -281,143 +473,145 @@ function DateTimePresetPicker() {
           Next week
         </Button>
       </div>
-    </div>
-  )
-}
-
-function MultiMonthRangePicker() {
-  const [range, setRange] = useState<DateRange | undefined>({
-    from: new Date(2023, 4, 3),
-    to: new Date(2023, 4, 11),
-  })
-
-  const formatDate = (date: Date | undefined) =>
-    date ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` : ""
-
-  return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
       <Calendar
-        mode="range"
-        selected={range}
-        onSelect={setRange}
-        numberOfMonths={2}
-        defaultMonth={new Date(2023, 4)}
-        className="border-0 shadow-none"
+        mode="single"
+        selected={date}
+        onSelect={setDate}
+        month={month}
+        onMonthChange={setMonth}
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
         classNames={{
-          months:
-            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
-          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
-          root: "w-fit p-0!",
+          nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
+        }}
+        components={{
+          MonthCaption: () => {
+            const monthItems = monthNames.map((m) => ({ label: m, value: m }))
+            const yearItems = Array.from({ length: 14 }, (_, i) => {
+              const y = String(2017 + i)
+              return { label: y, value: y }
+            })
+            return (
+              <div className="flex h-(--cell-size) items-center gap-1.5">
+                <Select
+                  items={monthItems}
+                  value={monthNames[month.getMonth()]}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    const next = new Date(month)
+                    next.setMonth(monthNames.indexOf(v))
+                    setMonth(next)
+                  }}
+                >
+                  <SelectTrigger variant="ghost" size="sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {monthItems.map((m) => (
+                        <SelectItem key={m.value} value={m.value}>
+                          {m.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Select
+                  items={yearItems}
+                  value={String(month.getFullYear())}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    const next = new Date(month)
+                    next.setFullYear(Number(v))
+                    setMonth(next)
+                  }}
+                >
+                  <SelectTrigger variant="ghost" size="sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {yearItems.map((y) => (
+                        <SelectItem key={y.value} value={y.value}>
+                          {y.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )
+          },
+          Nav: ({
+            className: navClassName,
+            onPreviousClick,
+            onNextClick,
+            previousMonth,
+            nextMonth,
+          }) => (
+            <nav className={navClassName}>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onPreviousClick?.(e)}
+                disabled={!previousMonth}
+                aria-label="Previous month"
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <Button
+                variant="ghost"
+                size="xs"
+                onClick={() => {
+                  const today = new Date()
+                  setDate(today)
+                  setMonth(today)
+                }}
+              >
+                Today
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                onClick={(e) => onNextClick?.(e)}
+                disabled={!nextMonth}
+                aria-label="Next month"
+              >
+                <ChevronRightIcon />
+              </Button>
+            </nav>
+          ),
         }}
       />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDate(range?.from) || (
-              <span className="text-card-foreground">Start date</span>
-            )}
-          </span>
-          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            to
-          </span>
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDate(range?.to) || (
-              <span className="text-card-foreground">End date</span>
-            )}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              setRange(undefined)
-            }}
-          >
-            Cancel
-          </Button>
-          <Button size="sm">Set date</Button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function DateRangePicker() {
-  const [range, setRange] = useState<DateRange | undefined>({
-    from: new Date(2023, 4, 3),
-    to: new Date(2023, 4, 11),
-  })
-
-  const formatDate = (date: Date | undefined) =>
-    date ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}` : ""
-
-  return (
-    <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
-      <Calendar
-        mode="range"
-        selected={range}
-        onSelect={setRange}
-        numberOfMonths={2}
-        defaultMonth={new Date(2023, 4)}
-        className="border-0 shadow-none"
-        classNames={{
-          months:
-            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
-          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
-          root: "w-fit p-0!",
-        }}
-      />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDate(range?.from) || (
-              <span className="text-card-foreground">Start date</span>
-            )}
-          </span>
-          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            to
-          </span>
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDate(range?.to) || (
-              <span className="text-card-foreground">End date</span>
-            )}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              setRange(undefined)
-            }}
-          >
-            Cancel
-          </Button>
-          <Button size="sm">Set date</Button>
-        </div>
-      </div>
     </div>
   )
 }
 
 export default function CalendarPage() {
   const [singleDate, setSingleDate] = useState<Date | undefined>(new Date())
-  const [rangeDate, setRangeDate] = useState<DateRange | undefined>({
-    from: new Date(2026, 3, 5),
-    to: new Date(2026, 3, 15),
-  })
   const [multipleDates, setMultipleDates] = useState<Date[] | undefined>([
     new Date(2026, 3, 5),
     new Date(2026, 3, 10),
     new Date(2026, 3, 18),
   ])
-  const [presetDate, setPresetDate] = useState<Date | undefined>(new Date())
-  const [presetMonth, setPresetMonth] = useState(new Date())
-  const [dateTimeRange, setDateTimeRange] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 7),
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(2023, 4, 3),
+    to: new Date(2023, 4, 11),
   })
+  const [multiMonthRange, setMultiMonthRange] = useState<DateRange | undefined>(
+    {
+      from: new Date(2023, 4, 3),
+      to: new Date(2023, 4, 11),
+    }
+  )
+  const [bookedDate, setBookedDate] = useState<Date | undefined>(undefined)
+  const [largeCellDate, setLargeCellDate] = useState<Date | undefined>(
+    undefined
+  )
+  const [weekNumDate, setWeekNumDate] = useState<Date | undefined>(undefined)
+  const [noOutsideDate, setNoOutsideDate] = useState<Date | undefined>(
+    undefined
+  )
+  const [weekdayDate, setWeekdayDate] = useState<Date | undefined>(undefined)
 
   const bookedDates = [
     new Date(2026, 3, 3),
@@ -429,31 +623,66 @@ export default function CalendarPage() {
   ]
 
   return (
-    <div className="flex flex-col gap-20 p-8">
+    <div className="flex flex-col gap-12 p-8">
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
-        <Calendar
-          mode="single"
-          selected={singleDate}
-          onSelect={setSingleDate}
-        />
+        <CalendarPopover
+          buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={singleDate}
+              onSelect={(d) => {
+                setSingleDate(d)
+                close()
+              }}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Multiple */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Multiple</SectionTitle>
-        <Calendar
-          mode="multiple"
-          selected={multipleDates}
-          onSelect={setMultipleDates}
-        />
+        <CalendarPopover
+          buttonContent={
+            multipleDates && multipleDates.length > 0
+              ? `${multipleDates.length} date${multipleDates.length > 1 ? "s" : ""} selected`
+              : "Pick dates"
+          }
+        >
+          {() => (
+            <Calendar
+              mode="multiple"
+              selected={multipleDates}
+              onSelect={setMultipleDates}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Date Picker */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Picker</SectionTitle>
-        <DatePicker />
+        <CalendarPopover
+          buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={singleDate}
+              onSelect={(d) => {
+                setSingleDate(d)
+                close()
+              }}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Time Input */}
@@ -465,164 +694,163 @@ export default function CalendarPage() {
       {/* Date Time Picker with Presets */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Time Picker with Presets</SectionTitle>
-        <DateTimePresetPicker />
+        <CalendarPopover buttonContent="Pick date & time">
+          {() => <DateTimePresetContent />}
+        </CalendarPopover>
       </div>
 
       {/* Presets */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Presets</SectionTitle>
-        <div className="flex w-max flex-col overflow-hidden rounded-xl bg-popover shadow-5xl">
-          <Calendar
-            mode="single"
-            selected={presetDate}
-            onSelect={setPresetDate}
-            month={presetMonth}
-            onMonthChange={setPresetMonth}
-            className="w-full border-0 shadow-none"
-            classNames={{
-              nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
-            }}
-            components={{
-              MonthCaption: () => {
-                const monthItems = monthNames.map((m) => ({
-                  label: m,
-                  value: m,
-                }))
-                const yearItems = Array.from({ length: 14 }, (_, i) => {
-                  const y = String(2017 + i)
-                  return { label: y, value: y }
-                })
-                return (
-                  <div className="flex h-(--cell-size) items-center gap-1.5">
-                    <Select
-                      items={monthItems}
-                      value={monthNames[presetMonth.getMonth()]}
-                      onValueChange={(v) => {
-                        if (!v) return
-                        const next = new Date(presetMonth)
-                        next.setMonth(monthNames.indexOf(v))
-                        setPresetMonth(next)
-                      }}
-                    >
-                      <SelectTrigger variant="ghost" size="sm">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {monthItems.map((m) => (
-                            <SelectItem key={m.value} value={m.value}>
-                              {m.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      items={yearItems}
-                      value={String(presetMonth.getFullYear())}
-                      onValueChange={(v) => {
-                        if (!v) return
-                        const next = new Date(presetMonth)
-                        next.setFullYear(Number(v))
-                        setPresetMonth(next)
-                      }}
-                    >
-                      <SelectTrigger variant="ghost" size="sm">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          {yearItems.map((y) => (
-                            <SelectItem key={y.value} value={y.value}>
-                              {y.label}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )
-              },
-            }}
-          />
-          <div className="flex items-center gap-2 border-t border-border px-4 py-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const d = new Date()
-                setPresetDate(d)
-                setPresetMonth(d)
-              }}
-            >
-              Today
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const d = addDays(new Date(), 1)
-                setPresetDate(d)
-                setPresetMonth(d)
-              }}
-            >
-              Tomorrow
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const d = addDays(new Date(), 7)
-                setPresetDate(d)
-                setPresetMonth(d)
-              }}
-            >
-              Next week
-            </Button>
-          </div>
-        </div>
+        <CalendarPopover buttonContent="Pick a date">
+          {() => <PresetsContent />}
+        </CalendarPopover>
       </div>
 
       {/* Date Range Picker */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Range Picker</SectionTitle>
-        <DateRangePicker />
+        <CalendarPopover
+          buttonContent={formatRange(dateRange, "Pick a date range")}
+          buttonClassName="w-64"
+        >
+          {({ close }) => (
+            <DateRangeContent
+              range={dateRange}
+              onRangeChange={setDateRange}
+              onConfirm={close}
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Booked Dates */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Booked Dates</SectionTitle>
-        <Calendar mode="single" disabled={bookedDates} />
+        <CalendarPopover
+          buttonContent={bookedDate ? format(bookedDate, "PPP") : "Pick a date"}
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={bookedDate}
+              onSelect={(d) => {
+                setBookedDate(d)
+                close()
+              }}
+              disabled={bookedDates}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Custom Cell Size */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Custom Cell Size</SectionTitle>
-        <Calendar mode="single" className="[--cell-size:2.75rem]" />
+        <CalendarPopover
+          buttonContent={
+            largeCellDate ? format(largeCellDate, "PPP") : "Pick a date"
+          }
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={largeCellDate}
+              onSelect={(d) => {
+                setLargeCellDate(d)
+                close()
+              }}
+              className="border-0 shadow-none [--cell-size:2.75rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Week Numbers */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Week Numbers</SectionTitle>
-        <Calendar mode="single" showWeekNumber />
+        <CalendarPopover
+          buttonContent={
+            weekNumDate ? format(weekNumDate, "PPP") : "Pick a date"
+          }
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={weekNumDate}
+              onSelect={(d) => {
+                setWeekNumDate(d)
+                close()
+              }}
+              showWeekNumber
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Without Outside Days */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Without Outside Days</SectionTitle>
-        <Calendar mode="single" showOutsideDays={false} />
+        <CalendarPopover
+          buttonContent={
+            noOutsideDate ? format(noOutsideDate, "PPP") : "Pick a date"
+          }
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={noOutsideDate}
+              onSelect={(d) => {
+                setNoOutsideDate(d)
+                close()
+              }}
+              showOutsideDays={false}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Multiple Months */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Multiple Months</SectionTitle>
-        <MultiMonthRangePicker />
+        <CalendarPopover
+          buttonContent={formatRange(multiMonthRange, "Pick a date range")}
+          buttonClassName="w-64"
+        >
+          {({ close }) => (
+            <MultiMonthRangeContent
+              range={multiMonthRange}
+              onRangeChange={setMultiMonthRange}
+              onConfirm={close}
+            />
+          )}
+        </CalendarPopover>
       </div>
 
       {/* Disabled Weekends */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled Weekends</SectionTitle>
-        <Calendar mode="single" disabled={{ dayOfWeek: [0, 6] }} />
+        <CalendarPopover
+          buttonContent={
+            weekdayDate ? format(weekdayDate, "PPP") : "Pick a weekday"
+          }
+        >
+          {({ close }) => (
+            <Calendar
+              mode="single"
+              selected={weekdayDate}
+              onSelect={(d) => {
+                setWeekdayDate(d)
+                close()
+              }}
+              disabled={{ dayOfWeek: [0, 6] }}
+              className="border-0 shadow-none [--cell-size:1.5rem]"
+            />
+          )}
+        </CalendarPopover>
       </div>
     </div>
   )
