@@ -30,6 +30,9 @@ function Calendar({
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const gridColsClass = props.showWeekNumber
+    ? "grid-cols-[var(--cell-size)_repeat(7,var(--cell-size))]"
+    : "grid-cols-[repeat(7,var(--cell-size))]"
 
   return (
     <DayPicker
@@ -97,14 +100,19 @@ function Calendar({
             : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground",
           defaultClassNames.caption_label
         ),
-        table: "w-full border-collapse",
-        weekdays: cn("flex gap-2.5", defaultClassNames.weekdays),
+        table: "border-collapse",
+        weekdays: cn(
+          "grid gap-0.5",
+          gridColsClass,
+          defaultClassNames.weekdays
+        ),
         weekday: cn(
-          "flex-1 rounded-(--cell-radius) text-xs leading-base font-medium tracking-normal text-card-foreground select-none",
+          "rounded-(--cell-radius) text-center text-xs leading-base font-medium tracking-normal text-card-foreground select-none",
           defaultClassNames.weekday
         ),
         week: cn(
-          "mt-2.5 flex w-full gap-2.5 overflow-visible",
+          "mt-0.5 grid gap-0.5 overflow-visible",
+          gridColsClass,
           defaultClassNames.week
         ),
         week_number_header: cn(
@@ -116,7 +124,7 @@ function Calendar({
           defaultClassNames.week_number
         ),
         day: cn(
-          "group/day relative aspect-square h-full w-full rounded-(--cell-radius) p-0 text-center select-none",
+          "group/day relative h-[var(--cell-size)] w-[var(--cell-size)] rounded-(--cell-radius) p-0 text-center select-none",
           defaultClassNames.day
         ),
         range_start: cn(
@@ -222,7 +230,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-medium tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        "relative isolate z-10 flex h-[var(--cell-size)]! w-[var(--cell-size)]! flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-medium tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
         // range start
         "data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground",
         "data-[range-start=true]:after:absolute data-[range-start=true]:after:top-0 data-[range-start=true]:after:-right-2.5 data-[range-start=true]:after:bottom-0 data-[range-start=true]:after:-z-10 data-[range-start=true]:after:w-2.5 data-[range-start=true]:after:bg-muted data-[range-start=true]:after:content-['']",
