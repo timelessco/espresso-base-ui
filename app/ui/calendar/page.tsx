@@ -158,7 +158,7 @@ function DateTimePresetContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem]"
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
         classNames={{
           nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
         }}
@@ -479,7 +479,7 @@ function PresetsContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem]"
+        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
         classNames={{
           nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
         }}
