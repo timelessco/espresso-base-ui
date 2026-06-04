@@ -126,7 +126,32 @@ function DateTimePresetContent() {
   }, [])
 
   return (
-    <div className="flex w-max flex-col">
+    <div className="flex w-max">
+      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 1)
+            setDate(d)
+            setMonth(d)
+          }}
+        >
+          Tomorrow
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 7)
+            setDate(d)
+            setMonth(d)
+          }}
+        >
+          Next week
+        </Button>
+      </div>
+      <div className="flex flex-col">
       <Calendar
         mode="single"
         selected={date}
@@ -294,29 +319,6 @@ function DateTimePresetContent() {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-2 border-t px-4 py-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = addDays(new Date(), 1)
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Tomorrow
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = addDays(new Date(), 7)
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Next week
-        </Button>
       </div>
     </div>
   )
@@ -446,7 +448,31 @@ function PresetsContent() {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [month, setMonth] = useState(new Date())
   return (
-    <div className="flex w-max flex-col">
+    <div className="flex w-max">
+      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 1)
+            setDate(d)
+            setMonth(d)
+          }}
+        >
+          Tomorrow
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            const d = addDays(new Date(), 7)
+            setDate(d)
+            setMonth(d)
+          }}
+        >
+          Next week
+        </Button>
+      </div>
       <Calendar
         mode="single"
         selected={date}
@@ -556,30 +582,6 @@ function PresetsContent() {
           ),
         }}
       />
-      <div className="flex items-center gap-2 border-t border-border px-4 py-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = addDays(new Date(), 1)
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Tomorrow
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            const d = addDays(new Date(), 7)
-            setDate(d)
-            setMonth(d)
-          }}
-        >
-          Next week
-        </Button>
-      </div>
     </div>
   )
 }
