@@ -1,6 +1,20 @@
 "use client"
 
-import { ArrowRight, FileText, Inbox, Plus, Search, Users } from "lucide-react"
+import {
+  ArrowRight,
+  AtSign,
+  Cloud,
+  FileText,
+  Inbox,
+  MessageSquare,
+  Plus,
+  Search,
+  Send,
+  Ticket,
+  Users,
+  Workflow,
+  Mail,
+} from "lucide-react"
 import {
   Empty,
   EmptyContent,
@@ -23,7 +37,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 export default function EmptyPage() {
   return (
-    <div className="flex max-w-2xl flex-col gap-12 p-8">
+    <div className="flex max-w-[764px] flex-col gap-12 p-8">
       {/* Default */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Default</SectionTitle>
@@ -230,6 +244,113 @@ export default function EmptyPage() {
               Projects you share with others will show up here.
             </EmptyDescription>
           </EmptyHeader>
+        </Empty>
+      </div>
+
+      {/* Provider Grid */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Provider Grid</SectionTitle>
+        <Empty className="min-h-[450px] border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon" className="bg-transparent">
+              <Plus />
+            </EmptyMedia>
+            <EmptyTitle>Add account</EmptyTitle>
+            <EmptyDescription>
+              Add a new account for easy profile switching.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent className="max-w-xl justify-center">
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                { label: "Google", src: "/images/svg/gmail.svg" },
+                { label: "Frappe", src: "/images/svg/frappe.svg" },
+                { label: "Outlook", src: "/images/svg/outlook.svg" },
+                { label: "Google", src: "/images/svg/google.svg" },
+                { label: "Yahoo", src: "/images/svg/yahoo.svg" },
+                {
+                  label: "Custom email",
+                  src: "/images/svg/custom-mail.svg",
+                },
+              ].map((provider, i) => (
+                <Button
+                  key={i}
+                  variant="outline"
+                  size="xl"
+                  className="w-[156px] justify-start gap-2.5 text-base"
+                >
+                  <img src={provider.src} alt={provider.label} />
+                  {provider.label}
+                </Button>
+              ))}
+            </div>
+          </EmptyContent>
+        </Empty>
+      </div>
+
+      {/* Icon Row */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Icon Row</SectionTitle>
+        <Empty className="min-h-[450px] border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon" className="bg-transparent">
+              <Plus />
+            </EmptyMedia>
+            <EmptyTitle>Add account</EmptyTitle>
+            <EmptyDescription>
+              Add a new account for easy profile switching.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <div className="flex items-center justify-center gap-4">
+              {[
+                { icon: Mail, color: "bg-blue-500", size: "size-4" },
+                { icon: Ticket, color: "bg-purple-500", size: "size-6" },
+                { icon: Send, color: "bg-blue-700", size: "size-8" },
+                { icon: Cloud, color: "bg-sky-400", size: "size-10" },
+                { icon: Inbox, color: "bg-fuchsia-500", size: "size-11.5" },
+                { icon: FileText, color: "bg-foreground", size: "size-16" },
+                { icon: AtSign, color: "bg-blue-500", size: "size-11.5" },
+                {
+                  icon: MessageSquare,
+                  color: "bg-orange-500",
+                  size: "size-10",
+                },
+                { icon: Workflow, color: "bg-indigo-500", size: "size-8" },
+                { icon: Inbox, color: "bg-teal-700", size: "size-6" },
+                { icon: Mail, color: "bg-emerald-700", size: "size-4" },
+              ].map(({ icon: Icon, color, size }, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center justify-center rounded-full ${color} ${size}`}
+                >
+                  <Icon className="size-1/2 text-white" />
+                </div>
+              ))}
+            </div>
+          </EmptyContent>
+        </Empty>
+      </div>
+
+      {/* Minimal */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Minimal</SectionTitle>
+        <Empty className="min-h-[450px] border">
+          <EmptyHeader>
+            <EmptyMedia variant="icon" className="bg-transparent">
+              <Users />
+            </EmptyMedia>
+            <EmptyTitle>No leads found</EmptyTitle>
+            <EmptyDescription>
+              No leads found. Create a lead to start tracking opportunities.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button variant="secondary" size="sm">
+              <Plus />
+              New
+            </Button>
+          </EmptyContent>
         </Empty>
       </div>
     </div>
