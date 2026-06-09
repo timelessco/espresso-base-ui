@@ -100,7 +100,7 @@ function TimeInput() {
       step="1"
       value={time}
       onChange={(e) => setTime(e.target.value)}
-      className="w-fit [&::-webkit-calendar-picker-indicator]:hidden"
+      className="w-fit [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit-ampm-field]:rounded-sm [&::-webkit-datetime-edit-ampm-field]:px-px [&::-webkit-datetime-edit-hour-field]:rounded-sm [&::-webkit-datetime-edit-hour-field]:px-px [&::-webkit-datetime-edit-minute-field]:rounded-sm [&::-webkit-datetime-edit-minute-field]:px-px [&::-webkit-datetime-edit-second-field]:rounded-sm [&::-webkit-datetime-edit-second-field]:px-px"
     />
   )
 }
@@ -152,173 +152,173 @@ function DateTimePresetContent() {
         </Button>
       </div>
       <div className="flex flex-col">
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        month={month}
-        onMonthChange={setMonth}
-        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
-        classNames={{
-          nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
-        }}
-        components={{
-          MonthCaption: () => {
-            const monthItems = monthNames.map((m) => ({
-              label: m,
-              value: m,
-            }))
-            const yearItems = Array.from({ length: 14 }, (_, i) => {
-              const y = String(2017 + i)
-              return { label: y, value: y }
-            })
-            return (
-              <div className="flex h-(--cell-size) items-center gap-1.5">
-                <Select
-                  items={monthItems}
-                  value={monthNames[month.getMonth()]}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setMonth(monthNames.indexOf(v))
-                    setMonth(next)
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          month={month}
+          onMonthChange={setMonth}
+          className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+          classNames={{
+            nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
+          }}
+          components={{
+            MonthCaption: () => {
+              const monthItems = monthNames.map((m) => ({
+                label: m,
+                value: m,
+              }))
+              const yearItems = Array.from({ length: 14 }, (_, i) => {
+                const y = String(2017 + i)
+                return { label: y, value: y }
+              })
+              return (
+                <div className="flex h-(--cell-size) items-center gap-1.5">
+                  <Select
+                    items={monthItems}
+                    value={monthNames[month.getMonth()]}
+                    onValueChange={(v) => {
+                      if (!v) return
+                      const next = new Date(month)
+                      next.setMonth(monthNames.indexOf(v))
+                      setMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {monthItems.map((m) => (
+                          <SelectItem key={m.value} value={m.value}>
+                            {m.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <Select
+                    items={yearItems}
+                    value={String(month.getFullYear())}
+                    onValueChange={(v) => {
+                      if (!v) return
+                      const next = new Date(month)
+                      next.setFullYear(Number(v))
+                      setMonth(next)
+                    }}
+                  >
+                    <SelectTrigger variant="ghost" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {yearItems.map((y) => (
+                          <SelectItem key={y.value} value={y.value}>
+                            {y.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )
+            },
+            Nav: ({
+              className: navClassName,
+              onPreviousClick,
+              onNextClick,
+              previousMonth,
+              nextMonth,
+            }) => (
+              <nav className={navClassName}>
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  onClick={(e) => onPreviousClick?.(e)}
+                  disabled={!previousMonth}
+                  aria-label="Previous month"
+                >
+                  <ChevronLeftIcon />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="xs"
+                  onClick={() => {
+                    const today = new Date()
+                    setDate(today)
+                    setMonth(today)
                   }}
                 >
-                  <SelectTrigger variant="ghost" size="sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {monthItems.map((m) => (
-                        <SelectItem key={m.value} value={m.value}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={yearItems}
-                  value={String(month.getFullYear())}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setFullYear(Number(v))
-                    setMonth(next)
-                  }}
+                  Today
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  onClick={(e) => onNextClick?.(e)}
+                  disabled={!nextMonth}
+                  aria-label="Next month"
                 >
-                  <SelectTrigger variant="ghost" size="sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {yearItems.map((y) => (
-                        <SelectItem key={y.value} value={y.value}>
-                          {y.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            )
-          },
-          Nav: ({
-            className: navClassName,
-            onPreviousClick,
-            onNextClick,
-            previousMonth,
-            nextMonth,
-          }) => (
-            <nav className={navClassName}>
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={(e) => onPreviousClick?.(e)}
-                disabled={!previousMonth}
-                aria-label="Previous month"
-              >
-                <ChevronLeftIcon />
-              </Button>
-              <Button
-                variant="ghost"
-                size="xs"
-                onClick={() => {
-                  const today = new Date()
-                  setDate(today)
-                  setMonth(today)
-                }}
-              >
-                Today
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={(e) => onNextClick?.(e)}
-                disabled={!nextMonth}
-                aria-label="Next month"
-              >
-                <ChevronRightIcon />
-              </Button>
-            </nav>
-          ),
-        }}
-      />
-      <div className="flex items-center justify-between border-t px-4 py-3">
-        <span className="text-base leading-base font-medium tracking-normal text-foreground">
-          Time
-        </span>
-        <Button variant="ghost" size="sm" onClick={setToNow}>
-          Now
-        </Button>
-      </div>
-      <div className="flex items-center gap-2 px-4 pb-3">
-        <Select value={hour} onValueChange={(v) => v && setHour(v)}>
-          <SelectTrigger variant="subtle" size="sm" className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {Array.from({ length: 12 }, (_, i) => {
-                const v = String(i + 1).padStart(2, "0")
-                return (
-                  <SelectItem key={v} value={v}>
-                    {v}
-                  </SelectItem>
-                )
-              })}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select value={minute} onValueChange={(v) => v && setMinute(v)}>
-          <SelectTrigger variant="subtle" size="sm" className="w-full">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent alignItemWithTrigger={false} className="max-h-60">
-            <SelectGroup>
-              {Array.from({ length: 60 }, (_, i) => {
-                const v = String(i).padStart(2, "0")
-                return (
-                  <SelectItem key={v} value={v}>
-                    {v}
-                  </SelectItem>
-                )
-              })}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <Select value={period} onValueChange={(v) => v && setPeriod(v)}>
-          <SelectTrigger variant="subtle" size="sm" className="w-16">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="AM">AM</SelectItem>
-              <SelectItem value="PM">PM</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+                  <ChevronRightIcon />
+                </Button>
+              </nav>
+            ),
+          }}
+        />
+        <div className="flex items-center justify-between border-t px-4 py-3">
+          <span className="text-base leading-base font-medium tracking-normal text-foreground">
+            Time
+          </span>
+          <Button variant="ghost" size="sm" onClick={setToNow}>
+            Now
+          </Button>
+        </div>
+        <div className="flex items-center gap-2 px-4 pb-3">
+          <Select value={hour} onValueChange={(v) => v && setHour(v)}>
+            <SelectTrigger variant="subtle" size="sm" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {Array.from({ length: 12 }, (_, i) => {
+                  const v = String(i + 1).padStart(2, "0")
+                  return (
+                    <SelectItem key={v} value={v}>
+                      {v}
+                    </SelectItem>
+                  )
+                })}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select value={minute} onValueChange={(v) => v && setMinute(v)}>
+            <SelectTrigger variant="subtle" size="sm" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent alignItemWithTrigger={false} className="max-h-60">
+              <SelectGroup>
+                {Array.from({ length: 60 }, (_, i) => {
+                  const v = String(i).padStart(2, "0")
+                  return (
+                    <SelectItem key={v} value={v}>
+                      {v}
+                    </SelectItem>
+                  )
+                })}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select value={period} onValueChange={(v) => v && setPeriod(v)}>
+            <SelectTrigger variant="subtle" size="sm" className="w-16">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="AM">AM</SelectItem>
+                <SelectItem value="PM">PM</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   )
