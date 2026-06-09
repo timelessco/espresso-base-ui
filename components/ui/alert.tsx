@@ -200,8 +200,8 @@ function AlertAction({
     <Button
       data-slot="alert-action"
       variant="ghost"
-      size="icon-xs"
-      className={cn("absolute top-1.5 right-3", className)}
+      size="icon-sm"
+      className={cn("absolute top-2 right-2 size-5", className)}
       {...props}
     >
       {children}
