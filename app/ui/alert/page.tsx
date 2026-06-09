@@ -32,7 +32,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
       </div>
@@ -50,7 +50,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert variant="success">
@@ -63,7 +63,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert variant="info">
@@ -76,7 +76,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert variant="warning">
@@ -89,7 +89,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert variant="destructive">
@@ -104,7 +104,7 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
       </div>
@@ -115,7 +115,7 @@ export default function AlertPage() {
         <Alert type="banner">
           <AlertTitle>Your trial ends soon!</AlertTitle>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
       </div>
@@ -134,7 +134,7 @@ export default function AlertPage() {
             <Button variant="inverted-ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="success">
@@ -146,7 +146,7 @@ export default function AlertPage() {
             <Button variant="inverted-ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="info">
@@ -160,7 +160,7 @@ export default function AlertPage() {
             <Button variant="inverted-ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="warning">
@@ -174,7 +174,7 @@ export default function AlertPage() {
             <Button variant="inverted-ghost">Remind me later</Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="destructive">
@@ -188,7 +188,7 @@ export default function AlertPage() {
             <Button variant="inverted-ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X className="size-4" />
+            <X />
           </AlertAction>
         </Alert>
       </div>
