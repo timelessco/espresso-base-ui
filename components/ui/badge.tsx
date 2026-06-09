@@ -24,6 +24,12 @@ const badgeVariants = cva(
         lg: "h-6 px-2 text-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&>svg]:size-3!",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "default", className: "h-3.5!" },
+      { variant: "outline", size: "md", className: "h-4.5!" },
+      { variant: "outline", size: "lg", className: "h-5.5!" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
