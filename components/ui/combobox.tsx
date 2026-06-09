@@ -88,7 +88,10 @@ function ComboboxInput({
   return (
     <InputGroup
       variant={variant}
-      className={cn("h-8 w-auto data-[variant=outline]:h-7.5", className)}
+      className={cn(
+        "h-8 w-auto data-[variant=outline]:h-7.5 data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150",
+        className
+      )}
     >
       <ComboboxPrimitive.Input
         render={<InputGroupInput disabled={disabled} />}
