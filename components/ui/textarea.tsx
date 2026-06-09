@@ -11,11 +11,11 @@ const textareaVariants = cva(
     variants: {
       variant: {
         outline:
-          "bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:not-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! disabled:bg-input disabled:text-popover-foreground",
+          "bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! disabled:bg-transparent disabled:text-popover-foreground data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:not-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]!",
         subtle:
-          "bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-disabled:active:bg-background dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! disabled:bg-input disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
+          "bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-disabled:active:bg-background disabled:bg-input disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]!",
         ghost:
-          "bg-transparent not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-disabled:active:bg-primary-foreground dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]! disabled:bg-transparent disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
+          "bg-transparent not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success dark:not-disabled:focus:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]!",
       },
       size: {
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",
@@ -23,6 +23,12 @@ const textareaVariants = cva(
         lg: "min-h-31.5 rounded-lg px-3.5 py-3 text-xl",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "sm", className: "min-h-14.5!" },
+      { variant: "outline", size: "default", className: "min-h-25!" },
+      { variant: "outline", size: "lg", className: "min-h-31!" },
+    ],
     defaultVariants: {
       variant: "outline",
       size: "default",

@@ -35,7 +35,7 @@ const tagVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-muted active:bg-accent data-disabled:bg-secondary data-disabled:text-card-foreground",
         outline:
-          "bg-background text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:border-border-normal focus-visible:bg-secondary active:border-border-strong active:bg-accent dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] data-disabled:border-border data-disabled:bg-secondary data-disabled:text-card-foreground",
+          "bg-background text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:border-border-normal focus-visible:bg-secondary active:border-border-strong active:bg-accent dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] data-disabled:border-border data-disabled:bg-transparent data-disabled:text-card-foreground",
         ghost:
           "text-secondary-foreground hover:bg-muted focus-visible:bg-secondary active:bg-accent data-disabled:text-card-foreground",
         destructive:
@@ -47,6 +47,12 @@ const tagVariants = cva(
         lg: "h-7 rounded-lg px-2 text-base leading-base tracking-normal",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "sm", className: "h-4.5!" },
+      { variant: "outline", size: "default", className: "h-5.5!" },
+      { variant: "outline", size: "lg", className: "h-6.5!" },
+    ],
     defaultVariants: {
       variant: "primary",
       size: "default",

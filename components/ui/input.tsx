@@ -23,6 +23,13 @@ const inputVariants = cva(
         xl: "h-10 rounded-lg px-3 py-2.25 text-xl",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "sm", className: "h-6.5!" },
+      { variant: "outline", size: "md", className: "h-7.5!" },
+      { variant: "outline", size: "lg", className: "h-9.5!" },
+      { variant: "outline", size: "xl", className: "h-9.5!" },
+    ],
     defaultVariants: {
       variant: "outline",
       size: "md",
