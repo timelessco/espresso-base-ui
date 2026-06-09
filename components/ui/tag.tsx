@@ -47,6 +47,12 @@ const tagVariants = cva(
         lg: "h-7 rounded-lg px-2 text-base leading-base tracking-normal",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "sm", className: "h-4.5!" },
+      { variant: "outline", size: "default", className: "h-5.5!" },
+      { variant: "outline", size: "lg", className: "h-6.5!" },
+    ],
     defaultVariants: {
       variant: "primary",
       size: "default",
