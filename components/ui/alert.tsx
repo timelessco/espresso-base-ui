@@ -33,31 +33,32 @@ const alertVariants = cva(
       {
         type: "default",
         variant: "default",
-        className: "border-border-soft bg-primary-foreground",
+        className:
+          "border-transparent bg-transparent shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)]",
       },
       {
         type: "default",
         variant: "success",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-success/80! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:bg-success! [&_[data-slot=alert-button]>button]:active:bg-success/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--success),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--success),white_10%)]!",
+          "border-transparent bg-transparent shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] [&_[data-slot=alert-button]>button]:bg-success/80! [&_[data-slot=alert-button]>button]:text-success-foreground [&_[data-slot=alert-button]>button]:hover:bg-success! [&_[data-slot=alert-button]>button]:active:bg-success/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--success),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--success),white_10%)]!",
       },
       {
         type: "default",
         variant: "destructive",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-error/80! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:bg-error! [&_[data-slot=alert-button]>button]:active:bg-error/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--error),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--error),white_10%)]!",
+          "border-transparent bg-transparent shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] [&_[data-slot=alert-button]>button]:bg-error/80! [&_[data-slot=alert-button]>button]:text-error-foreground [&_[data-slot=alert-button]>button]:hover:bg-error! [&_[data-slot=alert-button]>button]:active:bg-error/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--error),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--error),white_10%)]!",
       },
       {
         type: "default",
         variant: "warning",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-warning/80! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:bg-warning! [&_[data-slot=alert-button]>button]:active:bg-warning/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--warning),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--warning),white_10%)]!",
+          "border-transparent bg-transparent shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] [&_[data-slot=alert-button]>button]:bg-warning/80! [&_[data-slot=alert-button]>button]:text-warning-foreground [&_[data-slot=alert-button]>button]:hover:bg-warning! [&_[data-slot=alert-button]>button]:active:bg-warning/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--warning),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--warning),white_10%)]!",
       },
       {
         type: "default",
         variant: "info",
         className:
-          "border-border-soft bg-primary-foreground [&_[data-slot=alert-button]>button]:bg-info/80! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
+          "border-transparent bg-transparent shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] [&_[data-slot=alert-button]>button]:bg-info/80! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
       },
       // banner type — variant bg colors
       {
