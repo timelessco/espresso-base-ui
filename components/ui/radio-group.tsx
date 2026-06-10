@@ -18,7 +18,7 @@ function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
 
 const radioGroupItemVariants = cva(
   [
-    "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input",
+    "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-all duration-[250ms] ease-[ease] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 not-data-disabled:active:scale-[0.97] not-data-disabled:data-pressed:scale-[0.97] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input",
     // unchecked states
     "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:shadow-3xs! not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none!",
     // checked states
