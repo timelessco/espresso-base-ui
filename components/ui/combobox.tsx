@@ -176,7 +176,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-1.5 text-base text-muted-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-muted-foreground not-data-[variant=destructive]:focus:**:text-muted-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-highlighted:active:bg-muted data-highlighted:active:text-muted-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "not-data-[variant=destructive]:focus:**:text-secondaey-foreground relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -230,7 +230,7 @@ function ComboboxEmpty({ className, ...props }: ComboboxPrimitive.Empty.Props) {
     <ComboboxPrimitive.Empty
       data-slot="combobox-empty"
       className={cn(
-        "hidden w-full justify-center py-2 text-center text-sm text-muted-foreground group-data-empty/combobox-content:flex",
+        "hidden w-full justify-center py-2 text-center text-sm text-secondary-foreground group-data-empty/combobox-content:flex",
         className
       )}
       {...props}
@@ -245,7 +245,7 @@ function ComboboxSeparator({
   return (
     <ComboboxPrimitive.Separator
       data-slot="combobox-separator"
-      className={cn("pointer-events-none -mx-1 my-1 h-px bg-border", className)}
+      className={cn("pointer-events-none mx-1 my-1 h-px bg-border", className)}
       {...props}
     />
   )
