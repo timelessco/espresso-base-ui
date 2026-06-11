@@ -854,8 +854,30 @@
   --border-strong: var(--color-gray-500); /* #999999 */ /*outline/gray-4*/
   --border-stronger: var(--color-gray-800); /* #383838 */ /*outline/gray-5*/
 
-  /* end custom variables */
+  --shadow-elevation-sm:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+  --shadow-elevation-base:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
+  --shadow-elevation-md:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.15), 0 0 6px 2px rgba(0, 0, 0, 0.04),
+    0 6px 12px -2px rgba(0, 0, 0, 0.08);
+  --shadow-elevation-lg:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.18), 0 0 6px 3px rgba(0, 0, 0, 0.03),
+    0 18px 22px -6px rgba(0, 0, 0, 0.1);
+  --shadow-elevation-xl:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 10px 2px rgba(0, 0, 0, 0.04),
+    0 24px 30px -8px rgba(0, 0, 0, 0.1);
+  --shadow-elevation-2xl:
+    0 0.25px 2px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
+    0 44px 52px -10px rgba(0, 0, 0, 0.1);
 
+  /* end custom variables */
   --spacing: 0.25rem; /* 4px */
 
   --radius: 0.625rem; /* 10px */
@@ -984,6 +1006,29 @@
   --border-normal: var(--color-gray-500); /* #424242 */ /*outline/gray-3*/
   --border-strong: var(--color-gray-450); /* #575757 */ /*outline/gray-4*/
   --border-stronger: oklch(94.61% 0 0); /* #EDEDED */ /*outline/gray-5*/
+
+  --shadow-elevation-sm:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.14);
+  --shadow-elevation-base:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.14);
+  --shadow-elevation-md:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.15), 0 0 6px 2px rgba(0, 0, 0, 0.04),
+    0 6px 12px -2px rgba(0, 0, 0, 0.08);
+  --shadow-elevation-lg:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.18), 0 0 6px 3px rgba(0, 0, 0, 0.03),
+    0 18px 22px -6px rgba(0, 0, 0, 0.1);
+  --shadow-elevation-xl:
+    0 0.25px 1.5px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 10px 2px rgba(0, 0, 0, 0.04),
+    0 24px 30px -8px rgba(0, 0, 0, 0.1);
+  --shadow-elevation-2xl:
+    0 0.25px 2px 0 rgba(255, 255, 255, 0.16) inset,
+    0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
+    0 44px 52px -10px rgba(0, 0, 0, 0.1);
   /* end custom variables */
 
   --border: var(--color-gray-600); /* #343434 */ /*outline/gray-2*/
@@ -1103,6 +1148,12 @@
   --shadow-3xl: var(--shadow-3xl);
   --shadow-4xl: var(--shadow-4xl);
   --shadow-5xl: var(--shadow-5xl);
+  --shadow-elevation-sm: var(--shadow-elevation-sm);
+  --shadow-elevation-base: var(--shadow-elevation-base);
+  --shadow-elevation-md: var(--shadow-elevation-md);
+  --shadow-elevation-lg: var(--shadow-elevation-lg);
+  --shadow-elevation-xl: var(--shadow-elevation-xl);
+  --shadow-elevation-2xl: var(--shadow-elevation-2xl);
 
   /* font sizes */
   --text-tiny: var(--text-tiny);
