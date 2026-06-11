@@ -27,7 +27,7 @@ export default function AlertPage() {
             Upgrade to keep enjoying features.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               Update now
             </Button>
           </AlertHandlers>
@@ -45,7 +45,7 @@ export default function AlertPage() {
           <AlertTitle>Default alert</AlertTitle>
           <AlertDescription>This is a default vertical alert.</AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               Take action
             </Button>
           </AlertHandlers>
@@ -58,7 +58,7 @@ export default function AlertPage() {
           <AlertTitle>Success alert</AlertTitle>
           <AlertDescription>This is a success vertical alert.</AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               View changes
             </Button>
           </AlertHandlers>
@@ -71,7 +71,7 @@ export default function AlertPage() {
           <AlertTitle>Info alert</AlertTitle>
           <AlertDescription>This is an info vertical alert.</AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               Learn more
             </Button>
           </AlertHandlers>
@@ -84,7 +84,7 @@ export default function AlertPage() {
           <AlertTitle>Warning alert</AlertTitle>
           <AlertDescription>This is a warning vertical alert.</AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               Review
             </Button>
           </AlertHandlers>
@@ -99,7 +99,7 @@ export default function AlertPage() {
             This is a destructive vertical alert.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="secondary" className="w-full">
+            <Button variant="secondary" size="sm" className="w-full">
               Try again
             </Button>
           </AlertHandlers>

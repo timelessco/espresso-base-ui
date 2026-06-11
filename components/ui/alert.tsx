@@ -9,16 +9,16 @@ type AlertType = "default" | "banner"
 
 const alertVariants = cva(
   [
-    "group/alert relative w-full rounded-lg border text-left leading-base tracking-normal",
+    "group/alert relative w-full border text-left leading-base tracking-normal",
     "[&>svg]:shrink-0 [&>svg:not([class*='size-'])]:size-4",
   ],
   {
     variants: {
       type: {
         default:
-          "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 px-3 py-2.5 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 rounded-xl px-3 pt-2.5 pb-3 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
         banner:
-          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 border-0 px-3.5 py-2.5 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 rounded-lg border-0 px-3 py-4 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
       },
       variant: {
         default: "[&>svg]:text-muted-foreground",
@@ -115,7 +115,7 @@ const alertTitleVariants = cva(
 )
 
 const alertDescriptionVariants = cva(
-  "leading-lg font-normal tracking-normal text-balance opacity-80 md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
+  "leading-lg font-normal tracking-normal text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
   {
     variants: {
       type: {
@@ -202,7 +202,7 @@ function AlertAction({
       data-slot="alert-action"
       variant="ghost"
       size="icon-sm"
-      className={cn("absolute top-2 right-2 size-5", className)}
+      className={cn("absolute top-3.5 right-3 size-5", className)}
       {...props}
     >
       {children}
