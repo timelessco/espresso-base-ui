@@ -781,7 +781,7 @@ function ColorPickerContent(
         data-slot="color-picker-content"
         {...(popoverContentProps as React.ComponentProps<"div">)}
         className={cn(
-          "flex max-w-[310px] flex-col gap-4 px-2 pt-2 pb-3",
+          "flex max-w-[260px] flex-col gap-3 border-none p-1.5 shadow-5xs",
           className
         )}
       >
@@ -795,7 +795,7 @@ function ColorPickerContent(
       data-slot="color-picker-content"
       {...popoverContentProps}
       className={cn(
-        "flex max-w-[310px] flex-col gap-4 px-2 pt-2 pb-3",
+        "flex max-w-[260px] flex-col gap-3 border-none p-1.5 shadow-5xs",
         className
       )}
     >
@@ -897,7 +897,7 @@ function ColorPickerArea(props: DivProps) {
       data-slot="color-picker-area"
       {...areaProps}
       className={cn(
-        "relative h-60 w-full cursor-crosshair touch-none rounded-sm border",
+        "relative h-40 w-full cursor-crosshair touch-none rounded-xl",
         context.disabled && "pointer-events-none opacity-50",
         className
       )}
@@ -1085,7 +1085,7 @@ function ColorPickerSwatch(props: DivProps) {
       data-slot="color-picker-swatch"
       {...swatchProps}
       className={cn(
-        "size-8 rounded-full",
+        "size-7 rounded-full",
         context.disabled && "opacity-50",
         className
       )}
@@ -1141,7 +1141,7 @@ function ColorPickerEyeDropper(props: React.ComponentProps<typeof Button>) {
       data-slot="color-picker-eye-dropper"
       {...buttonProps}
       variant="outline"
-      size={size}
+      size="icon-sm"
       onClick={onEyeDropper}
       disabled={isDisabled}
     >
@@ -1296,7 +1296,7 @@ function InputGroupItem({
   return (
     <Input
       data-slot="color-picker-input"
-      className={cn(inputGroupItemVariants({ position, className }))}
+      className={cn("h-6.5!", inputGroupItemVariants({ position, className }))}
       {...props}
     />
   )
@@ -1349,7 +1349,7 @@ function HexInput(props: FormatInputProps) {
         position="isolated"
         {...inputProps}
         placeholder="#000000"
-        className={cn("font-mono", className)}
+        className={cn("", className)}
         value={hexValue}
         onChange={onHexChange}
         disabled={context.disabled}
@@ -1367,7 +1367,7 @@ function HexInput(props: FormatInputProps) {
         position="first"
         {...inputProps}
         placeholder="#000000"
-        className="flex-1 font-mono"
+        className="flex-1"
         value={hexValue}
         onChange={onHexChange}
         disabled={context.disabled}
