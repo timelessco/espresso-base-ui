@@ -268,7 +268,7 @@
   --color-gray-700: oklch(43.86% 0 0); /* #525252 */
   --color-gray-800: oklch(34.07% 0 0); /* #383838 */
   --color-gray-900: oklch(20.46% 0 0); /* #171717 */
-  --color-gray-950: oklch(12.96% 0.027 261.69); /* #030712 */
+  --color-gray-950: oklch(16.84% 0 0); /* #0F0F0F */ /* changed recently */
 
   /* zinc */
   --color-zinc-50: oklch(0.9851 0.0001 263.28); /* #fafafa */
@@ -582,12 +582,16 @@
   --color-gray-50: oklch(97.91% 0 0); /* #f8f8f8 */
   --color-gray-100: oklch(88.53% 0 0); /* #d9d9d9 */
   --color-gray-200: oklch(75.4% 0 0); /* #afafaf */
-  --color-gray-300: oklch(59.99% 0 0); /* #808080 */ /* custom variable */
-  --color-gray-400: oklch(54.86% 0 0); /* #717171 */
+  --color-gray-300: oklch(
+    68.3% 0 0
+  ); /* #999999 */ /* custom variable */ /* changed recnetly */
+  --color-gray-400: oklch(57.95% 0 0); /* #7A7A7A */ /* changed recnetly */
   --color-gray-450: oklch(45.68% 0 0); /* #575757 */ /* custom variable */
   --color-gray-500: oklch(37.91% 0 0); /* #424242 */
-  --color-gray-600: oklch(32.5% 0 0); /* #343434 */ /* custom variable */
-  --color-gray-700: oklch(28.91% 0 0); /* #2b2b2b */
+  --color-gray-600: oklch(
+    34.07% 0 0
+  ); /* #383838 */ /* custom variable */ /* changed recnetly */
+  --color-gray-700: oklch(28.09% 0 0); /* #292929 */ /* changed recnetly */
   --color-gray-800: oklch(26.03% 0 0); /* #242424 */
   --color-gray-900: oklch(23.93% 0 0); /* #1f1f1f */
   --color-gray-950: oklch(20.46% 0 0); /* #171717 */
@@ -964,10 +968,10 @@
   --primary: var(--color-gray-50); /* #F8F8F8 */ /*surface/gray-7*/
   --primary-foreground: oklch(16.84% 0 0); /* #0F0F0F */ /*ink/white*/
   --secondary: var(--color-gray-700); /* #2B2B2B */ /*surface/gray-2*/
-  --secondary-foreground: var(--color-gray-100); /* #D9D9D9 */ /*ink/gray-7*/
+  --secondary-foreground: var(--color-gray-200); /* #AFAFAF */ /*ink/gray-7*/
 
   --muted: var(--color-gray-600); /* #343434 */ /*surface/gray-3*/
-  --muted-foreground: var(--color-gray-200); /* #AFAFAF */ /*ink/gray-6*/
+  --muted-foreground: var(--color-gray-300); /* #999999 */ /*ink/gray-6*/
   --accent: var(--color-gray-500); /* #424242 */ /*surface/gray-4*/
   --accent-foreground: var(--color-gray-300); /* #808080 */ /*ink/gray-5*/
 
