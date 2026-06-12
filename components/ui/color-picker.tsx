@@ -728,7 +728,7 @@ function ColorPickerTrigger(
     variant?: React.ComponentProps<typeof Button>["variant"]
   }
 ) {
-  const { asChild, disabled, variant = "ghost", ...triggerProps } = props
+  const { asChild, disabled, variant = "outline", ...triggerProps } = props
 
   const context = useColorPickerContext(TRIGGER_NAME)
 
