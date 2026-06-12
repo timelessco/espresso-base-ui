@@ -728,7 +728,13 @@ function ColorPickerTrigger(
     variant?: React.ComponentProps<typeof Button>["variant"]
   }
 ) {
-  const { asChild, disabled, variant = "outline", ...triggerProps } = props
+  const {
+    asChild,
+    disabled,
+    variant = "outline",
+    className,
+    ...triggerProps
+  } = props
 
   const context = useColorPickerContext(TRIGGER_NAME)
 
@@ -743,6 +749,7 @@ function ColorPickerTrigger(
         <TriggerPrimitive
           data-slot="color-picker-trigger"
           {...(asChild ? {} : { variant })}
+          className={cn("min-w-[106px] justify-start", className)}
           {...(triggerProps as React.ComponentProps<"button">)}
         />
       }
