@@ -20,7 +20,7 @@ import {
 import { cn } from "@/lib/utils"
 import type { DateRange } from "react-day-picker"
 import { addDays, format } from "date-fns"
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -59,10 +59,13 @@ function CalendarPopover({
         render={
           <Button
             variant="outline"
-            className={cn("w-56 justify-between font-normal", buttonClassName)}
+            className={cn(
+              "w-56 justify-start gap-2 font-normal text-foreground",
+              buttonClassName
+            )}
           >
+            <img src="/images/svg/calender.svg" alt="" className="size-4" />
             {buttonContent}
-            <CalendarIcon className="size-4" />
           </Button>
         }
       />
@@ -85,6 +88,44 @@ function formatRange(range: DateRange | undefined, fallback: string) {
   }
   if (range?.from) return formatDateShort(range.from)
   return fallback
+}
+
+function FormattedDate({ date }: { date: Date }) {
+  return (
+    <>
+      {format(date, "dd")}
+      <span className="text-card-foreground"> / </span>
+      {format(date, "MM")}
+      <span className="text-card-foreground"> / </span>
+      {format(date, "yyyy")}
+    </>
+  )
+}
+
+function FormattedRange({
+  range,
+  fallback,
+}: {
+  range: DateRange | undefined
+  fallback: string
+}) {
+  if (range?.from && range?.to) {
+    return (
+      <span className="text-foreground">
+        <FormattedDate date={range.from} />
+        <span className="px-1"> - </span>
+        <FormattedDate date={range.to} />
+      </span>
+    )
+  }
+  if (range?.from) {
+    return (
+      <span className="text-foreground">
+        <FormattedDate date={range.from} />
+      </span>
+    )
+  }
+  return <span className="text-card-foreground">{fallback}</span>
 }
 
 function TimeInput() {
@@ -324,66 +365,6 @@ function DateTimePresetContent() {
   )
 }
 
-function MultiMonthRangeContent({
-  range,
-  onRangeChange,
-  onConfirm,
-}: {
-  range: DateRange | undefined
-  onRangeChange: (r: DateRange | undefined) => void
-  onConfirm: () => void
-}) {
-  return (
-    <div className="flex w-max flex-col">
-      <Calendar
-        mode="range"
-        selected={range}
-        onSelect={onRangeChange}
-        numberOfMonths={2}
-        defaultMonth={range?.from ?? new Date(2023, 4)}
-        className="border-0 shadow-none [--cell-size:1.5rem]"
-        classNames={{
-          months:
-            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
-          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
-          root: "w-fit p-0!",
-        }}
-      />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDateShort(range?.from) || (
-              <span className="text-card-foreground">Start date</span>
-            )}
-          </span>
-          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            to
-          </span>
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDateShort(range?.to) || (
-              <span className="text-card-foreground">End date</span>
-            )}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              onRangeChange(undefined)
-            }}
-          >
-            Cancel
-          </Button>
-          <Button size="sm" onClick={onConfirm}>
-            Set date
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function DateRangeContent({
   range,
   onRangeChange,
@@ -595,12 +576,6 @@ export default function CalendarPage() {
     from: new Date(2023, 4, 3),
     to: new Date(2023, 4, 11),
   })
-  const [multiMonthRange, setMultiMonthRange] = useState<DateRange | undefined>(
-    {
-      from: new Date(2023, 4, 3),
-      to: new Date(2023, 4, 11),
-    }
-  )
   const [bookedDate, setBookedDate] = useState<Date | undefined>(undefined)
   const [largeCellDate, setLargeCellDate] = useState<Date | undefined>(
     undefined
@@ -632,11 +607,7 @@ export default function CalendarPage() {
                 variant="outline"
                 className="w-56 justify-start gap-2 font-normal"
               >
-                <img
-                  src="/images/svg/calender.svg"
-                  alt=""
-                  className="size-4"
-                />
+                <img src="/images/svg/calender.svg" alt="" className="size-4" />
                 {singleDate ? (
                   <span className="text-foreground">
                     {format(singleDate, "dd")}
@@ -729,8 +700,10 @@ export default function CalendarPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Range Picker</SectionTitle>
         <CalendarPopover
-          buttonContent={formatRange(dateRange, "Pick a date range")}
-          buttonClassName="w-64"
+          buttonContent={
+            <FormattedRange range={dateRange} fallback="Pick a date range" />
+          }
+          buttonClassName="w-80"
         >
           {({ close }) => (
             <DateRangeContent
@@ -826,23 +799,6 @@ export default function CalendarPage() {
               }}
               showOutsideDays={false}
               className="border-0 shadow-none [--cell-size:1.5rem]"
-            />
-          )}
-        </CalendarPopover>
-      </div>
-
-      {/* Multiple Months */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Multiple Months</SectionTitle>
-        <CalendarPopover
-          buttonContent={formatRange(multiMonthRange, "Pick a date range")}
-          buttonClassName="w-64"
-        >
-          {({ close }) => (
-            <MultiMonthRangeContent
-              range={multiMonthRange}
-              onRangeChange={setMultiMonthRange}
-              onConfirm={close}
             />
           )}
         </CalendarPopover>
