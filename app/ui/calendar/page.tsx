@@ -625,21 +625,41 @@ export default function CalendarPage() {
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
-        <CalendarPopover
-          buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
-        >
-          {({ close }) => (
+        <Popover>
+          <PopoverTrigger
+            render={
+              <Button
+                variant="outline"
+                className="w-56 justify-start gap-2 font-normal"
+              >
+                <img
+                  src="/images/svg/calender.svg"
+                  alt=""
+                  className="size-4"
+                />
+                {singleDate ? (
+                  <span className="text-foreground">
+                    {format(singleDate, "dd")}
+                    <span className="text-card-foreground"> / </span>
+                    {format(singleDate, "MM")}
+                    <span className="text-card-foreground"> / </span>
+                    {format(singleDate, "yyyy")}
+                  </span>
+                ) : (
+                  <span className="text-card-foreground">dd / mm / yyyy</span>
+                )}
+              </Button>
+            }
+          />
+          <PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
             <Calendar
               mode="single"
               selected={singleDate}
-              onSelect={(d) => {
-                setSingleDate(d)
-                close()
-              }}
+              onSelect={(d) => setSingleDate(d)}
               className="border-0 shadow-none [--cell-size:1.5rem]"
             />
-          )}
-        </CalendarPopover>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {/* Multiple */}
