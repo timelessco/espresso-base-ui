@@ -897,7 +897,7 @@ function ColorPickerArea(props: DivProps) {
       data-slot="color-picker-area"
       {...areaProps}
       className={cn(
-        "relative h-40 w-full cursor-crosshair touch-none rounded-xl",
+        "group/color-picker-area relative h-40 w-full cursor-crosshair touch-none rounded-xl",
         context.disabled && "pointer-events-none opacity-50",
         className
       )}
@@ -927,7 +927,7 @@ function ColorPickerArea(props: DivProps) {
         />
       </div>
       <div
-        className="absolute size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-3 border-white shadow-sm"
+        className="absolute size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-sm transition-transform duration-200 ease-out group-active/color-picker-area:scale-110 hover:scale-110"
         style={{
           left: `${hsv?.s ?? 0}%`,
           top: `${100 - (hsv?.v ?? 0)}%`,
