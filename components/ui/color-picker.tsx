@@ -513,7 +513,8 @@ function ColorPicker(props: ColorPickerProps) {
   const listenersRef = useLazyRef(() => new Set<() => void>())
   const stateRef = useLazyRef<StoreState>(() => {
     const colorString = valueProp ?? defaultValue
-    const color = hexToRgb(colorString)
+    const parsed = parseColorString(colorString)
+    const color: ColorValue = parsed ?? { r: 0, g: 0, b: 0, a: 1 }
 
     return {
       color,
@@ -648,10 +649,18 @@ function ColorPickerImpl(props: ColorPickerImplProps) {
   useIsomorphicLayoutEffect(() => {
     if (valueProp !== undefined) {
       const currentState = store.getState()
-      const color = hexToRgb(valueProp, currentState.color.a)
-      const hsv = rgbToHsv(color)
-      store.setColor(color)
-      store.setHsv(hsv)
+      const parsed = parseColorString(valueProp)
+      if (parsed) {
+        const color: ColorValue = {
+          r: parsed.r,
+          g: parsed.g,
+          b: parsed.b,
+          a: parsed.a ?? currentState.color.a,
+        }
+        const hsv = rgbToHsv(color)
+        store.setColor(color)
+        store.setHsv(hsv)
+      }
     }
   }, [valueProp])
 
@@ -728,7 +737,13 @@ function ColorPickerTrigger(
     variant?: React.ComponentProps<typeof Button>["variant"]
   }
 ) {
-  const { asChild, disabled, variant = "outline", ...triggerProps } = props
+  const {
+    asChild,
+    disabled,
+    variant = "outline",
+    className,
+    ...triggerProps
+  } = props
 
   const context = useColorPickerContext(TRIGGER_NAME)
 
@@ -743,6 +758,7 @@ function ColorPickerTrigger(
         <TriggerPrimitive
           data-slot="color-picker-trigger"
           {...(asChild ? {} : { variant })}
+          className={cn("min-w-[220px] justify-start", className)}
           {...(triggerProps as React.ComponentProps<"button">)}
         />
       }
