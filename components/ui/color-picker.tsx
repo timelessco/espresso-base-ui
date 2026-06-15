@@ -1296,7 +1296,10 @@ function InputGroupItem({
   return (
     <Input
       data-slot="color-picker-input"
-      className={cn("h-6.5!", inputGroupItemVariants({ position, className }))}
+      className={cn(
+        "h-6.5! shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] [&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] [&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4]! dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] dark:[&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242] dark:[&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]!",
+        inputGroupItemVariants({ position, className })
+      )}
       {...props}
     />
   )
@@ -1360,7 +1363,10 @@ function HexInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hex color value"
@@ -1420,7 +1426,10 @@ function RgbInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Red color component (0-255)"
@@ -1523,7 +1532,10 @@ function HslInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
@@ -1630,7 +1642,10 @@ function HsbInput(props: HsbInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
