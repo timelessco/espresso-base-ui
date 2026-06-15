@@ -157,8 +157,8 @@ export default function ColorPickerPage() {
             <ColorPickerHueSlider />
             <ColorPickerAlphaSlider />
             <div className="flex items-center gap-2">
-              <ColorPickerEyeDropper />
               <ColorPickerSwatch />
+              <ColorPickerEyeDropper />
               <ColorPickerFormatSelect className="w-full flex-1" />
             </div>
             <ColorPickerInput className="flex-1" />

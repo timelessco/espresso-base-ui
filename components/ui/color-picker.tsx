@@ -897,7 +897,7 @@ function ColorPickerArea(props: DivProps) {
       data-slot="color-picker-area"
       {...areaProps}
       className={cn(
-        "group/color-picker-area relative h-40 w-full cursor-crosshair touch-none rounded-xl",
+        "group/color-picker-area relative h-40 w-full cursor-default touch-none rounded-xl",
         context.disabled && "pointer-events-none opacity-50",
         className
       )}
@@ -975,10 +975,10 @@ function ColorPickerHueSlider(
       onValueChange={onValueChange}
       disabled={context.disabled}
     >
-      <SliderPrimitive.Track className="relative h-3 w-full grow overflow-hidden rounded-full bg-[linear-gradient(to_right,#ff0000_0%,#ffff00_16.66%,#00ff00_33.33%,#00ffff_50%,#0000ff_66.66%,#ff00ff_83.33%,#ff0000_100%)]">
+      <SliderPrimitive.Track className="relative h-4 w-full grow overflow-hidden rounded-full bg-[linear-gradient(to_right,#ff0000_0%,#ffff00_16.66%,#00ff00_33.33%,#00ffff_50%,#0000ff_66.66%,#ff00ff_83.33%,#ff0000_100%)]">
         <SliderPrimitive.Range className="absolute h-full" />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block size-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
+      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 active:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
     </SliderPrimitive.Root>
   )
 }
@@ -1022,7 +1022,7 @@ function ColorPickerAlphaSlider(
       onValueChange={onValueChange}
     >
       <SliderPrimitive.Track
-        className="relative h-3 w-full grow overflow-hidden rounded-full"
+        className="relative h-4 w-full grow overflow-hidden rounded-full"
         style={{
           background:
             "linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%)",
@@ -1038,7 +1038,7 @@ function ColorPickerAlphaSlider(
         />
         <SliderPrimitive.Range className="absolute h-full" />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block size-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
+      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 active:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
     </SliderPrimitive.Root>
   )
 }
@@ -1085,7 +1085,7 @@ function ColorPickerSwatch(props: DivProps) {
       data-slot="color-picker-swatch"
       {...swatchProps}
       className={cn(
-        "size-7 rounded-full",
+        "size-6 rounded-full",
         context.disabled && "opacity-50",
         className
       )}
