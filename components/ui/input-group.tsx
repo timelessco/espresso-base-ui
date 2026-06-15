@@ -14,7 +14,7 @@ const inputGroupVariants = cva(
     // disabled
     "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:text-popover-foreground",
     // focus-within
-    "has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! dark:has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]!",
+    "has-[[data-slot=input-group-control]:focus-visible]:shadow-raised!",
     // invalid
     "has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
     // block/textarea layout
@@ -24,7 +24,7 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] has-disabled:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:not-has-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
+          "bg-background shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-raised has-disabled:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
         subtle:
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-disabled:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
@@ -185,7 +185,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none! ring-0 not-disabled:hover:shadow-none! not-disabled:focus:shadow-none! not-disabled:active:shadow-none! hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:ring-0 active:border-0 active:bg-transparent! active:ring-0 data-filled:shadow-none! disabled:bg-transparent aria-invalid:ring-0 dark:not-disabled:hover:shadow-none! dark:not-disabled:focus:shadow-none! dark:not-disabled:active:shadow-none! dark:bg-transparent dark:disabled:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none! ring-0 hover:bg-transparent! not-disabled:hover:shadow-none! focus:border-0 focus:bg-transparent! focus:ring-0 not-disabled:focus:shadow-none! active:border-0 active:bg-transparent! active:ring-0 not-disabled:active:shadow-none! disabled:bg-transparent aria-invalid:ring-0 data-filled:shadow-none! dark:bg-transparent dark:not-disabled:hover:shadow-none! dark:not-disabled:focus:shadow-none! dark:not-disabled:active:shadow-none! dark:disabled:bg-transparent",
         className
       )}
       {...props}

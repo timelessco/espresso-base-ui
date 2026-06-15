@@ -53,10 +53,8 @@ function InputOTPSlot({
       data-active={isActive}
       className={cn(
         "relative flex size-7.5 items-center justify-center rounded-md bg-transparent text-sm font-medium text-foreground transition-shadow duration-150 outline-none",
-        "shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012]",
-        "dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)]",
+        "shadow-default",
         "data-[active=true]:z-10 data-[active=true]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] data-[active=true]:ring-3 data-[active=true]:ring-ring/50",
-        "dark:data-[active=true]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
         "group-aria-invalid/input-otp-group:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]",
         "group-aria-invalid/input-otp-group:data-[active=true]:shadow-[0px_0px_0px_1px_var(--destructive)] group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/20 dark:group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/40",
         className
