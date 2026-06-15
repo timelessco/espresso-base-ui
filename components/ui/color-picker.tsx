@@ -22,12 +22,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Tabs,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 
 const ROOT_NAME = "ColorPicker"
 const ROOT_IMPL_NAME = "ColorPickerImpl"
@@ -1152,11 +1151,13 @@ function ColorPickerEyeDropper(props: React.ComponentProps<typeof Button>) {
 
 interface ColorPickerFormatSelectProps
   extends
-    Omit<React.ComponentProps<typeof Select>, "value" | "onValueChange">,
-    Pick<React.ComponentProps<typeof SelectTrigger>, "size" | "className"> {}
+    Omit<React.ComponentProps<typeof Tabs>, "value" | "onValueChange">,
+    Pick<React.ComponentProps<typeof TabsList>, "size"> {
+  disabled?: boolean
+}
 
 function ColorPickerFormatSelect(props: ColorPickerFormatSelectProps) {
-  const { size, disabled, className, ...selectProps } = props
+  const { size, disabled, className, ...tabsProps } = props
 
   const context = useColorPickerContext(FORMAT_SELECT_NAME)
   const store = useStoreContext(FORMAT_SELECT_NAME)
@@ -1165,35 +1166,37 @@ function ColorPickerFormatSelect(props: ColorPickerFormatSelectProps) {
   const format = useStore((state) => state.format)
 
   const onFormatChange = React.useCallback(
-    (value: string | null) => {
-      if (value) store.setFormat(value as ColorFormat)
+    (value: unknown) => {
+      if (typeof value === "string") store.setFormat(value as ColorFormat)
     },
     [store]
   )
 
   return (
-    <Select
+    <Tabs
       data-slot="color-picker-format-select"
-      {...selectProps}
+      {...tabsProps}
       value={format}
       onValueChange={onFormatChange}
-      disabled={isDisabled}
+      className={cn(className)}
     >
-      <SelectTrigger
-        data-slot="color-picker-format-select-trigger"
+      <TabsList
+        data-slot="color-picker-format-select-list"
         size={size ?? "sm"}
-        className={cn(className)}
+        className="w-full"
       >
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {colorFormats.map((format) => (
-          <SelectItem key={format} value={format}>
-            {format.toUpperCase()}
-          </SelectItem>
+        {colorFormats.map((formatOption) => (
+          <TabsTrigger
+            key={formatOption}
+            value={formatOption}
+            disabled={isDisabled}
+          >
+            {formatOption.toUpperCase()}
+          </TabsTrigger>
         ))}
-      </SelectContent>
-    </Select>
+        <TabsIndicator />
+      </TabsList>
+    </Tabs>
   )
 }
 
@@ -1296,7 +1299,10 @@ function InputGroupItem({
   return (
     <Input
       data-slot="color-picker-input"
-      className={cn("h-6.5!", inputGroupItemVariants({ position, className }))}
+      className={cn(
+        "h-6.5! shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] [&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] [&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4]! dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] dark:[&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242] dark:[&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]!",
+        inputGroupItemVariants({ position, className })
+      )}
       {...props}
     />
   )
@@ -1360,7 +1366,10 @@ function HexInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hex color value"
@@ -1420,7 +1429,10 @@ function RgbInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Red color component (0-255)"
@@ -1523,7 +1535,10 @@ function HslInput(props: FormatInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
@@ -1630,7 +1645,10 @@ function HsbInput(props: HsbInputProps) {
   return (
     <div
       data-slot="color-picker-input-wrapper"
-      className={cn("flex w-full items-center", className)}
+      className={cn(
+        "flex w-full items-center *:hover:relative *:hover:z-10 *:focus-visible:relative *:focus-visible:z-10",
+        className
+      )}
     >
       <InputGroupItem
         aria-label="Hue degree (0-360)"
