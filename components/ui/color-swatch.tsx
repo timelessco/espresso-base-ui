@@ -7,7 +7,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const colorSwatchVariants = cva(
-  "relative flex items-center justify-center rounded-full bg-clip-padding data-disabled:pointer-events-none data-disabled:opacity-50 data-[selected=true]:outline-2 data-[selected=true]:outline-offset-2",
+  "relative flex items-center justify-center rounded-full bg-clip-padding outline-2 outline-transparent outline-offset-0 transition-[outline-color,outline-offset] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] data-disabled:pointer-events-none data-disabled:opacity-50 data-[selected=true]:outline-offset-2",
   {
     variants: {
       size: {
@@ -126,13 +126,16 @@ function ColorSwatch({
         ...style,
       }}
     >
-      {children ??
-        (selected ? (
-          <Check
-            className="size-1/2 text-white drop-shadow-sm"
-            strokeWidth={3}
-          />
-        ) : null)}
+      {children ?? (
+        <Check
+          aria-hidden="true"
+          className={cn(
+            "size-1/2 text-white drop-shadow-sm transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+            selected ? "scale-100 opacity-100" : "scale-50 opacity-0"
+          )}
+          strokeWidth={3}
+        />
+      )}
     </Primitive>
   )
 }
