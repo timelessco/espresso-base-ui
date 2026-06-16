@@ -22,6 +22,13 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
+function formatBytes(bytes: number) {
+  if (bytes === 0) return "0 B"
+  const sizes = ["B", "KB", "MB", "GB", "TB"]
+  const i = Math.floor(Math.log(bytes) / Math.log(1024))
+  return `${(bytes / 1024 ** i).toFixed(i ? 1 : 0)} ${sizes[i]}`
+}
+
 /** Renders items from the FileUpload store. Use inside a <FileUpload> tree. */
 function Items({
   variant = "linear",
@@ -30,21 +37,33 @@ function Items({
   variant?: "linear" | "circular" | "fill"
   fillItem?: boolean
 }) {
-  const files = useFileUpload((state) =>
-    Array.from(state.files.values()).map((f) => f.file)
-  )
+  const fileStates = useFileUpload((state) => Array.from(state.files.values()))
 
   return (
     <>
-      {files.map((file) => (
+      {fileStates.map((fs) => (
         <FileUploadItem
-          key={file.name + file.size + file.lastModified}
-          value={file}
-          className={fillItem ? "relative overflow-hidden" : undefined}
+          key={fs.file.name + fs.file.size + fs.file.lastModified}
+          value={fs.file}
+          className={
+            fillItem ? "relative items-start overflow-hidden" : "items-start"
+          }
         >
           <FileUploadItemPreview />
-          <FileUploadItemMetadata />
-          <FileUploadItemProgress variant={variant} />
+          <div className="flex min-w-0 flex-1 flex-col gap-3">
+            <FileUploadItemMetadata>
+              <p className="truncate text-base font-medium text-foreground">
+                {fs.file.name}
+              </p>
+              <p className="pt-1.5 text-sm text-secondary-foreground">
+                {formatBytes(fs.file.size)} • {Math.round(fs.progress)}%
+              </p>
+              {fs.error && (
+                <p className="text-sm text-destructive">{fs.error}</p>
+              )}
+            </FileUploadItemMetadata>
+            <FileUploadItemProgress variant={variant} />
+          </div>
           <FileUploadItemDelete asChild>
             <Button variant="ghost" size="icon-xs">
               <X />

@@ -1044,7 +1044,7 @@ function FileUploadItem(props: FileUploadItemProps) {
         dir={context.dir}
         {...itemProps}
         className={cn(
-          "relative flex items-center gap-2.5 rounded-md border p-3",
+          "relative flex items-center gap-3.5 rounded-xl border-0 p-3.5 shadow-default",
           className
         )}
       >
@@ -1109,7 +1109,7 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
       data-slot="file-upload-preview"
       {...previewProps}
       className={cn(
-        "relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded border bg-accent/50 [&>svg]:size-10",
+        "relative flex h-10 w-7.5 shrink-0 items-center justify-center overflow-hidden rounded bg-accent/50 [&>svg]:w-full",
         className
       )}
     >
@@ -1295,7 +1295,7 @@ function FileUploadItemProgress(props: FileUploadItemProgressProps) {
           data-slot="file-upload-progress"
           {...progressProps}
           className={cn(
-            "relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20",
+            "relative h-1 w-full overflow-hidden rounded-full bg-primary/20",
             className
           )}
         >
@@ -1346,6 +1346,7 @@ function FileUploadItemDelete(props: FileUploadItemDeleteProps) {
       data-slot="file-upload-item-delete"
       {...deleteProps}
       onClick={onClick}
+      className="absolute top-2.5 right-2.5"
     />
   )
 }
