@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { CloudUploadIcon, UploadIcon, X } from "lucide-react"
+import { ArrowUpToLineIcon, UploadIcon, X } from "lucide-react"
 import { toast } from "sonner"
 import {
   FileUpload,
@@ -86,12 +86,12 @@ export default function FileUploadPage() {
         <SectionTitle>Basic Dropzone</SectionTitle>
         <FileUpload multiple>
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <div className="flex flex-col items-center gap-1 text-center">
-              <p className="text-sm font-medium">
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <div className="flex flex-col items-center gap-1 pt-2 text-center">
+              <p className="text-base font-medium text-foreground">
                 Drop files here or click to upload
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-accent-foreground">
                 Any file, multiple allowed
               </p>
             </div>
@@ -138,9 +138,11 @@ export default function FileUploadPage() {
           }
         >
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Drop images here</p>
-            <p className="text-xs text-muted-foreground">
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop images here
+            </p>
+            <p className="text-sm text-accent-foreground">
               PNG / JPG / GIF — up to 2 MB each, max 3 files
             </p>
           </FileUploadDropzone>
@@ -162,9 +164,11 @@ export default function FileUploadPage() {
           }}
         >
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Drop files to upload</p>
-            <p className="text-xs text-muted-foreground">
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop files to upload
+            </p>
+            <p className="text-sm text-accent-foreground">
               Fake upload simulates ~2s per file
             </p>
           </FileUploadDropzone>
@@ -186,8 +190,10 @@ export default function FileUploadPage() {
           }}
         >
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Drop files to upload</p>
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop files to upload
+            </p>
           </FileUploadDropzone>
           <FileUploadList>
             <Items variant="circular" />
@@ -207,8 +213,10 @@ export default function FileUploadPage() {
           }}
         >
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Drop files to upload</p>
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop files to upload
+            </p>
           </FileUploadDropzone>
           <FileUploadList>
             <Items variant="fill" fillItem />
@@ -221,8 +229,10 @@ export default function FileUploadPage() {
         <SectionTitle>Single File</SectionTitle>
         <FileUpload maxFiles={1}>
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Drop a single file</p>
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop a single file
+            </p>
           </FileUploadDropzone>
           <FileUploadList>
             <Items />
@@ -241,9 +251,11 @@ export default function FileUploadPage() {
         <SectionTitle>Disabled</SectionTitle>
         <FileUpload disabled multiple>
           <FileUploadDropzone>
-            <CloudUploadIcon className="size-8 text-muted-foreground" />
-            <p className="text-sm font-medium">Disabled dropzone</p>
-            <p className="text-xs text-muted-foreground">
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Disabled dropzone
+            </p>
+            <p className="text-sm text-accent-foreground">
               Cannot accept files in this state
             </p>
           </FileUploadDropzone>
@@ -258,8 +270,10 @@ function ControlledExample() {
   return (
     <FileUpload multiple value={files} onValueChange={setFiles}>
       <FileUploadDropzone>
-        <CloudUploadIcon className="size-8 text-muted-foreground" />
-        <p className="text-sm font-medium">Drop files here</p>
+        <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+        <p className="pt-2 text-base font-medium text-foreground">
+          Drop files here
+        </p>
       </FileUploadDropzone>
       <FileUploadList>
         {files.map((file) => (
