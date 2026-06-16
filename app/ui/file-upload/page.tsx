@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ArrowUpToLineIcon, UploadIcon, X } from "lucide-react"
+import { ArrowUpToLineIcon, Trash, UploadIcon } from "lucide-react"
 import { toast } from "sonner"
 import {
   FileUpload,
@@ -65,8 +65,8 @@ function Items({
             <FileUploadItemProgress variant={variant} />
           </div>
           <FileUploadItemDelete asChild>
-            <Button variant="ghost" size="icon-xs">
-              <X />
+            <Button variant="ghost" size="icon-sm" className="size-6">
+              <Trash />
             </Button>
           </FileUploadItemDelete>
         </FileUploadItem>
@@ -295,20 +295,7 @@ function ControlledExample() {
         </p>
       </FileUploadDropzone>
       <FileUploadList>
-        {files.map((file) => (
-          <FileUploadItem
-            key={file.name + file.size + file.lastModified}
-            value={file}
-          >
-            <FileUploadItemPreview />
-            <FileUploadItemMetadata />
-            <FileUploadItemDelete asChild>
-              <Button variant="ghost" size="icon-xs">
-                <X />
-              </Button>
-            </FileUploadItemDelete>
-          </FileUploadItem>
-        ))}
+        <Items />
       </FileUploadList>
       <p className="text-sm text-muted-foreground">
         Selected: <span className="font-medium">{files.length}</span> file
