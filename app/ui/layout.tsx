@@ -29,6 +29,7 @@ import {
   Ellipsis,
   Folder,
   FormInput,
+  History,
   Home,
   Inbox,
   Keyboard,
@@ -162,6 +163,7 @@ const components = [
   { label: "Tabs", href: "/ui/tabs", icon: Layout },
   { label: "Tags", href: "/ui/tag", icon: Tags },
   { label: "Text Area", href: "/ui/textarea", icon: CaseSensitive },
+  { label: "Timeline", href: "/ui/timeline", icon: History },
   { label: "Tooltip", href: "/ui/tooltip", icon: BoxSelect },
 ]
 
