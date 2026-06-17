@@ -114,10 +114,10 @@ export default function FileUploadPage() {
                 Any file, multiple allowed
               </p>
             </div>
+            <FileUploadList>
+              <Items />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -164,10 +164,10 @@ export default function FileUploadPage() {
             <p className="text-sm text-accent-foreground">
               PNG / JPG / GIF — up to 2 MB each, max 3 files
             </p>
+            <FileUploadList>
+              <Items />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -190,10 +190,10 @@ export default function FileUploadPage() {
             <p className="text-sm text-accent-foreground">
               Fake upload simulates ~2s per file
             </p>
+            <FileUploadList>
+              <Items variant="linear" />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items variant="linear" />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -213,10 +213,10 @@ export default function FileUploadPage() {
             <p className="pt-2 text-base font-medium text-foreground">
               Drop files to upload
             </p>
+            <FileUploadList>
+              <Items variant="circular" />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items variant="circular" />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -236,10 +236,10 @@ export default function FileUploadPage() {
             <p className="pt-2 text-base font-medium text-foreground">
               Drop files to upload
             </p>
+            <FileUploadList>
+              <Items variant="fill" fillItem />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items variant="fill" fillItem />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -252,10 +252,10 @@ export default function FileUploadPage() {
             <p className="pt-2 text-base font-medium text-foreground">
               Drop a single file
             </p>
+            <FileUploadList>
+              <Items />
+            </FileUploadList>
           </FileUploadDropzone>
-          <FileUploadList>
-            <Items />
-          </FileUploadList>
         </FileUpload>
       </div>
 
@@ -293,10 +293,10 @@ function ControlledExample() {
         <p className="pt-2 text-base font-medium text-foreground">
           Drop files here
         </p>
+        <FileUploadList>
+          <Items />
+        </FileUploadList>
       </FileUploadDropzone>
-      <FileUploadList>
-        <Items />
-      </FileUploadList>
       <p className="text-sm text-muted-foreground">
         Selected: <span className="font-medium">{files.length}</span> file
         {files.length === 1 ? "" : "s"}
