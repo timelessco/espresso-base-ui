@@ -956,7 +956,8 @@ function FileUploadList(props: FileUploadListProps) {
       {...listProps}
       className={cn(
         "flex w-full flex-col gap-2 pt-5 data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:slide-in-from-top-2 data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=inactive]:slide-out-to-top-2",
-        orientation === "horizontal" && "flex-row overflow-x-auto p-1.5",
+        orientation === "horizontal" &&
+          "flex-row flex-wrap justify-center gap-4",
         className
       )}
       onClick={(e) => e.stopPropagation()}
@@ -1046,7 +1047,7 @@ function FileUploadItem(props: FileUploadItemProps) {
         dir={context.dir}
         {...itemProps}
         className={cn(
-          "relative flex items-center gap-3.5 rounded-xl border-0 p-3.5 pr-10 shadow-default",
+          "relative flex items-center gap-3.5 rounded-xl border-0 bg-popover p-3.5 pr-10 shadow-default [[data-orientation=horizontal]_&]:h-15 [[data-orientation=horizontal]_&]:w-15 [[data-orientation=horizontal]_&]:shrink-0 [[data-orientation=horizontal]_&]:gap-0 [[data-orientation=horizontal]_&]:p-0 [[data-orientation=horizontal]_&]:shadow-none",
           className
         )}
       >
@@ -1111,7 +1112,7 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
       data-slot="file-upload-preview"
       {...previewProps}
       className={cn(
-        "relative flex h-10 w-7.5 shrink-0 items-center justify-center overflow-hidden rounded bg-accent/50 [&>svg]:w-full",
+        "relative flex h-10 w-7.5 shrink-0 items-center justify-center overflow-hidden rounded bg-accent/50 [&>svg]:w-full [[data-orientation=horizontal]_&]:size-full [[data-orientation=horizontal]_&]:rounded-lg [[data-orientation=horizontal]_&]:bg-muted",
         className
       )}
     >
@@ -1348,7 +1349,7 @@ function FileUploadItemDelete(props: FileUploadItemDeleteProps) {
       data-slot="file-upload-item-delete"
       {...deleteProps}
       onClick={onClick}
-      className="absolute top-2.5 right-2.5"
+      className="absolute top-2.5 right-2.5 [[data-orientation=horizontal]_&]:-top-1.5 [[data-orientation=horizontal]_&]:-right-1.5 [[data-orientation=horizontal]_&]:size-3.5 [[data-orientation=horizontal]_&]:rounded-full [[data-orientation=horizontal]_&]:bg-background [[data-orientation=horizontal]_&]:shadow-3xl"
     />
   )
 }
