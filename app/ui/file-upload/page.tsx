@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { ArrowUpToLineIcon, Trash, UploadIcon } from "lucide-react"
+import { ArrowUpToLineIcon, Trash, UploadIcon, X } from "lucide-react"
 import { toast } from "sonner"
 import {
   FileUpload,
@@ -70,6 +70,34 @@ function Items({
             </Button>
           </FileUploadItemDelete>
         </FileUploadItem>
+      ))}
+    </>
+  )
+}
+
+/** Square thumbnail tiles — used by the horizontal orientation example. */
+function TileItems() {
+  const fileStates = useFileUpload((state) => Array.from(state.files.values()))
+
+  return (
+    <>
+      {fileStates.map((fs) => (
+        <div
+          key={fs.file.name + fs.file.size + fs.file.lastModified}
+          className="flex w-15 shrink-0 flex-col gap-1.5"
+        >
+          <FileUploadItem value={fs.file}>
+            <FileUploadItemPreview />
+            <FileUploadItemDelete asChild>
+              <Button variant="secondary" size="icon-sm">
+                <X className="size-2.5" />
+              </Button>
+            </FileUploadItemDelete>
+          </FileUploadItem>
+          <p className="w-full truncate text-center text-xs text-accent-foreground">
+            {fs.file.name}
+          </p>
+        </div>
       ))}
     </>
   )
@@ -238,6 +266,25 @@ export default function FileUploadPage() {
             </p>
             <FileUploadList>
               <Items variant="fill" fillItem />
+            </FileUploadList>
+          </FileUploadDropzone>
+        </FileUpload>
+      </div>
+
+      {/* Horizontal Orientation */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Horizontal Orientation</SectionTitle>
+        <FileUpload accept="image/*" multiple>
+          <FileUploadDropzone>
+            <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+            <p className="pt-2 text-base font-medium text-foreground">
+              Drop images to add to the strip
+            </p>
+            <p className="text-sm text-accent-foreground">
+              Scrolls horizontally when overflowing
+            </p>
+            <FileUploadList orientation="horizontal">
+              <TileItems />
             </FileUploadList>
           </FileUploadDropzone>
         </FileUpload>
