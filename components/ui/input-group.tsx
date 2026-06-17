@@ -169,7 +169,7 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 group-data-[invalid=true]/field:shadow-none! group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl not-data-disabled:hover:border-0 not-data-disabled:hover:shadow-none! not-data-disabled:focus:border-0 not-data-disabled:focus:shadow-none! not-data-disabled:focus:ring-0 not-data-disabled:focus-visible:ring-0 not-data-disabled:active:border-0 not-data-disabled:active:shadow-none! not-data-disabled:active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:shadow-none! dark:not-data-disabled:hover:shadow-none! dark:not-data-disabled:focus:shadow-none! dark:not-data-disabled:active:shadow-none! dark:disabled:bg-transparent",
+        "flex-1 rounded-none border-0 bg-transparent ring-0 [--shadow-default:none] [--shadow-raised:none] group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl not-data-disabled:hover:border-0 not-data-disabled:focus:border-0 not-data-disabled:focus:ring-0 not-data-disabled:focus-visible:ring-0 not-data-disabled:active:border-0 not-data-disabled:active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
@@ -185,7 +185,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none! ring-0 hover:bg-transparent! not-disabled:hover:shadow-none! focus:border-0 focus:bg-transparent! focus:ring-0 not-disabled:focus:shadow-none! active:border-0 active:bg-transparent! active:ring-0 not-disabled:active:shadow-none! disabled:bg-transparent aria-invalid:ring-0 data-filled:shadow-none! dark:bg-transparent dark:not-disabled:hover:shadow-none! dark:not-disabled:focus:shadow-none! dark:not-disabled:active:shadow-none! dark:disabled:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 ring-0 [--shadow-default:none] [--shadow-raised:none] hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:ring-0 active:border-0 active:bg-transparent! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
