@@ -868,7 +868,7 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
       tabIndex={context.disabled ? undefined : 0}
       {...dropzoneProps}
       className={cn(
-        "relative flex min-w-[400px] flex-col items-center justify-center gap-2 rounded-3xl border border-dashed border-border px-6 py-10 transition-colors outline-none select-none hover:bg-accent/30 focus-visible:border-ring/50 data-dragging:border-primary/30 data-dragging:bg-accent/30 data-invalid:border-destructive data-invalid:ring-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50",
+        "relative flex min-w-[400px] flex-col items-center justify-start gap-2 rounded-3xl border border-dashed border-border px-6 py-8 transition-colors outline-none select-none hover:border-primary/30 focus-visible:border-ring/50 data-dragging:border-primary/30 data-invalid:border-destructive data-invalid:ring-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50",
         className
       )}
       onClick={onClick}
@@ -955,10 +955,12 @@ function FileUploadList(props: FileUploadListProps) {
       dir={context.dir}
       {...listProps}
       className={cn(
-        "flex flex-col gap-2 data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:slide-in-from-top-2 data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=inactive]:slide-out-to-top-2",
+        "flex w-full flex-col gap-2 pt-5 data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:slide-in-from-top-2 data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=inactive]:slide-out-to-top-2",
         orientation === "horizontal" && "flex-row overflow-x-auto p-1.5",
         className
       )}
+      onClick={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
     />
   )
 }
@@ -1044,7 +1046,7 @@ function FileUploadItem(props: FileUploadItemProps) {
         dir={context.dir}
         {...itemProps}
         className={cn(
-          "relative flex items-center gap-3.5 rounded-xl border-0 p-3.5 shadow-default",
+          "relative flex items-center gap-3.5 rounded-xl border-0 p-3.5 pr-10 shadow-default",
           className
         )}
       >
