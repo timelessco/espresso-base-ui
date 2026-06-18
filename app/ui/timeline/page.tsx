@@ -5,9 +5,6 @@ import {
   CheckIcon,
   CircleDashedIcon,
   CodeIcon,
-  FileArchiveIcon,
-  FileIcon,
-  FileTextIcon,
   GitBranchIcon,
   MessageSquareIcon,
   PhoneIncomingIcon,
@@ -146,7 +143,7 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="border-stronger -mt-2.5 rounded-lg border bg-background px-3 py-2.5">
+        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-background px-3 py-2.5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-0.5">
               <p>
@@ -170,7 +167,7 @@ function CrmActivityTimeline() {
               3d ago
             </span>
           </div>
-          <div className="mt-3.5 border-t border-border pt-3.5 text-sm text-foreground">
+          <div className="mt-3.5 border-t border-border-soft pt-3.5 text-sm text-foreground">
             <p className="pb-0.5">Hi Good morning,</p>
             <p>We hope this message finds you well.</p>
             <br></br>
@@ -188,13 +185,17 @@ function CrmActivityTimeline() {
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2">
             <AttachmentChip
-              icon={FileArchiveIcon}
+              icon="/images/svg/zip.svg"
               name="Satoshi.zip"
               meta="Zip · 5.4 MB"
             />
-            <AttachmentChip icon={FileIcon} name="Bose.PDF" meta="PDF · 44MB" />
             <AttachmentChip
-              icon={FileTextIcon}
+              icon="/images/svg/pdf.svg"
+              name="Bose.PDF"
+              meta="PDF · 44MB"
+            />
+            <AttachmentChip
+              icon="/images/svg/document.svg"
               name="Supply_Update.doc"
               meta="Doc · 9.8 MB"
             />
@@ -219,7 +220,7 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="border-stronger -mt-2.5 rounded-lg border bg-background px-3 py-2.5">
+        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-background px-3 py-2.5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-0.5">
               <p>
@@ -235,7 +236,7 @@ function CrmActivityTimeline() {
               3d ago
             </span>
           </div>
-          <p className="leading-lg text-accent-foreground">
+          <p className="pt-1 leading-lg text-accent-foreground">
             Hi, I placed an order last week. I spoke with Marisa at the time.
             When will it be delivered?
           </p>
@@ -266,9 +267,13 @@ function CrmActivityTimeline() {
             </div>
             <span className="text-xs text-muted-foreground">27 Jun</span>
           </div>
-          <div className="mt-2 inline-block rounded-lg bg-secondary px-3 py-2 text-sm">
-            <span className="font-medium text-foreground">@Sandra Bass</span>,
-            Great teamwork, everyone. Let&apos;s catch up with our findings.
+          <div className="mt-2 inline-block w-full rounded-lg bg-secondary px-3 py-2 text-base">
+            <p className="max-w-lg leading-lg">
+              <span className="font-medium text-foreground">@Sandra Bass</span>,
+              I&apos;ve noticed that too. I think we need better forecasting. We
+              often end up with either too much stock or not enough. Maybe we
+              should look into some advanced forecasting software?
+            </p>
           </div>
         </TimelineContent>
       </TimelineItem>
@@ -386,7 +391,7 @@ function CrmActivityTimeline() {
             </div>
             <span className="text-xs text-muted-foreground">14 May</span>
           </div>
-          <div className="mt-2 rounded-lg border border-border bg-background p-3">
+          <div className="mt-2 rounded-lg border border-border-soft bg-background px-3 py-2.5">
             <p className="pb-1 text-sm font-medium text-foreground">
               Inbound Call
             </p>
@@ -399,20 +404,24 @@ function CrmActivityTimeline() {
 }
 
 function AttachmentChip({
-  icon: Icon,
+  icon,
   name,
   meta,
 }: {
-  icon: React.ComponentType<{ className?: string }>
+  icon: string
   name: string
   meta: string
 }) {
   return (
     <div className="flex items-center gap-2 rounded-lg bg-secondary p-2">
-      <Icon className="size-4 shrink-0 text-muted-foreground" />
+      {/* biome-ignore lint/performance/noImgElement: static SVG from /public, no optimization needed */}
+
       <div className="min-w-0 flex-1">
-        <p className="truncate text-xs font-medium text-foreground">{name}</p>
-        <p className="truncate text-[11px] text-muted-foreground">{meta}</p>
+        <p className="truncate text-base font-medium text-foreground">{name}</p>
+        <div className="flex items-center gap-2 pt-1">
+          <img src={icon} alt="" className="size-4 shrink-0" />
+          <p className="truncate text-xs text-muted-foreground">{meta}</p>
+        </div>
       </div>
     </div>
   )
