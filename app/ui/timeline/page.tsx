@@ -173,17 +173,20 @@ function ActivityFeedTimeline() {
         >
           <TimelineHeader>
             <TimelineSeparator className="group-data-[orientation=vertical]/timeline:top-2 group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:h-[calc(100%-2.5rem)] group-data-[orientation=vertical]/timeline:translate-y-7" />
-            <TimelineIndicator className="size-8 overflow-hidden rounded-full border-none group-data-[orientation=vertical]/timeline:-left-8">
-              <Avatar className="size-8">
-                <AvatarImage src={activity.avatar} alt={activity.user} />
-                <AvatarFallback className="text-[10px]">
-                  {activity.user
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </AvatarFallback>
-              </Avatar>
-            </TimelineIndicator>
+            <TimelineIndicator
+              className="size-8 overflow-hidden rounded-full border-none group-data-[orientation=vertical]/timeline:-left-8"
+              render={
+                <Avatar className="size-8">
+                  <AvatarImage src={activity.avatar} alt={activity.user} />
+                  <AvatarFallback className="text-[10px]">
+                    {activity.user
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+              }
+            />
           </TimelineHeader>
           <TimelineContent>
             <p className="text-sm">

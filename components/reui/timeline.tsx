@@ -7,7 +7,8 @@ import {
   useContext,
   useState,
 } from "react"
-import { Slot } from "radix-ui"
+import { mergeProps } from "@base-ui/react/merge-props"
+import { useRender } from "@base-ui/react/use-render"
 
 import { cn } from "@/lib/utils"
 
@@ -87,7 +88,10 @@ function TimelineContent({
 }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(
+        "text-base leading-lg font-normal text-secondary-foreground",
+        className
+      )}
       data-slot="timeline-content"
       {...props}
     />
@@ -95,27 +99,25 @@ function TimelineContent({
 }
 
 // TimelineDate
-interface TimelineDateProps extends HTMLAttributes<HTMLTimeElement> {
-  asChild?: boolean
-}
-
 function TimelineDate({
-  asChild = false,
   className,
+  render,
   ...props
-}: TimelineDateProps) {
-  const Comp = asChild ? Slot.Root : "time"
-
-  return (
-    <Comp
-      className={cn(
-        "mb-1 block text-xs font-medium text-muted-foreground group-data-[orientation=vertical]/timeline:max-sm:h-4",
-        className
-      )}
-      data-slot="timeline-date"
-      {...props}
-    />
-  )
+}: useRender.ComponentProps<"time">) {
+  return useRender({
+    defaultTagName: "time",
+    props: mergeProps<"time">(
+      {
+        className: cn(
+          "mb-1 block text-sm font-normal text-accent-foreground group-data-[orientation=vertical]/timeline:max-sm:h-4",
+          className
+        ),
+      },
+      props
+    ),
+    render,
+    state: { slot: "timeline-date" },
+  })
 }
 
 // TimelineHeader
@@ -124,36 +126,35 @@ function TimelineHeader({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn(className)} data-slot="timeline-header" {...props} />
+    <div
+      className={cn("pb-1", className)}
+      data-slot="timeline-header"
+      {...props}
+    />
   )
 }
 
 // TimelineIndicator
-interface TimelineIndicatorProps extends HTMLAttributes<HTMLDivElement> {
-  asChild?: boolean
-}
-
 function TimelineIndicator({
-  asChild = false,
   className,
-  children,
+  render,
   ...props
-}: TimelineIndicatorProps) {
-  const Comp = asChild ? Slot.Root : "div"
-
-  return (
-    <Comp
-      aria-hidden="true"
-      className={cn(
-        "absolute size-4 rounded-full border-2 border-primary/20 group-data-completed/timeline-item:border-primary group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:left-0 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:top-0 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:-translate-x-1/2",
-        className
-      )}
-      data-slot="timeline-indicator"
-      {...props}
-    >
-      {children}
-    </Comp>
-  )
+}: useRender.ComponentProps<"div">) {
+  return useRender({
+    defaultTagName: "div",
+    props: mergeProps<"div">(
+      {
+        "aria-hidden": "true",
+        className: cn(
+          "absolute size-4 rounded-full border border-primary/20 group-data-completed/timeline-item:border-primary group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:left-0 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:top-0 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:-translate-x-1/2",
+          className
+        ),
+      },
+      props
+    ),
+    render,
+    state: { slot: "timeline-indicator" },
+  })
 }
 
 // TimelineItem
@@ -186,7 +187,7 @@ function TimelineSeparator({
     <div
       aria-hidden="true"
       className={cn(
-        "absolute self-start bg-primary/10 group-last/timeline-item:hidden group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:h-0.5 group-data-[orientation=horizontal]/timeline:w-[calc(100%-1rem-0.25rem)] group-data-[orientation=horizontal]/timeline:translate-x-4.5 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:h-[calc(100%-1rem-0.25rem)] group-data-[orientation=vertical]/timeline:w-0.5 group-data-[orientation=vertical]/timeline:-translate-x-1/2 group-data-[orientation=vertical]/timeline:translate-y-4.5",
+        "absolute self-start bg-primary/10 group-last/timeline-item:hidden group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:h-px group-data-[orientation=horizontal]/timeline:w-[calc(100%-1rem-0.25rem)] group-data-[orientation=horizontal]/timeline:translate-x-4.5 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:h-[calc(100%-1rem-0.25rem)] group-data-[orientation=vertical]/timeline:w-px group-data-[orientation=vertical]/timeline:-translate-x-1/2 group-data-[orientation=vertical]/timeline:translate-y-4.5",
         className
       )}
       data-slot="timeline-separator"
