@@ -127,7 +127,7 @@ export default function TimelinePage() {
 
 function CrmActivityTimeline() {
   return (
-    <Timeline defaultValue={5}>
+    <Timeline defaultValue={6}>
       {/* 1) Email card with attachments */}
       <TimelineItem
         step={1}
@@ -359,9 +359,9 @@ function CrmActivityTimeline() {
         </TimelineContent>
       </TimelineItem>
 
-      {/* 5) Phone call card */}
+      {/* 6) Phone call card */}
       <TimelineItem
-        step={5}
+        step={6}
         className="group-data-[orientation=vertical]/timeline:ms-10"
       >
         <TimelineIndicator className="flex size-8 items-center justify-center rounded-full border-none bg-destructive/10 text-destructive group-data-[orientation=vertical]/timeline:-left-8">
