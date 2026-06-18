@@ -979,7 +979,7 @@
   --muted: var(--color-gray-600); /* #343434 */ /*surface/gray-3*/
   --muted-foreground: var(--color-gray-300); /* #999999 */ /*ink/gray-6*/
   --accent: var(--color-gray-500); /* #424242 */ /*surface/gray-4*/
-  --accent-foreground: var(--color-gray-300); /* #808080 */ /*ink/gray-5*/
+  --accent-foreground: var(--color-gray-400); /* #7A7A7A */ /*ink/gray-5*/
 
   --destructive: oklch(49.06% 0.18 27.06); /* #B01F1F */ /*surface/red-5*/
   --destructive-foreground: oklch(100% 0 0); /* #FFFFFF */ /*ink/red-1*/
