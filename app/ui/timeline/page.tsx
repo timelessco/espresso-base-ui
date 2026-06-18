@@ -62,6 +62,12 @@ const releaseSteps = [
 export default function TimelinePage() {
   return (
     <div className="flex flex-col gap-12 p-8">
+      {/* CRM activity log (mixed item types) */}
+      <div className="flex max-w-2xl flex-col gap-8">
+        <SectionTitle>CRM activity log (mixed item types)</SectionTitle>
+        <CrmActivityTimeline />
+      </div>
+
       {/* Vertical (default) */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Vertical (default, defaultValue=2)</SectionTitle>
@@ -114,12 +120,6 @@ export default function TimelinePage() {
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Activity feed (avatars as indicators)</SectionTitle>
         <ActivityFeedTimeline />
-      </div>
-
-      {/* CRM activity log (mixed item types) */}
-      <div className="flex max-w-2xl flex-col gap-8">
-        <SectionTitle>CRM activity log (mixed item types)</SectionTitle>
-        <CrmActivityTimeline />
       </div>
     </div>
   )
