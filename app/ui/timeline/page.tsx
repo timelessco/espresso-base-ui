@@ -143,7 +143,7 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-background px-3 py-2.5">
+        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-0.5">
               <p>
@@ -220,7 +220,7 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-background px-3 py-2.5">
+        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-0.5">
               <p>
@@ -391,7 +391,7 @@ function CrmActivityTimeline() {
             </div>
             <span className="text-xs text-muted-foreground">14 May</span>
           </div>
-          <div className="mt-2 rounded-lg border border-border-soft bg-background px-3 py-2.5">
+          <div className="mt-2 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
             <p className="pb-1 text-sm font-medium text-foreground">
               Inbound Call
             </p>
