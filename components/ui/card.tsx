@@ -11,7 +11,7 @@ const cardVariants = cva(
         default:
           "rounded-xl bg-card py-4 ring-1 ring-foreground/10 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0",
         mail: "rounded-lg border border-border-soft bg-card px-3 py-2.5",
-        message: "rounded-lg border-0 bg-secondary px-3 py-2",
+        message: "rounded-lg border-0 bg-input px-3 py-2",
         call: "rounded-lg border border-border-soft bg-card px-3 py-2.5",
       },
     },
