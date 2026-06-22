@@ -14,6 +14,7 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import {
   Timeline,
   TimelineContent,
@@ -143,63 +144,65 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex flex-col gap-0.5">
-              <p>
-                <span className="font-medium text-foreground">
-                  Templeton Peck
-                </span>{" "}
-                <span className="text-sm text-accent-foreground">
-                  &lt;templeton@frappe.io&gt;
-                </span>
-              </p>
-              <p className="text-base font-normal text-muted-foreground">
-                <span className="text-accent-foreground">To:</span> Jonathan
-                Higgins, sandeep@timeless.co, +4
-              </p>
-              <p className="text-base text-muted-foreground">
-                <span className="text-accent-foreground">Subject:</span> Package
-                update
-              </p>
+        <TimelineContent>
+          <Card variant="mail" className="-mt-2.5 gap-0">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-col gap-1">
+                <p>
+                  <span className="font-medium text-foreground">
+                    Templeton Peck
+                  </span>{" "}
+                  <span className="text-sm text-accent-foreground">
+                    &lt;templeton@frappe.io&gt;
+                  </span>
+                </p>
+                <p className="text-base font-normal text-muted-foreground">
+                  <span className="text-accent-foreground">To:</span> Jonathan
+                  Higgins, sandeep@timeless.co, +4
+                </p>
+                <p className="text-base text-muted-foreground">
+                  <span className="text-accent-foreground">Subject:</span>{" "}
+                  Package update
+                </p>
+              </div>
+              <span className="shrink-0 text-xs text-accent-foreground">
+                3d ago
+              </span>
             </div>
-            <span className="shrink-0 text-xs text-muted-foreground">
-              3d ago
-            </span>
-          </div>
-          <div className="mt-3.5 border-t border-border-soft pt-3.5 text-sm text-foreground">
-            <p className="pb-0.5">Hi Good morning,</p>
-            <p>We hope this message finds you well.</p>
-            <br></br>
+            <div className="mt-3.5 border-t border-border-soft pt-3.5 text-base text-foreground">
+              <p className="pb-0.5">Hi Good morning,</p>
+              <p>We hope this message finds you well.</p>
+              <br></br>
 
-            <p className="leading-lg">
-              We are writing to inform you about recent updates to our inventory
-              package that may affect your current and future orders. We’ve
-              expanded our inventory with new items including Bose. These
-              additions are now available for ordering and can be viewed on our
-              Bose
-            </p>
-            <br></br>
-            <p className="pb-0.5">Thanks &amp; Regards</p>
-            <p>Templeton Peck</p>
-          </div>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            <AttachmentChip
-              icon="/images/svg/zip.svg"
-              name="Satoshi.zip"
-              meta="Zip · 5.4 MB"
-            />
-            <AttachmentChip
-              icon="/images/svg/pdf.svg"
-              name="Bose.PDF"
-              meta="PDF · 44MB"
-            />
-            <AttachmentChip
-              icon="/images/svg/document.svg"
-              name="Supply_Update.doc"
-              meta="Doc · 9.8 MB"
-            />
-          </div>
+              <p className="leading-lg">
+                We are writing to inform you about recent updates to our
+                inventory package that may affect your current and future
+                orders. We’ve expanded our inventory with new items including
+                Bose. These additions are now available for ordering and can be
+                viewed on our Bose
+              </p>
+              <br></br>
+              <p className="pb-0.5">Thanks &amp; Regards</p>
+              <p>Templeton Peck</p>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              <AttachmentChip
+                icon="/images/svg/zip.svg"
+                name="Satoshi.zip"
+                meta="Zip · 5.4 MB"
+              />
+              <AttachmentChip
+                icon="/images/svg/pdf.svg"
+                name="Bose.PDF"
+                meta="PDF · 44MB"
+              />
+              <AttachmentChip
+                icon="/images/svg/document.svg"
+                name="Supply_Update.doc"
+                meta="Doc · 9.8 MB"
+              />
+            </div>
+          </Card>
         </TimelineContent>
       </TimelineItem>
 
@@ -220,26 +223,28 @@ function CrmActivityTimeline() {
             </Avatar>
           }
         />
-        <TimelineContent className="-mt-2.5 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex flex-col gap-0.5">
-              <p>
-                <span className="font-medium text-foreground">
-                  Templeton Peck
-                </span>{" "}
-                <span className="text-sm text-accent-foreground">
-                  &lt;templeton@frappe.io&gt;
-                </span>
-              </p>
+        <TimelineContent>
+          <Card variant="mail" className="-mt-2.5 gap-0">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-col gap-0.5">
+                <p>
+                  <span className="font-medium text-foreground">
+                    Templeton Peck
+                  </span>{" "}
+                  <span className="text-sm text-accent-foreground">
+                    &lt;templeton@frappe.io&gt;
+                  </span>
+                </p>
+              </div>
+              <span className="shrink-0 text-xs text-accent-foreground">
+                3d ago
+              </span>
             </div>
-            <span className="shrink-0 text-xs text-muted-foreground">
-              3d ago
-            </span>
-          </div>
-          <p className="pt-1 leading-lg text-accent-foreground">
-            Hi, I placed an order last week. I spoke with Marisa at the time.
-            When will it be delivered?
-          </p>
+            <p className="pt-1 leading-lg text-accent-foreground">
+              Hi, I placed an order last week. I spoke with Marisa at the time.
+              When will it be delivered?
+            </p>
+          </Card>
         </TimelineContent>
       </TimelineItem>
 
@@ -265,16 +270,18 @@ function CrmActivityTimeline() {
               <span className="font-medium text-foreground">Sanny Woven</span>
               <span className="text-muted-foreground">added a comment</span>
             </div>
-            <span className="text-xs text-muted-foreground">27 Jun</span>
+            <span className="text-xs text-accent-foreground">27 Jun</span>
           </div>
-          <div className="mt-2 inline-block w-full rounded-lg bg-secondary px-3 py-2 text-base">
-            <p className="max-w-lg leading-lg">
-              <span className="font-medium text-foreground">@Sandra Bass</span>,
-              I&apos;ve noticed that too. I think we need better forecasting. We
-              often end up with either too much stock or not enough. Maybe we
+          <Card variant="message" className="mt-2 w-full text-base">
+            <p className="max-w-lg leading-lg text-muted-foreground">
+              <span className="font-medium text-secondary-foreground">
+                @Sandra Bass
+              </span>
+              , I&apos;ve noticed that too. I think we need better forecasting.
+              We often end up with either too much stock or not enough. Maybe we
               should look into some advanced forecasting software?
             </p>
-          </div>
+          </Card>
         </TimelineContent>
       </TimelineItem>
 
@@ -389,14 +396,14 @@ function CrmActivityTimeline() {
                 has reached out to you.
               </span>
             </div>
-            <span className="text-xs text-muted-foreground">14 May</span>
+            <span className="text-xs text-accent-foreground">14 May</span>
           </div>
-          <div className="mt-2 rounded-lg border border-border-soft bg-popover px-3 py-2.5">
+          <Card variant="call" className="mt-2 gap-0">
             <p className="pb-1 text-sm font-medium text-foreground">
               Inbound Call
             </p>
             <p className="text-sm text-destructive">Missed call</p>
-          </div>
+          </Card>
         </TimelineContent>
       </TimelineItem>
     </Timeline>
@@ -429,7 +436,7 @@ function AttachmentChip({
 
 function ActivityRow({ text, date }: { text: React.ReactNode; date: string }) {
   return (
-    <li className="flex items-center justify-between gap-3 text-muted-foreground">
+    <li className="flex items-center justify-between gap-3 text-accent-foreground">
       <span>{text}</span>
       <span className="shrink-0 text-xs">{date}</span>
     </li>
