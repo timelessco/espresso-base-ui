@@ -169,7 +169,7 @@ function CrmActivityTimeline() {
                 3d ago
               </span>
             </div>
-            <div className="mt-3.5 border-t border-border-soft pt-3.5 text-base text-foreground">
+            <div className="mt-3.5 border-t border-border-soft pt-3.5 text-base text-secondary-foreground">
               <p className="pb-0.5">Hi Good morning,</p>
               <p>We hope this message finds you well.</p>
               <br></br>
