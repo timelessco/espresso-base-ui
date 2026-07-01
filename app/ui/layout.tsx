@@ -9,6 +9,7 @@ import {
   ArrowRight,
   ArrowRightFromLine,
   Asterisk,
+  Paperclip,
   BadgeCheck,
   Bell,
   BellPlus,
@@ -127,6 +128,7 @@ const teams = [
 
 const components = [
   { label: "Alert", href: "/ui/alert", icon: AlertCircle },
+  { label: "Attachment", href: "/ui/attachment", icon: Paperclip },
   { label: "Avatar", href: "/ui/avatar", icon: User },
   { label: "Badge", href: "/ui/badge", icon: BadgeCheck },
   { label: "Breadcrumb", href: "/ui/breadcrumb", icon: Link2 },
