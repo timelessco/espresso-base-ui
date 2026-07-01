@@ -38,7 +38,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        "group/calendar rounded-xl bg-popover p-3.5 shadow-5xl [--cell-radius:var(--radius-xs)] [--cell-size:calc(var(--spacing)*6)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        "group/calendar rounded-xl bg-popover p-2 shadow-5xl [--cell-radius:var(--radius-xs)] [--cell-size:calc(var(--spacing)*6)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -95,6 +95,7 @@ function Calendar({
         ),
         caption_label: cn(
           "font-medium select-none",
+          (props.numberOfMonths ?? 1) > 1 ? "pl-0" : "pl-1.5",
           captionLayout === "label"
             ? "text-sm"
             : "flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground",
