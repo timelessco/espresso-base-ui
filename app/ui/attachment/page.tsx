@@ -166,7 +166,7 @@ export default function AttachmentPage() {
       {/* Vertical orientation */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical orientation (media on top)</SectionTitle>
-        <div className="flex flex-wrap gap-3">
+        <AttachmentGroup>
           <Attachment orientation="vertical">
             <AttachmentMedia variant="image">
               {/* biome-ignore lint/performance/noImgElement: showcase only */}
@@ -200,7 +200,7 @@ export default function AttachmentPage() {
               </AttachmentAction>
             </AttachmentActions>
           </Attachment>
-        </div>
+        </AttachmentGroup>
       </div>
 
       {/* Clickable (trigger) */}
