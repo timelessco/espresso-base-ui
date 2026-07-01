@@ -433,7 +433,7 @@ function PlaygroundSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="gap-3 pb-4">
-        <div className="mx-2 flex flex-col gap-3 rounded-lg border border-border-soft bg-background px-3 pt-2.5 pb-3 group-data-[collapsible=icon]:hidden">
+        <div className="mx-2 flex flex-col gap-3 rounded-lg border border-border-soft bg-card px-3 pt-2.5 pb-3 group-data-[collapsible=icon]:hidden">
           <div className="flex gap-2">
             <Workflow className="size-4 text-muted-foreground" />
             <div className="flex flex-col gap-2">
