@@ -15,7 +15,7 @@ const attachmentVariants = cva(
           "gap-2 text-base has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",
         sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5",
         xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1",
-        lg: "max-h-47.5 min-h-47.5 max-w-35 min-w-35 gap-3 p-0 text-base [&_[data-slot=attachment-actions]]:hidden [&_[data-slot=attachment-description]]:hidden [&_[data-slot=attachment-media]]:size-full [&_[data-slot=attachment-media]]:rounded-[inherit] [&_[data-slot=attachment-title]]:hidden [&_img]:size-full",
+        lg: "max-h-47.5 min-h-47.5 max-w-35 min-w-35 gap-3 text-base [&_[data-slot=attachment-actions]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:p-0 has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-description]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-title]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:size-full has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:rounded-[inherit] has-[[data-slot=attachment-media][data-variant=image]]:[&_img]:size-full has-[[data-slot=attachment-media][data-variant=icon]]:p-3",
       },
       orientation: {
         horizontal: "min-w-40 items-center",

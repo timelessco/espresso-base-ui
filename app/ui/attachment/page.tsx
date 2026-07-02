@@ -207,6 +207,33 @@ export default function AttachmentPage() {
         </AttachmentGroup>
       </div>
 
+      {/* Size: lg with icon media (title + description stay visible) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Size: lg with icon media (caption visible)</SectionTitle>
+        <AttachmentGroup>
+          {[
+            { Icon: FileTextIcon, name: "whitepaper.pdf", meta: "PDF · 5.2 MB" },
+            { Icon: FileSpreadsheetIcon, name: "budget.xlsx", meta: "XLSX · 96 KB" },
+            { Icon: FileArchiveIcon, name: "assets.zip", meta: "ZIP · 18 MB" },
+          ].map((file) => (
+            <Attachment key={file.name} size="lg" orientation="vertical">
+              <AttachmentMedia>
+                <file.Icon />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>{file.name}</AttachmentTitle>
+                <AttachmentDescription>{file.meta}</AttachmentDescription>
+              </AttachmentContent>
+              <AttachmentActions>
+                <AttachmentAction aria-label={`Remove ${file.name}`}>
+                  <XIcon />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+          ))}
+        </AttachmentGroup>
+      </div>
+
       {/* Vertical orientation */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical orientation (media on top)</SectionTitle>
