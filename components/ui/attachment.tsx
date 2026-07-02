@@ -1,7 +1,18 @@
+"use client"
+
 import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
+import {
+  MediaController,
+  MediaControlBar,
+  MediaDurationDisplay,
+  MediaMuteButton,
+  MediaPlayButton,
+  MediaTimeDisplay,
+  MediaTimeRange,
+} from "media-chrome/react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -55,6 +66,14 @@ const attachmentMediaVariants = cva(
         icon: "",
         image:
           "opacity-60 group-data-[state=done]/attachment:opacity-100 group-data-[state=idle]/attachment:opacity-100 *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover",
+        // Full-bleed video player (media-chrome <media-controller>).
+        video:
+          "aspect-square! w-full! bg-black [&_media-controller]:size-full [&_media-controller]:overflow-hidden [&_media-controller]:rounded-[inherit] [&_video]:size-full [&_video]:object-cover",
+        // Audio player pill (media-chrome <media-controller audio>).
+        audio:
+          "aspect-auto! h-auto! w-full! rounded-full bg-transparent [&_media-controller]:w-full",
+        // Rich link preview thumbnail.
+        link: "aspect-video! w-full! *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
@@ -63,18 +82,167 @@ const attachmentMediaVariants = cva(
   }
 )
 
+// Deterministic bar heights (0–1) for the audio waveform, so it looks organic
+// without needing to decode the audio.
+const WAVEFORM_BARS = Array.from({ length: 44 }, (_, i) =>
+  Math.max(0.18, Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.55)))
+)
+
+function AudioWaveform({
+  progress,
+  onSeek,
+}: {
+  progress: number
+  onSeek: (fraction: number) => void
+}) {
+  const handleSeek = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    onSeek(Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)))
+  }
+  return (
+    <div
+      onClick={handleSeek}
+      className="flex h-6 min-w-0 flex-1 cursor-pointer items-center justify-between"
+    >
+      {WAVEFORM_BARS.map((height, i) => (
+        <span
+          key={i}
+          className={cn(
+            "w-0.5 shrink-0 rounded-full transition-colors",
+            (i + 0.5) / WAVEFORM_BARS.length <= progress
+              ? "bg-white"
+              : "bg-white/30"
+          )}
+          style={{ height: `${Math.round(height * 100)}%` }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Wraps a plain <video> / <audio> element in a media-chrome player so the
+ * `video` and `audio` AttachmentMedia variants "just work" like image/icon.
+ *
+ * media-chrome elements are client-only custom elements that mutate their
+ * slotted media on upgrade (adding tabindex, etc.), so the real player is only
+ * rendered after mount — the server (and first client paint) shows a lightweight
+ * fallback, which keeps hydration clean.
+ */
+function AttachmentMediaPlayer({
+  variant,
+  children,
+}: {
+  variant: "video" | "audio"
+  children: React.ReactNode
+}) {
+  const [mounted, setMounted] = React.useState(false)
+  const mediaRef = React.useRef<HTMLMediaElement>(null)
+  const [progress, setProgress] = React.useState(0)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Track playback progress off the <audio> element to drive the waveform.
+  React.useEffect(() => {
+    if (variant !== "audio") return
+    const el = mediaRef.current
+    if (!el) return
+    const update = () =>
+      setProgress(el.duration ? el.currentTime / el.duration : 0)
+    el.addEventListener("timeupdate", update)
+    el.addEventListener("loadedmetadata", update)
+    update()
+    return () => {
+      el.removeEventListener("timeupdate", update)
+      el.removeEventListener("loadedmetadata", update)
+    }
+  }, [variant, mounted])
+
+  const child = React.isValidElement(children)
+    ? (children as React.ReactElement<{ poster?: string }>)
+    : null
+
+  if (!mounted) {
+    if (variant === "video") {
+      const poster = child?.props?.poster
+      return (
+        <div
+          className="size-full bg-black bg-cover bg-center"
+          style={poster ? { backgroundImage: `url(${poster})` } : undefined}
+        />
+      )
+    }
+    return <div className="h-9 w-full rounded-full bg-[#2b2b2b]" />
+  }
+
+  const cloneProps: Record<string, unknown> = { slot: "media" }
+  if (variant === "audio") cloneProps.ref = mediaRef
+  const media = child
+    ? React.cloneElement(
+        child as React.ReactElement<Record<string, unknown>>,
+        cloneProps
+      )
+    : children
+
+  if (variant === "audio") {
+    return (
+      <MediaController
+        audio
+        className="block w-full rounded-full bg-[#2b2b2b] px-1.5 py-1 [--media-control-background:transparent] [--media-control-hover-background:transparent] [--media-font-size:12px] [--media-primary-color:white]"
+      >
+        {media}
+        <MediaControlBar className="flex w-full items-center gap-2">
+          <MediaPlayButton className="p-1.5" />
+          <AudioWaveform
+            progress={progress}
+            onSeek={(fraction) => {
+              const el = mediaRef.current
+              if (el?.duration) el.currentTime = fraction * el.duration
+            }}
+          />
+          <MediaDurationDisplay className="pr-2 text-white" />
+        </MediaControlBar>
+      </MediaController>
+    )
+  }
+
+  return (
+    <MediaController className="block size-full [--media-control-background:transparent] [--media-control-hover-background:rgba(255,255,255,0.12)] [--media-font-size:12px] [--media-primary-color:white] [--media-range-thumb-height:10px] [--media-range-thumb-width:10px] [--media-range-track-height:4px]">
+      {media}
+      <MediaControlBar className="flex w-full items-center gap-1 bg-linear-to-t from-black/70 to-transparent px-2 pt-8 pb-2">
+        <MediaPlayButton className="p-1.5" />
+        <MediaTimeRange className="min-w-0 flex-1" />
+        <MediaTimeDisplay showDuration className="whitespace-nowrap" />
+        <MediaMuteButton className="p-1.5" />
+      </MediaControlBar>
+    </MediaController>
+  )
+}
+
 function AttachmentMedia({
   className,
   variant = "icon",
+  children,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof attachmentMediaVariants>) {
+  const isPlayer = variant === "video" || variant === "audio"
   return (
     <div
       data-slot="attachment-media"
       data-variant={variant}
       className={cn(attachmentMediaVariants({ variant }), className)}
       {...props}
-    />
+    >
+      {isPlayer ? (
+        <AttachmentMediaPlayer variant={variant}>
+          {children}
+        </AttachmentMediaPlayer>
+      ) : (
+        children
+      )}
+    </div>
   )
 }
 

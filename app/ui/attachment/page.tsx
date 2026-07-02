@@ -3,6 +3,7 @@ import {
   FileArchiveIcon,
   FileSpreadsheetIcon,
   FileTextIcon,
+  GlobeIcon,
   ImageIcon,
   MusicIcon,
   TriangleAlertIcon,
@@ -232,6 +233,67 @@ export default function AttachmentPage() {
             </Attachment>
           ))}
         </AttachmentGroup>
+      </div>
+
+      {/* Audio media variant */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Audio media variant (media-chrome player)</SectionTitle>
+        <Attachment className="w-full max-w-sm">
+          <AttachmentMedia variant="audio">
+            <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
+          </AttachmentMedia>
+        </Attachment>
+      </div>
+
+      {/* Video media variant */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Video media variant (media-chrome player)</SectionTitle>
+        <Attachment orientation="vertical" className="w-80 p-0">
+          <AttachmentMedia variant="video">
+            {/* biome-ignore lint/a11y/useMediaCaption: showcase only */}
+            <video
+              playsInline
+              poster="https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=640&dpr=2&q=80"
+              src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
+            />
+          </AttachmentMedia>
+        </Attachment>
+      </div>
+
+      {/* Link media variant */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Link media variant (rich preview)</SectionTitle>
+        <Attachment
+          orientation="vertical"
+          className="w-72 has-data-[slot=attachment-content]:w-72"
+        >
+          <AttachmentMedia variant="link">
+            {/* biome-ignore lint/performance/noImgElement: showcase only */}
+            <img
+              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=640&dpr=2&q=80"
+              alt="Event cover"
+            />
+          </AttachmentMedia>
+          <AttachmentContent>
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <GlobeIcon className="size-3.5" />
+              <span className="truncate text-xs">luma.com</span>
+            </div>
+            <AttachmentTitle className="mt-0.5 whitespace-normal">
+              DevRev Leadership Circle Bengaluru
+            </AttachmentTitle>
+          </AttachmentContent>
+          <AttachmentTrigger
+            render={
+              <a
+                href="https://luma.com/lc-blr-2026"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open DevRev Leadership Circle Bengaluru"
+              />
+            }
+          />
+        </Attachment>
       </div>
 
       {/* Vertical orientation */}
