@@ -9,6 +9,8 @@ import {
   Message,
   MessageAvatar,
   MessageContent,
+  MessageFooter,
+  MessageHeader,
 } from "@/components/ui/message"
 import {
   MessageScroller,
@@ -27,6 +29,7 @@ type ChatMessage = {
   name: string
   initials: string
   text: string
+  time: string
 }
 
 const conversation: ChatMessage[] = [
@@ -36,6 +39,7 @@ const conversation: ChatMessage[] = [
     name: "You",
     initials: "YO",
     text: "Can you walk me through how the message scroller keeps things anchored?",
+    time: "9:41 AM",
   },
   {
     id: "m2",
@@ -43,6 +47,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "Of course. Each row is wrapped in a MessageScrollerItem so the viewport can measure and preserve its position.",
+    time: "9:41 AM",
   },
   {
     id: "m3",
@@ -50,6 +55,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "When you mark an item with scrollAnchor, it's treated as a conversation turn — the viewport parks it near the top.",
+    time: "9:42 AM",
   },
   {
     id: "m4",
@@ -57,6 +63,7 @@ const conversation: ChatMessage[] = [
     name: "You",
     initials: "YO",
     text: "So the last thing I sent stays pinned while the reply streams in?",
+    time: "9:43 AM",
   },
   {
     id: "m5",
@@ -64,6 +71,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "Exactly. With autoScroll on, streamed replies stay in view as long as you're at the live edge.",
+    time: "9:43 AM",
   },
   {
     id: "m6",
@@ -71,6 +79,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "If you scroll up to read older messages, auto-scroll pauses so you aren't yanked back down.",
+    time: "9:44 AM",
   },
   {
     id: "m7",
@@ -78,6 +87,7 @@ const conversation: ChatMessage[] = [
     name: "You",
     initials: "YO",
     text: "Nice. And the floating button?",
+    time: "9:45 AM",
   },
   {
     id: "m8",
@@ -85,6 +95,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "MessageScrollerButton appears when there's content below (or above). Tap it to jump back to the latest message.",
+    time: "9:45 AM",
   },
   {
     id: "m9",
@@ -92,6 +103,7 @@ const conversation: ChatMessage[] = [
     name: "You",
     initials: "YO",
     text: "What about really long threads — does it render everything?",
+    time: "9:46 AM",
   },
   {
     id: "m10",
@@ -99,6 +111,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "It uses content-visibility so rows far off-screen skip layout work, but stay in the DOM for search and accessibility.",
+    time: "9:47 AM",
   },
   {
     id: "m11",
@@ -106,6 +119,7 @@ const conversation: ChatMessage[] = [
     name: "You",
     initials: "YO",
     text: "Great — that covers it. Let me scroll up to double-check the anchoring.",
+    time: "9:48 AM",
   },
   {
     id: "m12",
@@ -113,6 +127,7 @@ const conversation: ChatMessage[] = [
     name: "Assistant",
     initials: "AI",
     text: "Go for it. Notice the previous turn peeks above the anchored row so you keep your context.",
+    time: "9:48 AM",
   },
 ]
 
@@ -132,9 +147,11 @@ function ChatRow({ message }: { message: ChatMessage }) {
         </MessageAvatar>
       )}
       <MessageContent>
+        <MessageHeader>{message.name}</MessageHeader>
         <Bubble variant={isUser ? "default" : "secondary"}>
           <BubbleContent>{message.text}</BubbleContent>
         </Bubble>
+        <MessageFooter>{message.time}</MessageFooter>
       </MessageContent>
     </Message>
   )
