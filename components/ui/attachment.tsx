@@ -15,6 +15,7 @@ const attachmentVariants = cva(
           "gap-2 text-base has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",
         sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5",
         xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1",
+        lg: "max-h-47.5 min-h-47.5 max-w-35 min-w-35 gap-3 p-0 text-base [&_[data-slot=attachment-actions]]:hidden [&_[data-slot=attachment-description]]:hidden [&_[data-slot=attachment-media]]:size-full [&_[data-slot=attachment-media]]:rounded-[inherit] [&_[data-slot=attachment-title]]:hidden [&_img]:size-full",
       },
       orientation: {
         horizontal: "min-w-40 items-center",
@@ -101,7 +102,7 @@ function AttachmentTitle({
     <span
       data-slot="attachment-title"
       className={cn(
-        "group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer block max-w-full min-w-0 truncate font-medium",
+        "block max-w-full min-w-0 truncate font-medium group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer",
         className
       )}
       {...props}
@@ -186,7 +187,13 @@ function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="attachment-group"
       className={cn(
-        "scroll-fade-x scrollbar-none flex min-w-0 snap-x snap-mandatory scroll-px-1 gap-3 overflow-x-auto overscroll-x-contain py-1 *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
+        "scrollbar-none flex min-w-0 scroll-fade-x snap-x snap-mandatory scroll-px-1 gap-3 overflow-x-auto overscroll-x-contain py-1 *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
+        // When the group contains lg attachments, pile the cards on top of each
+        // other and fan them out. The first child is the front of the pile (kept
+        // in normal flow so it sets the footprint, lifted with a higher z-index);
+        // the rest are absolutely overlaid behind it, each rotated more from the
+        // bottom edge.
+        "has-[[data-size=lg]]:relative has-[[data-size=lg]]:isolate has-[[data-size=lg]]:w-fit has-[[data-size=lg]]:overflow-visible has-[[data-size=lg]]:scroll-fade-none has-[[data-size=lg]]:*:data-[slot=attachment]:absolute has-[[data-size=lg]]:*:data-[slot=attachment]:inset-0 has-[[data-size=lg]]:*:data-[slot=attachment]:origin-bottom has-[[data-size=lg]]:*:data-[slot=attachment]:shadow-[0_0_1px_0_rgba(0,0,0,0.2),0_1px_3px_0_rgba(0,0,0,0.05),0_10px_24px_-3px_rgba(0,0,0,0.1)] has-[[data-size=lg]]:*:data-[slot=attachment]:transition-transform has-[[data-size=lg]]:[&>[data-slot=attachment]:first-child]:relative has-[[data-size=lg]]:[&>[data-slot=attachment]:first-child]:inset-auto has-[[data-size=lg]]:[&>[data-slot=attachment]:first-child]:z-10 has-[[data-size=lg]]:[&>[data-slot=attachment]:first-child]:-rotate-[6deg] has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(2)]:top-1.5 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(2)]:left-1 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(2)]:z-20 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(2)]:rotate-3 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(3)]:top-3 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(3)]:left-1.5 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(3)]:z-30 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(3)]:rotate-18 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(4)]:z-40 has-[[data-size=lg]]:[&>[data-slot=attachment]:nth-child(4)]:rotate-[18deg]",
         className
       )}
       {...props}
