@@ -84,7 +84,9 @@ export default function AttachmentPage() {
             </AttachmentMedia>
             <AttachmentContent>
               <AttachmentTitle>Drop a file to attach</AttachmentTitle>
-              <AttachmentDescription>idle · dashed border</AttachmentDescription>
+              <AttachmentDescription>
+                idle · dashed border
+              </AttachmentDescription>
             </AttachmentContent>
           </Attachment>
 
@@ -114,7 +116,9 @@ export default function AttachmentPage() {
             </AttachmentMedia>
             <AttachmentContent>
               <AttachmentTitle>archive.zip</AttachmentTitle>
-              <AttachmentDescription>Upload failed · retry</AttachmentDescription>
+              <AttachmentDescription>
+                Upload failed · retry
+              </AttachmentDescription>
             </AttachmentContent>
             <AttachmentActions>
               <AttachmentAction aria-label="Remove archive.zip">
@@ -161,6 +165,46 @@ export default function AttachmentPage() {
             </Attachment>
           ))}
         </div>
+      </div>
+
+      {/* Size: lg */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Size: lg (large card — w-35 × h-47.5)</SectionTitle>
+        <AttachmentGroup>
+          {[
+            {
+              src: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=320&dpr=2&q=80",
+              name: "cat.jpg",
+              meta: "JPG · 2.1 MB",
+            },
+            {
+              src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=320&dpr=2&q=80",
+              name: "landscape.jpg",
+              meta: "JPG · 3.4 MB",
+            },
+            {
+              src: "https://images.unsplash.com/photo-1517849845537-4d257902454a?w=320&dpr=2&q=80",
+              name: "pup.jpg",
+              meta: "JPG · 1.8 MB",
+            },
+          ].map((file) => (
+            <Attachment key={file.name} size="lg" orientation="vertical">
+              <AttachmentMedia variant="image">
+                {/* biome-ignore lint/performance/noImgElement: showcase only */}
+                <img src={file.src} alt={file.name} />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>{file.name}</AttachmentTitle>
+                <AttachmentDescription>{file.meta}</AttachmentDescription>
+              </AttachmentContent>
+              <AttachmentActions>
+                <AttachmentAction aria-label={`Remove ${file.name}`}>
+                  <XIcon />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+          ))}
+        </AttachmentGroup>
       </div>
 
       {/* Vertical orientation */}
