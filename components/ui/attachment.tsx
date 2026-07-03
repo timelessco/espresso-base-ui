@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 const attachmentVariants = cva(
-  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-xl bg-secondary text-foreground transition-colors focus-within:ring-1 focus-within:ring-ring/50 has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed",
+  "group/attachment relative flex w-fit max-w-full min-w-0 shrink-0 flex-wrap rounded-xl bg-secondary text-foreground transition-colors focus-within:ring-1 focus-within:ring-ring/50 has-[[data-slot=attachment-media][data-variant=link]]:h-47.5 has-[[data-slot=attachment-media][data-variant=link]]:w-55 has-[[data-slot=attachment-media][data-variant=link]]:flex-nowrap has-[[data-slot=attachment-media][data-variant=link]]:gap-0 has-[[data-slot=attachment-media][data-variant=link]]:overflow-hidden has-[[data-slot=attachment-media][data-variant=link]]:p-0 has-[[data-slot=attachment-media][data-variant=video]]:size-80 has-[[data-slot=attachment-media][data-variant=video]]:bg-transparent has-[[data-slot=attachment-media][data-variant=video]]:p-0 has-[[data-slot=attachment-media][data-variant=video]]:shadow-[0_0_1px_0_rgba(0,0,0,0.2),0_1px_3px_0_rgba(0,0,0,0.05),0_10px_24px_-3px_rgba(0,0,0,0.1)] has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-content]]:px-3 has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-content]]:py-2.5 has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:line-clamp-2 has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:text-base has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:leading-lg has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:font-normal has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:whitespace-normal has-[[data-slot=attachment-media][data-variant=link]]:[&_[data-slot=attachment-title]]:text-secondary-foreground",
   {
     variants: {
       size: {
@@ -73,7 +73,7 @@ const attachmentMediaVariants = cva(
         audio:
           "aspect-auto! h-auto! w-full! rounded-full bg-transparent [&_media-controller]:w-full",
         // Rich link preview thumbnail.
-        link: "aspect-video! w-full! *:[img]:size-full *:[img]:object-cover",
+        link: "aspect-auto! h-29! w-full! rounded-none! *:[img]:size-full *:[img]:object-cover",
       },
     },
     defaultVariants: {
