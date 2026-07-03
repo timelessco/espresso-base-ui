@@ -248,7 +248,7 @@ export default function AttachmentPage() {
       {/* Video media variant */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Video media variant (media-chrome player)</SectionTitle>
-        <Attachment orientation="vertical" className="w-80 p-0">
+        <Attachment orientation="vertical">
           <AttachmentMedia variant="video">
             {/* biome-ignore lint/a11y/useMediaCaption: showcase only */}
             <video
@@ -263,10 +263,7 @@ export default function AttachmentPage() {
       {/* Link media variant */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Link media variant (rich preview)</SectionTitle>
-        <Attachment
-          orientation="vertical"
-          className="w-72 has-data-[slot=attachment-content]:w-72"
-        >
+        <Attachment orientation="vertical">
           <AttachmentMedia variant="link">
             {/* biome-ignore lint/performance/noImgElement: showcase only */}
             <img
@@ -274,12 +271,12 @@ export default function AttachmentPage() {
               alt="Event cover"
             />
           </AttachmentMedia>
-          <AttachmentContent>
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+          <AttachmentContent className="flex min-h-0 flex-1 flex-col justify-center">
+            <div className="flex items-center gap-1.5 text-sm font-normal text-accent-foreground">
               <GlobeIcon className="size-3.5" />
-              <span className="truncate text-xs">luma.com</span>
+              <span className="truncate">luma.com</span>
             </div>
-            <AttachmentTitle className="mt-0.5 whitespace-normal">
+            <AttachmentTitle className="mt-0.5">
               DevRev Leadership Circle Bengaluru
             </AttachmentTitle>
           </AttachmentContent>
