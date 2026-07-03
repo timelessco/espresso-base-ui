@@ -26,7 +26,7 @@ const attachmentVariants = cva(
           "gap-2 text-base has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",
         sm: "gap-2.5 text-xs has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5",
         xs: "gap-1.5 rounded-lg text-xs has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1",
-        lg: "max-h-47.5 min-h-47.5 max-w-35 min-w-35 gap-3 text-base [&_[data-slot=attachment-actions]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:p-0 has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-description]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-title]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:size-full has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:rounded-[inherit] has-[[data-slot=attachment-media][data-variant=image]]:[&_img]:size-full has-[[data-slot=attachment-media][data-variant=icon]]:p-3",
+        lg: "max-h-47.5 min-h-47.5 max-w-35 min-w-35 gap-3 text-base has-[[data-slot=attachment-media][data-variant=icon]]:p-3 has-[[data-slot=attachment-media][data-variant=image]]:p-0 [&_[data-slot=attachment-actions]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-description]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:size-full has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-media]]:rounded-[inherit] has-[[data-slot=attachment-media][data-variant=image]]:[&_[data-slot=attachment-title]]:hidden has-[[data-slot=attachment-media][data-variant=image]]:[&_img]:size-full",
       },
       orientation: {
         horizontal: "min-w-40 items-center",
@@ -102,7 +102,7 @@ function AudioWaveform({
   return (
     <div
       onClick={handleSeek}
-      className="flex h-6 min-w-0 flex-1 cursor-pointer items-center justify-between"
+      className="flex h-[15px] min-w-0 flex-1 cursor-pointer items-center justify-between"
     >
       {WAVEFORM_BARS.map((height, i) => (
         <span
@@ -190,11 +190,11 @@ function AttachmentMediaPlayer({
     return (
       <MediaController
         audio
-        className="block w-full rounded-full bg-[#2b2b2b] px-1.5 py-1 [--media-control-background:transparent] [--media-control-hover-background:transparent] [--media-font-size:12px] [--media-primary-color:white]"
+        className="block h-7 w-full rounded-full bg-[#2b2b2b] px-1.5 [--media-button-icon-height:16px] [--media-button-icon-width:16px] [--media-control-background:transparent] [--media-control-hover-background:transparent] [--media-control-padding:6px] [--media-font-size:12px] [--media-primary-color:white]"
       >
         {media}
-        <MediaControlBar className="flex w-full items-center gap-2">
-          <MediaPlayButton className="p-1.5" />
+        <MediaControlBar className="flex h-full w-full items-center gap-2">
+          <MediaPlayButton />
           <AudioWaveform
             progress={progress}
             onSeek={(fraction) => {
@@ -202,7 +202,7 @@ function AttachmentMediaPlayer({
               if (el?.duration) el.currentTime = fraction * el.duration
             }}
           />
-          <MediaDurationDisplay className="pr-2 text-white" />
+          <MediaDurationDisplay className="pr-2 text-sm [--media-font-size:0.875rem] [--media-primary-color:var(--muted)]" />
         </MediaControlBar>
       </MediaController>
     )

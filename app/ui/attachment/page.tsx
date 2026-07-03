@@ -238,7 +238,7 @@ export default function AttachmentPage() {
       {/* Audio media variant */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Audio media variant (media-chrome player)</SectionTitle>
-        <Attachment className="w-full max-w-sm">
+        <Attachment className="w-full max-w-sm bg-transparent has-data-[slot=attachment-media]:p-0">
           <AttachmentMedia variant="audio">
             <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
           </AttachmentMedia>
