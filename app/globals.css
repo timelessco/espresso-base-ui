@@ -1463,7 +1463,11 @@
     @apply font-sans;
   }
   svg {
-    stroke-width: 1.5;
+    stroke-width: 1;
+  }
+  /* lucide icons default to a 1px stroke app-wide */
+  .lucide {
+    stroke-width: 1;
   }
 }
 
