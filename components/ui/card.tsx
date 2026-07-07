@@ -4,15 +4,15 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground shadow-default has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
   {
     variants: {
       variant: {
         default:
-          "rounded-xl bg-card py-4 ring-1 ring-foreground/10 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0",
-        mail: "rounded-lg border border-border-soft bg-card px-3 py-2.5",
-        message: "rounded-lg border-0 bg-input px-3 py-2",
-        call: "rounded-lg border border-border-soft bg-card px-3 py-2.5",
+          "rounded-xl bg-card py-4 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0",
+        mail: "rounded-lg bg-card px-3 py-2.5",
+        message: "rounded-lg bg-input px-3 py-2",
+        call: "rounded-lg bg-card px-3 py-2.5",
       },
     },
     defaultVariants: {
