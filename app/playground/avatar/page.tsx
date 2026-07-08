@@ -216,7 +216,7 @@ export default function AvatarPlaygroundPage() {
       </div>
 
       {/* Right — floating props panel */}
-      <aside className="scrollbar-hide m-4 flex w-72 shrink-0 flex-col overflow-y-auto rounded-3xl border border-border bg-card shadow-default">
+      <aside className="scrollbar-hide m-4 flex w-72 shrink-0 flex-col overflow-y-auto rounded-3xl bg-card shadow-default">
         <div className="flex flex-col gap-5 px-4 py-5">
           {current ? (
             <>
