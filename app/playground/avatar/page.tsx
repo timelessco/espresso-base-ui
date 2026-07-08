@@ -1,7 +1,8 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Check, Copy, Star } from "lucide-react"
+import { Check, Copy, User } from "lucide-react"
+import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -21,42 +22,35 @@ import {
 } from "@/components/ui/color-picker"
 
 /* -------------------------------------------------------------------------- */
-/*  Button playground                                                          */
+/*  Avatar playground                                                          */
 /*                                                                            */
-/*  Click any button in the preview to select it, then tweak its padding,      */
-/*  height, font size, background and text color from the right sidebar.       */
-/*  Each button keeps its own overrides.                                       */
+/*  Click any avatar in the preview to select it, then tweak its size, icon    */
+/*  size, background and icon color from the right sidebar. Each avatar keeps   */
+/*  its own overrides.                                                          */
 /* -------------------------------------------------------------------------- */
 
 type Overrides = {
-  paddingX: number
-  height: number
-  fontSize: number
-  radius: number
+  avatarSize: number
   iconSize: number
   background: string
-  color: string
+  iconColor: string
 }
 
-type SizeItem = { key: string; size: string; label: string; icon: boolean }
+type AvatarItem = { key: string; size: string; variant: string; label: string }
 
-const TEXT_SIZES: SizeItem[] = [
-  { key: "xs", size: "xs", label: "xs", icon: false },
-  { key: "sm", size: "sm", label: "sm", icon: false },
-  { key: "default", size: "default", label: "default", icon: false },
-  { key: "lg", size: "lg", label: "lg", icon: false },
-  { key: "xl", size: "xl", label: "xl", icon: false },
-  { key: "2xl", size: "2xl", label: "2xl", icon: false },
-]
+const SIZES = ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"]
 
-const ICON_SIZES: SizeItem[] = [
-  { key: "icon-xs", size: "icon-xs", label: "xs", icon: true },
-  { key: "icon-sm", size: "icon-sm", label: "sm", icon: true },
-  { key: "icon", size: "icon", label: "default", icon: true },
-  { key: "icon-lg", size: "icon-lg", label: "lg", icon: true },
-  { key: "icon-xl", size: "icon-xl", label: "xl", icon: true },
-  { key: "icon-2xl", size: "icon-2xl", label: "2xl", icon: true },
-]
+function makeItems(variant: string): AvatarItem[] {
+  return SIZES.map((size) => ({
+    key: `${variant}-${size}`,
+    size,
+    variant,
+    label: size,
+  }))
+}
+
+const CIRCLE_ITEMS = makeItems("circle")
+const SQUARE_ITEMS = makeItems("square")
 
 /**
  * Normalize any CSS color string (`rgb`, `rgba`, `oklch`, named, …) to a
@@ -75,41 +69,28 @@ function toHex(color: string): string {
   return "#" + [r, g, b].map((n) => n.toString(16).padStart(2, "0")).join("")
 }
 
-const VARIANTS = [
-  { label: "Default", value: "default" },
-  { label: "Secondary", value: "secondary" },
-  { label: "Outline", value: "outline" },
-  { label: "Ghost", value: "ghost" },
-  { label: "Destructive", value: "destructive" },
-  { label: "Link", value: "link" },
-]
-
-export default function ButtonPlaygroundPage() {
-  const refs = useRef<Record<string, HTMLButtonElement | null>>({})
-  const [variant, setVariant] = useState("default")
+export default function AvatarPlaygroundPage() {
+  const refs = useRef<Record<string, HTMLSpanElement | null>>({})
   const [selected, setSelected] = useState<string | null>(null)
   const [overrides, setOverrides] = useState<Record<string, Overrides>>({})
-  // Seeded (unedited) snapshot per button, used to detect real changes.
+  // Seeded (unedited) snapshot per avatar, used to detect real changes.
   const initials = useRef<Record<string, Overrides>>({})
   const [showProps, setShowProps] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const selectButton = (key: string) => {
+  const selectAvatar = (key: string) => {
     setSelected(key)
     if (overrides[key]) return
-    // Seed controls from the button's current computed style on first select.
+    // Seed controls from the avatar's current computed style on first select.
     const el = refs.current[key]
     if (!el) return
     const cs = getComputedStyle(el)
     const svg = el.querySelector("svg")
     const seed: Overrides = {
-      paddingX: parseFloat(cs.paddingLeft) || 0,
-      height: parseFloat(cs.height) || 0,
-      fontSize: parseFloat(cs.fontSize) || 0,
-      radius: parseFloat(cs.borderTopLeftRadius) || 0,
+      avatarSize: parseFloat(cs.width) || 0,
       iconSize: svg ? parseFloat(getComputedStyle(svg).width) || 16 : 16,
       background: toHex(cs.backgroundColor),
-      color: toHex(cs.color),
+      iconColor: toHex(cs.color),
     }
     if (!initials.current[key]) initials.current[key] = seed
     setOverrides((prev) => (prev[key] ? prev : { ...prev, [key]: seed }))
@@ -134,59 +115,50 @@ export default function ButtonPlaygroundPage() {
     setOverrides({})
     initials.current = {}
     setSelected(null)
-    setVariant("default")
   }
 
   const styleFor = (key: string) => {
     const o = overrides[key]
     if (!o) return undefined
     return {
-      paddingLeft: o.paddingX,
-      paddingRight: o.paddingX,
-      height: o.height,
-      fontSize: o.fontSize,
-      borderRadius: o.radius,
+      width: o.avatarSize,
+      height: o.avatarSize,
       backgroundColor: o.background,
-      color: o.color,
+      color: o.iconColor,
     }
   }
 
   const iconStyleFor = (key: string) => {
     const o = overrides[key]
     if (!o) return undefined
-    // Also override the button's max-w/max-h svg clamp so the icon can grow.
-    return {
-      width: o.iconSize,
-      height: o.iconSize,
-      maxWidth: o.iconSize,
-      maxHeight: o.iconSize,
-    }
+    return { width: o.iconSize, height: o.iconSize }
   }
 
-  const renderRow = (heading: string, sizes: SizeItem[]) => (
+  const renderRow = (heading: string, items: AvatarItem[]) => (
     <div className="flex flex-col items-center gap-4">
       <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
         {heading}
       </span>
       <div className="flex flex-wrap items-end justify-center gap-4">
-        {sizes.map((item) => (
+        {items.map((item) => (
           <div key={item.key} className="flex flex-col items-center gap-2">
-            <Button
+            <Avatar
               ref={(el) => {
                 refs.current[item.key] = el
               }}
-              variant={variant as never}
               size={item.size as never}
+              variant={item.variant as never}
               style={styleFor(item.key)}
-              onClick={() => selectButton(item.key)}
+              onClick={() => selectAvatar(item.key)}
               className={
-                selected === item.key
-                  ? "ring-2 ring-ring ring-offset-2 ring-offset-background"
-                  : undefined
+                "cursor-pointer" +
+                (selected === item.key
+                  ? " ring-2 ring-ring ring-offset-2 ring-offset-background"
+                  : "")
               }
             >
-              {item.icon ? <Star style={iconStyleFor(item.key)} /> : "Button"}
-            </Button>
+              <User style={iconStyleFor(item.key)} />
+            </Avatar>
             <span className="text-xs text-muted-foreground">{item.label}</span>
           </div>
         ))}
@@ -196,7 +168,7 @@ export default function ButtonPlaygroundPage() {
 
   const current = selected ? overrides[selected] : null
   const selectedItem = selected
-    ? [...TEXT_SIZES, ...ICON_SIZES].find((s) => s.key === selected)
+    ? [...CIRCLE_ITEMS, ...SQUARE_ITEMS].find((s) => s.key === selected)
     : null
 
   // Compose the edited values into Tailwind arbitrary-value utility classes.
@@ -204,31 +176,27 @@ export default function ButtonPlaygroundPage() {
   const customClasses =
     current && selected && isEdited(selected)
       ? [
-          `px-[${Math.round(current.paddingX)}px]`,
-          `h-[${Math.round(current.height)}px]`,
-          `text-[${Math.round(current.fontSize)}px]`,
-          `rounded-[${Math.round(current.radius)}px]`,
+          `size-[${Math.round(current.avatarSize)}px]`,
+          `[&>svg]:size-[${Math.round(current.iconSize)}px]`,
           `bg-[${current.background}]`,
-          `text-[${current.color}]`,
-          ...(selectedItem?.icon
-            ? [`[&_svg]:size-[${Math.round(current.iconSize)}px]`]
-            : []),
+          `text-[${current.iconColor}]`,
         ].join(" ")
       : ""
 
-  // Build the list of props to show for the selected button.
   const attrs: { name: string; value: string }[] = selectedItem
     ? [
-        { name: "variant", value: variant },
         { name: "size", value: selectedItem.size },
+        { name: "variant", value: selectedItem.variant },
         ...(customClasses ? [{ name: "className", value: customClasses }] : []),
       ]
     : []
 
   const snippet = [
-    "<Button",
+    "<Avatar",
     ...attrs.map((a) => `  ${a.name}="${a.value}"`),
-    "/>",
+    ">",
+    "  <User />",
+    "</Avatar>",
   ].join("\n")
 
   const copySnippet = async () => {
@@ -239,34 +207,17 @@ export default function ButtonPlaygroundPage() {
 
   return (
     <div className="flex h-full min-h-0 w-full">
-      {/* Center — live component preview */}
+      {/* Center — live avatar preview */}
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex flex-1 flex-col items-center justify-center gap-12 overflow-auto p-10">
-          {renderRow("Text", TEXT_SIZES)}
-          {renderRow("Icon only", ICON_SIZES)}
+          {renderRow("Circle", CIRCLE_ITEMS)}
+          {renderRow("Square", SQUARE_ITEMS)}
         </div>
       </div>
 
-      {/* Right — props panel */}
+      {/* Right — floating props panel */}
       <aside className="scrollbar-hide m-4 flex w-72 shrink-0 flex-col overflow-y-auto rounded-3xl bg-card shadow-default">
         <div className="flex flex-col gap-5 px-4 py-5">
-          {/* Variant — applies to every button */}
-          <div className="flex flex-col gap-2.5">
-            <span className="text-sm font-medium text-foreground">Variant</span>
-            <div className="flex flex-wrap gap-1.5">
-              {VARIANTS.map((option) => (
-                <Button
-                  key={option.value}
-                  variant={variant === option.value ? "default" : "secondary"}
-                  size="xs"
-                  onClick={() => setVariant(option.value)}
-                >
-                  {option.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-
           {current ? (
             <>
               <span className="text-xs text-muted-foreground">
@@ -274,42 +225,19 @@ export default function ButtonPlaygroundPage() {
               </span>
 
               <SliderControl
-                label="Padding X"
-                value={current.paddingX}
-                min={0}
-                max={48}
-                onChange={(v) => setField("paddingX", v)}
-              />
-              <SliderControl
-                label="Height"
-                value={current.height}
-                min={16}
+                label="Avatar size"
+                value={current.avatarSize}
+                min={12}
                 max={96}
-                onChange={(v) => setField("height", v)}
+                onChange={(v) => setField("avatarSize", v)}
               />
               <SliderControl
-                label="Font size"
-                value={current.fontSize}
-                min={8}
-                max={40}
-                onChange={(v) => setField("fontSize", v)}
+                label="Icon size"
+                value={current.iconSize}
+                min={6}
+                max={64}
+                onChange={(v) => setField("iconSize", v)}
               />
-              <SliderControl
-                label="Border radius"
-                value={current.radius}
-                min={0}
-                max={40}
-                onChange={(v) => setField("radius", v)}
-              />
-              {selected?.startsWith("icon") && (
-                <SliderControl
-                  label="Icon size"
-                  value={current.iconSize}
-                  min={8}
-                  max={48}
-                  onChange={(v) => setField("iconSize", v)}
-                />
-              )}
 
               <ColorControl
                 label="Background"
@@ -317,14 +245,14 @@ export default function ButtonPlaygroundPage() {
                 onChange={(v) => setField("background", v)}
               />
               <ColorControl
-                label="Text color"
-                value={current.color}
-                onChange={(v) => setField("color", v)}
+                label="Icon color"
+                value={current.iconColor}
+                onChange={(v) => setField("iconColor", v)}
               />
             </>
           ) : (
             <p className="text-xs text-muted-foreground">
-              Select a button to edit its properties.
+              Click an avatar to edit its properties.
             </p>
           )}
         </div>
@@ -353,7 +281,7 @@ export default function ButtonPlaygroundPage() {
       <Dialog open={showProps} onOpenChange={setShowProps}>
         <DialogContent size="default">
           <DialogHeader>
-            <DialogTitle>Button properties</DialogTitle>
+            <DialogTitle>Avatar properties</DialogTitle>
           </DialogHeader>
           <div className="relative">
             <Button
@@ -369,7 +297,7 @@ export default function ButtonPlaygroundPage() {
               <code>
                 <div>
                   <span className="text-sky-600 dark:text-sky-400">
-                    &lt;Button
+                    &lt;Avatar
                   </span>
                 </div>
                 {attrs.map((a) => (
@@ -384,7 +312,17 @@ export default function ButtonPlaygroundPage() {
                   </div>
                 ))}
                 <div>
-                  <span className="text-sky-600 dark:text-sky-400">/&gt;</span>
+                  <span className="text-sky-600 dark:text-sky-400">&gt;</span>
+                </div>
+                <div className="pl-4">
+                  <span className="text-sky-600 dark:text-sky-400">
+                    &lt;User /&gt;
+                  </span>
+                </div>
+                <div>
+                  <span className="text-sky-600 dark:text-sky-400">
+                    &lt;/Avatar&gt;
+                  </span>
                 </div>
               </code>
             </pre>
@@ -414,7 +352,7 @@ function SliderControl({
     <div className="flex flex-col gap-2.5">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-foreground">{label}</span>
-        <span className="text-sm text-muted-foreground tabular-nums">
+        <span className="text-sm tabular-nums text-muted-foreground">
           {Math.round(value)}px
         </span>
       </div>
@@ -442,7 +380,7 @@ function ColorControl({
     <div className="flex items-center justify-between gap-2">
       <span className="text-sm font-medium text-foreground">{label}</span>
       <ColorPicker value={value} onValueChange={onChange} format="hex">
-        <ColorPickerTrigger className="flex h-7 min-w-24 justify-between gap-2 px-2">
+        <ColorPickerTrigger className="h-7 w-30 min-w-0 gap-2 px-2">
           <ColorPickerSwatch className="size-4" />
           <span className="text-xs tabular-nums">{value}</span>
         </ColorPickerTrigger>
