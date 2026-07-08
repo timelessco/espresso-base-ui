@@ -89,31 +89,30 @@ export default function ButtonPlaygroundPage() {
   const [variant, setVariant] = useState("default")
   const [selected, setSelected] = useState<string | null>(null)
   const [overrides, setOverrides] = useState<Record<string, Overrides>>({})
+  // Seeded (unedited) snapshot per button, used to detect real changes.
+  const initials = useRef<Record<string, Overrides>>({})
   const [showProps, setShowProps] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const selectButton = (key: string) => {
     setSelected(key)
+    if (overrides[key]) return
     // Seed controls from the button's current computed style on first select.
-    setOverrides((prev) => {
-      if (prev[key]) return prev
-      const el = refs.current[key]
-      if (!el) return prev
-      const cs = getComputedStyle(el)
-      const svg = el.querySelector("svg")
-      return {
-        ...prev,
-        [key]: {
-          paddingX: parseFloat(cs.paddingLeft) || 0,
-          height: parseFloat(cs.height) || 0,
-          fontSize: parseFloat(cs.fontSize) || 0,
-          radius: parseFloat(cs.borderTopLeftRadius) || 0,
-          iconSize: svg ? parseFloat(getComputedStyle(svg).width) || 16 : 16,
-          background: toHex(cs.backgroundColor),
-          color: toHex(cs.color),
-        },
-      }
-    })
+    const el = refs.current[key]
+    if (!el) return
+    const cs = getComputedStyle(el)
+    const svg = el.querySelector("svg")
+    const seed: Overrides = {
+      paddingX: parseFloat(cs.paddingLeft) || 0,
+      height: parseFloat(cs.height) || 0,
+      fontSize: parseFloat(cs.fontSize) || 0,
+      radius: parseFloat(cs.borderTopLeftRadius) || 0,
+      iconSize: svg ? parseFloat(getComputedStyle(svg).width) || 16 : 16,
+      background: toHex(cs.backgroundColor),
+      color: toHex(cs.color),
+    }
+    if (!initials.current[key]) initials.current[key] = seed
+    setOverrides((prev) => (prev[key] ? prev : { ...prev, [key]: seed }))
   }
 
   const setField = (field: keyof Overrides, value: number | string) => {
@@ -124,8 +123,16 @@ export default function ButtonPlaygroundPage() {
     }))
   }
 
+  const isEdited = (key: string) => {
+    const init = initials.current[key]
+    const o = overrides[key]
+    if (!init || !o) return false
+    return (Object.keys(o) as (keyof Overrides)[]).some((f) => o[f] !== init[f])
+  }
+
   const reset = () => {
     setOverrides({})
+    initials.current = {}
     setSelected(null)
     setVariant("default")
   }
@@ -192,33 +199,35 @@ export default function ButtonPlaygroundPage() {
     ? [...TEXT_SIZES, ...ICON_SIZES].find((s) => s.key === selected)
     : null
 
-  // Build the list of props to show for the selected button.
-  const attrs: { name: string; value: string | number; kind: "string" | "number" }[] =
-    selectedItem
+  // Compose the edited values into Tailwind arbitrary-value utility classes.
+  // Only when the user actually changed a property (not just selected).
+  const customClasses =
+    current && selected && isEdited(selected)
       ? [
-          { name: "variant", value: variant, kind: "string" },
-          { name: "size", value: selectedItem.size, kind: "string" },
-          ...(current
-            ? [
-                { name: "paddingX", value: Math.round(current.paddingX), kind: "number" as const },
-                { name: "height", value: Math.round(current.height), kind: "number" as const },
-                { name: "fontSize", value: Math.round(current.fontSize), kind: "number" as const },
-                { name: "borderRadius", value: Math.round(current.radius), kind: "number" as const },
-                ...(selectedItem.icon
-                  ? [{ name: "iconSize", value: Math.round(current.iconSize), kind: "number" as const }]
-                  : []),
-                { name: "background", value: current.background, kind: "string" as const },
-                { name: "color", value: current.color, kind: "string" as const },
-              ]
+          `px-[${Math.round(current.paddingX)}px]`,
+          `h-[${Math.round(current.height)}px]`,
+          `text-[${Math.round(current.fontSize)}px]`,
+          `rounded-[${Math.round(current.radius)}px]`,
+          `bg-[${current.background}]`,
+          `text-[${current.color}]`,
+          ...(selectedItem?.icon
+            ? [`[&_svg]:size-[${Math.round(current.iconSize)}px]`]
             : []),
-        ]
-      : []
+        ].join(" ")
+      : ""
+
+  // Build the list of props to show for the selected button.
+  const attrs: { name: string; value: string }[] = selectedItem
+    ? [
+        { name: "variant", value: variant },
+        { name: "size", value: selectedItem.size },
+        ...(customClasses ? [{ name: "className", value: customClasses }] : []),
+      ]
+    : []
 
   const snippet = [
     "<Button",
-    ...attrs.map((a) =>
-      a.kind === "string" ? `  ${a.name}="${a.value}"` : `  ${a.name}={${a.value}}`
-    ),
+    ...attrs.map((a) => `  ${a.name}="${a.value}"`),
     "/>",
   ].join("\n")
 
@@ -239,13 +248,11 @@ export default function ButtonPlaygroundPage() {
       </div>
 
       {/* Right — props panel */}
-      <aside className="scrollbar-hide flex w-72 shrink-0 flex-col overflow-y-auto border-l border-border bg-transparent">
-        <div className="flex flex-col gap-6 px-4 py-5">
+      <aside className="scrollbar-hide m-4 flex w-72 shrink-0 flex-col overflow-y-auto rounded-3xl bg-card shadow-default">
+        <div className="flex flex-col gap-5 px-4 py-5">
           {/* Variant — applies to every button */}
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              Variant
-            </span>
+          <div className="flex flex-col gap-2.5">
+            <span className="text-sm font-medium text-foreground">Variant</span>
             <div className="flex flex-wrap gap-1.5">
               {VARIANTS.map((option) => (
                 <Button
@@ -262,53 +269,53 @@ export default function ButtonPlaygroundPage() {
 
           {current ? (
             <>
-              <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                Editing: {selected}
+              <span className="text-xs text-muted-foreground">
+                Editing <span className="text-foreground">{selected}</span>
               </span>
 
               <SliderControl
-              label="Padding X"
-              value={current.paddingX}
-              min={0}
-              max={48}
-              onChange={(v) => setField("paddingX", v)}
-            />
-            <SliderControl
-              label="Height"
-              value={current.height}
-              min={16}
-              max={96}
-              onChange={(v) => setField("height", v)}
-            />
-            <SliderControl
-              label="Font size"
-              value={current.fontSize}
-              min={8}
-              max={40}
-              onChange={(v) => setField("fontSize", v)}
-            />
-            <SliderControl
-              label="Border radius"
-              value={current.radius}
-              min={0}
-              max={40}
-              onChange={(v) => setField("radius", v)}
-            />
-            {selected?.startsWith("icon") && (
-              <SliderControl
-                label="Icon size"
-                value={current.iconSize}
-                min={8}
+                label="Padding X"
+                value={current.paddingX}
+                min={0}
                 max={48}
-                onChange={(v) => setField("iconSize", v)}
+                onChange={(v) => setField("paddingX", v)}
               />
-            )}
+              <SliderControl
+                label="Height"
+                value={current.height}
+                min={16}
+                max={96}
+                onChange={(v) => setField("height", v)}
+              />
+              <SliderControl
+                label="Font size"
+                value={current.fontSize}
+                min={8}
+                max={40}
+                onChange={(v) => setField("fontSize", v)}
+              />
+              <SliderControl
+                label="Border radius"
+                value={current.radius}
+                min={0}
+                max={40}
+                onChange={(v) => setField("radius", v)}
+              />
+              {selected?.startsWith("icon") && (
+                <SliderControl
+                  label="Icon size"
+                  value={current.iconSize}
+                  min={8}
+                  max={48}
+                  onChange={(v) => setField("iconSize", v)}
+                />
+              )}
 
-            <ColorControl
-              label="Background"
-              value={current.background}
-              onChange={(v) => setField("background", v)}
-            />
+              <ColorControl
+                label="Background"
+                value={current.background}
+                onChange={(v) => setField("background", v)}
+              />
               <ColorControl
                 label="Text color"
                 value={current.color}
@@ -317,7 +324,7 @@ export default function ButtonPlaygroundPage() {
             </>
           ) : (
             <p className="text-xs text-muted-foreground">
-              Click a button to edit its properties.
+              Select a button to edit its properties.
             </p>
           )}
         </div>
@@ -366,24 +373,14 @@ export default function ButtonPlaygroundPage() {
                   </span>
                 </div>
                 {attrs.map((a) => (
-                  <div key={a.name} className="pl-4">
+                  <div key={a.name} className="pl-4 whitespace-pre-wrap">
                     <span className="text-violet-600 dark:text-violet-400">
                       {a.name}
                     </span>
                     <span className="text-muted-foreground">=</span>
-                    {a.kind === "string" ? (
-                      <span className="text-emerald-600 dark:text-emerald-400">
-                        &quot;{a.value}&quot;
-                      </span>
-                    ) : (
-                      <>
-                        <span className="text-muted-foreground">{"{"}</span>
-                        <span className="text-amber-600 dark:text-amber-400">
-                          {a.value}
-                        </span>
-                        <span className="text-muted-foreground">{"}"}</span>
-                      </>
-                    )}
+                    <span className="text-emerald-600 dark:text-emerald-400">
+                      &quot;{a.value}&quot;
+                    </span>
                   </div>
                 ))}
                 <div>
@@ -414,12 +411,10 @@ function SliderControl({
   onChange: (value: number) => void
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2.5">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          {label}
-        </span>
-        <span className="text-xs tabular-nums text-foreground">
+        <span className="text-sm font-medium text-foreground">{label}</span>
+        <span className="text-sm text-muted-foreground tabular-nums">
           {Math.round(value)}px
         </span>
       </div>
@@ -445,11 +440,9 @@ function ColorControl({
 }) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        {label}
-      </span>
+      <span className="text-sm font-medium text-foreground">{label}</span>
       <ColorPicker value={value} onValueChange={onChange} format="hex">
-        <ColorPickerTrigger className="h-7 min-w-0 gap-2 px-2">
+        <ColorPickerTrigger className="flex h-7 min-w-24 justify-between gap-2 px-2">
           <ColorPickerSwatch className="size-4" />
           <span className="text-xs tabular-nums">{value}</span>
         </ColorPickerTrigger>
