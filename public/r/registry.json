@@ -24,6 +24,9 @@
       "type": "registry:style",
       "title": "Espresso Theme",
       "description": "Espresso UI design tokens and color system.",
+      "devDependencies": [
+        "shadcn"
+      ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-font.json"
       ],
