@@ -84,6 +84,17 @@ const VARIANTS = [
   { label: "Link", value: "link" },
 ]
 
+// The shadcn registry URL the button is installed from.
+const REGISTRY_URL = "https://espresso-base-ui.vercel.app/r/button.json"
+
+// Base64url-encode the theme preset for the `?preset=` install param.
+function encodePreset(payload: unknown): string {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "")
+}
+
 export default function ButtonPlaygroundPage() {
   const refs = useRef<Record<string, HTMLButtonElement | null>>({})
   const [variant, setVariant] = useState("default")
@@ -94,11 +105,16 @@ export default function ButtonPlaygroundPage() {
   const [showProps, setShowProps] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const selectButton = (key: string) => {
+  // Overrides are scoped per variant+size, so theming one variant never leaks
+  // onto another (editing Default's `lg` must not touch Secondary's `lg`).
+  const keyFor = (size: string) => `${variant}:${size}`
+
+  const selectButton = (size: string) => {
+    const key = keyFor(size)
     setSelected(key)
     if (overrides[key]) return
     // Seed controls from the button's current computed style on first select.
-    const el = refs.current[key]
+    const el = refs.current[size]
     if (!el) return
     const cs = getComputedStyle(el)
     const svg = el.querySelector("svg")
@@ -137,22 +153,36 @@ export default function ButtonPlaygroundPage() {
     setVariant("default")
   }
 
-  const styleFor = (key: string) => {
-    const o = overrides[key]
+  // Copy the selected button's radius / background / text color onto every size
+  // shown in the preview (all buttons share the active variant).
+  const applyToAll = () => {
+    if (!selected) return
+    const src = overrides[selected]
+    if (!src) return
+    const { radius, background, color } = src
+    setOverrides((prev) => {
+      const next = { ...prev }
+      for (const item of [...TEXT_SIZES, ...ICON_SIZES]) {
+        const k = keyFor(item.key)
+        const base = prev[k] ?? src
+        next[k] = { ...base, radius, background, color }
+      }
+      return next
+    })
+  }
+
+  const styleFor = (size: string) => {
+    const o = overrides[keyFor(size)]
     if (!o) return undefined
     return {
-      paddingLeft: o.paddingX,
-      paddingRight: o.paddingX,
-      height: o.height,
-      fontSize: o.fontSize,
       borderRadius: o.radius,
       backgroundColor: o.background,
       color: o.color,
     }
   }
 
-  const iconStyleFor = (key: string) => {
-    const o = overrides[key]
+  const iconStyleFor = (size: string) => {
+    const o = overrides[keyFor(size)]
     if (!o) return undefined
     // Also override the button's max-w/max-h svg clamp so the icon can grow.
     return {
@@ -180,7 +210,7 @@ export default function ButtonPlaygroundPage() {
               style={styleFor(item.key)}
               onClick={() => selectButton(item.key)}
               className={
-                selected === item.key
+                selected === keyFor(item.key)
                   ? "ring-2 ring-ring ring-offset-2 ring-offset-background"
                   : undefined
               }
@@ -195,44 +225,37 @@ export default function ButtonPlaygroundPage() {
   )
 
   const current = selected ? overrides[selected] : null
-  const selectedItem = selected
-    ? [...TEXT_SIZES, ...ICON_SIZES].find((s) => s.key === selected)
-    : null
 
-  // Compose the edited values into Tailwind arbitrary-value utility classes.
-  // Only when the user actually changed a property (not just selected).
-  const customClasses =
-    current && selected && isEdited(selected)
-      ? [
-          `px-[${Math.round(current.paddingX)}px]`,
-          `h-[${Math.round(current.height)}px]`,
-          `text-[${Math.round(current.fontSize)}px]`,
-          `rounded-[${Math.round(current.radius)}px]`,
-          `bg-[${current.background}]`,
-          `text-[${current.color}]`,
-          ...(selectedItem?.icon
-            ? [`[&_svg]:size-[${Math.round(current.iconSize)}px]`]
-            : []),
-        ].join(" ")
-      : ""
+  // Group the changed values per variant into the theme preset the install
+  // command encodes. Each variant's edits install as a scoped rule.
+  const presetPayload = (() => {
+    const out: Record<
+      string,
+      { bg?: string; fg?: string; radius?: number }
+    > = {}
+    for (const key of Object.keys(overrides)) {
+      const o = overrides[key]
+      const init = initials.current[key]
+      if (!init) continue
+      const variantKey = key.split(":")[0]
+      const theme = out[variantKey] ?? (out[variantKey] = {})
+      if (o.background !== init.background) theme.bg = o.background
+      if (o.color !== init.color) theme.fg = o.color
+      if (o.radius !== init.radius) theme.radius = Math.round(o.radius)
+    }
+    for (const v of Object.keys(out)) {
+      if (Object.keys(out[v]).length === 0) delete out[v]
+    }
+    return out
+  })()
 
-  // Build the list of props to show for the selected button.
-  const attrs: { name: string; value: string }[] = selectedItem
-    ? [
-        { name: "variant", value: variant },
-        { name: "size", value: selectedItem.size },
-        ...(customClasses ? [{ name: "className", value: customClasses }] : []),
-      ]
-    : []
-
-  const snippet = [
-    "<Button",
-    ...attrs.map((a) => `  ${a.name}="${a.value}"`),
-    "/>",
-  ].join("\n")
+  const hasPreset = Object.keys(presetPayload).length > 0
+  const installCommand = hasPreset
+    ? `npx shadcn@latest add "${REGISTRY_URL}?preset=${encodePreset(presetPayload)}"`
+    : `npx shadcn@latest add ${REGISTRY_URL}`
 
   const copySnippet = async () => {
-    await navigator.clipboard.writeText(snippet)
+    await navigator.clipboard.writeText(installCommand)
     setCopied(true)
     setTimeout(() => setCopied(false), 1500)
   }
@@ -259,7 +282,10 @@ export default function ButtonPlaygroundPage() {
                   key={option.value}
                   variant={variant === option.value ? "default" : "secondary"}
                   size="xs"
-                  onClick={() => setVariant(option.value)}
+                  onClick={() => {
+                    setVariant(option.value)
+                    setSelected(null)
+                  }}
                 >
                   {option.label}
                 </Button>
@@ -270,30 +296,12 @@ export default function ButtonPlaygroundPage() {
           {current ? (
             <>
               <span className="text-xs text-muted-foreground">
-                Editing <span className="text-foreground">{selected}</span>
+                Editing{" "}
+                <span className="text-foreground">
+                  {variant} · {selected?.split(":")[1]}
+                </span>
               </span>
 
-              <SliderControl
-                label="Padding X"
-                value={current.paddingX}
-                min={0}
-                max={48}
-                onChange={(v) => setField("paddingX", v)}
-              />
-              <SliderControl
-                label="Height"
-                value={current.height}
-                min={16}
-                max={96}
-                onChange={(v) => setField("height", v)}
-              />
-              <SliderControl
-                label="Font size"
-                value={current.fontSize}
-                min={8}
-                max={40}
-                onChange={(v) => setField("fontSize", v)}
-              />
               <SliderControl
                 label="Border radius"
                 value={current.radius}
@@ -301,15 +309,6 @@ export default function ButtonPlaygroundPage() {
                 max={40}
                 onChange={(v) => setField("radius", v)}
               />
-              {selected?.startsWith("icon") && (
-                <SliderControl
-                  label="Icon size"
-                  value={current.iconSize}
-                  min={8}
-                  max={48}
-                  onChange={(v) => setField("iconSize", v)}
-                />
-              )}
 
               <ColorControl
                 label="Background"
@@ -330,6 +329,15 @@ export default function ButtonPlaygroundPage() {
         </div>
 
         <div className="mt-auto flex flex-col gap-2 border-t border-border px-4 py-4">
+          <Button
+            variant="secondary"
+            size="default"
+            className="w-full"
+            disabled={!selected}
+            onClick={applyToAll}
+          >
+            Apply to all buttons
+          </Button>
           <Button
             variant="outline"
             size="default"
@@ -353,8 +361,12 @@ export default function ButtonPlaygroundPage() {
       <Dialog open={showProps} onOpenChange={setShowProps}>
         <DialogContent size="default">
           <DialogHeader>
-            <DialogTitle>Button properties</DialogTitle>
+            <DialogTitle>Install with your theme</DialogTitle>
           </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            Run this command to add the button with the background, text color
+            and radius you picked — scoped per variant in your globals.css.
+          </p>
           <div className="relative">
             <Button
               variant="ghost"
@@ -365,27 +377,10 @@ export default function ButtonPlaygroundPage() {
             >
               {copied ? <Check /> : <Copy />}
             </Button>
-            <pre className="overflow-x-auto rounded-xl bg-muted p-4 font-mono text-sm leading-relaxed">
-              <code>
-                <div>
-                  <span className="text-sky-600 dark:text-sky-400">
-                    &lt;Button
-                  </span>
-                </div>
-                {attrs.map((a) => (
-                  <div key={a.name} className="pl-4 whitespace-pre-wrap">
-                    <span className="text-violet-600 dark:text-violet-400">
-                      {a.name}
-                    </span>
-                    <span className="text-muted-foreground">=</span>
-                    <span className="text-emerald-600 dark:text-emerald-400">
-                      &quot;{a.value}&quot;
-                    </span>
-                  </div>
-                ))}
-                <div>
-                  <span className="text-sky-600 dark:text-sky-400">/&gt;</span>
-                </div>
+            <pre className="overflow-x-auto rounded-xl bg-muted p-4 pr-12 font-mono text-sm leading-relaxed">
+              <code className="break-all whitespace-pre-wrap">
+                <span className="text-muted-foreground select-none">$ </span>
+                {installCommand}
               </code>
             </pre>
           </div>
