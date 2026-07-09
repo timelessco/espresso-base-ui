@@ -11,6 +11,11 @@ const nextConfig = {
           has: [{ type: "query", key: "preset" }],
           destination: "/api/registry/button",
         },
+        {
+          // Theme preset (no static file) — always served dynamically.
+          source: "/r/theme.json",
+          destination: "/api/registry/theme",
+        },
       ],
     }
   },
