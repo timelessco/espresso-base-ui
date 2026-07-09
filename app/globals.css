@@ -881,7 +881,7 @@
   /* end custom variables */
   --spacing: 0.25rem; /* 4px */
 
-  --radius: 14px; /* 10px */
+  --radius: 0.625rem; /* 10px */
 
   /* font weights */
   --font-weight-normal: 420;
