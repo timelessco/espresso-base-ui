@@ -79,7 +79,7 @@ const selectTriggerVariants = cva(
     variants: {
       variant: {
         outline:
-          "border border-transparent bg-background shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-[size=default]:h-7.5! data-[size=lg]:h-9.5! data-[size=sm]:h-6.5! data-disabled:bg-transparent data-disabled:shadow-default",
+          "border border-transparent bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-[size=default]:h-7.5! data-[size=lg]:h-9.5! data-[size=sm]:h-6.5! data-disabled:bg-transparent data-disabled:shadow-default",
         subtle:
           "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-input",
         ghost:

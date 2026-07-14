@@ -11,7 +11,7 @@ const textareaVariants = cva(
     variants: {
       variant: {
         outline:
-          "bg-background shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-disabled:hover:shadow-raised not-disabled:focus:shadow-raised! disabled:bg-transparent disabled:text-popover-foreground data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
+          "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-disabled:hover:shadow-raised not-disabled:focus:shadow-raised! disabled:bg-transparent disabled:text-popover-foreground data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
         subtle:
           "bg-secondary not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-raised! not-disabled:active:bg-background disabled:bg-input disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
         ghost:
