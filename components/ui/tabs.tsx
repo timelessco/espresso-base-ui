@@ -108,7 +108,7 @@ function TabsList({
 }
 
 const tabsTriggerVariants = cva([
-  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-[7px] text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-normal text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   // active text color (background handled by TabsIndicator)
   "z-[1] data-active:text-foreground",
   // browser variant keeps per-tab border structure for its unique look
@@ -134,7 +134,7 @@ function TabsIndicator({ className, ...props }: TabsPrimitive.Indicator.Props) {
     <TabsPrimitive.Indicator
       data-slot="tabs-indicator"
       className={cn(
-        "absolute rounded-[7px] transition-all duration-200 ease-out",
+        "absolute rounded-normal transition-all duration-200 ease-out",
         // horizontal
         "group-data-horizontal/tabs:top-[var(--active-tab-top)] group-data-horizontal/tabs:left-[var(--active-tab-left)] group-data-horizontal/tabs:h-[var(--active-tab-height)] group-data-horizontal/tabs:w-[var(--active-tab-width)]",
         // vertical
@@ -143,7 +143,7 @@ function TabsIndicator({ className, ...props }: TabsPrimitive.Indicator.Props) {
         "group-data-[variant=default]/tabs-list:bg-surface group-data-[variant=default]/tabs-list:shadow-6xs",
         "group-data-[variant=ghost]/tabs-list:bg-surface group-data-[variant=ghost]/tabs-list:shadow-6xs",
         "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:shadow-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:top-auto group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:-bottom-px group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:h-px group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:rounded-none group-data-[variant=line]/tabs-list:group-data-horizontal/tabs:bg-foreground group-data-[variant=line]/tabs-list:group-data-vertical/tabs:right-[-1px] group-data-[variant=line]/tabs-list:group-data-vertical/tabs:left-auto group-data-[variant=line]/tabs-list:group-data-vertical/tabs:w-px group-data-[variant=line]/tabs-list:group-data-vertical/tabs:bg-foreground",
-        "group-data-[variant=browser]/tabs-list:border-border group-data-[variant=browser]/tabs-list:bg-background group-data-[variant=browser]/tabs-list:shadow-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:rounded-b-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-x group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-t group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:rounded-r-none group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-y group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-l group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:w-[calc(var(--active-tab-width)+1px)]!",
+        "group-data-[variant=browser]/tabs-list:border-border group-data-[variant=browser]/tabs-list:bg-background group-data-[variant=browser]/tabs-list:shadow-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:rounded-b-none group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-x group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-t group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:w-[calc(var(--active-tab-width)+1px)]! group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:rounded-r-none group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-y group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-l",
         className
       )}
       {...props}
@@ -155,7 +155,10 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
   return (
     <TabsPrimitive.Panel
       data-slot="tabs-content"
-      className={cn("flex-1 text-sm outline-none", className)}
+      className={cn(
+        "flex-1 text-sm text-secondary-foreground outline-none",
+        className
+      )}
       {...props}
     />
   )

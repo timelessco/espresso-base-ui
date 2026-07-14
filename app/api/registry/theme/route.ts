@@ -1,7 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-// The theme preset carried in the `?preset=` param.
-type ThemePreset = { primary?: string; primaryDark?: string; radius?: string }
+// The theme preset carried in the `?preset=` param. Colors are resolved,
+// self-contained values (oklch/rgb/hex), not `var(--color-…)`, so they work in
+// any consumer project regardless of its Tailwind theme.
+type ThemePreset = {
+  primary?: string
+  primaryFg?: string
+  primaryDark?: string
+  primaryFgDark?: string
+  radius?: string
+}
 
 // Decode the base64url `?preset=` payload: { primary, radius }.
 function decodePreset(param: string): ThemePreset | null {
@@ -14,9 +22,12 @@ function decodePreset(param: string): ThemePreset | null {
   }
 }
 
-// A css-only registry item (no files) that sets --primary / --radius on :root
-// via shadcn `cssVars`, so `npx shadcn add ".../r/theme.json?preset=…"` applies
-// the picked color and radius to the installer's globals.css.
+// A css-only registry item (no files) that overrides --primary / --radius via
+// the shadcn `css` field. We use the higher-specificity `:root:root` /
+// `.dark.dark` selectors (appended to the end of the installer's globals.css)
+// so the override wins regardless of the target's existing :root structure —
+// `cssVars` merges into an existing :root, which breaks when a theme declares
+// multiple :root blocks and a later one re-defines --primary.
 export async function GET(req: NextRequest) {
   const item: Record<string, unknown> = {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
@@ -30,15 +41,19 @@ export async function GET(req: NextRequest) {
   if (param) {
     const preset = decodePreset(param)
     if (preset) {
-      const light: Record<string, string> = {}
+      const root: Record<string, string> = {}
+      if (preset.primary) root["--primary"] = preset.primary
+      if (preset.primaryFg) root["--primary-foreground"] = preset.primaryFg
+      if (preset.radius) root["--radius"] = preset.radius
+
       const dark: Record<string, string> = {}
-      if (preset.primary) light.primary = preset.primary
-      if (preset.radius) light.radius = preset.radius
-      if (preset.primaryDark) dark.primary = preset.primaryDark
-      const cssVars: Record<string, Record<string, string>> = {}
-      if (Object.keys(light).length > 0) cssVars.light = light
-      if (Object.keys(dark).length > 0) cssVars.dark = dark
-      if (Object.keys(cssVars).length > 0) item.cssVars = cssVars
+      if (preset.primaryDark) dark["--primary"] = preset.primaryDark
+      if (preset.primaryFgDark) dark["--primary-foreground"] = preset.primaryFgDark
+
+      const css: Record<string, Record<string, string>> = {}
+      if (Object.keys(root).length > 0) css[":root:root"] = root
+      if (Object.keys(dark).length > 0) css[".dark.dark"] = dark
+      if (Object.keys(css).length > 0) item.css = css
     }
   }
 

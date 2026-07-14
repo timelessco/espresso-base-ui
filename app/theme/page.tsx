@@ -46,7 +46,7 @@ import {
   Wallet,
 } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
@@ -91,6 +91,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldTitle,
+} from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -138,8 +152,20 @@ const SWATCHES = [
 // 600/500 primary with white text; neutrals invert (900 light / 50 dark).
 const WHITE = "#ffffff"
 const VIVID = [
-  "red", "orange", "amber", "yellow", "lime", "green", "teal",
-  "cyan", "sky", "blue", "violet", "purple", "pink", "rose",
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+  "violet",
+  "purple",
+  "pink",
+  "rose",
 ]
 const NEUTRALS = ["slate", "gray", "zinc", "neutral", "stone"]
 
@@ -172,6 +198,12 @@ const THEME_COLORS: ThemeColor[] = [
 ].sort((a, b) => a.name.localeCompare(b.name))
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+const TEAM = [
+  { img: "https://i.pravatar.cc/80?img=12", fallback: "AB" },
+  { img: "https://i.pravatar.cc/80?img=32", fallback: "CD" },
+  { img: "https://i.pravatar.cc/80?img=45", fallback: "EF" },
+]
 
 type NavItem = { icon: LucideIcon; label: string; active?: boolean }
 type NavGroupData = { title: string; items: NavItem[] }
@@ -250,11 +282,24 @@ function encodePreset(payload: unknown): string {
     .replace(/=+$/, "")
 }
 
+// Resolve a `var(--token)` to a concrete computed color (oklch/rgb), so the
+// exported preset is self-contained and works in any consumer project.
+function resolveColor(value: string): string {
+  if (typeof document === "undefined" || !value.startsWith("var(")) return value
+  const probe = document.createElement("div")
+  probe.style.color = value
+  document.body.appendChild(probe)
+  const resolved = getComputedStyle(probe).color
+  probe.remove()
+  return resolved || value
+}
+
 export default function ThemePage() {
   const [themeColor, setThemeColor] = useState("neutral")
   const [radius, setRadius] = useState("0.625rem")
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [installCommand, setInstallCommand] = useState("")
   const [calDate, setCalDate] = useState<Date | undefined>(undefined)
   // The Calendar formats dates with the runtime locale, which differs between
   // server and client — render it only after mount to avoid a hydration mismatch.
@@ -273,7 +318,10 @@ export default function ThemePage() {
     const root = document.documentElement
     const isDark = root.classList.contains("dark")
     root.style.setProperty("--primary", isDark ? c.dark : c.light)
-    root.style.setProperty("--primary-foreground", isDark ? c.darkFg : c.lightFg)
+    root.style.setProperty(
+      "--primary-foreground",
+      isDark ? c.darkFg : c.lightFg
+    )
     updateThemeVars({
       primaryLight: c.light,
       primaryDark: c.dark,
@@ -299,9 +347,22 @@ export default function ThemePage() {
   const current =
     THEME_COLORS.find((c) => c.name === themeColor) ?? THEME_COLORS[0]
 
-  const installCommand = `npx shadcn@latest add "${THEME_REGISTRY_URL}?preset=${encodePreset(
-    { primary: current.light, primaryDark: current.dark, radius }
-  )}"`
+  // Build the install command from resolved (self-contained) colors. Done on
+  // the client because resolveColor reads computed styles from the DOM.
+  useEffect(() => {
+    if (!mounted) return
+    const c = THEME_COLORS.find((x) => x.name === themeColor) ?? THEME_COLORS[0]
+    const payload = {
+      primary: resolveColor(c.light),
+      primaryFg: resolveColor(c.lightFg),
+      primaryDark: resolveColor(c.dark),
+      primaryFgDark: resolveColor(c.darkFg),
+      radius,
+    }
+    setInstallCommand(
+      `npx shadcn@latest add "${THEME_REGISTRY_URL}?preset=${encodePreset(payload)}"`
+    )
+  }, [mounted, themeColor, radius])
 
   const copyCommand = async () => {
     await navigator.clipboard.writeText(installCommand)
@@ -315,7 +376,7 @@ export default function ThemePage() {
           scrolling behind is blurred, fading out toward the cards. */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-y-0 left-0 z-10 w-[19rem] bg-background/70 backdrop-blur-sm [mask-image:linear-gradient(to_right,black_0%,black_82%,transparent_100%)]"
+        className="pointer-events-none fixed inset-y-0 left-0 z-10 w-[19rem] bg-background/70 [mask-image:linear-gradient(to_right,black_0%,black_82%,transparent_100%)] backdrop-blur-sm"
       />
 
       {/* Control sidebar — solid, floating over the canvas */}
@@ -351,7 +412,9 @@ export default function ThemePage() {
 
         {/* Radius — functional: drives --radius */}
         <div className="flex flex-col gap-1.5">
-          <span className="px-1 text-xs font-bold text-neutral-300">Radius</span>
+          <span className="px-1 text-xs font-bold text-neutral-300">
+            Radius
+          </span>
           <Select value={radius} onValueChange={(v) => v && onRadiusChange(v)}>
             <SelectTrigger className="h-11 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-800">
               <SelectValue>
@@ -372,17 +435,20 @@ export default function ThemePage() {
         </div>
 
         <div className="mt-auto flex flex-col gap-2 pt-2">
-          <Button variant="secondary" size="sm" className="w-full justify-center bg-neutral-900 text-neutral-200 hover:bg-neutral-800" onClick={() => setShowCode(true)}>
-            --preset current
-          </Button>
-          <Button variant="secondary" size="sm" className="w-full justify-center bg-neutral-900 text-neutral-200 hover:bg-neutral-800" onClick={() => setShowCode(true)}>
-            Open Preset
-          </Button>
-          <Button variant="secondary" size="sm" className="w-full justify-center gap-2 bg-neutral-900 text-neutral-200 hover:bg-neutral-800" onClick={shuffle}>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="w-full justify-center gap-2 bg-neutral-900 text-neutral-200 hover:bg-neutral-800"
+            onClick={shuffle}
+          >
             <ShuffleIcon className="size-3.5" /> Shuffle
           </Button>
-          <Button size="lg" className="w-full justify-center bg-neutral-100 text-neutral-900 hover:bg-white" onClick={() => setShowCode(true)}>
-            Get Code
+          <Button
+            size="lg"
+            className="w-full justify-center bg-neutral-100 text-neutral-900 hover:bg-white"
+            onClick={() => setShowCode(true)}
+          >
+            Open Preset
           </Button>
         </div>
       </aside>
@@ -400,7 +466,11 @@ export default function ThemePage() {
             <CardContent>
               <div className="flex h-32 items-end gap-2">
                 {[45, 70, 55, 90, 40, 95].map((h, i) => (
-                  <div key={i} className="flex-1 rounded-md bg-primary/80" style={{ height: `${h}%` }} />
+                  <div
+                    key={i}
+                    className="flex-1 rounded-md bg-primary/80"
+                    style={{ height: `${h}%` }}
+                  />
                 ))}
               </div>
             </CardContent>
@@ -408,12 +478,20 @@ export default function ThemePage() {
               <div className="flex w-full flex-col gap-3">
                 <div className="grid w-full grid-cols-2 gap-3">
                   <div className="rounded-xl bg-muted p-3">
-                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">Upcoming</p>
-                    <p className="text-base font-semibold text-foreground">May 25, 2024</p>
+                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
+                      Upcoming
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      May 25, 2024
+                    </p>
                   </div>
                   <div className="rounded-xl bg-muted p-3">
-                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">Auto-save</p>
-                    <p className="text-base font-semibold text-foreground">Accelerated</p>
+                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
+                      Auto-save
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      Accelerated
+                    </p>
                   </div>
                 </div>
                 <Button>View Full Report</Button>
@@ -425,18 +503,24 @@ export default function ThemePage() {
           <Card>
             <CardHeader>
               <CardTitle>Payout Threshold</CardTitle>
-              <CardDescription>Set the minimum balance before a payout is triggered.</CardDescription>
+              <CardDescription>
+                Set the minimum balance before a payout is triggered.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5 [&_button]:w-full">
-                  <span className="text-sm font-medium">Preferred Currency</span>
+                  <span className="text-sm font-medium">
+                    Preferred Currency
+                  </span>
                   <Select defaultValue="usd">
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="usd">USD — United States Dollar</SelectItem>
+                      <SelectItem value="usd">
+                        USD — United States Dollar
+                      </SelectItem>
                       <SelectItem value="eur">EUR — Euro</SelectItem>
                       <SelectItem value="gbp">GBP — Pound Sterling</SelectItem>
                     </SelectContent>
@@ -464,8 +548,18 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-5">
-                <TargetRow label="Retirement" amount="$420,000" pct={65} sub="$273,000" />
-                <TargetRow label="Real Estate" amount="$85,000" pct={32} sub="$27,200" />
+                <TargetRow
+                  label="Retirement"
+                  amount="$420,000"
+                  pct={65}
+                  sub="$273,000"
+                />
+                <TargetRow
+                  label="Real Estate"
+                  amount="$85,000"
+                  pct={32}
+                  sub="$27,200"
+                />
               </div>
             </CardContent>
           </Card>
@@ -480,9 +574,15 @@ export default function ThemePage() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap gap-2">
                   <Button size="sm">Button</Button>
-                  <Button size="sm" variant="secondary">Secondary</Button>
-                  <Button size="sm" variant="outline">Outline</Button>
-                  <Button size="sm" variant="ghost">Ghost</Button>
+                  <Button size="sm" variant="secondary">
+                    Secondary
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    Outline
+                  </Button>
+                  <Button size="sm" variant="ghost">
+                    Ghost
+                  </Button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge>Badge</Badge>
@@ -492,8 +592,12 @@ export default function ThemePage() {
                 <Input placeholder="Name" />
                 <Textarea placeholder="Message" />
                 <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2 text-sm"><Checkbox defaultChecked /> Subscribe</label>
-                  <label className="flex items-center gap-2 text-sm"><Switch defaultChecked /> Enabled</label>
+                  <label className="flex items-center gap-2 text-sm">
+                    <Checkbox defaultChecked /> Subscribe
+                  </label>
+                  <label className="flex items-center gap-2 text-sm">
+                    <Switch defaultChecked /> Enabled
+                  </label>
                 </div>
               </div>
             </CardContent>
@@ -508,9 +612,17 @@ export default function ThemePage() {
             <CardContent>
               <div className="grid grid-cols-4 gap-3">
                 {SWATCHES.map((token) => (
-                  <div key={token} className="flex flex-col items-center gap-1.5">
-                    <div className="h-10 w-full rounded-lg border border-border" style={{ background: `var(--${token})` }} />
-                    <span className="text-[10px] text-muted-foreground">--{token}</span>
+                  <div
+                    key={token}
+                    className="flex flex-col items-center gap-1.5"
+                  >
+                    <div
+                      className="h-10 w-full rounded-lg border border-border"
+                      style={{ background: `var(--${token})` }}
+                    />
+                    <span className="text-[10px] text-muted-foreground">
+                      --{token}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -525,8 +637,14 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-                <p>A strong body style keeps long-form content readable and balances the visual weight of headings.</p>
-                <p>Thoughtful spacing and cadence help paragraphs scan quickly without feeling dense.</p>
+                <p className="leading-lg">
+                  A strong body style keeps long-form content readable and
+                  balances the visual weight of headings.
+                </p>
+                <p className="leading-lg">
+                  Thoughtful spacing and cadence help paragraphs scan quickly
+                  without feeling dense.
+                </p>
               </div>
             </CardContent>
             <CardFooter>
@@ -544,9 +662,25 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-3">
-                <TxRow name="Blue Bottle Coffee" cat="Food & Drink" when="Today" amount="-$6.50" />
-                <TxRow name="Whole Foods Market" cat="Groceries" when="Yesterday" amount="-$142.30" />
-                <TxRow name="Stripe Payout" cat="Income" when="Oct 12" amount="+$4,200.00" positive />
+                <TxRow
+                  name="Blue Bottle Coffee"
+                  cat="Food & Drink"
+                  when="Today"
+                  amount="-$6.50"
+                />
+                <TxRow
+                  name="Whole Foods Market"
+                  cat="Groceries"
+                  when="Yesterday"
+                  amount="-$142.30"
+                />
+                <TxRow
+                  name="Stripe Payout"
+                  cat="Income"
+                  when="Oct 12"
+                  amount="+$4,200.00"
+                  positive
+                />
               </div>
             </CardContent>
           </Card>
@@ -555,25 +689,45 @@ export default function ThemePage() {
           <Card>
             <CardHeader>
               <CardTitle>Notifications</CardTitle>
-              <CardDescription>Choose what you want to be notified about.</CardDescription>
+              <CardDescription>
+                Choose what you want to be notified about.
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col gap-4">
+              <FieldGroup>
                 {[
-                  ["Transaction alerts", "Deposits, withdrawals, and transfers.", true],
-                  ["Security alerts", "Login attempts and account changes.", true],
-                  ["Goal milestones", "Updates at 25%, 50%, 75%, and 100%.", false],
-                  ["Market updates", "Daily portfolio summary and price alerts.", false],
+                  [
+                    "Transaction alerts",
+                    "Deposits, withdrawals, and transfers.",
+                    true,
+                  ],
+                  [
+                    "Security alerts",
+                    "Login attempts and account changes.",
+                    true,
+                  ],
+                  [
+                    "Goal milestones",
+                    "Updates at 25%, 50%, 75%, and 100%.",
+                    false,
+                  ],
+                  [
+                    "Market updates",
+                    "Daily portfolio summary and price alerts.",
+                    false,
+                  ],
                 ].map(([t, d, on]) => (
-                  <label key={t as string} className="flex items-start gap-3">
-                    <Checkbox defaultChecked={on as boolean} />
-                    <span className="flex flex-col">
-                      <span className="text-sm font-medium text-foreground">{t}</span>
-                      <span className="text-xs text-muted-foreground">{d}</span>
-                    </span>
-                  </label>
+                  <Field key={t as string} orientation="vertical">
+                    <FieldLabel>
+                      <Checkbox defaultChecked={on as boolean} />
+                      <FieldContent>
+                        <FieldTitle>{t as string}</FieldTitle>
+                        <FieldDescription>{d as string}</FieldDescription>
+                      </FieldContent>
+                    </FieldLabel>
+                  </Field>
                 ))}
-              </div>
+              </FieldGroup>
             </CardContent>
           </Card>
 
@@ -600,7 +754,9 @@ export default function ThemePage() {
                   </Select>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Estimated Shares</span>
+                  <span className="text-muted-foreground">
+                    Estimated Shares
+                  </span>
                   <span className="font-medium text-foreground">12.4</span>
                 </div>
                 <Button>Review Order</Button>
@@ -642,20 +798,24 @@ export default function ThemePage() {
               <CardDescription>How should we send it?</CardDescription>
             </CardHeader>
             <CardContent>
-              <RadioGroup defaultValue="standard">
-                {[
-                  ["standard", "Standard", "3–5 business days"],
-                  ["express", "Express", "1–2 business days"],
-                  ["pickup", "Pickup", "Collect in store"],
-                ].map(([v, t, d]) => (
-                  <label key={v} className="flex items-center gap-3">
-                    <RadioGroupItem value={v} />
-                    <span className="flex flex-col">
-                      <span className="text-sm font-medium text-foreground">{t}</span>
-                      <span className="text-xs text-muted-foreground">{d}</span>
-                    </span>
-                  </label>
-                ))}
+              <RadioGroup defaultValue="express">
+                <FieldGroup>
+                  {[
+                    ["standard", "Standard", "3–5 business days"],
+                    ["express", "Express", "1–2 business days"],
+                    ["pickup", "Pickup", "Collect in store"],
+                  ].map(([v, t, d]) => (
+                    <Field key={v} orientation="vertical">
+                      <FieldLabel htmlFor={v}>
+                        <RadioGroupItem value={v} id={v} />
+                        <FieldContent>
+                          <FieldTitle>{t}</FieldTitle>
+                          <FieldDescription>{d}</FieldDescription>
+                        </FieldContent>
+                      </FieldLabel>
+                    </Field>
+                  ))}
+                </FieldGroup>
               </RadioGroup>
             </CardContent>
           </Card>
@@ -686,16 +846,25 @@ export default function ThemePage() {
                   ["NEXT_PUBLIC_API", "https://api.example.com"],
                   ["STRIPE_SECRET", "••••••••"],
                 ].map(([k, val]) => (
-                  <div key={k} className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2">
-                    <span className="shrink-0 font-mono text-xs font-medium text-foreground">{k}</span>
-                    <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">{val}</span>
+                  <div
+                    key={k}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2"
+                  >
+                    <span className="shrink-0 font-mono text-xs font-medium text-foreground">
+                      {k}
+                    </span>
+                    <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
+                      {val}
+                    </span>
                   </div>
                 ))}
               </div>
             </CardContent>
             <CardFooter>
               <div className="flex w-full items-center justify-end gap-2">
-                <Button variant="outline" size="sm">Edit</Button>
+                <Button variant="outline" size="sm">
+                  Edit
+                </Button>
                 <Button size="sm">Deploy</Button>
               </div>
             </CardFooter>
@@ -705,7 +874,9 @@ export default function ThemePage() {
           <Card>
             <CardHeader>
               <CardTitle>Traffic channels</CardTitle>
-              <CardDescription>Desktop and mobile, last 6 months</CardDescription>
+              <CardDescription>
+                Desktop and mobile, last 6 months
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-4">
@@ -718,12 +889,23 @@ export default function ThemePage() {
                     ["May", 90, 60],
                     ["Jun", 74, 46],
                   ].map(([m, d, mo]) => (
-                    <div key={m as string} className="flex flex-1 flex-col items-center gap-1.5">
+                    <div
+                      key={m as string}
+                      className="flex flex-1 flex-col items-center gap-1.5"
+                    >
                       <div className="flex items-end justify-center gap-1">
-                        <div className="w-2.5 rounded-t bg-primary" style={{ height: (d as number) * 1.1 }} />
-                        <div className="w-2.5 rounded-t bg-primary/40" style={{ height: (mo as number) * 1.1 }} />
+                        <div
+                          className="w-2.5 rounded-t bg-primary"
+                          style={{ height: (d as number) * 1.1 }}
+                        />
+                        <div
+                          className="w-2.5 rounded-t bg-primary/40"
+                          style={{ height: (mo as number) * 1.1 }}
+                        />
                       </div>
-                      <span className="text-[10px] text-muted-foreground">{m}</span>
+                      <span className="text-[10px] text-muted-foreground">
+                        {m}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -738,8 +920,12 @@ export default function ThemePage() {
                     ["Mix delta", "+42%"],
                   ].map(([label, value]) => (
                     <div key={label} className="flex flex-col">
-                      <span className="text-[10px] tracking-wide text-muted-foreground uppercase">{label}</span>
-                      <span className="text-sm font-semibold text-foreground">{value}</span>
+                      <span className="text-[10px] tracking-wide text-muted-foreground uppercase">
+                        {label}
+                      </span>
+                      <span className="text-sm font-semibold text-foreground">
+                        {value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -768,8 +954,12 @@ export default function ThemePage() {
                   }}
                 >
                   <div className="absolute inset-3 flex flex-col items-center justify-center rounded-full bg-card">
-                    <span className="text-lg font-semibold text-foreground">935</span>
-                    <span className="text-[10px] text-muted-foreground">Visitors</span>
+                    <span className="text-lg font-semibold text-foreground">
+                      935
+                    </span>
+                    <span className="text-[10px] text-muted-foreground">
+                      Visitors
+                    </span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 text-xs">
@@ -789,14 +979,25 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-3">
-                <Field label="Spotify Artist URL" placeholder="spotify.com/artist/…" />
-                <Field label="Instagram Handle" placeholder="@username" />
-                <Field label="Website" placeholder="https://yoursite.com" />
+                <LabeledInput
+                  label="Spotify Artist URL"
+                  placeholder="spotify.com/artist/…"
+                />
+                <LabeledInput
+                  label="Instagram Handle"
+                  placeholder="@username"
+                />
+                <LabeledInput
+                  label="Website"
+                  placeholder="https://yoursite.com"
+                />
               </div>
             </CardContent>
             <CardFooter>
               <div className="flex w-full justify-end gap-2">
-                <Button variant="ghost" size="sm">Discard</Button>
+                <Button variant="ghost" size="sm">
+                  Discard
+                </Button>
                 <Button size="sm">Save Changes</Button>
               </div>
             </CardFooter>
@@ -810,19 +1011,20 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               {mounted && (
-              <Calendar
-                mode="single"
-                selected={calDate}
-                onSelect={setCalDate}
-                className="w-full p-0 shadow-none [--cell-size:2.25rem]"
-                classNames={{
-                  root: "w-full overflow-visible",
-                  months: "relative flex w-full flex-col gap-4 overflow-visible",
-                  month: "flex w-full flex-col gap-4 overflow-visible",
-                  weekdays: "grid grid-cols-7 justify-items-center gap-0.5",
-                  week: "mt-0.5 grid grid-cols-7 justify-items-center gap-0.5 overflow-visible",
-                }}
-              />
+                <Calendar
+                  mode="single"
+                  selected={calDate}
+                  onSelect={setCalDate}
+                  className="w-full p-0 shadow-none [--cell-size:2.25rem]"
+                  classNames={{
+                    root: "w-full overflow-visible",
+                    months:
+                      "relative flex w-full flex-col gap-4 overflow-visible",
+                    month: "flex w-full flex-col gap-4 overflow-visible",
+                    weekdays: "grid grid-cols-7 justify-items-center gap-0.5",
+                    week: "mt-0.5 grid grid-cols-7 justify-items-center gap-0.5 overflow-visible",
+                  }}
+                />
               )}
             </CardContent>
           </Card>
@@ -851,7 +1053,9 @@ export default function ThemePage() {
                     <TableRow key={id}>
                       <TableCell>{id}</TableCell>
                       <TableCell>
-                        <Badge variant={status === "Paid" ? "default" : "secondary"}>
+                        <Badge
+                          variant={status === "Paid" ? "default" : "secondary"}
+                        >
                           {status}
                         </Badge>
                       </TableCell>
@@ -872,9 +1076,10 @@ export default function ThemePage() {
             <CardContent>
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2">
-                  {["AB", "CD", "EF"].map((i) => (
-                    <Avatar key={i}>
-                      <AvatarFallback>{i}</AvatarFallback>
+                  {TEAM.map((m) => (
+                    <Avatar key={m.fallback}>
+                      <AvatarImage src={m.img} alt={m.fallback} />
+                      <AvatarFallback>{m.fallback}</AvatarFallback>
                     </Avatar>
                   ))}
                 </div>
@@ -914,7 +1119,17 @@ export default function ThemePage() {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                      <BreadcrumbEllipsis />
+                      <DropdownMenu>
+                        <DropdownMenuTrigger
+                          nativeButton={false}
+                          render={<BreadcrumbEllipsis />}
+                        />
+                        <DropdownMenuContent align="start">
+                          <DropdownMenuItem>Accounts</DropdownMenuItem>
+                          <DropdownMenuItem>Billing</DropdownMenuItem>
+                          <DropdownMenuItem>Transfers</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
@@ -924,20 +1139,36 @@ export default function ThemePage() {
                 </Breadcrumb>
                 <div className="flex flex-col gap-2">
                   {[
-                    [Gauge, "Change transfer limit", "Adjust how much you can send from your balance."],
-                    [CalendarDays, "Scheduled transfers", "Set up a transfer to send at a later date."],
-                    [ArrowLeftRight, "Direct Debits", "Set up and manage regular payments."],
-                  ].map(([Icon, title, desc]) => (
-                    <div key={title as string} className="flex items-start gap-3 rounded-xl bg-muted p-3">
-                      {(() => {
-                        const I = Icon as typeof Gauge
-                        return <I className="mt-0.5 size-4 text-muted-foreground" />
-                      })()}
-                      <div className="flex flex-col">
-                        <span className="text-sm font-medium text-foreground">{title as string}</span>
-                        <span className="text-xs text-muted-foreground">{desc as string}</span>
+                    {
+                      icon: Gauge,
+                      title: "Change transfer limit",
+                      desc: "Adjust how much you can send from your balance.",
+                    },
+                    {
+                      icon: CalendarDays,
+                      title: "Scheduled transfers",
+                      desc: "Set up a transfer to send at a later date.",
+                    },
+                    {
+                      icon: ArrowLeftRight,
+                      title: "Direct Debits",
+                      desc: "Set up and manage regular payments.",
+                    },
+                  ].map(({ icon: Icon, title, desc }) => (
+                    <div
+                      key={title}
+                      className="flex items-center gap-3 rounded-xl bg-muted p-3"
+                    >
+                      <Icon className="size-5 shrink-0 text-muted-foreground" />
+                      <div className="flex min-w-0 flex-col">
+                        <span className="text-sm font-medium text-foreground">
+                          {title}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {desc}
+                        </span>
                       </div>
-                      <ChevronRight className="mt-0.5 ml-auto size-4 shrink-0 text-muted-foreground" />
+                      <ChevronRight className="ml-auto size-4 shrink-0 text-muted-foreground" />
                     </div>
                   ))}
                 </div>
@@ -949,7 +1180,9 @@ export default function ThemePage() {
           <Card>
             <CardHeader>
               <CardTitle>Transfer Funds</CardTitle>
-              <CardDescription>Move money between your connected accounts.</CardDescription>
+              <CardDescription>
+                Move money between your connected accounts.
+              </CardDescription>
               <CardAction>
                 <Button variant="ghost" size="icon-sm">
                   <Plus className="rotate-45" />
@@ -959,7 +1192,9 @@ export default function ThemePage() {
             <CardContent>
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <span className="text-sm font-medium">Amount to Transfer</span>
+                  <span className="text-sm font-medium">
+                    Amount to Transfer
+                  </span>
                   <Input defaultValue="$ 1,200.00" />
                 </div>
                 <div className="flex flex-col gap-1.5 [&_button]:w-full">
@@ -969,8 +1204,12 @@ export default function ThemePage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="checking">Main Checking (··8402) — $12,450.00</SelectItem>
-                      <SelectItem value="savings">High Yield Savings (··1192) — $42,100.00</SelectItem>
+                      <SelectItem value="checking">
+                        Main Checking (··8402) — $12,450.00
+                      </SelectItem>
+                      <SelectItem value="savings">
+                        High Yield Savings (··1192) — $42,100.00
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -981,23 +1220,37 @@ export default function ThemePage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="savings">High Yield Savings (··1192) — $42,100.00</SelectItem>
-                      <SelectItem value="checking">Main Checking (··8402) — $12,450.00</SelectItem>
+                      <SelectItem value="savings">
+                        High Yield Savings (··1192) — $42,100.00
+                      </SelectItem>
+                      <SelectItem value="checking">
+                        Main Checking (··8402) — $12,450.00
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="flex flex-col gap-2 rounded-xl bg-muted p-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Estimated arrival</span>
-                    <span className="font-medium text-foreground">Today, Apr 14</span>
+                    <span className="text-muted-foreground">
+                      Estimated arrival
+                    </span>
+                    <span className="font-medium text-foreground">
+                      Today, Apr 14
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Transaction fee</span>
+                    <span className="text-muted-foreground">
+                      Transaction fee
+                    </span>
                     <span className="font-medium text-foreground">$0.00</span>
                   </div>
                   <div className="flex justify-between border-t border-border pt-2">
-                    <span className="font-medium text-foreground">Total amount</span>
-                    <span className="font-semibold text-foreground">$1,200.00</span>
+                    <span className="font-medium text-foreground">
+                      Total amount
+                    </span>
+                    <span className="font-semibold text-foreground">
+                      $1,200.00
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1015,24 +1268,53 @@ export default function ThemePage() {
               <div className="flex flex-col gap-5">
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col">
-                    <span className="text-2xl font-semibold text-foreground">US$12.94</span>
-                    <span className="text-xs text-muted-foreground">US$11,337.06 Available</span>
+                    <span className="text-2xl font-semibold text-foreground">
+                      US$12.94
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      US$11,337.06 Available
+                    </span>
                   </div>
-                  <Button variant="outline" size="sm">Pay Early</Button>
+                  <Button variant="outline" size="sm">
+                    Pay Early
+                  </Button>
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Yearly Activity</span>
+                    <span className="text-sm text-muted-foreground">
+                      Yearly Activity
+                    </span>
                     <Badge variant="secondary">+US$0.25 Daily Cash</Badge>
                   </div>
                   <div className="flex h-20 items-end justify-between gap-1">
-                    {[50, 65, 45, 70, 55, 60, 48, 62, 58, 72, 52, 90].map((h, i) => (
-                      <div key={i} className="w-full rounded-sm bg-primary/80" style={{ height: `${h}%` }} />
-                    ))}
+                    {[50, 65, 45, 70, 55, 60, 48, 62, 58, 72, 52, 90].map(
+                      (h, i) => (
+                        <div
+                          key={i}
+                          className="w-full rounded-sm bg-primary/80"
+                          style={{ height: `${h}%` }}
+                        />
+                      )
+                    )}
                   </div>
                   <div className="flex justify-between text-[10px] text-muted-foreground">
-                    {["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"].map((m, i) => (
-                      <span key={i} className="w-full text-center">{m}</span>
+                    {[
+                      "J",
+                      "F",
+                      "M",
+                      "A",
+                      "M",
+                      "J",
+                      "J",
+                      "A",
+                      "S",
+                      "O",
+                      "N",
+                      "D",
+                    ].map((m, i) => (
+                      <span key={i} className="w-full text-center">
+                        {m}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -1053,9 +1335,15 @@ export default function ThemePage() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap gap-2">
                   <Button size="sm">Cooking</Button>
-                  <Button size="sm" variant="outline">Dining</Button>
-                  <Button size="sm" variant="outline">Nightlight</Button>
-                  <Button size="sm" variant="outline">Focus</Button>
+                  <Button size="sm" variant="outline">
+                    Dining
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    Nightlight
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    Focus
+                  </Button>
                 </div>
                 {[
                   [Sun, "Brightness", 80],
@@ -1063,12 +1351,17 @@ export default function ThemePage() {
                   [Volume2, "Volume", 40],
                   [Timer, "Fade", 10],
                 ].map(([Icon, label, val]) => (
-                  <div key={label as string} className="flex items-center gap-3 rounded-xl border border-border p-3">
+                  <div
+                    key={label as string}
+                    className="flex items-center gap-3 rounded-xl border border-border p-3"
+                  >
                     {(() => {
                       const I = Icon as typeof Sun
                       return <I className="size-4 text-muted-foreground" />
                     })()}
-                    <span className="text-sm text-foreground">{label as string}</span>
+                    <span className="text-sm text-foreground">
+                      {label as string}
+                    </span>
                     <div className="ml-auto w-28">
                       <Slider defaultValue={[val as number]} />
                     </div>
@@ -1085,29 +1378,72 @@ export default function ThemePage() {
                 <div className="flex flex-col gap-3">
                   <Input placeholder="Search holdings or tickers..." />
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm">Stocks</Button>
-                    <Button variant="outline" size="sm">ETFs</Button>
-                    <Button variant="outline" size="sm">REITs</Button>
+                    <Button variant="outline" size="sm">
+                      Stocks
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      ETFs
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      REITs
+                    </Button>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
                   {[
-                    ["VOO", "Vanguard S&P 500 ETF", "112 SHARES · JAN 2021", "ETF", "$48,230.40"],
-                    ["VIG", "Vanguard Dividend Appreciation", "450 SHARES · MAR 2022", "ETF", "$26,033.79"],
-                    ["AAPL", "Apple Inc.", "85 SHARES · NOV 2020", "Stock", "$18,488.90"],
-                    ["O", "Realty Income Corp", "320 SHARES · JUN 2023", "REIT", "$15,136.59"],
+                    [
+                      "VOO",
+                      "Vanguard S&P 500 ETF",
+                      "112 SHARES · JAN 2021",
+                      "ETF",
+                      "$48,230.40",
+                    ],
+                    [
+                      "VIG",
+                      "Vanguard Dividend Appreciation",
+                      "450 SHARES · MAR 2022",
+                      "ETF",
+                      "$26,033.79",
+                    ],
+                    [
+                      "AAPL",
+                      "Apple Inc.",
+                      "85 SHARES · NOV 2020",
+                      "Stock",
+                      "$18,488.90",
+                    ],
+                    [
+                      "O",
+                      "Realty Income Corp",
+                      "320 SHARES · JUN 2023",
+                      "REIT",
+                      "$15,136.59",
+                    ],
                   ].map(([ticker, name, meta, type, value]) => (
-                    <div key={ticker} className="flex items-center gap-3 rounded-xl bg-muted p-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-bold text-foreground">{ticker}</div>
+                    <div
+                      key={ticker}
+                      className="flex items-center gap-3 rounded-xl bg-muted p-3"
+                    >
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-bold text-foreground">
+                        {ticker}
+                      </div>
                       <div className="flex min-w-0 flex-col">
-                        <span className="truncate text-sm font-medium text-foreground">{name}</span>
-                        <span className="text-[11px] text-muted-foreground">{meta}</span>
+                        <span className="truncate pb-1 text-sm font-medium text-foreground">
+                          {name}
+                        </span>
+                        <span className="text-[11px] text-muted-foreground">
+                          {meta}
+                        </span>
                       </div>
                       <div className="ml-auto flex items-center gap-3">
                         <Badge variant="secondary">{type}</Badge>
                         <div className="flex flex-col items-end">
-                          <span className="text-[10px] tracking-wide text-muted-foreground uppercase">Value</span>
-                          <span className="text-sm font-semibold text-foreground">{value}</span>
+                          <span className="pb-1 text-[10px] tracking-wide text-muted-foreground uppercase">
+                            Value
+                          </span>
+                          <span className="text-sm font-semibold text-foreground">
+                            {value}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1125,8 +1461,13 @@ export default function ThemePage() {
                   <CreditCard className="size-5 text-foreground" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-base font-semibold text-foreground">Connect Bank</span>
-                  <p className="text-sm text-muted-foreground">Link your payout method to receive monthly royalty distributions automatically.</p>
+                  <span className="text-base font-semibold text-foreground">
+                    Connect Bank
+                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    Link your payout method to receive monthly royalty
+                    distributions automatically.
+                  </p>
                 </div>
                 <Button>Set Up Payouts</Button>
               </div>
@@ -1141,7 +1482,24 @@ export default function ThemePage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-8 gap-2">
-                {[Copy, CircleAlert, Trash2, Share, Inbox, MoreHorizontal, RefreshCw, Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, Search, Settings].map((Icon, i) => (
+                {[
+                  Copy,
+                  CircleAlert,
+                  Trash2,
+                  Share,
+                  Inbox,
+                  MoreHorizontal,
+                  RefreshCw,
+                  Plus,
+                  Minus,
+                  ArrowLeft,
+                  ArrowRight,
+                  Check,
+                  ChevronDown,
+                  ChevronRight,
+                  Search,
+                  Settings,
+                ].map((Icon, i) => (
                   <Button key={i} variant="outline" size="icon">
                     <Icon />
                   </Button>
@@ -1155,15 +1513,20 @@ export default function ThemePage() {
             <CardContent>
               <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-8 text-center">
                 <div className="flex -space-x-2">
-                  {["AB", "CD", "EF"].map((i) => (
-                    <Avatar key={i}>
-                      <AvatarFallback>{i}</AvatarFallback>
+                  {TEAM.map((m) => (
+                    <Avatar key={m.fallback}>
+                      <AvatarImage src={m.img} alt={m.fallback} />
+                      <AvatarFallback>{m.fallback}</AvatarFallback>
                     </Avatar>
                   ))}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-base font-semibold text-foreground">No Team Members</span>
-                  <p className="text-sm text-muted-foreground">Invite your team to collaborate on this project.</p>
+                  <span className="text-base font-semibold text-foreground">
+                    No Team Members
+                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    Invite your team to collaborate on this project.
+                  </p>
                 </div>
                 <Button>Invite Members</Button>
               </div>
@@ -1215,7 +1578,13 @@ function Legend({ label, className }: { label: string; className: string }) {
   )
 }
 
-function Field({ label, placeholder }: { label: string; placeholder: string }) {
+function LabeledInput({
+  label,
+  placeholder,
+}: {
+  label: string
+  placeholder: string
+}) {
   return (
     <div className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-foreground">{label}</span>
@@ -1224,13 +1593,28 @@ function Field({ label, placeholder }: { label: string; placeholder: string }) {
   )
 }
 
-function TargetRow({ label, amount, pct, sub }: { label: string; amount: string; pct: number; sub: string }) {
+function TargetRow({
+  label,
+  amount,
+  pct,
+  sub,
+}: {
+  label: string
+  amount: string
+  pct: number
+  sub: string
+}) {
   return (
     <div className="rounded-xl bg-muted p-4">
-      <p className="text-[11px] tracking-wide text-muted-foreground uppercase">{label}</p>
+      <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
+        {label}
+      </p>
       <p className="text-2xl font-semibold text-foreground">{amount}</p>
       <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-background">
-        <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
+        <div
+          className="h-full rounded-full bg-primary"
+          style={{ width: `${pct}%` }}
+        />
       </div>
       <div className="mt-2 flex justify-between text-xs text-muted-foreground">
         <span>{pct}% achieved</span>
@@ -1240,18 +1624,39 @@ function TargetRow({ label, amount, pct, sub }: { label: string; amount: string;
   )
 }
 
-function TxRow({ name, cat, when, amount, positive }: { name: string; cat: string; when: string; amount: string; positive?: boolean }) {
+function TxRow({
+  name,
+  cat,
+  when,
+  amount,
+  positive,
+}: {
+  name: string
+  cat: string
+  when: string
+  amount: string
+  positive?: boolean
+}) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <div className="size-9 rounded-full bg-muted" />
         <div className="flex flex-col">
-          <span className="text-sm font-medium text-foreground">{name}</span>
+          <span className="pb-1 text-sm font-medium text-foreground">
+            {name}
+          </span>
           <span className="text-xs text-muted-foreground">{cat}</span>
         </div>
       </div>
       <div className="flex flex-col items-end">
-        <span className={cn("text-sm font-medium", positive ? "text-emerald-600" : "text-foreground")}>{amount}</span>
+        <span
+          className={cn(
+            "pb-1 text-sm font-medium",
+            positive ? "text-emerald-600" : "text-foreground"
+          )}
+        >
+          {amount}
+        </span>
         <span className="text-xs text-muted-foreground">{when}</span>
       </div>
     </div>
