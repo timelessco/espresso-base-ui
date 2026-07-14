@@ -436,9 +436,8 @@ export default function ThemePage() {
 
         <div className="mt-auto flex flex-col gap-2 pt-2">
           <Button
-            variant="secondary"
-            size="sm"
-            className="w-full justify-center gap-2 bg-neutral-900 text-neutral-200 hover:bg-neutral-800"
+            size="lg"
+            className="w-full justify-center gap-2 bg-neutral-100 text-neutral-900 hover:bg-white"
             onClick={shuffle}
           >
             <ShuffleIcon className="size-3.5" /> Shuffle
