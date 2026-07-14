@@ -412,22 +412,6 @@ export default function ThemePage() {
           <Button
             variant="secondary"
             size="sm"
-            className="w-full justify-center bg-neutral-900 text-neutral-200 hover:bg-neutral-800"
-            onClick={() => setShowCode(true)}
-          >
-            --preset current
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            className="w-full justify-center bg-neutral-900 text-neutral-200 hover:bg-neutral-800"
-            onClick={() => setShowCode(true)}
-          >
-            Open Preset
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
             className="w-full justify-center gap-2 bg-neutral-900 text-neutral-200 hover:bg-neutral-800"
             onClick={shuffle}
           >
@@ -438,7 +422,7 @@ export default function ThemePage() {
             className="w-full justify-center bg-neutral-100 text-neutral-900 hover:bg-white"
             onClick={() => setShowCode(true)}
           >
-            Get Code
+            Open Preset
           </Button>
         </div>
       </aside>

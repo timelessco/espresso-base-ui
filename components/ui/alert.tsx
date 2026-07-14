@@ -171,7 +171,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="alert-title"
-      className={cn(alertTitleVariants({ type }), className)}
+      className={cn(alertTitleVariants({ type }), "text-foreground", className)}
       {...props}
     />
   )
