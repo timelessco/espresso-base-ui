@@ -1,11 +1,62 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { Check, Copy, Shuffle as ShuffleIcon } from "lucide-react"
-import { Info } from "lucide-react"
+import { useEffect, useState } from "react"
+import {
+  type LucideIcon,
+  Activity,
+  ArrowLeft,
+  ArrowLeftRight,
+  ArrowRight,
+  Bell,
+  BookText,
+  CalendarDays,
+  Check,
+  ChevronDown,
+  ChevronRight,
+  CircleAlert,
+  Copy,
+  CreditCard,
+  FileText,
+  Gauge,
+  HelpCircle,
+  Inbox,
+  Info,
+  LayoutDashboard,
+  MessageSquare,
+  Minus,
+  MoreHorizontal,
+  Palette,
+  PieChart,
+  Plus,
+  Receipt,
+  RefreshCw,
+  Search,
+  Settings,
+  Share,
+  Shield,
+  Shuffle as ShuffleIcon,
+  Sun,
+  Target,
+  Thermometer,
+  Timer,
+  Trash2,
+  TrendingUp,
+  User,
+  Volume2,
+  Wallet,
+} from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -17,7 +68,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 import {
   Card,
   CardAction,
@@ -45,15 +102,6 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  ColorPicker,
-  ColorPickerArea,
-  ColorPickerContent,
-  ColorPickerHueSlider,
-  ColorPickerInput,
-  ColorPickerSwatch,
-  ColorPickerTrigger,
-} from "@/components/ui/color-picker"
 import { cn } from "@/lib/utils"
 import { updateThemeVars } from "./actions"
 
@@ -85,6 +133,114 @@ const SWATCHES = [
   "destructive",
 ]
 
+// Named theme colors pulled from the CSS color scales, with a light (:root) and
+// dark (.dark) `--primary` / `--primary-foreground` each. Vivid colors get a
+// 600/500 primary with white text; neutrals invert (900 light / 50 dark).
+const WHITE = "#ffffff"
+const VIVID = [
+  "red", "orange", "amber", "yellow", "lime", "green", "teal",
+  "cyan", "sky", "blue", "violet", "purple", "pink", "rose",
+]
+const NEUTRALS = ["slate", "gray", "zinc", "neutral", "stone"]
+
+type ThemeColor = {
+  name: string
+  swatch: string
+  light: string
+  dark: string
+  lightFg: string
+  darkFg: string
+}
+
+const THEME_COLORS: ThemeColor[] = [
+  ...VIVID.map((c) => ({
+    name: c,
+    swatch: `var(--color-${c}-500)`,
+    light: `var(--color-${c}-600)`,
+    dark: `var(--color-${c}-500)`,
+    lightFg: WHITE,
+    darkFg: WHITE,
+  })),
+  ...NEUTRALS.map((c) => ({
+    name: c,
+    swatch: `var(--color-${c}-500)`,
+    light: `var(--color-${c}-900)`,
+    dark: `var(--color-${c}-50)`,
+    lightFg: WHITE,
+    darkFg: `var(--color-${c}-900)`,
+  })),
+].sort((a, b) => a.name.localeCompare(b.name))
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+type NavItem = { icon: LucideIcon; label: string; active?: boolean }
+type NavGroupData = { title: string; items: NavItem[] }
+
+const NAV: NavGroupData[] = [
+  {
+    title: "Overview",
+    items: [
+      { icon: LayoutDashboard, label: "Dashboard", active: true },
+      { icon: ArrowLeftRight, label: "Transactions" },
+      { icon: TrendingUp, label: "Investments" },
+      { icon: Wallet, label: "Accounts" },
+      { icon: PieChart, label: "Spending" },
+    ],
+  },
+  {
+    title: "Planning",
+    items: [
+      { icon: Target, label: "Goals" },
+      { icon: Receipt, label: "Budget" },
+      { icon: FileText, label: "Reports" },
+      { icon: BookText, label: "Documents" },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { icon: User, label: "Profile" },
+      { icon: CreditCard, label: "Billing", active: true },
+      { icon: Bell, label: "Notifications" },
+      { icon: Shield, label: "Security" },
+      { icon: Palette, label: "Appearance" },
+    ],
+  },
+  {
+    title: "Support",
+    items: [
+      { icon: HelpCircle, label: "Help Center" },
+      { icon: MessageSquare, label: "Contact Us" },
+      { icon: FileText, label: "Documentation" },
+      { icon: Activity, label: "Status" },
+    ],
+  },
+]
+
+function NavGroup({ group }: { group: NavGroupData }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="px-2 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+        {group.title}
+      </span>
+      {group.items.map(({ icon: Icon, label, active }) => (
+        <div
+          key={label}
+          className={cn(
+            "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm",
+            active
+              ? "bg-muted font-medium text-foreground"
+              : "text-muted-foreground"
+          )}
+        >
+          <Icon className="size-4" />
+          {label}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 const THEME_REGISTRY_URL = "https://espresso-base-ui.vercel.app/r/theme.json"
 
 function encodePreset(payload: unknown): string {
@@ -94,33 +250,8 @@ function encodePreset(payload: unknown): string {
     .replace(/=+$/, "")
 }
 
-// Resolve a `var(--token)` to a #rrggbb hex via a probe element + canvas.
-function resolveVarToHex(cssVar: string): string {
-  const probe = document.createElement("div")
-  probe.style.color = `var(${cssVar})`
-  document.body.appendChild(probe)
-  const rgb = getComputedStyle(probe).color
-  probe.remove()
-  const canvas = document.createElement("canvas")
-  const ctx = canvas.getContext("2d")
-  if (!ctx) return "#000000"
-  ctx.fillStyle = rgb || "#000000"
-  ctx.fillRect(0, 0, 1, 1)
-  const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data
-  return "#" + [r, g, b].map((n) => n.toString(16).padStart(2, "0")).join("")
-}
-
-function randomHex(): string {
-  const h = Math.floor(
-    // deterministic-enough spread without Math.random (blocked): derive from time
-    (typeof performance !== "undefined" ? performance.now() : 1) * 997
-  )
-  const n = (h % 0xffffff).toString(16).padStart(6, "0")
-  return `#${n}`
-}
-
 export default function ThemePage() {
-  const [primary, setPrimary] = useState<string | null>(null)
+  const [themeColor, setThemeColor] = useState("neutral")
   const [radius, setRadius] = useState("0.625rem")
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -128,36 +259,48 @@ export default function ThemePage() {
   // The Calendar formats dates with the runtime locale, which differs between
   // server and client — render it only after mount to avoid a hydration mismatch.
   const [mounted, setMounted] = useState(false)
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    setPrimary(resolveVarToHex("--primary"))
     setMounted(true)
   }, [])
 
-  const applyLive = (next: { primary?: string; radius?: string }) => {
+  // Apply a color: live-preview the current mode's values on the root, and save
+  // both light and dark values to globals.css.
+  const applyTheme = (name: string) => {
+    const c = THEME_COLORS.find((x) => x.name === name)
+    if (!c) return
+    setThemeColor(name)
     const root = document.documentElement
-    if (next.primary) root.style.setProperty("--primary", next.primary)
-    if (next.radius) root.style.setProperty("--radius", next.radius)
-  }
-
-  const onColorChange = (hex: string) => {
-    setPrimary(hex)
-    applyLive({ primary: hex })
-    if (saveTimer.current) clearTimeout(saveTimer.current)
-    saveTimer.current = setTimeout(() => updateThemeVars({ primary: hex }), 400)
+    const isDark = root.classList.contains("dark")
+    root.style.setProperty("--primary", isDark ? c.dark : c.light)
+    root.style.setProperty("--primary-foreground", isDark ? c.darkFg : c.lightFg)
+    updateThemeVars({
+      primaryLight: c.light,
+      primaryDark: c.dark,
+      primaryFgLight: c.lightFg,
+      primaryFgDark: c.darkFg,
+    })
   }
 
   const onRadiusChange = (value: string) => {
     setRadius(value)
-    applyLive({ radius: value })
+    document.documentElement.style.setProperty("--radius", value)
     updateThemeVars({ radius: value })
   }
 
-  const shuffle = () => onColorChange(randomHex())
+  const shuffle = () => {
+    const idx =
+      Math.floor(
+        (typeof performance !== "undefined" ? performance.now() : 1) * 997
+      ) % THEME_COLORS.length
+    applyTheme(THEME_COLORS[idx].name)
+  }
+
+  const current =
+    THEME_COLORS.find((c) => c.name === themeColor) ?? THEME_COLORS[0]
 
   const installCommand = `npx shadcn@latest add "${THEME_REGISTRY_URL}?preset=${encodePreset(
-    { primary: primary ?? undefined, radius }
+    { primary: current.light, primaryDark: current.dark, radius }
   )}"`
 
   const copyCommand = async () => {
@@ -177,29 +320,33 @@ export default function ThemePage() {
 
       {/* Control sidebar — solid, floating over the canvas */}
       <aside className="fixed inset-y-4 left-4 z-20 flex w-64 flex-col gap-3 overflow-y-auto rounded-2xl border border-neutral-700/60 bg-neutral-800 p-3 text-neutral-100 shadow-2xl">
-        {/* Theme color — functional: drives --primary */}
+        {/* Theme color — functional: drives --primary (light + dark) */}
         <div className="flex flex-col gap-1.5">
           <span className="px-1 text-xs font-bold text-neutral-300">Theme</span>
-          <ColorPicker
-            value={primary ?? "#171717"}
-            onValueChange={onColorChange}
-            format="hex"
-          >
-            <ColorPickerTrigger className="flex h-11 w-full! min-w-0 items-center justify-between rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm transition-colors hover:bg-neutral-800">
-              <span className="flex items-center gap-2.5">
-                <ColorPickerSwatch className="size-5 rounded-md ring-1 ring-white/10" />
-                <span className="font-medium tabular-nums text-neutral-100">
-                  {primary ?? "…"}
-                </span>
+          <Select value={themeColor} onValueChange={(v) => v && applyTheme(v)}>
+            <SelectTrigger className="h-11 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-800">
+              <span className="flex items-center gap-2">
+                <span
+                  className="size-4 rounded-full ring-1 ring-white/15"
+                  style={{ background: current.swatch }}
+                />
+                {cap(themeColor)}
               </span>
-              <span className="text-neutral-500">Aa</span>
-            </ColorPickerTrigger>
-            <ColorPickerContent>
-              <ColorPickerArea />
-              <ColorPickerHueSlider />
-              <ColorPickerInput withoutAlpha className="flex-1" />
-            </ColorPickerContent>
-          </ColorPicker>
+            </SelectTrigger>
+            <SelectContent>
+              {THEME_COLORS.map((c) => (
+                <SelectItem key={c.name} value={c.name}>
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="size-3.5 rounded-full ring-1 ring-black/10"
+                      style={{ background: c.swatch }}
+                    />
+                    {cap(c.name)}
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Radius — functional: drives --radius */}
@@ -473,6 +620,7 @@ export default function ThemePage() {
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="analytics">Analytics</TabsTrigger>
                   <TabsTrigger value="reports">Reports</TabsTrigger>
+                  <TabsIndicator />
                 </TabsList>
                 <TabsContent value="overview">
                   A quick summary of activity across all accounts this month.
@@ -735,6 +883,289 @@ export default function ThemePage() {
                     Invite
                   </Button>
                 </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Navigation */}
+          <Card>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
+                  <NavGroup group={NAV[0]} />
+                  <NavGroup group={NAV[1]} />
+                </div>
+                <div className="flex flex-col gap-4">
+                  <NavGroup group={NAV[2]} />
+                  <NavGroup group={NAV[3]} />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Payments — breadcrumb + settings list */}
+          <Card>
+            <CardContent>
+              <div className="flex flex-col gap-4">
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbEllipsis />
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>Payments</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                <div className="flex flex-col gap-2">
+                  {[
+                    [Gauge, "Change transfer limit", "Adjust how much you can send from your balance."],
+                    [CalendarDays, "Scheduled transfers", "Set up a transfer to send at a later date."],
+                    [ArrowLeftRight, "Direct Debits", "Set up and manage regular payments."],
+                  ].map(([Icon, title, desc]) => (
+                    <div key={title as string} className="flex items-start gap-3 rounded-xl bg-muted p-3">
+                      {(() => {
+                        const I = Icon as typeof Gauge
+                        return <I className="mt-0.5 size-4 text-muted-foreground" />
+                      })()}
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-foreground">{title as string}</span>
+                        <span className="text-xs text-muted-foreground">{desc as string}</span>
+                      </div>
+                      <ChevronRight className="mt-0.5 ml-auto size-4 shrink-0 text-muted-foreground" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Transfer Funds */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Transfer Funds</CardTitle>
+              <CardDescription>Move money between your connected accounts.</CardDescription>
+              <CardAction>
+                <Button variant="ghost" size="icon-sm">
+                  <Plus className="rotate-45" />
+                </Button>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-sm font-medium">Amount to Transfer</span>
+                  <Input defaultValue="$ 1,200.00" />
+                </div>
+                <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                  <span className="text-sm font-medium">From Account</span>
+                  <Select defaultValue="checking">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="checking">Main Checking (··8402) — $12,450.00</SelectItem>
+                      <SelectItem value="savings">High Yield Savings (··1192) — $42,100.00</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                  <span className="text-sm font-medium">To Account</span>
+                  <Select defaultValue="savings">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="savings">High Yield Savings (··1192) — $42,100.00</SelectItem>
+                      <SelectItem value="checking">Main Checking (··8402) — $12,450.00</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-2 rounded-xl bg-muted p-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Estimated arrival</span>
+                    <span className="font-medium text-foreground">Today, Apr 14</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Transaction fee</span>
+                    <span className="font-medium text-foreground">$0.00</span>
+                  </div>
+                  <div className="flex justify-between border-t border-border pt-2">
+                    <span className="font-medium text-foreground">Total amount</span>
+                    <span className="font-semibold text-foreground">$1,200.00</span>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <div className="grid w-full">
+                <Button>Confirm Transfer</Button>
+              </div>
+            </CardFooter>
+          </Card>
+
+          {/* Balance + Yearly activity */}
+          <Card>
+            <CardContent>
+              <div className="flex flex-col gap-5">
+                <div className="flex items-start justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-semibold text-foreground">US$12.94</span>
+                    <span className="text-xs text-muted-foreground">US$11,337.06 Available</span>
+                  </div>
+                  <Button variant="outline" size="sm">Pay Early</Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Yearly Activity</span>
+                    <Badge variant="secondary">+US$0.25 Daily Cash</Badge>
+                  </div>
+                  <div className="flex h-20 items-end justify-between gap-1">
+                    {[50, 65, 45, 70, 55, 60, 48, 62, 58, 72, 52, 90].map((h, i) => (
+                      <div key={i} className="w-full rounded-sm bg-primary/80" style={{ height: `${h}%` }} />
+                    ))}
+                  </div>
+                  <div className="flex justify-between text-[10px] text-muted-foreground">
+                    {["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"].map((m, i) => (
+                      <span key={i} className="w-full text-center">{m}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Kitchen Island — control panel */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Kitchen Island</CardTitle>
+              <CardDescription>Hue Color Ambient</CardDescription>
+              <CardAction>
+                <Switch defaultChecked />
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap gap-2">
+                  <Button size="sm">Cooking</Button>
+                  <Button size="sm" variant="outline">Dining</Button>
+                  <Button size="sm" variant="outline">Nightlight</Button>
+                  <Button size="sm" variant="outline">Focus</Button>
+                </div>
+                {[
+                  [Sun, "Brightness", 80],
+                  [Thermometer, "Color Temp", 60],
+                  [Volume2, "Volume", 40],
+                  [Timer, "Fade", 10],
+                ].map(([Icon, label, val]) => (
+                  <div key={label as string} className="flex items-center gap-3 rounded-xl border border-border p-3">
+                    {(() => {
+                      const I = Icon as typeof Sun
+                      return <I className="size-4 text-muted-foreground" />
+                    })()}
+                    <span className="text-sm text-foreground">{label as string}</span>
+                    <div className="ml-auto w-28">
+                      <Slider defaultValue={[val as number]} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Holdings */}
+          <Card>
+            <CardContent>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
+                  <Input placeholder="Search holdings or tickers..." />
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm">Stocks</Button>
+                    <Button variant="outline" size="sm">ETFs</Button>
+                    <Button variant="outline" size="sm">REITs</Button>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {[
+                    ["VOO", "Vanguard S&P 500 ETF", "112 SHARES · JAN 2021", "ETF", "$48,230.40"],
+                    ["VIG", "Vanguard Dividend Appreciation", "450 SHARES · MAR 2022", "ETF", "$26,033.79"],
+                    ["AAPL", "Apple Inc.", "85 SHARES · NOV 2020", "Stock", "$18,488.90"],
+                    ["O", "Realty Income Corp", "320 SHARES · JUN 2023", "REIT", "$15,136.59"],
+                  ].map(([ticker, name, meta, type, value]) => (
+                    <div key={ticker} className="flex items-center gap-3 rounded-xl bg-muted p-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-bold text-foreground">{ticker}</div>
+                      <div className="flex min-w-0 flex-col">
+                        <span className="truncate text-sm font-medium text-foreground">{name}</span>
+                        <span className="text-[11px] text-muted-foreground">{meta}</span>
+                      </div>
+                      <div className="ml-auto flex items-center gap-3">
+                        <Badge variant="secondary">{type}</Badge>
+                        <div className="flex flex-col items-end">
+                          <span className="text-[10px] tracking-wide text-muted-foreground uppercase">Value</span>
+                          <span className="text-sm font-semibold text-foreground">{value}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Connect Bank — empty state */}
+          <Card>
+            <CardContent>
+              <div className="flex flex-col items-center gap-3 py-6 text-center">
+                <div className="flex size-12 items-center justify-center rounded-xl bg-muted">
+                  <CreditCard className="size-5 text-foreground" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-base font-semibold text-foreground">Connect Bank</span>
+                  <p className="text-sm text-muted-foreground">Link your payout method to receive monthly royalty distributions automatically.</p>
+                </div>
+                <Button>Set Up Payouts</Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Icon buttons */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Icon buttons</CardTitle>
+              <CardDescription>Outline icon actions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-8 gap-2">
+                {[Copy, CircleAlert, Trash2, Share, Inbox, MoreHorizontal, RefreshCw, Plus, Minus, ArrowLeft, ArrowRight, Check, ChevronDown, ChevronRight, Search, Settings].map((Icon, i) => (
+                  <Button key={i} variant="outline" size="icon">
+                    <Icon />
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Invite Members — dashed empty state */}
+          <Card>
+            <CardContent>
+              <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-8 text-center">
+                <div className="flex -space-x-2">
+                  {["AB", "CD", "EF"].map((i) => (
+                    <Avatar key={i}>
+                      <AvatarFallback>{i}</AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-base font-semibold text-foreground">No Team Members</span>
+                  <p className="text-sm text-muted-foreground">Invite your team to collaborate on this project.</p>
+                </div>
+                <Button>Invite Members</Button>
               </div>
             </CardContent>
           </Card>

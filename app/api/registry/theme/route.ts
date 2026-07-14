@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 
 // The theme preset carried in the `?preset=` param.
-type ThemePreset = { primary?: string; radius?: string }
+type ThemePreset = { primary?: string; primaryDark?: string; radius?: string }
 
 // Decode the base64url `?preset=` payload: { primary, radius }.
 function decodePreset(param: string): ThemePreset | null {
@@ -31,9 +31,14 @@ export async function GET(req: NextRequest) {
     const preset = decodePreset(param)
     if (preset) {
       const light: Record<string, string> = {}
+      const dark: Record<string, string> = {}
       if (preset.primary) light.primary = preset.primary
       if (preset.radius) light.radius = preset.radius
-      if (Object.keys(light).length > 0) item.cssVars = { light }
+      if (preset.primaryDark) dark.primary = preset.primaryDark
+      const cssVars: Record<string, Record<string, string>> = {}
+      if (Object.keys(light).length > 0) cssVars.light = light
+      if (Object.keys(dark).length > 0) cssVars.dark = dark
+      if (Object.keys(cssVars).length > 0) item.cssVars = cssVars
     }
   }
 
