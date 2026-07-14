@@ -282,11 +282,24 @@ function encodePreset(payload: unknown): string {
     .replace(/=+$/, "")
 }
 
+// Resolve a `var(--token)` to a concrete computed color (oklch/rgb), so the
+// exported preset is self-contained and works in any consumer project.
+function resolveColor(value: string): string {
+  if (typeof document === "undefined" || !value.startsWith("var(")) return value
+  const probe = document.createElement("div")
+  probe.style.color = value
+  document.body.appendChild(probe)
+  const resolved = getComputedStyle(probe).color
+  probe.remove()
+  return resolved || value
+}
+
 export default function ThemePage() {
   const [themeColor, setThemeColor] = useState("neutral")
   const [radius, setRadius] = useState("0.625rem")
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [installCommand, setInstallCommand] = useState("")
   const [calDate, setCalDate] = useState<Date | undefined>(undefined)
   // The Calendar formats dates with the runtime locale, which differs between
   // server and client — render it only after mount to avoid a hydration mismatch.
@@ -334,9 +347,22 @@ export default function ThemePage() {
   const current =
     THEME_COLORS.find((c) => c.name === themeColor) ?? THEME_COLORS[0]
 
-  const installCommand = `npx shadcn@latest add "${THEME_REGISTRY_URL}?preset=${encodePreset(
-    { primary: current.light, primaryDark: current.dark, radius }
-  )}"`
+  // Build the install command from resolved (self-contained) colors. Done on
+  // the client because resolveColor reads computed styles from the DOM.
+  useEffect(() => {
+    if (!mounted) return
+    const c = THEME_COLORS.find((x) => x.name === themeColor) ?? THEME_COLORS[0]
+    const payload = {
+      primary: resolveColor(c.light),
+      primaryFg: resolveColor(c.lightFg),
+      primaryDark: resolveColor(c.dark),
+      primaryFgDark: resolveColor(c.darkFg),
+      radius,
+    }
+    setInstallCommand(
+      `npx shadcn@latest add "${THEME_REGISTRY_URL}?preset=${encodePreset(payload)}"`
+    )
+  }, [mounted, themeColor, radius])
 
   const copyCommand = async () => {
     await navigator.clipboard.writeText(installCommand)

@@ -757,7 +757,7 @@
   --popover: oklch(100% 0 0); /* #FFFFFF */ /*surface/modal*/
   --popover-foreground: var(--color-gray-400); /* #c7c7c7 */ /*ink/gray-3*/
 
-  --primary: var(--color-pink-600); /* #171717 */ /*surface/gray-7*/
+  --primary: var(--color-gray-900); /* #171717 */ /*surface/gray-7*/
   --primary-foreground: #ffffff; /* #FFFFFF */ /*ink/white*/
 
   --secondary: var(--color-gray-100); /* #F3F3F3 */ /*surface/gray-2*/
@@ -881,7 +881,7 @@
   /* end custom variables */
   --spacing: 0.25rem; /* 4px */
 
-  --radius: 14px; /* 10px */
+  --radius: 0.625rem; /* 10px */
 
   /* font weights */
   --font-weight-normal: 420;
@@ -963,8 +963,8 @@
   --popover: var(--color-gray-800); /* #242424 */ /*surface/modal*/
   --popover-foreground: var(--color-gray-450); /* #575757 */ /*ink/gray-3*/
 
-  --primary: var(--color-pink-500); /* #F8F8F8 */ /*surface/gray-7*/
-  --primary-foreground: #ffffff; /* #0F0F0F */ /*ink/white*/
+  --primary: var(--color-gray-50); /* #F8F8F8 */ /*surface/gray-7*/
+  --primary-foreground: var(--color-gray-900); /* #0F0F0F */ /*ink/white*/
   --secondary: var(--color-gray-700); /* #2B2B2B */ /*surface/gray-2*/
   --secondary-foreground: var(--color-gray-200); /* #AFAFAF */ /*ink/gray-7*/
 
