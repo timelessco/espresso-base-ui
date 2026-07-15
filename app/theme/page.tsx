@@ -4,11 +4,13 @@ import { useEffect, useState } from "react"
 import {
   type LucideIcon,
   Activity,
+  AppWindow,
   ArrowLeft,
   ArrowLeftRight,
   ArrowRight,
   Bell,
   BookText,
+  Boxes,
   CalendarDays,
   Check,
   ChevronDown,
@@ -22,8 +24,10 @@ import {
   Inbox,
   Info,
   LayoutDashboard,
+  LogOut,
   MessageSquare,
   Minus,
+  Moon,
   MoreHorizontal,
   Palette,
   PieChart,
@@ -95,6 +99,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -113,10 +121,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
 import { updateThemeVars } from "./actions"
 
 /* -------------------------------------------------------------------------- */
@@ -295,6 +315,8 @@ function resolveColor(value: string): string {
 }
 
 export default function ThemePage() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   const [themeColor, setThemeColor] = useState("neutral")
   const [radius, setRadius] = useState("0.625rem")
   const [showCode, setShowCode] = useState(false)
@@ -371,1168 +393,1315 @@ export default function ThemePage() {
   }
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-background">
-      {/* Frosted blur in the space around the floating sidebar — content
-          scrolling behind is blurred, fading out toward the cards. */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-y-0 left-0 z-10 w-[19rem] bg-background/70 [mask-image:linear-gradient(to_right,black_0%,black_82%,transparent_100%)] backdrop-blur-sm"
-      />
-
-      {/* Control sidebar — solid, floating over the canvas */}
-      <aside className="fixed inset-y-4 left-4 z-20 flex w-64 flex-col gap-3 overflow-y-auto rounded-2xl border border-neutral-700/60 bg-neutral-800 p-3 text-neutral-100 shadow-2xl">
-        {/* Theme color — functional: drives --primary (light + dark) */}
-        <div className="flex flex-col gap-1.5">
-          <span className="px-1 text-xs font-bold text-neutral-300">Theme</span>
-          <Select value={themeColor} onValueChange={(v) => v && applyTheme(v)}>
-            <SelectTrigger className="h-11 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-800">
-              <span className="flex items-center gap-2">
-                <span
-                  className="size-4 rounded-full ring-1 ring-white/15"
-                  style={{ background: current.swatch }}
-                />
-                {cap(themeColor)}
-              </span>
-            </SelectTrigger>
-            <SelectContent>
-              {THEME_COLORS.map((c) => (
-                <SelectItem key={c.name} value={c.name}>
-                  <span className="flex items-center gap-2">
-                    <span
-                      className="size-3.5 rounded-full ring-1 ring-black/10"
-                      style={{ background: c.swatch }}
+    <SidebarProvider className="h-svh overflow-hidden">
+      {/* Control sidebar — standard app sidebar with a header + controls */}
+      <Sidebar>
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={
+                    <SidebarMenuButton
+                      size="lg"
+                      className="group-data-[collapsible=icon]:pl-1.5! md:pl-1.5 data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground"
                     />
-                    {cap(c.name)}
-                  </span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+                  }
+                >
+                  <div className="flex aspect-square size-7 items-center justify-center rounded-md">
+                    <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                  </div>
+                  <div className="grid flex-1 text-left">
+                    <span className="truncate pb-0.5 text-base font-medium text-foreground">
+                      Gameplan
+                    </span>
+                    <span className="truncate text-sm font-normal text-muted-foreground">
+                      Sally Potter
+                    </span>
+                  </div>
+                  <ChevronDown className="relative right-2 ml-auto" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-[--anchor-width] min-w-56"
+                  align="start"
+                  alignOffset={2}
+                  sideOffset={4}
+                >
+                  <div className="flex items-center gap-3 px-2 py-2">
+                    <div className="flex aspect-square size-7 items-center justify-center rounded-md">
+                      <img src="/images/svg/logo-gameplan.svg" alt="Gameplan" />
+                    </div>
+                    <div className="grid text-left">
+                      <span className="truncate pb-0.5 text-base font-medium text-foreground">
+                        Gameplan
+                      </span>
+                      <span className="truncate text-sm font-normal text-muted-foreground">
+                        Sally Potter
+                      </span>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <AppWindow />
+                      App
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem render={<a href="/crm" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img src="/images/svg/logo-crm.svg" alt="CRM" />
+                        </div>
+                        CRM
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/crm-data-grid" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img src="/images/svg/logo-crm.svg" alt="CRM" />
+                        </div>
+                        CRM Data Grid
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/helpdesk" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img
+                            src="/images/svg/logo-helpDesk.svg"
+                            alt="Helpdesk"
+                          />
+                        </div>
+                        Helpdesk
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/drive" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img src="/images/svg/logo-drive.svg" alt="Drive" />
+                        </div>
+                        Drive
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/mail" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img src="/images/svg/logo-mail.svg" alt="Mail" />
+                        </div>
+                        Mail
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/gameplan" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md text-white">
+                          <img
+                            src="/images/svg/logo-gameplan.svg"
+                            alt="Gameplan"
+                          />
+                        </div>
+                        Gameplan
+                      </DropdownMenuItem>
+                      <DropdownMenuItem render={<a href="/ui" />}>
+                        <div className="flex size-7 items-center justify-center rounded-md bg-[#84B346] text-white">
+                          <Boxes className="size-4" />
+                        </div>
+                        UI
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    <User />
+                    My Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setTheme(isDark ? "light" : "dark")}
+                  >
+                    {isDark ? <Sun /> : <Moon />}
+                    {isDark ? "Light Mode" : "Dark Mode"}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CircleAlert />
+                    Notifications
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <LogOut />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
 
-        {/* Radius — functional: drives --radius */}
-        <div className="flex flex-col gap-1.5">
-          <span className="px-1 text-xs font-bold text-neutral-300">
-            Radius
-          </span>
-          <Select value={radius} onValueChange={(v) => v && onRadiusChange(v)}>
-            <SelectTrigger className="h-11 w-full rounded-xl border border-neutral-700 bg-neutral-900 px-3 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-800">
-              <SelectValue>
-                {(value) =>
-                  RADIUS_OPTIONS.find((o) => o.value === value)?.label ??
-                  "Default"
-                }
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {RADIUS_OPTIONS.map((o) => (
-                <SelectItem key={o.value} value={o.value}>
-                  {o.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <SidebarContent className="gap-4 p-3">
+          {/* Theme color — functional: drives --primary (light + dark) */}
+          <div className="flex flex-col gap-1.5">
+            <span className="px-1 text-xs font-medium text-muted-foreground">
+              Color
+            </span>
+            <Select
+              value={themeColor}
+              onValueChange={(v) => v && applyTheme(v)}
+            >
+              <SelectTrigger className="w-full">
+                <span className="flex items-center gap-2">
+                  <span
+                    className="size-4 rounded-full ring-1 ring-border"
+                    style={{ background: current.swatch }}
+                  />
+                  {cap(themeColor)}
+                </span>
+              </SelectTrigger>
+              <SelectContent>
+                {THEME_COLORS.map((c) => (
+                  <SelectItem key={c.name} value={c.name}>
+                    <span className="flex items-center gap-2">
+                      <span
+                        className="size-3.5 rounded-full ring-1 ring-border"
+                        style={{ background: c.swatch }}
+                      />
+                      {cap(c.name)}
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-        <div className="mt-auto flex flex-col gap-2 pt-2">
+          {/* Radius — functional: drives --radius */}
+          <div className="flex flex-col gap-1.5">
+            <span className="px-1 text-xs font-medium text-muted-foreground">
+              Radius
+            </span>
+            <Select
+              value={radius}
+              onValueChange={(v) => v && onRadiusChange(v)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue>
+                  {(value) =>
+                    RADIUS_OPTIONS.find((o) => o.value === value)?.label ??
+                    "Default"
+                  }
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {RADIUS_OPTIONS.map((o) => (
+                  <SelectItem key={o.value} value={o.value}>
+                    {o.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </SidebarContent>
+
+        <SidebarFooter className="gap-2 border-t border-sidebar-border p-3">
           <Button
-            size="lg"
-            className="w-full justify-center gap-2 bg-neutral-100 text-neutral-900 hover:bg-white"
+            variant="outline"
+            className="w-full justify-center gap-2"
             onClick={shuffle}
           >
             <ShuffleIcon className="size-3.5" /> Shuffle
           </Button>
           <Button
-            size="lg"
-            className="w-full justify-center bg-neutral-100 text-neutral-900 hover:bg-white"
+            className="w-full justify-center"
             onClick={() => setShowCode(true)}
           >
             Open Preset
           </Button>
-        </div>
-      </aside>
+        </SidebarFooter>
+      </Sidebar>
 
-      {/* Preview canvas — scrolls both axes, passing behind the sidebar */}
-      {/* Preview canvas — scrolls both axes, passing behind the sidebar */}
-      <main className="absolute inset-0 z-0 overflow-auto bg-muted/40">
-        <div className="ml-[19.5rem] w-[128rem] columns-6 gap-6 py-6 pr-6 [&>*]:mb-6 [&>*]:break-inside-avoid">
-          {/* Contribution History */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Contribution History</CardTitle>
-              <CardDescription>Last 6 months of activity</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex h-32 items-end gap-2">
-                {[45, 70, 55, 90, 40, 95].map((h, i) => (
-                  <div
-                    key={i}
-                    className="flex-1 rounded-md bg-primary/80"
-                    style={{ height: `${h}%` }}
-                  />
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="flex w-full flex-col gap-3">
-                <div className="grid w-full grid-cols-2 gap-3">
-                  <div className="rounded-xl bg-muted p-3">
-                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
-                      Upcoming
-                    </p>
-                    <p className="text-base font-semibold text-foreground">
-                      May 25, 2024
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-muted p-3">
-                    <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
-                      Auto-save
-                    </p>
-                    <p className="text-base font-semibold text-foreground">
-                      Accelerated
-                    </p>
-                  </div>
-                </div>
-                <Button>View Full Report</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Payout Threshold */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Payout Threshold</CardTitle>
-              <CardDescription>
-                Set the minimum balance before a payout is triggered.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5 [&_button]:w-full">
-                  <span className="text-sm font-medium">
-                    Preferred Currency
-                  </span>
-                  <Select defaultValue="usd">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="usd">
-                        USD — United States Dollar
-                      </SelectItem>
-                      <SelectItem value="eur">EUR — Euro</SelectItem>
-                      <SelectItem value="gbp">GBP — Pound Sterling</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Minimum Payout</span>
-                  <span className="text-xl font-semibold">$2500.00</span>
-                </div>
-                <Slider defaultValue={[25]} />
-                <Textarea placeholder="Add any notes for this payout configuration…" />
-                <Button>Save Threshold</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Savings Targets */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Savings Targets</CardTitle>
-              <CardDescription>Active milestones for 2024</CardDescription>
-              <CardAction>
-                <Badge variant="outline">New Goal</Badge>
-              </CardAction>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-5">
-                <TargetRow
-                  label="Retirement"
-                  amount="$420,000"
-                  pct={65}
-                  sub="$273,000"
-                />
-                <TargetRow
-                  label="Real Estate"
-                  amount="$85,000"
-                  pct={32}
-                  sub="$27,200"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Component showcase */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Components</CardTitle>
-              <CardDescription>Buttons, inputs and controls</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm">Button</Button>
-                  <Button size="sm" variant="secondary">
-                    Secondary
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    Outline
-                  </Button>
-                  <Button size="sm" variant="ghost">
-                    Ghost
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge>Badge</Badge>
-                  <Badge variant="secondary">Secondary</Badge>
-                  <Badge variant="outline">Outline</Badge>
-                </div>
-                <Input placeholder="Name" />
-                <Textarea placeholder="Message" />
-                <div className="flex items-center gap-4">
-                  <label className="flex items-center gap-2 text-sm">
-                    <Checkbox defaultChecked /> Subscribe
-                  </label>
-                  <label className="flex items-center gap-2 text-sm">
-                    <Switch defaultChecked /> Enabled
-                  </label>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Color tokens */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Color tokens</CardTitle>
-              <CardDescription>Driven by your theme variables</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-4 gap-3">
-                {SWATCHES.map((token) => (
-                  <div
-                    key={token}
-                    className="flex flex-col items-center gap-1.5"
-                  >
-                    <div
-                      className="h-10 w-full rounded-lg border border-border"
-                      style={{ background: `var(--${token})` }}
-                    />
-                    <span className="text-[10px] text-muted-foreground">
-                      --{token}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Typography */}
-          <Card>
-            <CardHeader>
-              <CardDescription>Inter</CardDescription>
-              <CardTitle>Designing with rhythm and hierarchy.</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-                <p className="leading-lg">
-                  A strong body style keeps long-form content readable and
-                  balances the visual weight of headings.
-                </p>
-                <p className="leading-lg">
-                  Thoughtful spacing and cadence help paragraphs scan quickly
-                  without feeling dense.
-                </p>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="grid w-full">
-                <Button variant="outline">Share Feedback</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Recent Transactions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Transactions</CardTitle>
-              <CardDescription>Your latest account activity</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-3">
-                <TxRow
-                  name="Blue Bottle Coffee"
-                  cat="Food & Drink"
-                  when="Today"
-                  amount="-$6.50"
-                />
-                <TxRow
-                  name="Whole Foods Market"
-                  cat="Groceries"
-                  when="Yesterday"
-                  amount="-$142.30"
-                />
-                <TxRow
-                  name="Stripe Payout"
-                  cat="Income"
-                  when="Oct 12"
-                  amount="+$4,200.00"
-                  positive
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Notifications */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Notifications</CardTitle>
-              <CardDescription>
-                Choose what you want to be notified about.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FieldGroup>
-                {[
-                  [
-                    "Transaction alerts",
-                    "Deposits, withdrawals, and transfers.",
-                    true,
-                  ],
-                  [
-                    "Security alerts",
-                    "Login attempts and account changes.",
-                    true,
-                  ],
-                  [
-                    "Goal milestones",
-                    "Updates at 25%, 50%, 75%, and 100%.",
-                    false,
-                  ],
-                  [
-                    "Market updates",
-                    "Daily portfolio summary and price alerts.",
-                    false,
-                  ],
-                ].map(([t, d, on]) => (
-                  <Field key={t as string} orientation="vertical">
-                    <FieldLabel>
-                      <Checkbox defaultChecked={on as boolean} />
-                      <FieldContent>
-                        <FieldTitle>{t as string}</FieldTitle>
-                        <FieldDescription>{d as string}</FieldDescription>
-                      </FieldContent>
-                    </FieldLabel>
-                  </Field>
-                ))}
-              </FieldGroup>
-            </CardContent>
-          </Card>
-
-          {/* Buy Investment */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Buy Investment</CardTitle>
-              <CardDescription>Amount to invest</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <Input defaultValue="$ 1,000.00" />
-                <div className="flex flex-col gap-1.5 [&_button]:w-full">
-                  <span className="text-sm font-medium">Order Type</span>
-                  <Select defaultValue="market">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="market">Market Order</SelectItem>
-                      <SelectItem value="limit">Limit Order</SelectItem>
-                      <SelectItem value="stop">Stop Order</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">
-                    Estimated Shares
-                  </span>
-                  <span className="font-medium text-foreground">12.4</span>
-                </div>
-                <Button>Review Order</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Tabs */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-              <CardDescription>Switch between views</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue="overview">
-                <TabsList size="sm">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                  <TabsTrigger value="reports">Reports</TabsTrigger>
-                  <TabsIndicator />
-                </TabsList>
-                <TabsContent value="overview">
-                  A quick summary of activity across all accounts this month.
-                </TabsContent>
-                <TabsContent value="analytics">
-                  Trends, breakdowns and comparisons over time.
-                </TabsContent>
-                <TabsContent value="reports">
-                  Exportable statements and scheduled reports.
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-
-          {/* Delivery method — radio */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Delivery method</CardTitle>
-              <CardDescription>How should we send it?</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup defaultValue="express">
-                <FieldGroup>
-                  {[
-                    ["standard", "Standard", "3–5 business days"],
-                    ["express", "Express", "1–2 business days"],
-                    ["pickup", "Pickup", "Collect in store"],
-                  ].map(([v, t, d]) => (
-                    <Field key={v} orientation="vertical">
-                      <FieldLabel htmlFor={v}>
-                        <RadioGroupItem value={v} id={v} />
-                        <FieldContent>
-                          <FieldTitle>{t}</FieldTitle>
-                          <FieldDescription>{d}</FieldDescription>
-                        </FieldContent>
-                      </FieldLabel>
-                    </Field>
-                  ))}
-                </FieldGroup>
-              </RadioGroup>
-            </CardContent>
-          </Card>
-
-          {/* Alert */}
-          <Card>
-            <CardContent>
-              <Alert>
-                <Info />
-                <AlertTitle>Your trial ends soon!</AlertTitle>
-                <AlertDescription>
-                  Upgrade to keep enjoying all features without interruption.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Environment Variables */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Environment Variables</CardTitle>
-              <CardDescription>Production · 3 variables</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-2">
-                {[
-                  ["DATABASE_URL", "••••••••"],
-                  ["NEXT_PUBLIC_API", "https://api.example.com"],
-                  ["STRIPE_SECRET", "••••••••"],
-                ].map(([k, val]) => (
-                  <div
-                    key={k}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2"
-                  >
-                    <span className="shrink-0 font-mono text-xs font-medium text-foreground">
-                      {k}
-                    </span>
-                    <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
-                      {val}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="flex w-full items-center justify-end gap-2">
-                <Button variant="outline" size="sm">
-                  Edit
-                </Button>
-                <Button size="sm">Deploy</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Traffic channels */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Traffic channels</CardTitle>
-              <CardDescription>
-                Desktop and mobile, last 6 months
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex h-32 items-end justify-between gap-2">
-                  {[
-                    ["Jan", 70, 40],
-                    ["Feb", 95, 55],
-                    ["Mar", 60, 42],
-                    ["Apr", 82, 50],
-                    ["May", 90, 60],
-                    ["Jun", 74, 46],
-                  ].map(([m, d, mo]) => (
-                    <div
-                      key={m as string}
-                      className="flex flex-1 flex-col items-center gap-1.5"
-                    >
-                      <div className="flex items-end justify-center gap-1">
-                        <div
-                          className="w-2.5 rounded-t bg-primary"
-                          style={{ height: (d as number) * 1.1 }}
-                        />
-                        <div
-                          className="w-2.5 rounded-t bg-primary/40"
-                          style={{ height: (mo as number) * 1.1 }}
-                        />
-                      </div>
-                      <span className="text-[10px] text-muted-foreground">
-                        {m}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex items-center gap-4 text-xs">
-                  <Legend label="Desktop" className="bg-primary" />
-                  <Legend label="Mobile" className="bg-primary/40" />
-                </div>
-                <div className="grid grid-cols-3 gap-2 border-t border-border pt-3 text-center">
-                  {[
-                    ["Desktop", "1,224"],
-                    ["Mobile", "860"],
-                    ["Mix delta", "+42%"],
-                  ].map(([label, value]) => (
-                    <div key={label} className="flex flex-col">
-                      <span className="text-[10px] tracking-wide text-muted-foreground uppercase">
-                        {label}
-                      </span>
-                      <span className="text-sm font-semibold text-foreground">
-                        {value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="grid w-full">
-                <Button>View report</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Browser share — donut */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Browser Share</CardTitle>
-              <CardDescription>January – June</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-6">
-                <div
-                  className="relative size-28 rounded-full"
-                  style={{
-                    background:
-                      "conic-gradient(var(--primary) 0 55%, color-mix(in oklch, var(--primary), white 55%) 55% 80%, var(--muted) 80% 100%)",
-                  }}
-                >
-                  <div className="absolute inset-3 flex flex-col items-center justify-center rounded-full bg-card">
-                    <span className="text-lg font-semibold text-foreground">
-                      935
-                    </span>
-                    <span className="text-[10px] text-muted-foreground">
-                      Visitors
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 text-xs">
-                  <Legend label="Chrome" className="bg-primary" />
-                  <Legend label="Edge" className="bg-primary/60" />
-                  <Legend label="Firefox" className="bg-muted" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Social Links */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Social Links</CardTitle>
-              <CardDescription>Connect your profiles</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-3">
-                <LabeledInput
-                  label="Spotify Artist URL"
-                  placeholder="spotify.com/artist/…"
-                />
-                <LabeledInput
-                  label="Instagram Handle"
-                  placeholder="@username"
-                />
-                <LabeledInput
-                  label="Website"
-                  placeholder="https://yoursite.com"
-                />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="flex w-full justify-end gap-2">
-                <Button variant="ghost" size="sm">
-                  Discard
-                </Button>
-                <Button size="sm">Save Changes</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Calendar */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Upcoming Payments</CardTitle>
-              <CardDescription>Select a date to view</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {mounted && (
-                <Calendar
-                  mode="single"
-                  selected={calDate}
-                  onSelect={setCalDate}
-                  className="w-full p-0 shadow-none [--cell-size:2.25rem]"
-                  classNames={{
-                    root: "w-full overflow-visible",
-                    months:
-                      "relative flex w-full flex-col gap-4 overflow-visible",
-                    month: "flex w-full flex-col gap-4 overflow-visible",
-                    weekdays: "grid grid-cols-7 justify-items-center gap-0.5",
-                    week: "mt-0.5 grid grid-cols-7 justify-items-center gap-0.5 overflow-visible",
-                  }}
-                />
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Data table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Latest invoices</CardTitle>
-              <CardDescription>Recent billing activity</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Invoice</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Amount</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[
-                    ["INV-001", "Paid", "$250.00"],
-                    ["INV-002", "Pending", "$150.00"],
-                    ["INV-003", "Paid", "$350.00"],
-                  ].map(([id, status, amt]) => (
-                    <TableRow key={id}>
-                      <TableCell>{id}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={status === "Paid" ? "default" : "secondary"}
-                        >
-                          {status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{amt}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-
-          {/* Team */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Team</CardTitle>
-              <CardDescription>3 members</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {TEAM.map((m) => (
-                    <Avatar key={m.fallback}>
-                      <AvatarImage src={m.img} alt={m.fallback} />
-                      <AvatarFallback>{m.fallback}</AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
-                <div className="ml-auto">
-                  <Button variant="outline" size="sm">
-                    Invite
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <Card>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex flex-col gap-4">
-                  <NavGroup group={NAV[0]} />
-                  <NavGroup group={NAV[1]} />
-                </div>
-                <div className="flex flex-col gap-4">
-                  <NavGroup group={NAV[2]} />
-                  <NavGroup group={NAV[3]} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Payments — breadcrumb + settings list */}
-          <Card>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <Breadcrumb>
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="#">Home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger
-                          nativeButton={false}
-                          render={<BreadcrumbEllipsis />}
-                        />
-                        <DropdownMenuContent align="start">
-                          <DropdownMenuItem>Accounts</DropdownMenuItem>
-                          <DropdownMenuItem>Billing</DropdownMenuItem>
-                          <DropdownMenuItem>Transfers</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator />
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Payments</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-                <div className="flex flex-col gap-2">
-                  {[
-                    {
-                      icon: Gauge,
-                      title: "Change transfer limit",
-                      desc: "Adjust how much you can send from your balance.",
-                    },
-                    {
-                      icon: CalendarDays,
-                      title: "Scheduled transfers",
-                      desc: "Set up a transfer to send at a later date.",
-                    },
-                    {
-                      icon: ArrowLeftRight,
-                      title: "Direct Debits",
-                      desc: "Set up and manage regular payments.",
-                    },
-                  ].map(({ icon: Icon, title, desc }) => (
-                    <div
-                      key={title}
-                      className="flex items-center gap-3 rounded-xl bg-muted p-3"
-                    >
-                      <Icon className="size-5 shrink-0 text-muted-foreground" />
-                      <div className="flex min-w-0 flex-col">
-                        <span className="text-sm font-medium text-foreground">
-                          {title}
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          {desc}
-                        </span>
-                      </div>
-                      <ChevronRight className="ml-auto size-4 shrink-0 text-muted-foreground" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Transfer Funds */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Transfer Funds</CardTitle>
-              <CardDescription>
-                Move money between your connected accounts.
-              </CardDescription>
-              <CardAction>
-                <Button variant="ghost" size="icon-sm">
-                  <Plus className="rotate-45" />
-                </Button>
-              </CardAction>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-sm font-medium">
-                    Amount to Transfer
-                  </span>
-                  <Input defaultValue="$ 1,200.00" />
-                </div>
-                <div className="flex flex-col gap-1.5 [&_button]:w-full">
-                  <span className="text-sm font-medium">From Account</span>
-                  <Select defaultValue="checking">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="checking">
-                        Main Checking (··8402) — $12,450.00
-                      </SelectItem>
-                      <SelectItem value="savings">
-                        High Yield Savings (··1192) — $42,100.00
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-1.5 [&_button]:w-full">
-                  <span className="text-sm font-medium">To Account</span>
-                  <Select defaultValue="savings">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="savings">
-                        High Yield Savings (··1192) — $42,100.00
-                      </SelectItem>
-                      <SelectItem value="checking">
-                        Main Checking (··8402) — $12,450.00
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col gap-2 rounded-xl bg-muted p-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Estimated arrival
-                    </span>
-                    <span className="font-medium text-foreground">
-                      Today, Apr 14
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      Transaction fee
-                    </span>
-                    <span className="font-medium text-foreground">$0.00</span>
-                  </div>
-                  <div className="flex justify-between border-t border-border pt-2">
-                    <span className="font-medium text-foreground">
-                      Total amount
-                    </span>
-                    <span className="font-semibold text-foreground">
-                      $1,200.00
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="grid w-full">
-                <Button>Confirm Transfer</Button>
-              </div>
-            </CardFooter>
-          </Card>
-
-          {/* Balance + Yearly activity */}
-          <Card>
-            <CardContent>
-              <div className="flex flex-col gap-5">
-                <div className="flex items-start justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-semibold text-foreground">
-                      US$12.94
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      US$11,337.06 Available
-                    </span>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    Pay Early
-                  </Button>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
-                      Yearly Activity
-                    </span>
-                    <Badge variant="secondary">+US$0.25 Daily Cash</Badge>
-                  </div>
-                  <div className="flex h-20 items-end justify-between gap-1">
-                    {[50, 65, 45, 70, 55, 60, 48, 62, 58, 72, 52, 90].map(
-                      (h, i) => (
-                        <div
-                          key={i}
-                          className="w-full rounded-sm bg-primary/80"
-                          style={{ height: `${h}%` }}
-                        />
-                      )
-                    )}
-                  </div>
-                  <div className="flex justify-between text-[10px] text-muted-foreground">
-                    {[
-                      "J",
-                      "F",
-                      "M",
-                      "A",
-                      "M",
-                      "J",
-                      "J",
-                      "A",
-                      "S",
-                      "O",
-                      "N",
-                      "D",
-                    ].map((m, i) => (
-                      <span key={i} className="w-full text-center">
-                        {m}
-                      </span>
+      {/* Preview canvas — the main pane */}
+      <SidebarInset className="min-h-0 min-w-0">
+        <main className="min-h-0 w-full min-w-0 flex-1">
+          <div className="size-full overflow-auto">
+            <div className="w-[128rem] columns-6 gap-6 p-6 [&>*]:mb-6 [&>*]:break-inside-avoid">
+              {/* Contribution History */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Contribution History</CardTitle>
+                  <CardDescription>Last 6 months of activity</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex h-32 items-end gap-2">
+                    {[45, 70, 55, 90, 40, 95].map((h, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-md bg-primary/80"
+                        style={{ height: `${h}%` }}
+                      />
                     ))}
                   </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+                <CardFooter>
+                  <div className="flex w-full flex-col gap-3">
+                    <div className="grid w-full grid-cols-2 gap-3">
+                      <div className="rounded-xl bg-muted p-3">
+                        <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
+                          Upcoming
+                        </p>
+                        <p className="text-base font-semibold text-foreground">
+                          May 25, 2024
+                        </p>
+                      </div>
+                      <div className="rounded-xl bg-muted p-3">
+                        <p className="text-[11px] tracking-wide text-muted-foreground uppercase">
+                          Auto-save
+                        </p>
+                        <p className="text-base font-semibold text-foreground">
+                          Accelerated
+                        </p>
+                      </div>
+                    </div>
+                    <Button>View Full Report</Button>
+                  </div>
+                </CardFooter>
+              </Card>
 
-          {/* Kitchen Island — control panel */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Kitchen Island</CardTitle>
-              <CardDescription>Hue Color Ambient</CardDescription>
-              <CardAction>
-                <Switch defaultChecked />
-              </CardAction>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-wrap gap-2">
-                  <Button size="sm">Cooking</Button>
-                  <Button size="sm" variant="outline">
-                    Dining
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    Nightlight
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    Focus
-                  </Button>
-                </div>
-                {[
-                  [Sun, "Brightness", 80],
-                  [Thermometer, "Color Temp", 60],
-                  [Volume2, "Volume", 40],
-                  [Timer, "Fade", 10],
-                ].map(([Icon, label, val]) => (
-                  <div
-                    key={label as string}
-                    className="flex items-center gap-3 rounded-xl border border-border p-3"
-                  >
-                    {(() => {
-                      const I = Icon as typeof Sun
-                      return <I className="size-4 text-muted-foreground" />
-                    })()}
-                    <span className="text-sm text-foreground">
-                      {label as string}
-                    </span>
-                    <div className="ml-auto w-28">
-                      <Slider defaultValue={[val as number]} />
+              {/* Payout Threshold */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Payout Threshold</CardTitle>
+                  <CardDescription>
+                    Set the minimum balance before a payout is triggered.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                      <span className="text-sm font-medium">
+                        Preferred Currency
+                      </span>
+                      <Select defaultValue="usd">
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="usd">
+                            USD — United States Dollar
+                          </SelectItem>
+                          <SelectItem value="eur">EUR — Euro</SelectItem>
+                          <SelectItem value="gbp">
+                            GBP — Pound Sterling
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">
+                        Minimum Payout
+                      </span>
+                      <span className="text-xl font-semibold">$2500.00</span>
+                    </div>
+                    <Slider defaultValue={[25]} />
+                    <Textarea placeholder="Add any notes for this payout configuration…" />
+                    <Button>Save Threshold</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Savings Targets */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Savings Targets</CardTitle>
+                  <CardDescription>Active milestones for 2024</CardDescription>
+                  <CardAction>
+                    <Badge variant="outline">New Goal</Badge>
+                  </CardAction>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-5">
+                    <TargetRow
+                      label="Retirement"
+                      amount="$420,000"
+                      pct={65}
+                      sub="$273,000"
+                    />
+                    <TargetRow
+                      label="Real Estate"
+                      amount="$85,000"
+                      pct={32}
+                      sub="$27,200"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Component showcase */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Components</CardTitle>
+                  <CardDescription>
+                    Buttons, inputs and controls
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-wrap gap-2">
+                      <Button size="sm">Button</Button>
+                      <Button size="sm" variant="secondary">
+                        Secondary
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        Outline
+                      </Button>
+                      <Button size="sm" variant="ghost">
+                        Ghost
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge>Badge</Badge>
+                      <Badge variant="secondary">Secondary</Badge>
+                      <Badge variant="outline">Outline</Badge>
+                    </div>
+                    <Input placeholder="Name" />
+                    <Textarea placeholder="Message" />
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center gap-2 text-sm">
+                        <Checkbox defaultChecked /> Subscribe
+                      </label>
+                      <label className="flex items-center gap-2 text-sm">
+                        <Switch defaultChecked /> Enabled
+                      </label>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
 
-          {/* Holdings */}
-          <Card>
-            <CardContent>
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-3">
-                  <Input placeholder="Search holdings or tickers..." />
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      Stocks
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      ETFs
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      REITs
-                    </Button>
+              {/* Color tokens */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Color tokens</CardTitle>
+                  <CardDescription>
+                    Driven by your theme variables
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-4 gap-3">
+                    {SWATCHES.map((token) => (
+                      <div
+                        key={token}
+                        className="flex flex-col items-center gap-1.5"
+                      >
+                        <div
+                          className="h-10 w-full rounded-lg border border-border"
+                          style={{ background: `var(--${token})` }}
+                        />
+                        <span className="text-[10px] text-muted-foreground">
+                          --{token}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {[
-                    [
-                      "VOO",
-                      "Vanguard S&P 500 ETF",
-                      "112 SHARES · JAN 2021",
-                      "ETF",
-                      "$48,230.40",
-                    ],
-                    [
-                      "VIG",
-                      "Vanguard Dividend Appreciation",
-                      "450 SHARES · MAR 2022",
-                      "ETF",
-                      "$26,033.79",
-                    ],
-                    [
-                      "AAPL",
-                      "Apple Inc.",
-                      "85 SHARES · NOV 2020",
-                      "Stock",
-                      "$18,488.90",
-                    ],
-                    [
-                      "O",
-                      "Realty Income Corp",
-                      "320 SHARES · JUN 2023",
-                      "REIT",
-                      "$15,136.59",
-                    ],
-                  ].map(([ticker, name, meta, type, value]) => (
-                    <div
-                      key={ticker}
-                      className="flex items-center gap-3 rounded-xl bg-muted p-3"
-                    >
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-bold text-foreground">
-                        {ticker}
-                      </div>
-                      <div className="flex min-w-0 flex-col">
-                        <span className="truncate pb-1 text-sm font-medium text-foreground">
-                          {name}
+                </CardContent>
+              </Card>
+
+              {/* Typography */}
+              <Card>
+                <CardHeader>
+                  <CardDescription>Inter</CardDescription>
+                  <CardTitle>Designing with rhythm and hierarchy.</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-3 text-sm text-muted-foreground">
+                    <p className="leading-lg">
+                      A strong body style keeps long-form content readable and
+                      balances the visual weight of headings.
+                    </p>
+                    <p className="leading-lg">
+                      Thoughtful spacing and cadence help paragraphs scan
+                      quickly without feeling dense.
+                    </p>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className="grid w-full">
+                    <Button variant="outline">Share Feedback</Button>
+                  </div>
+                </CardFooter>
+              </Card>
+
+              {/* Recent Transactions */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Transactions</CardTitle>
+                  <CardDescription>
+                    Your latest account activity
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-3">
+                    <TxRow
+                      name="Blue Bottle Coffee"
+                      cat="Food & Drink"
+                      when="Today"
+                      amount="-$6.50"
+                    />
+                    <TxRow
+                      name="Whole Foods Market"
+                      cat="Groceries"
+                      when="Yesterday"
+                      amount="-$142.30"
+                    />
+                    <TxRow
+                      name="Stripe Payout"
+                      cat="Income"
+                      when="Oct 12"
+                      amount="+$4,200.00"
+                      positive
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Notifications */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Notifications</CardTitle>
+                  <CardDescription>
+                    Choose what you want to be notified about.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <FieldGroup>
+                    {[
+                      [
+                        "Transaction alerts",
+                        "Deposits, withdrawals, and transfers.",
+                        true,
+                      ],
+                      [
+                        "Security alerts",
+                        "Login attempts and account changes.",
+                        true,
+                      ],
+                      [
+                        "Goal milestones",
+                        "Updates at 25%, 50%, 75%, and 100%.",
+                        false,
+                      ],
+                      [
+                        "Market updates",
+                        "Daily portfolio summary and price alerts.",
+                        false,
+                      ],
+                    ].map(([t, d, on]) => (
+                      <Field key={t as string} orientation="vertical">
+                        <FieldLabel>
+                          <Checkbox defaultChecked={on as boolean} />
+                          <FieldContent>
+                            <FieldTitle>{t as string}</FieldTitle>
+                            <FieldDescription>{d as string}</FieldDescription>
+                          </FieldContent>
+                        </FieldLabel>
+                      </Field>
+                    ))}
+                  </FieldGroup>
+                </CardContent>
+              </Card>
+
+              {/* Buy Investment */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Buy Investment</CardTitle>
+                  <CardDescription>Amount to invest</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <Input defaultValue="$ 1,000.00" />
+                    <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                      <span className="text-sm font-medium">Order Type</span>
+                      <Select defaultValue="market">
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="market">Market Order</SelectItem>
+                          <SelectItem value="limit">Limit Order</SelectItem>
+                          <SelectItem value="stop">Stop Order</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        Estimated Shares
+                      </span>
+                      <span className="font-medium text-foreground">12.4</span>
+                    </div>
+                    <Button>Review Order</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Tabs */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Overview</CardTitle>
+                  <CardDescription>Switch between views</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="overview">
+                    <TabsList size="sm">
+                      <TabsTrigger value="overview">Overview</TabsTrigger>
+                      <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                      <TabsTrigger value="reports">Reports</TabsTrigger>
+                      <TabsIndicator />
+                    </TabsList>
+                    <TabsContent value="overview">
+                      A quick summary of activity across all accounts this
+                      month.
+                    </TabsContent>
+                    <TabsContent value="analytics">
+                      Trends, breakdowns and comparisons over time.
+                    </TabsContent>
+                    <TabsContent value="reports">
+                      Exportable statements and scheduled reports.
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+
+              {/* Delivery method — radio */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Delivery method</CardTitle>
+                  <CardDescription>How should we send it?</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <RadioGroup defaultValue="express">
+                    <FieldGroup>
+                      {[
+                        ["standard", "Standard", "3–5 business days"],
+                        ["express", "Express", "1–2 business days"],
+                        ["pickup", "Pickup", "Collect in store"],
+                      ].map(([v, t, d]) => (
+                        <Field key={v} orientation="vertical">
+                          <FieldLabel htmlFor={v}>
+                            <RadioGroupItem value={v} id={v} />
+                            <FieldContent>
+                              <FieldTitle>{t}</FieldTitle>
+                              <FieldDescription>{d}</FieldDescription>
+                            </FieldContent>
+                          </FieldLabel>
+                        </Field>
+                      ))}
+                    </FieldGroup>
+                  </RadioGroup>
+                </CardContent>
+              </Card>
+
+              {/* Alert */}
+              <Card>
+                <CardContent>
+                  <Alert>
+                    <Info />
+                    <AlertTitle>Your trial ends soon!</AlertTitle>
+                    <AlertDescription>
+                      Upgrade to keep enjoying all features without
+                      interruption.
+                    </AlertDescription>
+                  </Alert>
+                </CardContent>
+              </Card>
+
+              {/* Environment Variables */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Environment Variables</CardTitle>
+                  <CardDescription>Production · 3 variables</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-2">
+                    {[
+                      ["DATABASE_URL", "••••••••"],
+                      ["NEXT_PUBLIC_API", "https://api.example.com"],
+                      ["STRIPE_SECRET", "••••••••"],
+                    ].map(([k, val]) => (
+                      <div
+                        key={k}
+                        className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2"
+                      >
+                        <span className="shrink-0 font-mono text-xs font-medium text-foreground">
+                          {k}
                         </span>
-                        <span className="text-[11px] text-muted-foreground">
-                          {meta}
+                        <span className="min-w-0 truncate font-mono text-xs text-muted-foreground">
+                          {val}
                         </span>
                       </div>
-                      <div className="ml-auto flex items-center gap-3">
-                        <Badge variant="secondary">{type}</Badge>
-                        <div className="flex flex-col items-end">
-                          <span className="pb-1 text-[10px] tracking-wide text-muted-foreground uppercase">
-                            Value
+                    ))}
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className="flex w-full items-center justify-end gap-2">
+                    <Button variant="outline" size="sm">
+                      Edit
+                    </Button>
+                    <Button size="sm">Deploy</Button>
+                  </div>
+                </CardFooter>
+              </Card>
+
+              {/* Traffic channels */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Traffic channels</CardTitle>
+                  <CardDescription>
+                    Desktop and mobile, last 6 months
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex h-32 items-end justify-between gap-2">
+                      {[
+                        ["Jan", 70, 40],
+                        ["Feb", 95, 55],
+                        ["Mar", 60, 42],
+                        ["Apr", 82, 50],
+                        ["May", 90, 60],
+                        ["Jun", 74, 46],
+                      ].map(([m, d, mo]) => (
+                        <div
+                          key={m as string}
+                          className="flex flex-1 flex-col items-center gap-1.5"
+                        >
+                          <div className="flex items-end justify-center gap-1">
+                            <div
+                              className="w-2.5 rounded-t bg-primary"
+                              style={{ height: (d as number) * 1.1 }}
+                            />
+                            <div
+                              className="w-2.5 rounded-t bg-primary/40"
+                              style={{ height: (mo as number) * 1.1 }}
+                            />
+                          </div>
+                          <span className="text-[10px] text-muted-foreground">
+                            {m}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-4 text-xs">
+                      <Legend label="Desktop" className="bg-primary" />
+                      <Legend label="Mobile" className="bg-primary/40" />
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 border-t border-border pt-3 text-center">
+                      {[
+                        ["Desktop", "1,224"],
+                        ["Mobile", "860"],
+                        ["Mix delta", "+42%"],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex flex-col">
+                          <span className="text-[10px] tracking-wide text-muted-foreground uppercase">
+                            {label}
                           </span>
                           <span className="text-sm font-semibold text-foreground">
                             {value}
                           </span>
                         </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className="grid w-full">
+                    <Button>View report</Button>
+                  </div>
+                </CardFooter>
+              </Card>
+
+              {/* Browser share — donut */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Browser Share</CardTitle>
+                  <CardDescription>January – June</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-6">
+                    <div
+                      className="relative size-28 rounded-full"
+                      style={{
+                        background:
+                          "conic-gradient(var(--primary) 0 55%, color-mix(in oklch, var(--primary), white 55%) 55% 80%, var(--muted) 80% 100%)",
+                      }}
+                    >
+                      <div className="absolute inset-3 flex flex-col items-center justify-center rounded-full bg-card">
+                        <span className="text-lg font-semibold text-foreground">
+                          935
+                        </span>
+                        <span className="text-[10px] text-muted-foreground">
+                          Visitors
+                        </span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+                    <div className="flex flex-col gap-2 text-xs">
+                      <Legend label="Chrome" className="bg-primary" />
+                      <Legend label="Edge" className="bg-primary/60" />
+                      <Legend label="Firefox" className="bg-muted" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Connect Bank — empty state */}
-          <Card>
-            <CardContent>
-              <div className="flex flex-col items-center gap-3 py-6 text-center">
-                <div className="flex size-12 items-center justify-center rounded-xl bg-muted">
-                  <CreditCard className="size-5 text-foreground" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-base font-semibold text-foreground">
-                    Connect Bank
-                  </span>
-                  <p className="text-sm text-muted-foreground">
-                    Link your payout method to receive monthly royalty
-                    distributions automatically.
-                  </p>
-                </div>
-                <Button>Set Up Payouts</Button>
-              </div>
-            </CardContent>
-          </Card>
+              {/* Social Links */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Social Links</CardTitle>
+                  <CardDescription>Connect your profiles</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-3">
+                    <LabeledInput
+                      label="Spotify Artist URL"
+                      placeholder="spotify.com/artist/…"
+                    />
+                    <LabeledInput
+                      label="Instagram Handle"
+                      placeholder="@username"
+                    />
+                    <LabeledInput
+                      label="Website"
+                      placeholder="https://yoursite.com"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className="flex w-full justify-end gap-2">
+                    <Button variant="ghost" size="sm">
+                      Discard
+                    </Button>
+                    <Button size="sm">Save Changes</Button>
+                  </div>
+                </CardFooter>
+              </Card>
 
-          {/* Icon buttons */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Icon buttons</CardTitle>
-              <CardDescription>Outline icon actions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-8 gap-2">
-                {[
-                  Copy,
-                  CircleAlert,
-                  Trash2,
-                  Share,
-                  Inbox,
-                  MoreHorizontal,
-                  RefreshCw,
-                  Plus,
-                  Minus,
-                  ArrowLeft,
-                  ArrowRight,
-                  Check,
-                  ChevronDown,
-                  ChevronRight,
-                  Search,
-                  Settings,
-                ].map((Icon, i) => (
-                  <Button key={i} variant="outline" size="icon">
-                    <Icon />
-                  </Button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+              {/* Calendar */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Upcoming Payments</CardTitle>
+                  <CardDescription>Select a date to view</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {mounted && (
+                    <Calendar
+                      mode="single"
+                      selected={calDate}
+                      onSelect={setCalDate}
+                      className="w-full p-0 shadow-none [--cell-size:2.25rem]"
+                      classNames={{
+                        root: "w-full overflow-visible",
+                        months:
+                          "relative flex w-full flex-col gap-4 overflow-visible",
+                        month: "flex w-full flex-col gap-4 overflow-visible",
+                        weekdays:
+                          "grid grid-cols-7 justify-items-center gap-0.5",
+                        week: "mt-0.5 grid grid-cols-7 justify-items-center gap-0.5 overflow-visible",
+                      }}
+                    />
+                  )}
+                </CardContent>
+              </Card>
 
-          {/* Invite Members — dashed empty state */}
-          <Card>
-            <CardContent>
-              <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-8 text-center">
-                <div className="flex -space-x-2">
-                  {TEAM.map((m) => (
-                    <Avatar key={m.fallback}>
-                      <AvatarImage src={m.img} alt={m.fallback} />
-                      <AvatarFallback>{m.fallback}</AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-base font-semibold text-foreground">
-                    No Team Members
-                  </span>
-                  <p className="text-sm text-muted-foreground">
-                    Invite your team to collaborate on this project.
-                  </p>
-                </div>
-                <Button>Invite Members</Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
+              {/* Data table */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Latest invoices</CardTitle>
+                  <CardDescription>Recent billing activity</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Invoice</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Amount</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {[
+                        ["INV-001", "Paid", "$250.00"],
+                        ["INV-002", "Pending", "$150.00"],
+                        ["INV-003", "Paid", "$350.00"],
+                      ].map(([id, status, amt]) => (
+                        <TableRow key={id}>
+                          <TableCell>{id}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                status === "Paid" ? "default" : "secondary"
+                              }
+                            >
+                              {status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{amt}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              {/* Team */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Team</CardTitle>
+                  <CardDescription>3 members</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center gap-3">
+                    <div className="flex -space-x-2">
+                      {TEAM.map((m) => (
+                        <Avatar key={m.fallback}>
+                          <AvatarImage src={m.img} alt={m.fallback} />
+                          <AvatarFallback>{m.fallback}</AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </div>
+                    <div className="ml-auto">
+                      <Button variant="outline" size="sm">
+                        Invite
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Navigation */}
+              <Card>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-4">
+                      <NavGroup group={NAV[0]} />
+                      <NavGroup group={NAV[1]} />
+                    </div>
+                    <div className="flex flex-col gap-4">
+                      <NavGroup group={NAV[2]} />
+                      <NavGroup group={NAV[3]} />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Payments — breadcrumb + settings list */}
+              <Card>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <Breadcrumb>
+                      <BreadcrumbList>
+                        <BreadcrumbItem>
+                          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger
+                              nativeButton={false}
+                              render={<BreadcrumbEllipsis />}
+                            />
+                            <DropdownMenuContent align="start">
+                              <DropdownMenuItem>Accounts</DropdownMenuItem>
+                              <DropdownMenuItem>Billing</DropdownMenuItem>
+                              <DropdownMenuItem>Transfers</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                          <BreadcrumbPage>Payments</BreadcrumbPage>
+                        </BreadcrumbItem>
+                      </BreadcrumbList>
+                    </Breadcrumb>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        {
+                          icon: Gauge,
+                          title: "Change transfer limit",
+                          desc: "Adjust how much you can send from your balance.",
+                        },
+                        {
+                          icon: CalendarDays,
+                          title: "Scheduled transfers",
+                          desc: "Set up a transfer to send at a later date.",
+                        },
+                        {
+                          icon: ArrowLeftRight,
+                          title: "Direct Debits",
+                          desc: "Set up and manage regular payments.",
+                        },
+                      ].map(({ icon: Icon, title, desc }) => (
+                        <div
+                          key={title}
+                          className="flex items-center gap-3 rounded-xl bg-muted p-3"
+                        >
+                          <Icon className="size-5 shrink-0 text-muted-foreground" />
+                          <div className="flex min-w-0 flex-col">
+                            <span className="text-sm font-medium text-foreground">
+                              {title}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {desc}
+                            </span>
+                          </div>
+                          <ChevronRight className="ml-auto size-4 shrink-0 text-muted-foreground" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Transfer Funds */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Transfer Funds</CardTitle>
+                  <CardDescription>
+                    Move money between your connected accounts.
+                  </CardDescription>
+                  <CardAction>
+                    <Button variant="ghost" size="icon-sm">
+                      <Plus className="rotate-45" />
+                    </Button>
+                  </CardAction>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-sm font-medium">
+                        Amount to Transfer
+                      </span>
+                      <Input defaultValue="$ 1,200.00" />
+                    </div>
+                    <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                      <span className="text-sm font-medium">From Account</span>
+                      <Select defaultValue="checking">
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="checking">
+                            Main Checking (··8402) — $12,450.00
+                          </SelectItem>
+                          <SelectItem value="savings">
+                            High Yield Savings (··1192) — $42,100.00
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex flex-col gap-1.5 [&_button]:w-full">
+                      <span className="text-sm font-medium">To Account</span>
+                      <Select defaultValue="savings">
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="savings">
+                            High Yield Savings (··1192) — $42,100.00
+                          </SelectItem>
+                          <SelectItem value="checking">
+                            Main Checking (··8402) — $12,450.00
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex flex-col gap-2 rounded-xl bg-muted p-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Estimated arrival
+                        </span>
+                        <span className="font-medium text-foreground">
+                          Today, Apr 14
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          Transaction fee
+                        </span>
+                        <span className="font-medium text-foreground">
+                          $0.00
+                        </span>
+                      </div>
+                      <div className="flex justify-between border-t border-border pt-2">
+                        <span className="font-medium text-foreground">
+                          Total amount
+                        </span>
+                        <span className="font-semibold text-foreground">
+                          $1,200.00
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className="grid w-full">
+                    <Button>Confirm Transfer</Button>
+                  </div>
+                </CardFooter>
+              </Card>
+
+              {/* Balance + Yearly activity */}
+              <Card>
+                <CardContent>
+                  <div className="flex flex-col gap-5">
+                    <div className="flex items-start justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-2xl font-semibold text-foreground">
+                          US$12.94
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          US$11,337.06 Available
+                        </span>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        Pay Early
+                      </Button>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">
+                          Yearly Activity
+                        </span>
+                        <Badge variant="secondary">+US$0.25 Daily Cash</Badge>
+                      </div>
+                      <div className="flex h-20 items-end justify-between gap-1">
+                        {[50, 65, 45, 70, 55, 60, 48, 62, 58, 72, 52, 90].map(
+                          (h, i) => (
+                            <div
+                              key={i}
+                              className="w-full rounded-sm bg-primary/80"
+                              style={{ height: `${h}%` }}
+                            />
+                          )
+                        )}
+                      </div>
+                      <div className="flex justify-between text-[10px] text-muted-foreground">
+                        {[
+                          "J",
+                          "F",
+                          "M",
+                          "A",
+                          "M",
+                          "J",
+                          "J",
+                          "A",
+                          "S",
+                          "O",
+                          "N",
+                          "D",
+                        ].map((m, i) => (
+                          <span key={i} className="w-full text-center">
+                            {m}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kitchen Island — control panel */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Kitchen Island</CardTitle>
+                  <CardDescription>Hue Color Ambient</CardDescription>
+                  <CardAction>
+                    <Switch defaultChecked />
+                  </CardAction>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-wrap gap-2">
+                      <Button size="sm">Cooking</Button>
+                      <Button size="sm" variant="outline">
+                        Dining
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        Nightlight
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        Focus
+                      </Button>
+                    </div>
+                    {[
+                      [Sun, "Brightness", 80],
+                      [Thermometer, "Color Temp", 60],
+                      [Volume2, "Volume", 40],
+                      [Timer, "Fade", 10],
+                    ].map(([Icon, label, val]) => (
+                      <div
+                        key={label as string}
+                        className="flex items-center gap-3 rounded-xl border border-border p-3"
+                      >
+                        {(() => {
+                          const I = Icon as typeof Sun
+                          return <I className="size-4 text-muted-foreground" />
+                        })()}
+                        <span className="text-sm text-foreground">
+                          {label as string}
+                        </span>
+                        <div className="ml-auto w-28">
+                          <Slider defaultValue={[val as number]} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Holdings */}
+              <Card>
+                <CardContent>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-3">
+                      <Input placeholder="Search holdings or tickers..." />
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm">
+                          Stocks
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          ETFs
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          REITs
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {[
+                        [
+                          "VOO",
+                          "Vanguard S&P 500 ETF",
+                          "112 SHARES · JAN 2021",
+                          "ETF",
+                          "$48,230.40",
+                        ],
+                        [
+                          "VIG",
+                          "Vanguard Dividend Appreciation",
+                          "450 SHARES · MAR 2022",
+                          "ETF",
+                          "$26,033.79",
+                        ],
+                        [
+                          "AAPL",
+                          "Apple Inc.",
+                          "85 SHARES · NOV 2020",
+                          "Stock",
+                          "$18,488.90",
+                        ],
+                        [
+                          "O",
+                          "Realty Income Corp",
+                          "320 SHARES · JUN 2023",
+                          "REIT",
+                          "$15,136.59",
+                        ],
+                      ].map(([ticker, name, meta, type, value]) => (
+                        <div
+                          key={ticker}
+                          className="flex items-center gap-3 rounded-xl bg-muted p-3"
+                        >
+                          <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-background text-[11px] font-bold text-foreground">
+                            {ticker}
+                          </div>
+                          <div className="flex min-w-0 flex-col">
+                            <span className="truncate pb-1 text-sm font-medium text-foreground">
+                              {name}
+                            </span>
+                            <span className="text-[11px] text-muted-foreground">
+                              {meta}
+                            </span>
+                          </div>
+                          <div className="ml-auto flex items-center gap-3">
+                            <Badge variant="secondary">{type}</Badge>
+                            <div className="flex flex-col items-end">
+                              <span className="pb-1 text-[10px] tracking-wide text-muted-foreground uppercase">
+                                Value
+                              </span>
+                              <span className="text-sm font-semibold text-foreground">
+                                {value}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Connect Bank — empty state */}
+              <Card>
+                <CardContent>
+                  <div className="flex flex-col items-center gap-3 py-6 text-center">
+                    <div className="flex size-12 items-center justify-center rounded-xl bg-muted">
+                      <CreditCard className="size-5 text-foreground" />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-base font-semibold text-foreground">
+                        Connect Bank
+                      </span>
+                      <p className="text-sm text-muted-foreground">
+                        Link your payout method to receive monthly royalty
+                        distributions automatically.
+                      </p>
+                    </div>
+                    <Button>Set Up Payouts</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Icon buttons */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Icon buttons</CardTitle>
+                  <CardDescription>Outline icon actions</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-8 gap-2">
+                    {[
+                      Copy,
+                      CircleAlert,
+                      Trash2,
+                      Share,
+                      Inbox,
+                      MoreHorizontal,
+                      RefreshCw,
+                      Plus,
+                      Minus,
+                      ArrowLeft,
+                      ArrowRight,
+                      Check,
+                      ChevronDown,
+                      ChevronRight,
+                      Search,
+                      Settings,
+                    ].map((Icon, i) => (
+                      <Button key={i} variant="outline" size="icon">
+                        <Icon />
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Invite Members — dashed empty state */}
+              <Card>
+                <CardContent>
+                  <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border py-8 text-center">
+                    <div className="flex -space-x-2">
+                      {TEAM.map((m) => (
+                        <Avatar key={m.fallback}>
+                          <AvatarImage src={m.img} alt={m.fallback} />
+                          <AvatarFallback>{m.fallback}</AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-base font-semibold text-foreground">
+                        No Team Members
+                      </span>
+                      <p className="text-sm text-muted-foreground">
+                        Invite your team to collaborate on this project.
+                      </p>
+                    </div>
+                    <Button>Invite Members</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </main>
+      </SidebarInset>
 
       <Dialog open={showCode} onOpenChange={setShowCode}>
         <DialogContent size="default">
@@ -1562,7 +1731,7 @@ export default function ThemePage() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </SidebarProvider>
   )
 }
 
