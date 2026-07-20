@@ -1,6 +1,13 @@
 "use client"
 
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "lucide-react"
+import {
+  AlertCircle,
+  CheckCircle2,
+  Info,
+  TriangleAlert,
+  X,
+  CircleX,
+} from "lucide-react"
 import {
   Alert,
   AlertAction,
@@ -18,7 +25,7 @@ export default function AlertPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
       {/* Vertical (default) */}
-      <div className="flex max-w-xs flex-col gap-4">
+      {/* <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Vertical (default)</SectionTitle>
         <Alert>
           <Info />
@@ -32,25 +39,31 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
-      </div>
+      </div> */}
 
       {/* Vertical — Variants */}
-      <div className="flex max-w-xs flex-col gap-4">
+      <div className="flex max-w-[204px] flex-col gap-4">
         <SectionTitle>Vertical — Variants</SectionTitle>
         <Alert variant="default">
           <Info />
-          <AlertTitle>Default alert</AlertTitle>
-          <AlertDescription>This is a default vertical alert.</AlertDescription>
+          <AlertTitle>Your trial ends soon!</AlertTitle>
+          <AlertDescription>
+            Upgrade to keep enjoying features.
+          </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
-              Take action
+              Update now
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="success">
@@ -63,48 +76,63 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="info">
           <Info />
-          <AlertTitle>Info alert</AlertTitle>
-          <AlertDescription>This is an info vertical alert.</AlertDescription>
+          <AlertTitle>Maintenance Notice</AlertTitle>
+          <AlertDescription>
+            Planned maintenance from 12 AM to 3 AM. Some features may be
+            unavailable.
+          </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
               Learn more
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="warning">
           <TriangleAlert />
-          <AlertTitle>Warning alert</AlertTitle>
-          <AlertDescription>This is a warning vertical alert.</AlertDescription>
-          <AlertHandlers>
-            <Button variant="secondary" size="sm" className="w-full">
-              Review
-            </Button>
-          </AlertHandlers>
-          <AlertAction>
-            <X />
-          </AlertAction>
-        </Alert>
-        <Alert variant="destructive">
-          <AlertCircle />
-          <AlertTitle>Destructive alert</AlertTitle>
+          <AlertTitle>Unsaved Changes</AlertTitle>
           <AlertDescription>
-            This is a destructive vertical alert.
+            You have unsaved work. Save before navigating away to prevent data
+            loss.
           </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
-              Try again
+              Save Now
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert variant="destructive">
+          <CircleX />
+          <AlertTitle>Unsaved Changes</AlertTitle>
+          <AlertDescription>
+            You have unsaved work. Save before navigating away to prevent data
+            loss.
+          </AlertDescription>
+          <AlertHandlers>
+            <Button variant="secondary" size="sm" className="w-full">
+              Retry
+            </Button>
+          </AlertHandlers>
+          <AlertAction>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>
@@ -113,9 +141,79 @@ export default function AlertPage() {
       <div className="flex max-w-xl flex-col gap-4">
         <SectionTitle>Banner (horizontal)</SectionTitle>
         <Alert type="banner">
+          <Info />
           <AlertTitle>Your trial ends soon!</AlertTitle>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="sm">
+              Update
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="info">
+          <Info />
+          <AlertTitle>Your trial ends soon!</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-blue-600 dark:text-blue-300"
+            >
+              Explore now
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="success">
+          <CheckCircle2 />
+          <AlertTitle>Source successfully added</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-green-600 dark:text-green-300"
+            >
+              Explore now
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="warning">
+          <TriangleAlert />
+          <AlertTitle>Changes will affect all warehouses</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-amber-600 dark:text-amber-300"
+            >
+              Confirm
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="destructive">
+          <CircleX />
+          <AlertTitle>Changes will affect all warehouses</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-red-600 dark:text-red-300"
+            >
+              Retry
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>
@@ -130,11 +228,13 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Explore now</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Explore now</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="success">
@@ -142,11 +242,13 @@ export default function AlertPage() {
           <AlertTitle>Changes saved successfully</AlertTitle>
           <AlertDescription>Your changes have been saved.</AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">View changes</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">View changes</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="info">
@@ -156,11 +258,13 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Explore now</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Explore now</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="warning">
@@ -170,25 +274,29 @@ export default function AlertPage() {
             Your subscription will expire in 7 days.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Renew now</Button>
-            <Button variant="inverted-ghost">Remind me later</Button>
+            <Button variant="secondary">Renew now</Button>
+            <Button variant="ghost">Remind me later</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="destructive">
-          <AlertCircle />
+          <CircleX />
           <AlertTitle>Failed to save changes</AlertTitle>
           <AlertDescription>
             There was a problem processing your request.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Try again</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Try again</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>
