@@ -898,6 +898,8 @@
   --text-sm--line-height: 1.1538;
   --text-base: 0.875rem; /* 14px */
   --text-base--line-height: 1.1429;
+  --text-normal: 0.9375rem; /* 15px */
+  --text-normal--line-height: 1.2;
   --text-lg: 1rem; /* 16px */
   --text-lg--line-height: 1.125;
   --text-xl: 1.125rem; /* 18px */
@@ -1177,6 +1179,8 @@
   --text-sm--line-height: var(--text-sm--line-height);
   --text-base: var(--text-base);
   --text-base--line-height: var(--text-base--line-height);
+  --text-normal: var(--text-normal);
+  --text-normal--line-height: var(--text-normal--line-height);
   --text-lg: var(--text-lg);
   --text-lg--line-height: var(--text-lg--line-height);
   --text-xl: var(--text-xl);

@@ -1,6 +1,13 @@
 "use client"
 
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from "lucide-react"
+import {
+  AlertCircle,
+  CheckCircle2,
+  Info,
+  TriangleAlert,
+  X,
+  CircleX,
+} from "lucide-react"
 import {
   Alert,
   AlertAction,
@@ -32,7 +39,9 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div> */}
@@ -52,7 +61,9 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="success">
@@ -65,7 +76,9 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="info">
@@ -81,7 +94,9 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="warning">
@@ -97,11 +112,13 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert variant="destructive">
-          <AlertCircle />
+          <CircleX />
           <AlertTitle>Unsaved Changes</AlertTitle>
           <AlertDescription>
             You have unsaved work. Save before navigating away to prevent data
@@ -113,7 +130,9 @@ export default function AlertPage() {
             </Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>
@@ -122,9 +141,79 @@ export default function AlertPage() {
       <div className="flex max-w-xl flex-col gap-4">
         <SectionTitle>Banner (horizontal)</SectionTitle>
         <Alert type="banner">
+          <Info />
           <AlertTitle>Your trial ends soon!</AlertTitle>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="sm">
+              Update
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="info">
+          <Info />
+          <AlertTitle>Your trial ends soon!</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-blue-600 dark:text-blue-300"
+            >
+              Explore now
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="success">
+          <CheckCircle2 />
+          <AlertTitle>Source successfully added</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-green-600 dark:text-green-300"
+            >
+              Explore now
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="warning">
+          <TriangleAlert />
+          <AlertTitle>Changes will affect all warehouses</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-amber-600 dark:text-amber-300"
+            >
+              Confirm
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+        <Alert type="banner" variant="destructive">
+          <CircleX />
+          <AlertTitle>Changes will affect all warehouses</AlertTitle>
+          <AlertAction>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-red-600 dark:text-red-300"
+            >
+              Retry
+            </Button>
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>
@@ -143,7 +232,9 @@ export default function AlertPage() {
             <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="success">
@@ -155,7 +246,9 @@ export default function AlertPage() {
             <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="info">
@@ -169,7 +262,9 @@ export default function AlertPage() {
             <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="warning">
@@ -183,11 +278,13 @@ export default function AlertPage() {
             <Button variant="ghost">Remind me later</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
         <Alert type="banner" variant="destructive">
-          <AlertCircle />
+          <CircleX />
           <AlertTitle>Failed to save changes</AlertTitle>
           <AlertDescription>
             There was a problem processing your request.
@@ -197,7 +294,9 @@ export default function AlertPage() {
             <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
-            <X />
+            <Button variant="ghost" size="icon-xs">
+              <X />
+            </Button>
           </AlertAction>
         </Alert>
       </div>

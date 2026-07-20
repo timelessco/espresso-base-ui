@@ -2,7 +2,6 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 type AlertVariant = "default" | "success" | "destructive" | "warning" | "info"
 type AlertType = "default" | "banner"
@@ -16,9 +15,9 @@ const alertVariants = cva(
     variants: {
       type: {
         default:
-          "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 rounded-xl px-3 pt-2.5 pb-3 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-1.5 gap-y-1 rounded-xl p-3 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-span-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
         banner:
-          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 rounded-lg border-0 px-3 py-4 has-[>[data-slot=alert-action]]:pr-9 [&_[data-slot=alert-button]>button[data-variant=secondary]]:bg-surface! [&_[data-slot=alert-button]>button[data-variant=secondary]]:shadow-elevation-sm has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-1.5 gap-y-1 rounded-lg border-0 p-3 has-[>[data-slot=alert-action]]:pr-9 [&_[data-slot=alert-button]>button[data-variant=secondary]]:bg-surface! [&_[data-slot=alert-button]>button[data-variant=secondary]]:shadow-elevation-sm [&_[data-slot=alert-button]>button[data-variant=secondary]]:hover:bg-gray-50/10! [&:not(:has(>[data-slot=alert-button]))]:flex! [&:not(:has(>[data-slot=alert-button]))]:items-center! [&:not(:has(>[data-slot=alert-button]))]:py-1.5! [&:not(:has(>[data-slot=alert-button]))]:pr-1.5! [&:not(:has(>[data-slot=alert-button]))]:pl-3.5! [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:relative! [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:top-auto! [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:right-auto! [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:ml-auto! [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:flex [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:items-center [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-action]]:gap-1 [&:not(:has(>[data-slot=alert-button]))>[data-slot=alert-title]]:text-normal! has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-span-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
       },
       variant: {
         default: "[&>svg]:text-muted-foreground",
@@ -109,7 +108,7 @@ const alertTitleVariants = cva(
 )
 
 const alertDescriptionVariants = cva(
-  "leading-lg font-normal tracking-normal text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
+  "leading-xl font-normal tracking-normal text-wrap text-muted-foreground [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
   {
     variants: {
       type: {
@@ -186,21 +185,13 @@ function AlertDescription({
   )
 }
 
-function AlertAction({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof Button>) {
+function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <Button
+    <div
       data-slot="alert-action"
-      variant="ghost"
-      size="icon-xs"
-      className={cn("absolute top-2 right-2 size-5", className)}
+      className={cn("absolute top-1.5 right-1.5", className)}
       {...props}
-    >
-      {children}
-    </Button>
+    />
   )
 }
 
