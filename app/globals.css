@@ -957,7 +957,7 @@
 
 .dark {
   --background: var(--color-gray-950); /* #171717 */
-  --foreground: var(--color-gray-50); /* #F8F8F8 */ /*ink/gray-8*/
+  --foreground: var(--color-gray-100); /* #d9d9d9 */ /*ink/gray-8*/
   --card: var(--color-gray-900); /* #1f1f1f */ /*surface/card*/
   --card-foreground: var(--color-gray-400); /* #717171 */ /*ink/gray-4*/
   --popover: var(--color-gray-800); /* #242424 */ /*surface/modal*/
@@ -1040,7 +1040,7 @@
   /* end custom variables */
 
   --border: var(--color-gray-600); /* #343434 */ /*outline/gray-2*/
-  --input: var(--color-gray-800); /* #242424 */ /*surface/gray-1*/
+  --input: var(--color-gray-900); /* #1f1f1f */ /*surface/gray-1*/
 
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
@@ -1060,7 +1060,7 @@
   --sidebar-border: var(--color-gray-800); /* #242424 */
   --sidebar-ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
 
-  --surface: var(--color-gray-600); /* #343434 */ /*surface/selected*/
+  --surface: var(--color-gray-600); /* #383838 */ /*surface/selected*/
   --code-highlight: lab(95.36% 0 0);
   --code-number: lab(48.96% 0 0);
   --selection: lab(2.75381% 0 0);

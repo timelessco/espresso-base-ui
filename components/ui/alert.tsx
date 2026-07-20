@@ -18,7 +18,7 @@ const alertVariants = cva(
         default:
           "grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 rounded-xl px-3 pt-2.5 pb-3 has-[>[data-slot=alert-action]]:pr-3 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-span-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
         banner:
-          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 rounded-lg border-0 px-3 py-4 has-[>[data-slot=alert-action]]:pr-9 has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
+          "grid grid-cols-[auto_1fr] gap-x-2.5 gap-y-1 rounded-lg border-0 px-3 py-4 has-[>[data-slot=alert-action]]:pr-9 [&_[data-slot=alert-button]>button[data-variant=secondary]]:bg-surface! [&_[data-slot=alert-button]>button[data-variant=secondary]]:shadow-elevation-sm has-[>[data-slot=alert-button]]:[&>[data-slot=alert-button]]:col-start-2 has-[>svg]:[&>[data-slot=alert-description]]:col-start-2 has-[>svg]:[&>[data-slot=alert-title]]:col-start-2",
       },
       variant: {
         default: "[&>svg]:text-muted-foreground",
@@ -59,36 +59,31 @@ const alertVariants = cva(
         className:
           "border-transparent bg-transparent shadow-default [&_[data-slot=alert-button]>button]:bg-info/80! [&_[data-slot=alert-button]>button]:text-info-foreground [&_[data-slot=alert-button]>button]:hover:bg-info! [&_[data-slot=alert-button]>button]:active:bg-info/60! dark:[&_[data-slot=alert-button]>button]:hover:bg-[color-mix(in_oklch,var(--info),white_5%)]! dark:[&_[data-slot=alert-button]>button]:active:bg-[color-mix(in_oklch,var(--info),white_10%)]!",
       },
-      // banner type — variant bg colors
+      // banner type — neutral bg-input background, plain secondary buttons
       {
         type: "banner",
         variant: "default",
-        className:
-          "border border-border-soft bg-input dark:[--btn-inverted-bg:theme(colors.gray.500)] dark:[--btn-inverted-fg:theme(colors.gray.50)] dark:[--btn-inverted-ghost-fg:theme(colors.gray.50)]",
+        className: "border border-border-soft bg-input",
       },
       {
         type: "banner",
         variant: "success",
-        className:
-          "bg-success dark:[--btn-inverted-bg:theme(colors.green.700)] dark:[--btn-inverted-fg:theme(colors.green.200)] dark:[--btn-inverted-ghost-fg:theme(colors.green.400)]",
+        className: "border border-border-soft bg-input",
       },
       {
         type: "banner",
         variant: "destructive",
-        className:
-          "bg-error dark:[--btn-inverted-bg:theme(colors.red.700)] dark:[--btn-inverted-fg:theme(colors.red.200)] dark:[--btn-inverted-ghost-fg:theme(colors.red.400)]",
+        className: "border border-border-soft bg-input",
       },
       {
         type: "banner",
         variant: "warning",
-        className:
-          "bg-warning dark:[--btn-inverted-bg:theme(colors.amber.700)] dark:[--btn-inverted-fg:theme(colors.amber.200)] dark:[--btn-inverted-ghost-fg:theme(colors.amber.400)]",
+        className: "border border-border-soft bg-input",
       },
       {
         type: "banner",
         variant: "info",
-        className:
-          "bg-info dark:[--btn-inverted-bg:theme(colors.blue.700)] dark:[--btn-inverted-fg:theme(colors.blue.200)] dark:[--btn-inverted-ghost-fg:theme(colors.blue.400)]",
+        className: "border border-border-soft bg-input",
       },
     ],
     defaultVariants: {
@@ -200,8 +195,8 @@ function AlertAction({
     <Button
       data-slot="alert-action"
       variant="ghost"
-      size="icon-sm"
-      className={cn("absolute top-3.5 right-3 size-5", className)}
+      size="icon-xs"
+      className={cn("absolute top-2 right-2 size-5", className)}
       {...props}
     >
       {children}

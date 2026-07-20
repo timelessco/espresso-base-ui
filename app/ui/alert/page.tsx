@@ -18,7 +18,7 @@ export default function AlertPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
       {/* Vertical (default) */}
-      <div className="flex max-w-xs flex-col gap-4">
+      {/* <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Vertical (default)</SectionTitle>
         <Alert>
           <Info />
@@ -35,18 +35,20 @@ export default function AlertPage() {
             <X />
           </AlertAction>
         </Alert>
-      </div>
+      </div> */}
 
       {/* Vertical — Variants */}
-      <div className="flex max-w-xs flex-col gap-4">
+      <div className="flex max-w-[204px] flex-col gap-4">
         <SectionTitle>Vertical — Variants</SectionTitle>
         <Alert variant="default">
           <Info />
-          <AlertTitle>Default alert</AlertTitle>
-          <AlertDescription>This is a default vertical alert.</AlertDescription>
+          <AlertTitle>Your trial ends soon!</AlertTitle>
+          <AlertDescription>
+            Upgrade to keep enjoying features.
+          </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
-              Take action
+              Update now
             </Button>
           </AlertHandlers>
           <AlertAction>
@@ -68,8 +70,11 @@ export default function AlertPage() {
         </Alert>
         <Alert variant="info">
           <Info />
-          <AlertTitle>Info alert</AlertTitle>
-          <AlertDescription>This is an info vertical alert.</AlertDescription>
+          <AlertTitle>Maintenance Notice</AlertTitle>
+          <AlertDescription>
+            Planned maintenance from 12 AM to 3 AM. Some features may be
+            unavailable.
+          </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
               Learn more
@@ -81,11 +86,14 @@ export default function AlertPage() {
         </Alert>
         <Alert variant="warning">
           <TriangleAlert />
-          <AlertTitle>Warning alert</AlertTitle>
-          <AlertDescription>This is a warning vertical alert.</AlertDescription>
+          <AlertTitle>Unsaved Changes</AlertTitle>
+          <AlertDescription>
+            You have unsaved work. Save before navigating away to prevent data
+            loss.
+          </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
-              Review
+              Save Now
             </Button>
           </AlertHandlers>
           <AlertAction>
@@ -94,13 +102,14 @@ export default function AlertPage() {
         </Alert>
         <Alert variant="destructive">
           <AlertCircle />
-          <AlertTitle>Destructive alert</AlertTitle>
+          <AlertTitle>Unsaved Changes</AlertTitle>
           <AlertDescription>
-            This is a destructive vertical alert.
+            You have unsaved work. Save before navigating away to prevent data
+            loss.
           </AlertDescription>
           <AlertHandlers>
             <Button variant="secondary" size="sm" className="w-full">
-              Try again
+              Retry
             </Button>
           </AlertHandlers>
           <AlertAction>
@@ -130,8 +139,8 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Explore now</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Explore now</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
             <X />
@@ -142,8 +151,8 @@ export default function AlertPage() {
           <AlertTitle>Changes saved successfully</AlertTitle>
           <AlertDescription>Your changes have been saved.</AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">View changes</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">View changes</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
             <X />
@@ -156,8 +165,8 @@ export default function AlertPage() {
             Discover the new feature to enhance your experience.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Explore now</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Explore now</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
             <X />
@@ -170,8 +179,8 @@ export default function AlertPage() {
             Your subscription will expire in 7 days.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Renew now</Button>
-            <Button variant="inverted-ghost">Remind me later</Button>
+            <Button variant="secondary">Renew now</Button>
+            <Button variant="ghost">Remind me later</Button>
           </AlertHandlers>
           <AlertAction>
             <X />
@@ -184,8 +193,8 @@ export default function AlertPage() {
             There was a problem processing your request.
           </AlertDescription>
           <AlertHandlers>
-            <Button variant="inverted">Try again</Button>
-            <Button variant="inverted-ghost">Dismiss</Button>
+            <Button variant="secondary">Try again</Button>
+            <Button variant="ghost">Dismiss</Button>
           </AlertHandlers>
           <AlertAction>
             <X />
