@@ -13,7 +13,7 @@ const checkboxVariants = cva(
     // checked states
     "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
     // indeterminate states
-    "data-indeterminate:bg-primary data-indeterminate:text-primary-foreground not-data-disabled:data-indeterminate:hover:bg-primary/86 not-data-disabled:data-indeterminate:hover:shadow-sm not-data-disabled:data-indeterminate:focus-visible:ring-2 not-data-disabled:data-indeterminate:focus-visible:ring-ring not-data-disabled:data-indeterminate:active:bg-primary/74",
+    "data-indeterminate:bg-primary data-indeterminate:text-primary-foreground not-data-disabled:data-indeterminate:hover:bg-primary/86 not-data-disabled:data-indeterminate:focus-visible:ring-2 not-data-disabled:data-indeterminate:focus-visible:ring-ring not-data-disabled:data-indeterminate:active:bg-primary/74",
     // invalid states (self + Field context)
     "data-invalid:border-destructive! data-invalid:ring-2! data-invalid:ring-destructive/20! data-invalid:data-checked:border-destructive!",
     "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20! group-data-[invalid=true]/field:data-checked:border-destructive!",
