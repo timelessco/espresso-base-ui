@@ -21,6 +21,7 @@ const checkboxVariants = cva(
   {
     variants: {
       size: {
+        xs: "size-[13px]",
         sm: "size-3.5",
         default: "size-4",
       },
@@ -36,6 +37,7 @@ const checkboxIndicatorVariants = cva(
   {
     variants: {
       size: {
+        xs: "[&>svg]:size-2",
         sm: "[&>svg]:size-2.5",
         default: "[&>svg]:size-3",
       },
