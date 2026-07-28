@@ -18,6 +18,15 @@ export default function SwitchPage() {
         </div>
       </div>
 
+      {/* Extra Small (xs) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Extra Small (xs)</SectionTitle>
+        <div className="flex items-center gap-4">
+          <Switch size="xs" />
+          <Switch size="xs" defaultChecked />
+        </div>
+      </div>
+
       {/* Small (sm) */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Small (sm)</SectionTitle>
@@ -35,6 +44,8 @@ export default function SwitchPage() {
           <Switch disabled defaultChecked />
           <Switch size="sm" disabled />
           <Switch size="sm" disabled defaultChecked />
+          <Switch size="xs" disabled />
+          <Switch size="xs" disabled defaultChecked />
         </div>
       </div>
 
@@ -46,6 +57,8 @@ export default function SwitchPage() {
           <Switch data-invalid="true" defaultChecked />
           <Switch size="sm" data-invalid="true" />
           <Switch size="sm" data-invalid="true" defaultChecked />
+          <Switch size="xs" data-invalid="true" />
+          <Switch size="xs" data-invalid="true" defaultChecked />
         </div>
       </div>
 
@@ -59,6 +72,7 @@ export default function SwitchPage() {
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">State</th>
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">default</th>
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">sm</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">xs</th>
               </tr>
             </thead>
             <tbody>
@@ -66,31 +80,37 @@ export default function SwitchPage() {
                 <td className="px-4 py-3 text-xs text-muted-foreground">Off</td>
                 <td className="px-4 py-3"><Switch /></td>
                 <td className="px-4 py-3"><Switch size="sm" /></td>
+                <td className="px-4 py-3"><Switch size="xs" /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">On</td>
                 <td className="px-4 py-3"><Switch defaultChecked /></td>
                 <td className="px-4 py-3"><Switch size="sm" defaultChecked /></td>
+                <td className="px-4 py-3"><Switch size="xs" defaultChecked /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled Off</td>
                 <td className="px-4 py-3"><Switch disabled /></td>
                 <td className="px-4 py-3"><Switch size="sm" disabled /></td>
+                <td className="px-4 py-3"><Switch size="xs" disabled /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled On</td>
                 <td className="px-4 py-3"><Switch disabled defaultChecked /></td>
                 <td className="px-4 py-3"><Switch size="sm" disabled defaultChecked /></td>
+                <td className="px-4 py-3"><Switch size="xs" disabled defaultChecked /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Off</td>
                 <td className="px-4 py-3"><Switch data-invalid="true" /></td>
                 <td className="px-4 py-3"><Switch size="sm" data-invalid="true" /></td>
+                <td className="px-4 py-3"><Switch size="xs" data-invalid="true" /></td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Invalid On</td>
                 <td className="px-4 py-3"><Switch data-invalid="true" defaultChecked /></td>
                 <td className="px-4 py-3"><Switch size="sm" data-invalid="true" defaultChecked /></td>
+                <td className="px-4 py-3"><Switch size="xs" data-invalid="true" defaultChecked /></td>
               </tr>
             </tbody>
           </table>
