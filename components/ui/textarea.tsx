@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 const textareaVariants = cva(
   [
-    "flex field-sizing-content w-full leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input disabled:text-popover-foreground",
+    "flex field-sizing-content w-full leading-lg font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input disabled:text-popover-foreground",
   ],
   {
     variants: {
@@ -18,20 +18,22 @@ const textareaVariants = cva(
           "bg-transparent not-disabled:hover:bg-muted not-disabled:focus:bg-background not-disabled:focus:shadow-raised! not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-popover-foreground data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
       },
       size: {
+        xs: "min-h-12 rounded-md px-2 py-1 text-sm",
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",
-        default: "min-h-25.5 rounded-lg px-3 py-2.5 text-lg",
+        md: "min-h-25.5 rounded-lg px-3 py-2.5 text-lg",
         lg: "min-h-31.5 rounded-lg px-3.5 py-3 text-xl",
       },
     },
     compoundVariants: [
       // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "xs", className: "min-h-11.5!" },
       { variant: "outline", size: "sm", className: "min-h-14.5!" },
-      { variant: "outline", size: "default", className: "min-h-25!" },
+      { variant: "outline", size: "md", className: "min-h-25!" },
       { variant: "outline", size: "lg", className: "min-h-31!" },
     ],
     defaultVariants: {
       variant: "outline",
-      size: "default",
+      size: "md",
     },
   }
 )
@@ -46,7 +48,7 @@ function Textarea({
     <textarea
       data-slot="textarea"
       data-variant={variant ?? "outline"}
-      data-size={size ?? "default"}
+      data-size={size ?? "md"}
       className={cn(textareaVariants({ variant, size, className }))}
       {...props}
     />

@@ -17,18 +17,18 @@ const inputVariants = cva(
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input [&:-webkit-autofill]:bg-filled",
       },
       size: {
+        xs: "h-6 rounded-md px-2 py-1 text-sm",
         sm: "h-7 rounded-md px-2 py-1.5 text-base",
         md: "h-8 rounded-md px-2.5 py-2 text-base",
         lg: "h-10 rounded-lg px-3 py-2.75 text-lg",
-        xl: "h-10 rounded-lg px-3 py-2.25 text-xl",
       },
     },
     compoundVariants: [
       // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "xs", className: "h-5.5!" },
       { variant: "outline", size: "sm", className: "h-6.5!" },
       { variant: "outline", size: "md", className: "h-7.5!" },
       { variant: "outline", size: "lg", className: "h-9.5!" },
-      { variant: "outline", size: "xl", className: "h-9.5!" },
     ],
     defaultVariants: {
       variant: "outline",
@@ -71,7 +71,7 @@ export { Input, inputVariants }
 // ### Added
 // - CVA-based `inputVariants`
 // - Variant prop (`outline`, `subtle`) with `outline` as default
-// - Size variants (`sm`, `md`, `lg`, `xl`) with `md` as default
+// - Size variants (`xs`, `sm`, `md`, `lg`) with `md` as default
 // - `data-variant` and `data-size` attributes on the element
 // - Exported `inputVariants`
 // - Hover, active, and focus states for both variants

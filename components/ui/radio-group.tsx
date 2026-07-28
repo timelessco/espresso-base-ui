@@ -20,9 +20,9 @@ const radioGroupItemVariants = cva(
   [
     "group/radio peer relative flex shrink-0 rounded-full border border-transparent transition-all duration-[250ms] ease-[ease] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 not-data-disabled:active:scale-[0.97] not-data-disabled:data-pressed:scale-[0.97] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-unchecked:border-accent data-disabled:data-unchecked:bg-input",
     // unchecked states
-    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-md not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:shadow-3xs! not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none!",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-elevation-sm not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:shadow-3xs! not-data-disabled:data-unchecked:active:border-muted-foreground not-data-disabled:data-unchecked:active:bg-secondary not-data-disabled:data-unchecked:active:shadow-none!",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-md not-data-disabled:data-checked:focus-visible:shadow-3xs! not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:shadow-3xs! not-data-disabled:data-checked:active:bg-primary/74",
     // invalid state (self + Field context)
     "data-invalid:border-destructive! data-invalid:ring-2! data-invalid:ring-destructive/20! data-invalid:data-checked:border-destructive!",
     "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20! group-data-[invalid=true]/field:data-checked:border-destructive!",
@@ -30,6 +30,7 @@ const radioGroupItemVariants = cva(
   {
     variants: {
       size: {
+        xs: "size-[13px]",
         sm: "size-3.5",
         default: "size-4",
       },
@@ -43,6 +44,7 @@ const radioGroupItemVariants = cva(
 const radioGroupIndicatorVariants = cva("flex items-center justify-center", {
   variants: {
     size: {
+      xs: "size-[13px] [&>span]:size-1.25",
       sm: "size-3.5 [&>span]:size-1.5",
       default: "size-4 [&>span]:size-1.75",
     },

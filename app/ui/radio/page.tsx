@@ -20,6 +20,17 @@ export default function RadioPage() {
         </RadioGroup>
       </div>
 
+      {/* Extra Small (xs) */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Extra Small (xs)</SectionTitle>
+        <RadioGroup defaultValue="option-1">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem size="xs" value="option-1" />
+            <RadioGroupItem size="xs" value="option-2" />
+          </div>
+        </RadioGroup>
+      </div>
+
       {/* Small (sm) */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Small (sm)</SectionTitle>
@@ -47,6 +58,12 @@ export default function RadioPage() {
               <RadioGroupItem size="sm" value="dis-4" />
             </div>
           </RadioGroup>
+          <RadioGroup defaultValue="dis-6" disabled className="w-auto">
+            <div className="flex items-center gap-4">
+              <RadioGroupItem size="xs" value="dis-5" />
+              <RadioGroupItem size="xs" value="dis-6" />
+            </div>
+          </RadioGroup>
         </div>
       </div>
 
@@ -66,6 +83,12 @@ export default function RadioPage() {
           <RadioGroup value="inv-4" className="w-auto">
             <RadioGroupItem size="sm" data-invalid="true" value="inv-4" />
           </RadioGroup>
+          <RadioGroup value="" className="w-auto">
+            <RadioGroupItem size="xs" data-invalid="true" value="inv-5" />
+          </RadioGroup>
+          <RadioGroup value="inv-6" className="w-auto">
+            <RadioGroupItem size="xs" data-invalid="true" value="inv-6" />
+          </RadioGroup>
         </div>
       </div>
 
@@ -79,6 +102,7 @@ export default function RadioPage() {
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">State</th>
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">default</th>
                 <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">sm</th>
+                <th className="px-4 py-2 text-left text-xs font-medium text-muted-foreground">xs</th>
               </tr>
             </thead>
             <tbody>
@@ -94,6 +118,11 @@ export default function RadioPage() {
                     <RadioGroupItem size="sm" value="unchecked" />
                   </RadioGroup>
                 </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="">
+                    <RadioGroupItem size="xs" value="unchecked" />
+                  </RadioGroup>
+                </td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Checked</td>
@@ -105,6 +134,11 @@ export default function RadioPage() {
                 <td className="px-4 py-3">
                   <RadioGroup value="checked">
                     <RadioGroupItem size="sm" value="checked" />
+                  </RadioGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="checked">
+                    <RadioGroupItem size="xs" value="checked" />
                   </RadioGroup>
                 </td>
               </tr>
@@ -120,6 +154,11 @@ export default function RadioPage() {
                     <RadioGroupItem size="sm" value="dis-unchecked" />
                   </RadioGroup>
                 </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="" disabled>
+                    <RadioGroupItem size="xs" value="dis-unchecked" />
+                  </RadioGroup>
+                </td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Invalid Unchecked</td>
@@ -131,6 +170,11 @@ export default function RadioPage() {
                 <td className="px-4 py-3">
                   <RadioGroup value="">
                     <RadioGroupItem size="sm" data-invalid="true" value="inv-unchecked" />
+                  </RadioGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="">
+                    <RadioGroupItem size="xs" data-invalid="true" value="inv-unchecked" />
                   </RadioGroup>
                 </td>
               </tr>
@@ -146,6 +190,11 @@ export default function RadioPage() {
                     <RadioGroupItem size="sm" data-invalid="true" value="inv-checked" />
                   </RadioGroup>
                 </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="inv-checked">
+                    <RadioGroupItem size="xs" data-invalid="true" value="inv-checked" />
+                  </RadioGroup>
+                </td>
               </tr>
               <tr className="border-t border-border">
                 <td className="px-4 py-3 text-xs text-muted-foreground">Disabled Checked</td>
@@ -157,6 +206,11 @@ export default function RadioPage() {
                 <td className="px-4 py-3">
                   <RadioGroup value="dis-checked" disabled>
                     <RadioGroupItem size="sm" value="dis-checked" />
+                  </RadioGroup>
+                </td>
+                <td className="px-4 py-3">
+                  <RadioGroup value="dis-checked" disabled>
+                    <RadioGroupItem size="xs" value="dis-checked" />
                   </RadioGroup>
                 </td>
               </tr>

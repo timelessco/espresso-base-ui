@@ -30,6 +30,14 @@ export default function InputGroupPage() {
       {/* Outline — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Outline — Sizes</SectionTitle>
+        <InputGroup variant="outline" size="xs">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Extra Small (xs)" />
+        </InputGroup>
         <InputGroup variant="outline" size="sm">
           <InputGroupAddon align="inline-start">
             <InputGroupText>
@@ -54,19 +62,19 @@ export default function InputGroupPage() {
           </InputGroupAddon>
           <InputGroupInput placeholder="Large (lg)" />
         </InputGroup>
-        <InputGroup variant="outline" size="xl">
-          <InputGroupAddon align="inline-start">
-            <InputGroupText>
-              <Search />
-            </InputGroupText>
-          </InputGroupAddon>
-          <InputGroupInput placeholder="Extra Large (xl)" />
-        </InputGroup>
       </div>
 
       {/* Subtle — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Subtle — Sizes</SectionTitle>
+        <InputGroup variant="subtle" size="xs">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Extra Small (xs)" />
+        </InputGroup>
         <InputGroup variant="subtle" size="sm">
           <InputGroupAddon align="inline-start">
             <InputGroupText>
@@ -90,14 +98,6 @@ export default function InputGroupPage() {
             </InputGroupText>
           </InputGroupAddon>
           <InputGroupInput placeholder="Large (lg)" />
-        </InputGroup>
-        <InputGroup variant="subtle" size="xl">
-          <InputGroupAddon align="inline-start">
-            <InputGroupText>
-              <Search />
-            </InputGroupText>
-          </InputGroupAddon>
-          <InputGroupInput placeholder="Extra Large (xl)" />
         </InputGroup>
       </div>
 
