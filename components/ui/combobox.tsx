@@ -79,22 +79,31 @@ function ComboboxInput({
   disabled = false,
   showTrigger = true,
   showClear = false,
+  size = "md",
   ...props
-}: ComboboxPrimitive.Input.Props & {
+}: Omit<ComboboxPrimitive.Input.Props, "size"> & {
   showTrigger?: boolean
   showClear?: boolean
+  size?: "xs" | "sm" | "md" | "lg"
 }) {
   const variant = useComboboxVariant()
   return (
     <InputGroup
       variant={variant}
+      size={size}
       className={cn(
-        "h-8 w-auto data-[variant=outline]:h-7.5 data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150",
+        "w-auto data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150",
         className
       )}
     >
       <ComboboxPrimitive.Input
-        render={<InputGroupInput disabled={disabled} />}
+        render={
+          <InputGroupInput
+            disabled={disabled}
+            // combobox uses text-base at lg (InputGroup's lg is text-lg)
+            className="group-data-[size=lg]/input-group:text-base!"
+          />
+        }
         {...props}
       />
       <InputGroupAddon align="inline-end">

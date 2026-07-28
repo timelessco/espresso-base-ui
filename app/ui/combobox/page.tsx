@@ -107,6 +107,28 @@ export default function ComboboxPage() {
         </Combobox>
       </div>
 
+      {/* Sizes */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Sizes</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <Combobox key={size} items={fruits}>
+            <ComboboxInput size={size} placeholder={`Size ${size}...`} />
+            <ComboboxContent>
+              <ComboboxList>
+                <ComboboxCollection>
+                  {(item: { label: string; value: string }) => (
+                    <ComboboxItem key={item.value} value={item.value}>
+                      {item.label}
+                    </ComboboxItem>
+                  )}
+                </ComboboxCollection>
+              </ComboboxList>
+              <ComboboxEmpty>No results found.</ComboboxEmpty>
+            </ComboboxContent>
+          </Combobox>
+        ))}
+      </div>
+
       {/* Outline variant (default) */}
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Outline (default)</SectionTitle>
