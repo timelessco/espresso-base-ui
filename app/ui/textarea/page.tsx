@@ -12,24 +12,27 @@ export default function TextareaPage() {
       {/* Outline — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Outline — Sizes</SectionTitle>
+        <Textarea variant="outline" size="xs" placeholder="Extra Small (xs)" />
         <Textarea variant="outline" size="sm" placeholder="Small (sm)" />
-        <Textarea variant="outline" size="default" placeholder="Default" />
+        <Textarea variant="outline" size="md" placeholder="Medium (md)" />
         <Textarea variant="outline" size="lg" placeholder="Large (lg)" />
       </div>
 
       {/* Subtle — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Subtle — Sizes</SectionTitle>
+        <Textarea variant="subtle" size="xs" placeholder="Extra Small (xs)" />
         <Textarea variant="subtle" size="sm" placeholder="Small (sm)" />
-        <Textarea variant="subtle" size="default" placeholder="Default" />
+        <Textarea variant="subtle" size="md" placeholder="Medium (md)" />
         <Textarea variant="subtle" size="lg" placeholder="Large (lg)" />
       </div>
 
       {/* Ghost — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Ghost — Sizes</SectionTitle>
+        <Textarea variant="ghost" size="xs" placeholder="Extra Small (xs)" />
         <Textarea variant="ghost" size="sm" placeholder="Small (sm)" />
-        <Textarea variant="ghost" size="default" placeholder="Default" />
+        <Textarea variant="ghost" size="md" placeholder="Medium (md)" />
         <Textarea variant="ghost" size="lg" placeholder="Large (lg)" />
       </div>
 
