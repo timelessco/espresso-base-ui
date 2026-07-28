@@ -195,6 +195,21 @@ export default function SelectPage() {
         <SectionTitle>Sizes</SectionTitle>
         <div className="flex items-center gap-4">
           <Select items={fruits}>
+            <SelectTrigger size="xs" className="w-48">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Fruits</SelectLabel>
+                {fruits.map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select items={fruits}>
             <SelectTrigger size="sm" className="w-48">
               <SelectValue />
             </SelectTrigger>
@@ -210,7 +225,7 @@ export default function SelectPage() {
             </SelectContent>
           </Select>
           <Select items={fruits}>
-            <SelectTrigger size="default" className="w-48">
+            <SelectTrigger size="md" className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
