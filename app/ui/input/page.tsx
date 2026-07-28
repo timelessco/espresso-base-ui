@@ -13,19 +13,19 @@ export default function InputPage() {
       {/* Outline — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Outline — Sizes</SectionTitle>
+        <Input variant="outline" size="xs" placeholder="Extra Small (xs)" />
         <Input variant="outline" size="sm" placeholder="Small (sm)" />
         <Input variant="outline" size="md" placeholder="Medium (md)" />
         <Input variant="outline" size="lg" placeholder="Large (lg)" />
-        <Input variant="outline" size="xl" placeholder="Extra Large (xl)" />
       </div>
 
       {/* Subtle — Sizes */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Subtle — Sizes</SectionTitle>
+        <Input variant="subtle" size="xs" placeholder="Extra Small (xs)" />
         <Input variant="subtle" size="sm" placeholder="Small (sm)" />
         <Input variant="subtle" size="md" placeholder="Medium (md)" />
         <Input variant="subtle" size="lg" placeholder="Large (lg)" />
-        <Input variant="subtle" size="xl" placeholder="Extra Large (xl)" />
       </div>
 
       {/* Outline — States */}
