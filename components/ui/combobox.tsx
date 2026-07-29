@@ -14,23 +14,34 @@ import {
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
 type ComboboxVariant = "outline" | "subtle"
+type ComboboxSize = "xs" | "sm" | "md" | "lg"
 
-const ComboboxContext = React.createContext<{ variant: ComboboxVariant }>({
+const ComboboxContext = React.createContext<{
+  variant: ComboboxVariant
+  size: ComboboxSize
+}>({
   variant: "outline",
+  size: "md",
 })
 
 function useComboboxVariant() {
   return React.useContext(ComboboxContext).variant
 }
 
+function useComboboxSize() {
+  return React.useContext(ComboboxContext).size
+}
+
 function Combobox<TItem, TMultiple extends boolean | undefined = undefined>({
   variant = "outline",
+  size = "md",
   ...props
 }: ComboboxPrimitive.Root.Props<TItem, TMultiple> & {
   variant?: ComboboxVariant
+  size?: ComboboxSize
 }) {
   return (
-    <ComboboxContext.Provider value={{ variant }}>
+    <ComboboxContext.Provider value={{ variant, size }}>
       <ComboboxPrimitive.Root {...props} />
     </ComboboxContext.Provider>
   )
@@ -79,20 +90,19 @@ function ComboboxInput({
   disabled = false,
   showTrigger = true,
   showClear = false,
-  size = "md",
   ...props
-}: Omit<ComboboxPrimitive.Input.Props, "size"> & {
+}: ComboboxPrimitive.Input.Props & {
   showTrigger?: boolean
   showClear?: boolean
-  size?: "xs" | "sm" | "md" | "lg"
 }) {
   const variant = useComboboxVariant()
+  const size = useComboboxSize()
   return (
     <InputGroup
       variant={variant}
       size={size}
       className={cn(
-        "w-auto data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150",
+        "w-auto data-[size=lg]:rounded-lg data-[size=md]:rounded-md data-[size=sm]:rounded-md data-[size=xs]:rounded-sm data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150",
         className
       )}
     >
@@ -124,6 +134,13 @@ function ComboboxInput({
   )
 }
 
+const comboboxContentRadiusClasses: Record<ComboboxSize, string> = {
+  xs: "rounded-md",
+  sm: "rounded-lg",
+  md: "rounded-xl",
+  lg: "rounded-xl",
+}
+
 function ComboboxContent({
   className,
   side = "bottom",
@@ -137,6 +154,7 @@ function ComboboxContent({
     ComboboxPrimitive.Positioner.Props,
     "side" | "align" | "sideOffset" | "alignOffset" | "anchor"
   >) {
+  const size = useComboboxSize()
   return (
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Positioner
@@ -151,7 +169,8 @@ function ComboboxContent({
           data-slot="combobox-content"
           data-chips={!!anchor}
           className={cn(
-            "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-xl bg-popover text-muted-foreground shadow-5xs duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "group/combobox-content relative max-h-(--available-height) w-(--anchor-width) max-w-(--available-width) min-w-[calc(var(--anchor-width)+--spacing(7))] origin-(--transform-origin) overflow-hidden rounded-xl bg-card text-muted-foreground shadow-elevation-xl duration-100 data-[chips=true]:min-w-(--anchor-width) data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            comboboxContentRadiusClasses[size],
             className
           )}
           {...props}
@@ -176,16 +195,25 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
   )
 }
 
+const comboboxItemSizeClasses: Record<ComboboxSize, string> = {
+  xs: "h-6 py-0 text-sm",
+  sm: "h-7 py-0 text-base",
+  md: "h-8 py-0 text-base",
+  lg: "h-10 py-0 text-lg",
+}
+
 function ComboboxItem({
   className,
   children,
   ...props
 }: ComboboxPrimitive.Item.Props) {
+  const size = useComboboxSize()
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
         "not-data-[variant=destructive]:focus:**:text-secondaey-foreground relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        comboboxItemSizeClasses[size],
         className
       )}
       {...props}
@@ -193,7 +221,7 @@ function ComboboxItem({
       {children}
       <ComboboxPrimitive.ItemIndicator
         render={
-          <span className="pointer-events-none absolute right-2 flex size-4 items-center justify-center" />
+          <span className="pointer-events-none absolute top-1/2 right-2 flex size-4 -translate-y-1/2 items-center justify-center" />
         }
       >
         <CheckIcon className="pointer-events-none" />

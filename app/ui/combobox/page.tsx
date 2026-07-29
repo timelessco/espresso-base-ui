@@ -111,8 +111,8 @@ export default function ComboboxPage() {
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Sizes</SectionTitle>
         {(["xs", "sm", "md", "lg"] as const).map((size) => (
-          <Combobox key={size} items={fruits}>
-            <ComboboxInput size={size} placeholder={`Size ${size}...`} />
+          <Combobox key={size} size={size} items={fruits}>
+            <ComboboxInput placeholder={`Size ${size}...`} />
             <ComboboxContent>
               <ComboboxList>
                 <ComboboxCollection>
