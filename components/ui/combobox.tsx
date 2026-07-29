@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
-type ComboboxVariant = "outline" | "subtle"
+type ComboboxVariant = "outline" | "subtle" | "ghost"
 type ComboboxSize = "xs" | "sm" | "md" | "lg"
 
 const ComboboxContext = React.createContext<{

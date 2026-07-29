@@ -169,6 +169,26 @@ export default function ComboboxPage() {
         </Combobox>
       </div>
 
+      {/* Ghost variant */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Ghost</SectionTitle>
+        <Combobox variant="ghost" items={fruits}>
+          <ComboboxInput placeholder="Pick a fruit..." />
+          <ComboboxContent>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No results found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+      </div>
+
       {/* With Icons */}
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>With Icons</SectionTitle>

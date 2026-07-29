@@ -27,6 +27,8 @@ const inputGroupVariants = cva(
           "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-raised has-disabled:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
         subtle:
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-disabled:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
+        ghost:
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
         xs: "h-6 rounded-md [&_svg:not([class*='size-'])]:size-4",
