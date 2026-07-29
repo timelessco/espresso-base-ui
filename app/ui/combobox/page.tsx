@@ -30,6 +30,45 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
+function ChipsSizeExample({ size }: { size: "xs" | "sm" | "md" | "lg" }) {
+  const [value, setValue] = React.useState<string[]>([])
+  const anchorRef = useComboboxAnchor()
+  return (
+    <Combobox
+      variant="outline"
+      size={size}
+      multiple
+      items={fruits}
+      value={value}
+      onValueChange={(v: unknown) => setValue(v as string[])}
+    >
+      <ComboboxChips ref={anchorRef}>
+        {value.map((v) => {
+          const item = fruits.find((f) => f.value === v)
+          return (
+            <ComboboxChip key={v}>
+              <ComboboxValue>{item?.label ?? v}</ComboboxValue>
+            </ComboboxChip>
+          )
+        })}
+        <ComboboxChipsInput placeholder={`Add fruits (${size})...`} />
+      </ComboboxChips>
+      <ComboboxContent anchor={anchorRef}>
+        <ComboboxList>
+          <ComboboxCollection>
+            {(item: { label: string; value: string }) => (
+              <ComboboxItem key={item.value} value={item.value}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxCollection>
+        </ComboboxList>
+        <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
 const fruits = [
   { label: "Apple", value: "apple" },
   { label: "Banana", value: "banana" },
@@ -460,6 +499,14 @@ export default function ComboboxPage() {
             {chipsGhostValue.length ? chipsGhostValue.join(", ") : "none"}
           </span>
         </p>
+      </div>
+
+      {/* Multi-select with Chips — Sizes */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Multi-select Chips — Sizes</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <ChipsSizeExample key={size} size={size} />
+        ))}
       </div>
 
       {/* In a Field with label + description */}

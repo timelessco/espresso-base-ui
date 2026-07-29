@@ -293,29 +293,58 @@ function ComboboxSeparator({
   )
 }
 
+// per-variant min-height (outline is 2px shorter for the shadow ring)
+const comboboxChipsMinHClasses: Record<
+  ComboboxVariant,
+  Record<ComboboxSize, string>
+> = {
+  outline: { xs: "min-h-5.5!", sm: "min-h-6.5!", md: "min-h-7.5!", lg: "min-h-9.5!" },
+  subtle: { xs: "min-h-6!", sm: "min-h-7!", md: "min-h-8!", lg: "min-h-10!" },
+  ghost: { xs: "min-h-6!", sm: "min-h-7!", md: "min-h-8!", lg: "min-h-10!" },
+}
+
+const comboboxChipsSizeClasses: Record<ComboboxSize, string> = {
+  xs: "text-sm rounded-sm",
+  sm: "text-sm rounded-md",
+  md: "text-sm rounded-md",
+  lg: "text-base rounded-lg",
+}
+
 function ComboboxChips({
   className,
   ...props
 }: React.ComponentPropsWithRef<typeof ComboboxPrimitive.Chips> &
   ComboboxPrimitive.Chips.Props) {
   const variant = useComboboxVariant()
+  const size = useComboboxSize()
   return (
     <ComboboxPrimitive.Chips
       data-slot="combobox-chips"
       data-variant={variant}
+      data-size={size}
       className={cn(
         "flex flex-wrap items-center gap-1 rounded-lg bg-clip-padding px-2.5 text-sm transition-colors has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:has-aria-invalid:ring-destructive/40",
         // outline variant
-        "data-[variant=outline]:min-h-7.5! data-[variant=outline]:bg-background data-[variant=outline]:py-0.5 data-[variant=outline]:shadow-default data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150 data-[variant=outline]:hover:shadow-raised data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
+        "data-[variant=outline]:bg-background data-[variant=outline]:py-0.5 data-[variant=outline]:shadow-default data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150 data-[variant=outline]:hover:shadow-raised data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
         // subtle variant
-        "data-[variant=subtle]:min-h-8! data-[variant=subtle]:bg-secondary data-[variant=subtle]:py-0.75 data-[variant=subtle]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
+        "data-[variant=subtle]:bg-secondary data-[variant=subtle]:py-0.75 data-[variant=subtle]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
         // ghost variant
-        "data-[variant=ghost]:min-h-8! data-[variant=ghost]:bg-transparent data-[variant=ghost]:py-0.75 data-[variant=ghost]:has-[[data-slot=combobox-chip-input]:focus-visible]:bg-background",
+        "data-[variant=ghost]:bg-transparent data-[variant=ghost]:py-0.75 data-[variant=ghost]:has-[[data-slot=combobox-chip-input]:focus-visible]:bg-background",
+        // size
+        comboboxChipsMinHClasses[variant][size],
+        comboboxChipsSizeClasses[size],
         className
       )}
       {...props}
     />
   )
+}
+
+const comboboxChipSizeClasses: Record<ComboboxSize, string> = {
+  xs: "h-5 pl-1.5 text-xs",
+  sm: "h-5 pl-1.5 text-xs",
+  md: "h-6 pl-1.5 text-sm",
+  lg: "h-7 pl-2 text-base",
 }
 
 function ComboboxChip({
@@ -327,12 +356,15 @@ function ComboboxChip({
   showRemove?: boolean
 }) {
   const variant = useComboboxVariant()
+  const size = useComboboxSize()
   return (
     <ComboboxPrimitive.Chip
       data-slot="combobox-chip"
       data-variant={variant}
+      data-size={size}
       className={cn(
         "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised data-[variant=ghost]:bg-secondary",
+        comboboxChipSizeClasses[size],
         className
       )}
       {...props}
@@ -351,14 +383,26 @@ function ComboboxChip({
   )
 }
 
+const comboboxChipInputSizeClasses: Record<ComboboxSize, string> = {
+  xs: "h-5",
+  sm: "h-5.5",
+  md: "h-6.25",
+  lg: "h-7",
+}
+
 function ComboboxChipsInput({
   className,
   ...props
 }: ComboboxPrimitive.Input.Props) {
+  const size = useComboboxSize()
   return (
     <ComboboxPrimitive.Input
       data-slot="combobox-chip-input"
-      className={cn("h-6.25 min-w-16 flex-1 outline-none", className)}
+      className={cn(
+        "h-6.25 min-w-16 flex-1 outline-none",
+        comboboxChipInputSizeClasses[size],
+        className
+      )}
       {...props}
     />
   )
