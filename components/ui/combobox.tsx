@@ -116,14 +116,19 @@ function ComboboxInput({
         }
         {...props}
       />
-      <InputGroupAddon align="inline-end">
+      <InputGroupAddon align="inline-end" className="pr-3">
         {showTrigger && (
           <InputGroupButton
             size="icon-xs"
             variant="ghost"
             render={<ComboboxTrigger />}
             data-slot="input-group-button"
-            className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
+            className={cn(
+              "group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent",
+              size === "xs"
+                ? "size-3.5 rounded-2xs [&_svg]:size-3"
+                : "size-4 rounded-2xs [&_svg]:size-3.5"
+            )}
             disabled={disabled}
           />
         )}
@@ -196,10 +201,10 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
 }
 
 const comboboxItemSizeClasses: Record<ComboboxSize, string> = {
-  xs: "h-6 py-0 text-sm",
-  sm: "h-7 py-0 text-base",
-  md: "h-8 py-0 text-base",
-  lg: "h-10 py-0 text-lg",
+  xs: "py-1 pl-2 text-sm rounded-sm",
+  sm: "py-1.5 pl-2 text-base rounded-md",
+  md: "py-2 pl-2 text-base rounded-lg",
+  lg: "py-2.75 pl-2.5 text-lg rounded-lg",
 }
 
 function ComboboxItem({
