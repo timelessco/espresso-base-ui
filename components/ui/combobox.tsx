@@ -192,7 +192,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
       data-slot="combobox-list"
       data-variant={variant}
       className={cn(
-        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] [animation:scroll-shadow-mask_linear_both] scroll-py-1 overflow-y-auto overscroll-contain p-1 [animation-timeline:scroll(self)] data-empty:p-0",
+        "no-scrollbar scroll-fade max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0",
         className
       )}
       {...props}
