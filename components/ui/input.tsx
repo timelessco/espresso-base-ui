@@ -16,7 +16,7 @@ const inputVariants = cva(
         subtle:
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input [&:-webkit-autofill]:bg-filled",
         ghost:
-          "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
       },
       size: {
         xs: "h-6 rounded-md px-2 py-1 text-sm",

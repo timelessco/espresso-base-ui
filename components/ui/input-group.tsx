@@ -28,7 +28,7 @@ const inputGroupVariants = cva(
         subtle:
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-disabled:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
         ghost:
-          "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
+          "bg-transparent group-data-[invalid=true]/field:bg-error! has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
         xs: "h-6 rounded-md [&_svg:not([class*='size-'])]:size-4",

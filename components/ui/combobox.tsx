@@ -309,6 +309,8 @@ function ComboboxChips({
         "data-[variant=outline]:min-h-7.5! data-[variant=outline]:bg-background data-[variant=outline]:py-0.5 data-[variant=outline]:shadow-default data-[variant=outline]:transition-shadow data-[variant=outline]:duration-150 data-[variant=outline]:hover:shadow-raised data-[variant=outline]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
         // subtle variant
         "data-[variant=subtle]:min-h-8! data-[variant=subtle]:bg-secondary data-[variant=subtle]:py-0.75 data-[variant=subtle]:has-[[data-slot=combobox-chip-input]:focus-visible]:shadow-raised",
+        // ghost variant
+        "data-[variant=ghost]:min-h-8! data-[variant=ghost]:bg-transparent data-[variant=ghost]:py-0.75 data-[variant=ghost]:has-[[data-slot=combobox-chip-input]:focus-visible]:bg-background",
         className
       )}
       {...props}
@@ -330,7 +332,7 @@ function ComboboxChip({
       data-slot="combobox-chip"
       data-variant={variant}
       className={cn(
-        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised",
+        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised data-[variant=ghost]:bg-secondary",
         className
       )}
       {...props}
