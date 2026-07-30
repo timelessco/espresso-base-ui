@@ -19,6 +19,24 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
+function OtpDemo({
+  variant,
+  size,
+}: {
+  variant?: "outline" | "subtle"
+  size?: "xs" | "sm" | "md" | "lg"
+}) {
+  return (
+    <InputOTP maxLength={6} variant={variant} size={size}>
+      <InputOTPGroup>
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <InputOTPSlot key={i} index={i} />
+        ))}
+      </InputOTPGroup>
+    </InputOTP>
+  )
+}
+
 const REGEXP_DIGITS = "^\\d*$"
 
 export default function InputOTPPage() {
@@ -40,6 +58,41 @@ export default function InputOTPPage() {
             <InputOTPSlot index={5} />
           </InputOTPGroup>
         </InputOTP>
+      </div>
+
+      {/* Variants */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Variants</SectionTitle>
+        <div className="flex flex-col gap-2">
+          <span className="text-xs text-muted-foreground">Outline</span>
+          <OtpDemo variant="outline" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-xs text-muted-foreground">Subtle</span>
+          <OtpDemo variant="subtle" />
+        </div>
+      </div>
+
+      {/* Sizes — Outline */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes — Outline</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((s) => (
+          <div key={s} className="flex flex-col gap-2">
+            <span className="text-xs text-muted-foreground">{s}</span>
+            <OtpDemo variant="outline" size={s} />
+          </div>
+        ))}
+      </div>
+
+      {/* Sizes — Subtle */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes — Subtle</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((s) => (
+          <div key={s} className="flex flex-col gap-2">
+            <span className="text-xs text-muted-foreground">{s}</span>
+            <OtpDemo variant="subtle" size={s} />
+          </div>
+        ))}
       </div>
 
       {/* With Separator */}
@@ -176,8 +229,22 @@ export default function InputOTPPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Invalid</SectionTitle>
         <Field data-invalid="true">
-          <FieldLabel>Verification code</FieldLabel>
+          <FieldLabel>Verification code (outline)</FieldLabel>
           <InputOTP maxLength={6}>
+            <InputOTPGroup aria-invalid>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+          <FieldError>Invalid code. Please try again.</FieldError>
+        </Field>
+        <Field data-invalid="true">
+          <FieldLabel>Verification code (subtle)</FieldLabel>
+          <InputOTP maxLength={6} variant="subtle">
             <InputOTPGroup aria-invalid>
               <InputOTPSlot index={0} />
               <InputOTPSlot index={1} />
