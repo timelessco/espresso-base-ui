@@ -30,6 +30,45 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
+function ChipsSizeExample({ size }: { size: "xs" | "sm" | "md" | "lg" }) {
+  const [value, setValue] = React.useState<string[]>([])
+  const anchorRef = useComboboxAnchor()
+  return (
+    <Combobox
+      variant="outline"
+      size={size}
+      multiple
+      items={fruits}
+      value={value}
+      onValueChange={(v: unknown) => setValue(v as string[])}
+    >
+      <ComboboxChips ref={anchorRef}>
+        {value.map((v) => {
+          const item = fruits.find((f) => f.value === v)
+          return (
+            <ComboboxChip key={v}>
+              <ComboboxValue>{item?.label ?? v}</ComboboxValue>
+            </ComboboxChip>
+          )
+        })}
+        <ComboboxChipsInput placeholder={`Add fruits (${size})...`} />
+      </ComboboxChips>
+      <ComboboxContent anchor={anchorRef}>
+        <ComboboxList>
+          <ComboboxCollection>
+            {(item: { label: string; value: string }) => (
+              <ComboboxItem key={item.value} value={item.value}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxCollection>
+        </ComboboxList>
+        <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
 const fruits = [
   { label: "Apple", value: "apple" },
   { label: "Banana", value: "banana" },
@@ -82,8 +121,10 @@ export default function ComboboxPage() {
   const [singleValue, setSingleValue] = React.useState<string | null>(null)
   const [chipsValue, setChipsValue] = React.useState<string[]>([])
   const [chipsSubtleValue, setChipsSubtleValue] = React.useState<string[]>([])
+  const [chipsGhostValue, setChipsGhostValue] = React.useState<string[]>([])
   const anchorRef = useComboboxAnchor()
   const anchorSubtleRef = useComboboxAnchor()
+  const anchorGhostRef = useComboboxAnchor()
 
   return (
     <div className="flex flex-col gap-12 p-8">
@@ -111,8 +152,8 @@ export default function ComboboxPage() {
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Sizes</SectionTitle>
         {(["xs", "sm", "md", "lg"] as const).map((size) => (
-          <Combobox key={size} items={fruits}>
-            <ComboboxInput size={size} placeholder={`Size ${size}...`} />
+          <Combobox key={size} size={size} items={fruits}>
+            <ComboboxInput placeholder={`Size ${size}...`} />
             <ComboboxContent>
               <ComboboxList>
                 <ComboboxCollection>
@@ -153,6 +194,26 @@ export default function ComboboxPage() {
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>Subtle</SectionTitle>
         <Combobox variant="subtle" items={fruits}>
+          <ComboboxInput placeholder="Pick a fruit..." />
+          <ComboboxContent>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No results found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+      </div>
+
+      {/* Ghost variant */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Ghost</SectionTitle>
+        <Combobox variant="ghost" items={fruits}>
           <ComboboxInput placeholder="Pick a fruit..." />
           <ComboboxContent>
             <ComboboxList>
@@ -396,6 +457,56 @@ export default function ComboboxPage() {
             {chipsSubtleValue.length ? chipsSubtleValue.join(", ") : "none"}
           </span>
         </p>
+      </div>
+
+      {/* Multi-select with Chips — Ghost */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Multi-select Chips — Ghost</SectionTitle>
+        <Combobox
+          variant="ghost"
+          multiple
+          items={fruits}
+          value={chipsGhostValue}
+          onValueChange={(v: unknown) => setChipsGhostValue(v as string[])}
+        >
+          <ComboboxChips ref={anchorGhostRef}>
+            {chipsGhostValue.map((v) => {
+              const item = fruits.find((f) => f.value === v)
+              return (
+                <ComboboxChip key={v}>
+                  <ComboboxValue>{item?.label ?? v}</ComboboxValue>
+                </ComboboxChip>
+              )
+            })}
+            <ComboboxChipsInput placeholder="Add fruits..." />
+          </ComboboxChips>
+          <ComboboxContent anchor={anchorGhostRef}>
+            <ComboboxList>
+              <ComboboxCollection>
+                {(item: { label: string; value: string }) => (
+                  <ComboboxItem key={item.value} value={item.value}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxCollection>
+            </ComboboxList>
+            <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+          </ComboboxContent>
+        </Combobox>
+        <p className="text-sm text-muted-foreground">
+          Selected:{" "}
+          <span className="font-medium">
+            {chipsGhostValue.length ? chipsGhostValue.join(", ") : "none"}
+          </span>
+        </p>
+      </div>
+
+      {/* Multi-select with Chips — Sizes */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Multi-select Chips — Sizes</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <ChipsSizeExample key={size} size={size} />
+        ))}
       </div>
 
       {/* In a Field with label + description */}

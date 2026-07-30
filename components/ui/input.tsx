@@ -15,6 +15,8 @@ const inputVariants = cva(
           "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised not-data-disabled:focus:shadow-raised! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-disabled:bg-transparent [&:-webkit-autofill]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--filled-outline)]",
         subtle:
           "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input [&:-webkit-autofill]:bg-filled",
+        ghost:
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
       },
       size: {
         xs: "h-6 rounded-md px-2 py-1 text-sm",
@@ -70,7 +72,7 @@ export { Input, inputVariants }
 //
 // ### Added
 // - CVA-based `inputVariants`
-// - Variant prop (`outline`, `subtle`) with `outline` as default
+// - Variant prop (`outline`, `subtle`, `ghost`) with `outline` as default
 // - Size variants (`xs`, `sm`, `md`, `lg`) with `md` as default
 // - `data-variant` and `data-size` attributes on the element
 // - Exported `inputVariants`

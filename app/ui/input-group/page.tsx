@@ -101,6 +101,43 @@ export default function InputGroupPage() {
         </InputGroup>
       </div>
 
+      {/* Ghost — Sizes */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Ghost — Sizes</SectionTitle>
+        <InputGroup variant="ghost" size="xs">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Extra Small (xs)" />
+        </InputGroup>
+        <InputGroup variant="ghost" size="sm">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Small (sm)" />
+        </InputGroup>
+        <InputGroup variant="ghost" size="md">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Medium (md)" />
+        </InputGroup>
+        <InputGroup variant="ghost" size="lg">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput placeholder="Large (lg)" />
+        </InputGroup>
+      </div>
+
       {/* Icon Positions */}
       <div className="flex max-w-sm flex-col gap-4">
         <SectionTitle>Icon — Inline Start</SectionTitle>
@@ -303,6 +340,35 @@ export default function InputGroupPage() {
           <InputGroupInput defaultValue="Invalid" />
         </InputGroup>
         <InputGroup variant="subtle" data-filled="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Filled" />
+        </InputGroup>
+      </div>
+
+      {/* Data States — Ghost */}
+      <div className="flex max-w-sm flex-col gap-4">
+        <SectionTitle>Ghost — Data States</SectionTitle>
+        <InputGroup variant="ghost" data-valid="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Valid" />
+        </InputGroup>
+        <InputGroup variant="ghost" data-invalid="true">
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+          <InputGroupInput defaultValue="Invalid" />
+        </InputGroup>
+        <InputGroup variant="ghost" data-filled="true">
           <InputGroupAddon align="inline-start">
             <InputGroupText>
               <Search />
