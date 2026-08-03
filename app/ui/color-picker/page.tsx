@@ -44,6 +44,44 @@ export default function ColorPickerPage() {
         </ColorPicker>
       </div>
 
+      {/* Trigger Variants */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Trigger Variants</SectionTitle>
+        {(["outline", "subtle", "ghost"] as const).map((variant) => (
+          <ColorPicker key={variant} defaultValue="#3b82f6">
+            <ColorPickerTrigger variant={variant}>
+              <ColorPickerSwatch className="size-5" />
+              {variant}
+            </ColorPickerTrigger>
+            <ColorPickerContent>
+              <ColorPickerArea />
+              <ColorPickerHueSlider />
+              <ColorPickerFormatSelect className="w-full" />
+              <ColorPickerInput className="flex-1" />
+            </ColorPickerContent>
+          </ColorPicker>
+        ))}
+      </div>
+
+      {/* Trigger Sizes */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Trigger Sizes</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <ColorPicker key={size} defaultValue="#3b82f6">
+            <ColorPickerTrigger size={size}>
+              <ColorPickerSwatch size={size} />
+              {size}
+            </ColorPickerTrigger>
+            <ColorPickerContent>
+              <ColorPickerArea />
+              <ColorPickerHueSlider />
+              <ColorPickerFormatSelect className="w-full" />
+              <ColorPickerInput className="flex-1" />
+            </ColorPickerContent>
+          </ColorPicker>
+        ))}
+      </div>
+
       {/* With Alpha */}
       <div className="flex max-w-xs flex-col gap-4">
         <SectionTitle>With Alpha</SectionTitle>

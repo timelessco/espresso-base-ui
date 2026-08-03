@@ -729,17 +729,59 @@ function ColorPickerImpl(props: ColorPickerImplProps) {
   )
 }
 
+type ColorPickerTriggerVariant = "outline" | "subtle" | "ghost"
+type ColorPickerTriggerSize = "xs" | "sm" | "md" | "lg"
+
+// map the color-picker variant names to the underlying Button variants
+const triggerVariantToButton = {
+  outline: "outline",
+  subtle: "secondary",
+  ghost: "ghost",
+} as const satisfies Record<
+  ColorPickerTriggerVariant,
+  React.ComponentProps<typeof Button>["variant"]
+>
+
+// map the color-picker size names to the underlying Button sizes (h / text / px)
+const triggerSizeToButton = {
+  xs: "xs",
+  sm: "sm",
+  md: "default",
+  lg: "lg",
+} as const satisfies Record<
+  ColorPickerTriggerSize,
+  React.ComponentProps<typeof Button>["size"]
+>
+
+// trigger sizing (height / text / radius) per size — px, gap and icon sizing
+// come from the mapped Button size above
+const colorPickerTriggerVariants = cva("min-w-[220px] justify-start", {
+  variants: {
+    size: {
+      xs: "h-6 rounded-sm text-sm",
+      sm: "h-7 rounded-md text-base",
+      md: "h-8 rounded-lg text-base",
+      lg: "h-10 rounded-lg text-lg",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+})
+
 function ColorPickerTrigger(
-  props: React.ComponentProps<typeof PopoverTrigger> & {
+  props: Omit<React.ComponentProps<typeof PopoverTrigger>, "size"> & {
     asChild?: boolean
     disabled?: boolean
-    variant?: React.ComponentProps<typeof Button>["variant"]
+    variant?: ColorPickerTriggerVariant
+    size?: ColorPickerTriggerSize
   }
 ) {
   const {
     asChild,
     disabled,
     variant = "outline",
+    size = "md",
     className,
     ...triggerProps
   } = props
@@ -756,8 +798,15 @@ function ColorPickerTrigger(
       render={
         <TriggerPrimitive
           data-slot="color-picker-trigger"
-          {...(asChild ? {} : { variant })}
-          className={cn("min-w-[220px] justify-start", className)}
+          data-variant={variant}
+          data-size={size}
+          {...(asChild
+            ? {}
+            : {
+                variant: triggerVariantToButton[variant],
+                size: triggerSizeToButton[size],
+              })}
+          className={cn(colorPickerTriggerVariants({ size }), className)}
           {...(triggerProps as React.ComponentProps<"button">)}
         />
       }
@@ -1042,8 +1091,21 @@ function ColorPickerAlphaSlider(
   )
 }
 
-function ColorPickerSwatch(props: DivProps) {
-  const { asChild, className, ...swatchProps } = props
+type ColorPickerSwatchSize = "xs" | "sm" | "md" | "lg"
+
+const colorPickerSwatchVariants = cva("size-6 rounded-full", {
+  variants: {
+    size: {
+      xs: "size-3.5",
+      sm: "size-4",
+      md: "size-4",
+      lg: "size-4",
+    },
+  },
+})
+
+function ColorPickerSwatch(props: DivProps & { size?: ColorPickerSwatchSize }) {
+  const { asChild, size, className, ...swatchProps } = props
 
   const context = useColorPickerContext(SWATCH_NAME)
 
@@ -1082,9 +1144,10 @@ function ColorPickerSwatch(props: DivProps) {
       role="img"
       aria-label={ariaLabel}
       data-slot="color-picker-swatch"
+      data-size={size}
       {...swatchProps}
       className={cn(
-        "size-6 rounded-full",
+        colorPickerSwatchVariants({ size }),
         context.disabled && "opacity-50",
         className
       )}
