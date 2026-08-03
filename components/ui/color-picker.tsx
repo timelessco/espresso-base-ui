@@ -758,10 +758,10 @@ const triggerSizeToButton = {
 const colorPickerTriggerVariants = cva("min-w-[220px] justify-start", {
   variants: {
     size: {
-      xs: "h-6 rounded-sm text-sm",
-      sm: "h-7 rounded-md text-base",
-      md: "h-8 rounded-lg text-base",
-      lg: "h-10 rounded-lg text-lg",
+      xs: "h-6 rounded-sm px-2 text-sm",
+      sm: "h-7 rounded-md px-2 text-base",
+      md: "h-8 rounded-lg px-2.5 text-base",
+      lg: "h-10 rounded-lg px-3 text-lg",
     },
   },
   defaultVariants: {
