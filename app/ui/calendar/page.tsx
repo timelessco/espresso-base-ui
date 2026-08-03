@@ -600,7 +600,7 @@ export default function CalendarPage() {
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
-        <Popover>
+        <Popover defaultOpen>
           <PopoverTrigger
             render={
               <Button

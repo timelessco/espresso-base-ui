@@ -38,7 +38,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        "group/calendar rounded-xl bg-popover p-2 shadow-5xl [--cell-radius:var(--radius-xs)] [--cell-size:calc(var(--spacing)*6)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        "group/calendar rounded-xl bg-popover p-2 shadow-elevation-xl [--cell-radius:var(--radius-xs)] [--cell-size:calc(var(--spacing)*6)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -59,7 +59,7 @@ function Calendar({
           defaultClassNames.months
         ),
         month: cn(
-          "flex w-full flex-col gap-4 overflow-visible",
+          "flex w-full flex-col gap-1.5 overflow-visible",
           defaultClassNames.month
         ),
         nav: cn(
@@ -108,7 +108,7 @@ function Calendar({
           defaultClassNames.weekdays
         ),
         weekday: cn(
-          "rounded-(--cell-radius) text-center text-xs leading-base font-medium tracking-normal text-card-foreground select-none",
+          "flex size-(--cell-size) items-center justify-center rounded-(--cell-radius) text-xs leading-base font-normal tracking-normal text-card-foreground select-none",
           defaultClassNames.weekday
         ),
         week: cn(
@@ -231,7 +231,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "relative isolate z-10 flex h-[var(--cell-size)]! w-[var(--cell-size)]! flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-medium tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        "relative isolate z-10 flex h-[var(--cell-size)]! w-[var(--cell-size)]! flex-col gap-1 rounded-(--cell-radius) border-0 text-xs leading-base font-normal tracking-normal focus-visible:relative focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
         // range start
         "data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground",
         "data-[range-start=true]:after:absolute data-[range-start=true]:after:top-0 data-[range-start=true]:after:-right-0.5 data-[range-start=true]:after:bottom-0 data-[range-start=true]:after:-z-10 data-[range-start=true]:after:w-0.5 data-[range-start=true]:after:bg-muted data-[range-start=true]:after:content-['']",

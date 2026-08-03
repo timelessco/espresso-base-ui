@@ -115,7 +115,7 @@ function InputOTPSlot({
       data-active={isActive}
       className={cn(
         // structural + variant-independent state (bg / shadow / size come from the container)
-        "relative flex items-center justify-center font-medium text-foreground transition-shadow duration-150 outline-none",
+        "relative flex items-center justify-center font-medium text-secondary-foreground transition-shadow duration-150 outline-none",
         "data-[active=true]:z-10 data-[active=true]:ring-3 data-[active=true]:ring-ring/50",
         "group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/20 dark:group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/40",
         className

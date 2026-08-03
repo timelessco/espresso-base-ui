@@ -21,6 +21,35 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
 
+function TriggerDemo({
+  label,
+  variant = "outline",
+  size = "md",
+}: {
+  label: string
+  variant?: "outline" | "subtle" | "ghost"
+  size?: "xs" | "sm" | "md" | "lg"
+}) {
+  const [value, setValue] = React.useState("#3b82f6")
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <ColorPicker value={value} onValueChange={setValue}>
+        <ColorPickerTrigger variant={variant} size={size}>
+          <ColorPickerSwatch size={size} />
+          {value}
+        </ColorPickerTrigger>
+        <ColorPickerContent>
+          <ColorPickerArea />
+          <ColorPickerHueSlider />
+          <ColorPickerFormatSelect className="w-full" />
+          <ColorPickerInput className="flex-1" />
+        </ColorPickerContent>
+      </ColorPicker>
+    </div>
+  )
+}
+
 export default function ColorPickerPage() {
   const [controlled, setControlled] = React.useState("#3b82f6")
   const [withAlpha, setWithAlpha] = React.useState("#ef4444")
@@ -42,6 +71,22 @@ export default function ColorPickerPage() {
             <ColorPickerInput className="flex-1" />
           </ColorPickerContent>
         </ColorPicker>
+      </div>
+
+      {/* Trigger Variants */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Trigger Variants</SectionTitle>
+        {(["outline", "subtle", "ghost"] as const).map((variant) => (
+          <TriggerDemo key={variant} label={variant} variant={variant} />
+        ))}
+      </div>
+
+      {/* Trigger Sizes */}
+      <div className="flex max-w-xs flex-col gap-4">
+        <SectionTitle>Trigger Sizes</SectionTitle>
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <TriggerDemo key={size} label={size} size={size} />
+        ))}
       </div>
 
       {/* With Alpha */}
