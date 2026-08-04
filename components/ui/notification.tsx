@@ -27,7 +27,7 @@ function CloseIcon({ className }: { className?: string }) {
 }
 
 const notificationVariants = cva(
-  "relative flex w-[390px] overflow-hidden rounded-lg bg-card px-3 py-2.5 shadow-3xl",
+  "relative flex w-[390px] overflow-hidden rounded-lg bg-card p-3 shadow-elevation-md",
   {
     variants: {
       variant: {
@@ -133,12 +133,14 @@ function notify(options: NotificationOptions) {
             variant="ghost"
             size="icon-xs"
             className={cn(
-              "absolute right-3",
-              variant === "inline" ? "top-1/2 -translate-y-1/2" : "top-2.5"
+              "absolute",
+              variant === "inline"
+                ? "top-1/2 right-3 -translate-y-1/2"
+                : "top-2 right-2"
             )}
             onClick={() => toast.dismiss(id)}
           >
-            <CloseIcon className="size-4" />
+            <CloseIcon className="size-3.5" />
           </Button>
         )}
       </div>
