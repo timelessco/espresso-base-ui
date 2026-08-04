@@ -52,6 +52,14 @@ export default function TooltipPage() {
                 Plain variant <Diamond className="size-3 shrink-0" />
               </TooltipContent>
             </Tooltip>
+            <Tooltip>
+              <TooltipTrigger render={<Button variant="outline" />}>
+                Subtle
+              </TooltipTrigger>
+              <TooltipContent variant="subtle">
+                Subtle variant <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
 
