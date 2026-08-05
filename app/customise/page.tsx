@@ -44,6 +44,67 @@ const TEXT_TOKENS: Record<string, number> = {
   "15xl": 5.5,
 }
 
+// Left-rail navigation. PREVIEW holds the current customisation pages;
+// COMPONENTS will be wired up one by one.
+const PREVIEW_ITEMS = [{ id: "crm", label: "CRM" }] as const
+
+const COMPONENT_IDS = [
+  "alert",
+  "attachment",
+  "avatar",
+  "badge",
+  "breadcrumb",
+  "button",
+  "button-group",
+  "calendar",
+  "card",
+  "checkbox",
+  "color-picker",
+  "color-swatch",
+  "combobox",
+  "command",
+  "dialog",
+  "dropdown-menu",
+  "empty",
+  "field",
+  "file-upload",
+  "header",
+  "input",
+  "input-group",
+  "input-otp",
+  "item",
+  "kanban",
+  "kbd",
+  "message",
+  "notification",
+  "popover",
+  "progress",
+  "radio",
+  "rating",
+  "select",
+  "separator",
+  "slider",
+  "sonner",
+  "spinner",
+  "switch",
+  "table",
+  "tabs",
+  "tag",
+  "textarea",
+  "timeline",
+  "tooltip",
+] as const
+
+function toLabel(id: string) {
+  return id
+    .split("-")
+    .map((w) => (w === "otp" ? "OTP" : w.charAt(0).toUpperCase() + w.slice(1)))
+    .join(" ")
+}
+
+const COMPONENT_ITEMS = COMPONENT_IDS.map((id) => ({ id, label: toLabel(id) }))
+const RAIL_ITEMS = [...PREVIEW_ITEMS, ...COMPONENT_ITEMS]
+
 const SPACING_BASE = 0.25 // rem — matches --spacing: 0.25rem
 
 const DEFAULTS = {
@@ -143,12 +204,127 @@ function SliderRow({
   )
 }
 
+function FlyoutItem({
+  label,
+  active,
+  onSelect,
+}: {
+  label: string
+  active: boolean
+  onSelect: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={cn(
+        "flex w-full items-center rounded-md px-2 py-1.5 text-left text-base transition-colors",
+        active
+          ? "font-medium text-primary"
+          : "text-secondary-foreground hover:bg-secondary"
+      )}
+    >
+      {label}
+    </button>
+  )
+}
+
+function PreviewRail({
+  active,
+  onSelect,
+}: {
+  active: string
+  onSelect: (id: string) => void
+}) {
+  return (
+    <div className="group/rail relative flex h-full shrink-0 items-stretch px-4">
+      {/* Tick pattern — one mark per flyout item, active one highlighted.
+          Scrolls independently (like the flyout) so every tick is reachable. */}
+      <div className="scrollbar-hide flex h-full flex-col justify-center-safe gap-1.5 overflow-y-auto py-4">
+        {RAIL_ITEMS.map((item) => {
+          const isActive = item.id === active
+          return (
+            <button
+              key={item.id}
+              type="button"
+              aria-label={item.label}
+              onClick={() => onSelect(item.id)}
+              className="flex h-1.5 w-6 items-center"
+            >
+              <span
+                className={cn(
+                  "h-0.5 rounded-full transition-all",
+                  isActive ? "w-6 bg-primary" : "w-4 bg-border"
+                )}
+              />
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Flyout — revealed on hover. Outer stays overflow-visible so the
+          `::before` bridge (covering the ml-2 gap) keeps hover continuous;
+          the inner container does the scrolling. */}
+      <div
+        className={cn(
+          "opacity- 0 invisible absolute top-1/2 left-full z-50 ml-2 flex max-h-[80vh] w-56 -translate-x-1 -translate-y-1/2 flex-col rounded-xl border border-border-soft bg-popover p-1.5 shadow-elevation-xl transition duration-150",
+          "before:absolute before:top-0 before:-left-3 before:h-full before:w-3 before:content-['']",
+          "group-hover/rail:visible group-hover/rail:translate-x-0 group-hover/rail:opacity-100"
+        )}
+      >
+        <div className="scrollbar-hide scroll-fade flex min-h-0 flex-col overflow-y-auto">
+          <span className="px-2 pt-1.5 pb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            Preview
+          </span>
+          {PREVIEW_ITEMS.map((item) => (
+            <FlyoutItem
+              key={item.id}
+              label={item.label}
+              active={item.id === active}
+              onSelect={() => onSelect(item.id)}
+            />
+          ))}
+
+          <div className="my-2 h-px shrink-0 bg-border" />
+
+          <span className="px-2 pt-1 pb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            Components
+          </span>
+          {COMPONENT_ITEMS.map((item) => (
+            <FlyoutItem
+              key={item.id}
+              label={item.label}
+              active={item.id === active}
+              onSelect={() => onSelect(item.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PreviewPlaceholder({ label }: { label: string }) {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
+      <span className="text-2xl font-medium text-foreground">{label}</span>
+      <span className="max-w-xs text-base text-muted-foreground">
+        Customisation for this component is coming soon.
+      </span>
+    </div>
+  )
+}
+
 export default function CustomisePage() {
+  const [active, setActive] = React.useState<string>("crm")
   const [accent, setAccent] = React.useState(DEFAULTS.accent)
   const [danger, setDanger] = React.useState(DEFAULTS.danger)
   const [fontScale, setFontScale] = React.useState(DEFAULTS.fontScale)
   const [spacingScale, setSpacingScale] = React.useState(DEFAULTS.spacingScale)
   const [radius, setRadius] = React.useState(DEFAULTS.radius)
+
+  const activeLabel =
+    RAIL_ITEMS.find((item) => item.id === active)?.label ?? active
 
   const previewVars = React.useMemo(() => {
     const vars: Record<string, string> = {
@@ -172,13 +348,21 @@ export default function CustomisePage() {
   }, [])
 
   return (
-    <div className="flex h-screen w-full overflow-hidden">
-      {/* Preview — CSS variable overrides cascade into the CRM here */}
+    <div className="flex h-screen w-full overflow-hidden bg-secondary">
+      {/* Left rail + hover flyout navigation */}
+      <PreviewRail active={active} onSelect={setActive} />
+
+      {/* Preview — CSS var overrides cascade in; `transform-gpu` makes this the
+          containing block so the CRM's fixed sidebar aligns to it, not the viewport */}
       <div
-        className="min-w-0 flex-1 overflow-hidden"
+        className="min-w-0 flex-1 transform-gpu overflow-hidden bg-background"
         style={previewVars}
       >
-        <CrmPage />
+        {active === "crm" ? (
+          <CrmPage />
+        ) : (
+          <PreviewPlaceholder label={activeLabel} />
+        )}
       </div>
 
       {/* Customiser panel */}
