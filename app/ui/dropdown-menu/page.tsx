@@ -290,13 +290,58 @@ function InsetDropdown() {
   )
 }
 
+function SizesDropdown({ size }: { size: "xs" | "sm" | "md" | "lg" }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <span className="text-xs text-muted-foreground">{size}</span>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={<Button className="w-fit" variant="outline" />}
+        >
+          Open menu
+        </DropdownMenuTrigger>
+        <DropdownMenuContent size={size} className="w-48">
+          <DropdownMenuItem>
+            <User />
+            Profile
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CreditCard />
+            Billing
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings />
+            Settings
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="destructive">
+            <LogOut />
+            Log out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+}
+
 export default function DropdownMenuPage() {
   return (
-    <div className="flex gap-12 p-8">
+    <div className="flex flex-col gap-12 p-8">
       {/* Default */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Default</SectionTitle>
         <DefaultDropdown />
+      </div>
+
+      {/* Sizes */}
+      <div className="flex flex-col gap-4">
+        <SectionTitle>Sizes</SectionTitle>
+        <div className="flex flex-col items-start gap-4">
+          {(["xs", "sm", "md", "lg"] as const).map((size) => (
+            <SizesDropdown key={size} size={size} />
+          ))}
+        </div>
       </div>
 
       {/* Simple */}
