@@ -38,53 +38,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  ChevronsUpDown,
-  Search,
-  Plus,
-  Mail,
-  Trash2,
-  Ellipsis,
-  Settings,
-  Paperclip,
-  Info,
-  CircleCheck,
-  CircleX,
-  TriangleAlert,
-  X,
-  FileText,
-  FileSpreadsheet,
-  Download,
-  User,
-  Moon,
-} from "lucide-react"
-import {
-  Alert,
-  AlertAction,
-  AlertDescription,
-  AlertHandlers,
-  AlertTitle,
-} from "@/components/ui/alert"
-import {
-  Attachment,
-  AttachmentAction,
-  AttachmentActions,
-  AttachmentContent,
-  AttachmentDescription,
-  AttachmentGroup,
-  AttachmentMedia,
-  AttachmentTitle,
-} from "@/components/ui/attachment"
+import { ChevronsUpDown } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarGroupCount,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { PreviewCard } from "./previews/preview-card"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -626,544 +581,12 @@ function ShadowsSection() {
   )
 }
 
-// A bordered showcase card with a bottom-left label (component preview grid).
-function ButtonPreview() {
+
+// Centered spinner shown while a preview chunk loads or the route transitions.
+function LoadingPreview() {
   return (
-    <div className="h-full overflow-y-auto bg-secondary p-6">
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <PreviewCard label="Variants">
-          <Button>Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Danger</Button>
-          <Button variant="link">Link</Button>
-        </PreviewCard>
-
-        <PreviewCard label="Sizes">
-          <Button size="xs">Extra Small</Button>
-          <Button size="sm">Small</Button>
-          <Button size="default">Medium</Button>
-          <Button size="lg">Large</Button>
-          <Button size="xl">Extra Large</Button>
-          <Button size="2xl">2XL</Button>
-        </PreviewCard>
-
-        <PreviewCard label="With icons">
-          <Button>
-            <Search />
-            Search
-          </Button>
-          <Button variant="secondary">
-            <Plus />
-            Add Member
-          </Button>
-          <Button variant="outline">
-            <Mail />
-            Email
-          </Button>
-          <Button variant="destructive">
-            <Trash2 />
-            Delete
-          </Button>
-        </PreviewCard>
-
-        <PreviewCard label="Icon only">
-          <Button variant="secondary" size="icon">
-            <Ellipsis />
-          </Button>
-          <Button variant="outline" size="icon">
-            <Settings />
-          </Button>
-          <Button variant="destructive" size="icon">
-            <Trash2 />
-          </Button>
-        </PreviewCard>
-
-        <PreviewCard label="With file upload">
-          <Button>
-            <Paperclip />
-            Upload File
-          </Button>
-        </PreviewCard>
-
-        <PreviewCard label="Disabled">
-          <Button disabled>Primary</Button>
-          <Button variant="secondary" disabled>
-            Secondary
-          </Button>
-          <Button variant="outline" disabled>
-            Outline
-          </Button>
-          <Button variant="ghost" disabled>
-            Ghost
-          </Button>
-          <Button variant="destructive" disabled>
-            Danger
-          </Button>
-        </PreviewCard>
-      </div>
-    </div>
-  )
-}
-
-function AlertPreview() {
-  return (
-    <div className="h-full overflow-y-auto bg-secondary p-6">
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <PreviewCard label="Variants">
-          <div className="flex w-full max-w-md flex-col gap-3">
-            <Alert variant="default">
-              <Info />
-              <AlertTitle>Heads up</AlertTitle>
-              <AlertDescription>
-                This is a default informational alert.
-              </AlertDescription>
-            </Alert>
-            <Alert variant="success">
-              <CircleCheck />
-              <AlertTitle>Payment received</AlertTitle>
-              <AlertDescription>Your invoice has been paid.</AlertDescription>
-            </Alert>
-            <Alert variant="warning">
-              <TriangleAlert />
-              <AlertTitle>Storage almost full</AlertTitle>
-              <AlertDescription>You have used 90% of space.</AlertDescription>
-            </Alert>
-            <Alert variant="destructive">
-              <CircleX />
-              <AlertTitle>Something went wrong</AlertTitle>
-              <AlertDescription>Please try again later.</AlertDescription>
-            </Alert>
-          </div>
-        </PreviewCard>
-
-        <PreviewCard label="With actions">
-          <div className="flex flex-wrap items-start justify-center gap-3">
-            <Alert variant="info" className="w-full max-w-[220px]">
-              <Info />
-              <AlertTitle>Your trial ends soon!</AlertTitle>
-              <AlertDescription>
-                Upgrade to keep enjoying features.
-              </AlertDescription>
-              <AlertHandlers>
-                <Button variant="secondary" size="sm" className="w-full">
-                  Update now
-                </Button>
-              </AlertHandlers>
-              <AlertAction>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert variant="success" className="w-full max-w-[220px]">
-              <CircleCheck />
-              <AlertTitle>Source added</AlertTitle>
-              <AlertDescription>
-                Your data source is now connected.
-              </AlertDescription>
-              <AlertHandlers>
-                <Button variant="secondary" size="sm" className="w-full">
-                  View changes
-                </Button>
-              </AlertHandlers>
-              <AlertAction>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-          </div>
-        </PreviewCard>
-
-        <PreviewCard label="Banner">
-          <div className="flex w-full max-w-xl flex-col gap-3">
-            <Alert type="banner">
-              <Info />
-              <AlertTitle>Your trial ends soon!</AlertTitle>
-              <AlertAction>
-                <Button variant="ghost" size="sm">
-                  Update
-                </Button>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="info">
-              <Info />
-              <AlertTitle>Your trial ends soon!</AlertTitle>
-              <AlertAction>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-blue-600 dark:text-blue-300"
-                >
-                  Explore now
-                </Button>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="success">
-              <CircleCheck />
-              <AlertTitle>Source successfully added</AlertTitle>
-              <AlertAction>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-green-600 dark:text-green-300"
-                >
-                  Explore now
-                </Button>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="warning">
-              <TriangleAlert />
-              <AlertTitle>Changes will affect all warehouses</AlertTitle>
-              <AlertAction>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-amber-600 dark:text-amber-300"
-                >
-                  Confirm
-                </Button>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="destructive">
-              <CircleX />
-              <AlertTitle>Changes will affect all warehouses</AlertTitle>
-              <AlertAction>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-red-600 dark:text-red-300"
-                >
-                  Retry
-                </Button>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-          </div>
-        </PreviewCard>
-
-        <PreviewCard label="Banner — with description">
-          <div className="flex w-full max-w-xl flex-col gap-3">
-            <Alert type="banner" variant="info">
-              <Info />
-              <AlertTitle>New Feature Available</AlertTitle>
-              <AlertDescription>
-                Discover the new feature to enhance your experience.
-              </AlertDescription>
-              <AlertHandlers>
-                <Button variant="secondary">Explore now</Button>
-                <Button variant="ghost">Dismiss</Button>
-              </AlertHandlers>
-              <AlertAction>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="warning">
-              <TriangleAlert />
-              <AlertTitle>Subscription expiring soon</AlertTitle>
-              <AlertDescription>
-                Your subscription will expire in 7 days.
-              </AlertDescription>
-              <AlertHandlers>
-                <Button variant="secondary">Renew now</Button>
-                <Button variant="ghost">Remind me later</Button>
-              </AlertHandlers>
-              <AlertAction>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-            <Alert type="banner" variant="destructive">
-              <CircleX />
-              <AlertTitle>Failed to save changes</AlertTitle>
-              <AlertDescription>
-                There was a problem processing your request.
-              </AlertDescription>
-              <AlertHandlers>
-                <Button variant="secondary">Try again</Button>
-                <Button variant="ghost">Dismiss</Button>
-              </AlertHandlers>
-              <AlertAction>
-                <Button variant="ghost" size="icon-xs">
-                  <X />
-                </Button>
-              </AlertAction>
-            </Alert>
-          </div>
-        </PreviewCard>
-      </div>
-    </div>
-  )
-}
-
-function AttachmentPreview() {
-  return (
-    <div className="h-full overflow-y-auto bg-secondary p-6">
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <PreviewCard label="File">
-          <Attachment className="w-full max-w-sm">
-            <AttachmentMedia>
-              <FileText />
-            </AttachmentMedia>
-            <AttachmentContent>
-              <AttachmentTitle>sales-dashboard.pdf</AttachmentTitle>
-              <AttachmentDescription>PDF · 2.4 MB</AttachmentDescription>
-            </AttachmentContent>
-            <AttachmentActions>
-              <AttachmentAction aria-label="Remove">
-                <X />
-              </AttachmentAction>
-            </AttachmentActions>
-          </Attachment>
-        </PreviewCard>
-
-        <PreviewCard label="Image">
-          <Attachment className="w-full max-w-sm">
-            <AttachmentMedia variant="image">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=200&dpr=2&q=80"
-                alt="Cover"
-              />
-            </AttachmentMedia>
-            <AttachmentContent>
-              <AttachmentTitle>cover-art.png</AttachmentTitle>
-              <AttachmentDescription>PNG · 840 KB</AttachmentDescription>
-            </AttachmentContent>
-            <AttachmentActions>
-              <AttachmentAction aria-label="Download">
-                <Download />
-              </AttachmentAction>
-              <AttachmentAction aria-label="Remove">
-                <X />
-              </AttachmentAction>
-            </AttachmentActions>
-          </Attachment>
-        </PreviewCard>
-
-        <PreviewCard label="Sizes">
-          <div className="flex w-full max-w-sm flex-col gap-3">
-            {(["default", "sm", "xs"] as const).map((size) => (
-              <Attachment key={size} size={size}>
-                <AttachmentMedia>
-                  <FileText />
-                </AttachmentMedia>
-                <AttachmentContent>
-                  <AttachmentTitle>proposal.docx</AttachmentTitle>
-                  <AttachmentDescription>size = {size}</AttachmentDescription>
-                </AttachmentContent>
-                <AttachmentActions>
-                  <AttachmentAction aria-label="Remove">
-                    <X />
-                  </AttachmentAction>
-                </AttachmentActions>
-              </Attachment>
-            ))}
-          </div>
-        </PreviewCard>
-
-        <PreviewCard label="States">
-          <div className="flex w-full max-w-sm flex-col gap-3">
-            <Attachment state="uploading">
-              <AttachmentMedia>
-                <Spinner />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>report-q3.pdf</AttachmentTitle>
-                <AttachmentDescription>Uploading · 62%</AttachmentDescription>
-              </AttachmentContent>
-            </Attachment>
-            <Attachment state="processing">
-              <AttachmentMedia>
-                <Spinner />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>keynote.mov</AttachmentTitle>
-                <AttachmentDescription>Processing…</AttachmentDescription>
-              </AttachmentContent>
-            </Attachment>
-            <Attachment state="error">
-              <AttachmentMedia>
-                <TriangleAlert />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>archive.zip</AttachmentTitle>
-                <AttachmentDescription>Upload failed</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove">
-                  <X />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-          </div>
-        </PreviewCard>
-
-        <PreviewCard label="Vertical (media on top)">
-          <AttachmentGroup>
-            <Attachment orientation="vertical">
-              <AttachmentMedia variant="image">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&dpr=2&q=80"
-                  alt="Headphones"
-                />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>headphones.jpg</AttachmentTitle>
-                <AttachmentDescription>JPG · 1.2 MB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove">
-                  <X />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-            <Attachment orientation="vertical">
-              <AttachmentMedia>
-                <FileSpreadsheet />
-              </AttachmentMedia>
-              <AttachmentContent>
-                <AttachmentTitle>budget.xlsx</AttachmentTitle>
-                <AttachmentDescription>XLSX · 320 KB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions>
-                <AttachmentAction aria-label="Remove">
-                  <X />
-                </AttachmentAction>
-              </AttachmentActions>
-            </Attachment>
-          </AttachmentGroup>
-        </PreviewCard>
-      </div>
-    </div>
-  )
-}
-
-const AVATAR_SIZES = ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"] as const
-const AVATAR_SRC = "https://github.com/shadcn.png"
-
-function AvatarPreview() {
-  return (
-    <div className="h-full overflow-y-auto bg-secondary p-6">
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <PreviewCard label="Sizes">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size}>
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Fallback">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size}>
-              <AvatarFallback>N</AvatarFallback>
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Icon">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size}>
-              <User className="text-muted-foreground" />
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Square">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size} variant="square">
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="With badge">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size}>
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>N</AvatarFallback>
-              <AvatarBadge />
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Badge with icon">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size}>
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>N</AvatarFallback>
-              <AvatarBadge className="bg-blue-500">
-                <Moon />
-              </AvatarBadge>
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Square with badge">
-          {AVATAR_SIZES.map((size) => (
-            <Avatar key={size} size={size} variant="square">
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>CN</AvatarFallback>
-              <AvatarBadge />
-            </Avatar>
-          ))}
-        </PreviewCard>
-
-        <PreviewCard label="Group — images">
-          <AvatarGroup>
-            <Avatar>
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>A</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarFallback>B</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage src={AVATAR_SRC} alt="User" />
-              <AvatarFallback>C</AvatarFallback>
-            </Avatar>
-            <AvatarGroupCount>+3</AvatarGroupCount>
-          </AvatarGroup>
-        </PreviewCard>
-
-        <PreviewCard label="Group — icons">
-          <AvatarGroup>
-            <Avatar>
-              <User className="text-muted-foreground" />
-            </Avatar>
-            <Avatar>
-              <User className="text-muted-foreground" />
-            </Avatar>
-            <Avatar>
-              <User className="text-muted-foreground" />
-            </Avatar>
-            <AvatarGroupCount>+5</AvatarGroupCount>
-          </AvatarGroup>
-        </PreviewCard>
-      </div>
+    <div className="flex h-full items-center justify-center bg-secondary">
+      <Spinner className="size-6 text-blue-500" />
     </div>
   )
 }
@@ -1172,11 +595,15 @@ function AvatarPreview() {
 // `./previews/<id>`. Loaded client-only (ssr: false) to avoid Base UI useId
 // hydration mismatches across the dynamic boundary.
 const lp = (loader: () => Promise<{ default: React.ComponentType }>) =>
-  dynamic(loader, { ssr: false })
+  dynamic(loader, { ssr: false, loading: () => <LoadingPreview /> })
 
 const PREVIEWS: Record<string, React.ComponentType> = {
+  alert: lp(() => import("./previews/alert")),
+  attachment: lp(() => import("./previews/attachment")),
+  avatar: lp(() => import("./previews/avatar")),
   badge: lp(() => import("./previews/badge")),
   breadcrumb: lp(() => import("./previews/breadcrumb")),
+  button: lp(() => import("./previews/button")),
   "button-group": lp(() => import("./previews/button-group")),
   calendar: lp(() => import("./previews/calendar")),
   card: lp(() => import("./previews/card")),
@@ -1230,10 +657,16 @@ function PreviewPlaceholder({ label }: { label: string }) {
 
 export default function CustomiseView({ active }: { active: string }) {
   const router = useRouter()
+  const [isPending, startTransition] = React.useTransition()
   const setActive = React.useCallback(
-    (id: string) => router.push(`/customise/${id}`),
+    (id: string) => startTransition(() => router.push(`/customise/${id}`)),
     [router]
   )
+  // Render the preview client-only. It's empty on the server and the first
+  // client render (so they match), which keeps the panel's Base UI `useId`
+  // counter stable and avoids hydration mismatches from the preview subtree.
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
   const themeDefaults = useThemeColorDefaults(ALL_COLOR_TOKENS)
   // seed the Style-tab colors so they don't flash before defaults resolve
   const [colors, setColors] = React.useState<Record<string, ColorPair>>({
@@ -1358,7 +791,7 @@ export default function CustomiseView({ active }: { active: string }) {
   }, [themeDefaults])
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-secondary">
+    <div className="flex h-screen w-full overflow-hidden bg-[#f3f3f3] dark:bg-[#2b2b2b]">
       {/* Token overrides applied at :root (so portaled overlays inherit them);
           the tool chrome (rail + panel) is reset via [data-customise-panel]. */}
       <style dangerouslySetInnerHTML={{ __html: previewCss }} />
@@ -1374,16 +807,10 @@ export default function CustomiseView({ active }: { active: string }) {
         data-preview-scope
         className="min-w-0 flex-1 transform-gpu overflow-hidden bg-background"
       >
-        {active === "crm" ? (
+        {!mounted ? null : isPending ? (
+          <LoadingPreview />
+        ) : active === "crm" ? (
           <CrmPage />
-        ) : active === "button" ? (
-          <ButtonPreview />
-        ) : active === "alert" ? (
-          <AlertPreview />
-        ) : active === "attachment" ? (
-          <AttachmentPreview />
-        ) : active === "avatar" ? (
-          <AvatarPreview />
         ) : PREVIEWS[active] ? (
           React.createElement(PREVIEWS[active])
         ) : (
