@@ -7,37 +7,46 @@ import { Checkbox } from "@/components/ui/checkbox"
 export default function CheckboxPreview() {
   return (
     <PreviewGrid>
-      <PreviewCard label="Sizes">
-        <Checkbox size="xs" defaultChecked />
-        <Checkbox size="sm" defaultChecked />
-        <Checkbox size="default" defaultChecked />
+      <PreviewCard label="Default">
+        <Checkbox />
+        <Checkbox defaultChecked />
       </PreviewCard>
 
-      <PreviewCard label="Checked / Unchecked">
-        <Checkbox defaultChecked />
-        <Checkbox />
+      <PreviewCard label="Extra Small (xs)">
+        <Checkbox size="xs" />
+        <Checkbox size="xs" defaultChecked />
+      </PreviewCard>
+
+      <PreviewCard label="Small (sm)">
+        <Checkbox size="sm" />
+        <Checkbox size="sm" defaultChecked />
+      </PreviewCard>
+
+      <PreviewCard label="Disabled">
+        <Checkbox disabled />
+        <Checkbox disabled defaultChecked />
+        <Checkbox size="sm" disabled />
+        <Checkbox size="sm" disabled defaultChecked />
+        <Checkbox size="xs" disabled />
+        <Checkbox size="xs" disabled defaultChecked />
       </PreviewCard>
 
       <PreviewCard label="Indeterminate">
         <Checkbox indeterminate />
         <Checkbox size="sm" indeterminate />
-      </PreviewCard>
-
-      <PreviewCard label="Disabled">
-        <Checkbox disabled defaultChecked />
-        <Checkbox disabled />
+        <Checkbox size="xs" indeterminate />
+        <Checkbox indeterminate disabled />
+        <Checkbox size="sm" indeterminate disabled />
+        <Checkbox size="xs" indeterminate disabled />
       </PreviewCard>
 
       <PreviewCard label="Invalid">
-        <Checkbox data-invalid="true" defaultChecked />
         <Checkbox data-invalid="true" />
-      </PreviewCard>
-
-      <PreviewCard label="With label">
-        <label className="flex items-center gap-2 text-sm text-foreground">
-          <Checkbox defaultChecked />
-          Accept terms
-        </label>
+        <Checkbox data-invalid="true" defaultChecked />
+        <Checkbox size="sm" data-invalid="true" />
+        <Checkbox size="sm" data-invalid="true" defaultChecked />
+        <Checkbox size="xs" data-invalid="true" />
+        <Checkbox size="xs" data-invalid="true" defaultChecked />
       </PreviewCard>
     </PreviewGrid>
   )

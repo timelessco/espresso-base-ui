@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Diamond, Settings } from "lucide-react"
+import { Diamond } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -30,21 +30,27 @@ export default function TooltipPreview() {
         <PreviewCard label="Variants">
           <Tooltip>
             <TooltipTrigger render={<Button variant="outline" />}>
-              Default
+              With arrow
             </TooltipTrigger>
-            <TooltipContent variant="default">Default variant</TooltipContent>
+            <TooltipContent variant="default">
+              Default variant <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger render={<Button variant="outline" />}>
-              Plain
+              Without arrow
             </TooltipTrigger>
-            <TooltipContent variant="plain">Plain variant</TooltipContent>
+            <TooltipContent variant="plain">
+              Plain variant <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger render={<Button variant="outline" />}>
               Subtle
             </TooltipTrigger>
-            <TooltipContent variant="subtle">Subtle variant</TooltipContent>
+            <TooltipContent variant="subtle">
+              Subtle variant <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
           </Tooltip>
         </PreviewCard>
 
@@ -54,17 +60,75 @@ export default function TooltipPreview() {
               <TooltipTrigger render={<Button variant="outline" />}>
                 {side}
               </TooltipTrigger>
-              <TooltipContent side={side}>{side} tooltip</TooltipContent>
+              <TooltipContent side={side}>
+                {side} tooltip <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
             </Tooltip>
           ))}
         </PreviewCard>
 
-        <PreviewCard label="Icon trigger">
+        <PreviewCard label="Text trigger">
+          <p className="max-w-xs text-sm text-muted-foreground">
+            Hover over the{" "}
+            <Tooltip>
+              <TooltipTrigger
+                render={
+                  <span className="cursor-help underline decoration-dotted" />
+                }
+              >
+                underlined text
+              </TooltipTrigger>
+              <TooltipContent>
+                This is an inline tooltip{" "}
+                <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
+            </Tooltip>{" "}
+            to see the tooltip.
+          </p>
+        </PreviewCard>
+
+        <PreviewCard label="Long content">
           <Tooltip>
-            <TooltipTrigger render={<Button variant="outline" size="icon" />}>
-              <Settings />
+            <TooltipTrigger render={<Button variant="outline" />}>
+              Long tooltip
             </TooltipTrigger>
-            <TooltipContent>Settings</TooltipContent>
+            <TooltipContent>
+              This is a longer tooltip message that wraps to multiple lines to
+              show how the component handles longer text content.{" "}
+              <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
+          </Tooltip>
+        </PreviewCard>
+
+        <PreviewCard label="Alignment">
+          {(["start", "center", "end"] as const).map((align) => (
+            <Tooltip key={align}>
+              <TooltipTrigger render={<Button variant="outline" />}>
+                {align}
+              </TooltipTrigger>
+              <TooltipContent align={align}>
+                Aligned to {align} <Diamond className="size-3 shrink-0" />
+              </TooltipContent>
+            </Tooltip>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="With offset">
+          <Tooltip>
+            <TooltipTrigger render={<Button variant="outline" />}>
+              Default offset (4)
+            </TooltipTrigger>
+            <TooltipContent sideOffset={4}>
+              Default offset <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger render={<Button variant="outline" />}>
+              Large offset (12)
+            </TooltipTrigger>
+            <TooltipContent sideOffset={12}>
+              Large offset <Diamond className="size-3 shrink-0" />
+            </TooltipContent>
           </Tooltip>
         </PreviewCard>
       </PreviewGrid>

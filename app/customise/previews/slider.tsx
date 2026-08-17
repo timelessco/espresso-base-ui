@@ -8,35 +8,56 @@ export default function SliderPreview() {
   return (
     <PreviewGrid>
       <PreviewCard label="Sizes">
-        <div className="flex w-full max-w-xs flex-col gap-6">
-          <Slider size="sm" defaultValue={[40]} />
+        <div className="flex w-full max-w-sm flex-col gap-6">
+          <Slider size="sm" defaultValue={[50]} />
           <Slider size="default" defaultValue={[50]} />
-          <Slider size="lg" defaultValue={[60]} />
-          <Slider size="xl" defaultValue={[70]} />
-        </div>
-      </PreviewCard>
-
-      <PreviewCard label="Single value">
-        <div className="w-full max-w-xs">
-          <Slider defaultValue={[35]} />
+          <Slider size="lg" defaultValue={[50]} />
+          <Slider size="xl" defaultValue={[50]} />
         </div>
       </PreviewCard>
 
       <PreviewCard label="Range">
-        <div className="w-full max-w-xs">
-          <Slider defaultValue={[25, 75]} />
+        <div className="flex w-full max-w-sm flex-col gap-6">
+          <Slider size="sm" defaultValue={[25, 75]} />
+          <Slider size="default" defaultValue={[25, 75]} />
+          <Slider size="lg" defaultValue={[25, 75]} />
+          <Slider size="xl" defaultValue={[25, 75]} />
         </div>
       </PreviewCard>
 
-      <PreviewCard label="Steps">
-        <div className="w-full max-w-xs">
-          <Slider defaultValue={[40]} step={10} />
+      <PreviewCard label="Step (10)">
+        <div className="w-full max-w-sm">
+          <Slider defaultValue={[50]} step={10} />
+        </div>
+      </PreviewCard>
+
+      <PreviewCard label="Multiple Values">
+        <div className="w-full max-w-sm">
+          <Slider defaultValue={[20, 50, 80]} />
         </div>
       </PreviewCard>
 
       <PreviewCard label="Disabled">
-        <div className="w-full max-w-xs">
-          <Slider defaultValue={[50]} disabled />
+        <div className="flex w-full max-w-sm flex-col gap-6">
+          <Slider size="sm" defaultValue={[50]} disabled />
+          <Slider size="default" defaultValue={[50]} disabled />
+          <Slider size="lg" defaultValue={[25, 75]} disabled />
+          <Slider size="xl" defaultValue={[25, 75]} disabled />
+        </div>
+      </PreviewCard>
+
+      <PreviewCard label="Vertical">
+        <div className="flex h-40 items-center gap-8">
+          <Slider size="sm" defaultValue={[50]} orientation="vertical" />
+          <Slider size="default" defaultValue={[50]} orientation="vertical" />
+          <Slider size="lg" defaultValue={[25, 75]} orientation="vertical" />
+          <Slider size="xl" defaultValue={[25, 75]} orientation="vertical" />
+          <Slider
+            size="default"
+            defaultValue={[50]}
+            orientation="vertical"
+            disabled
+          />
         </div>
       </PreviewCard>
     </PreviewGrid>

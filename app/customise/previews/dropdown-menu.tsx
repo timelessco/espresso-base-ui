@@ -3,11 +3,16 @@
 import * as React from "react"
 import {
   Bold,
+  Cloud,
   CreditCard,
+  Github,
   Italic,
+  Keyboard,
+  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
+  Plus,
   PlusCircle,
   Settings,
   Underline,
@@ -56,33 +61,58 @@ export default function DropdownMenuPreview() {
                 Settings
                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Keyboard />
+                Keyboard shortcuts
+                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Users />
+                Team
+              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <UserPlus />
+                  Invite users
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>
+                    <Mail />
+                    Email
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <MessageSquare />
+                    Message
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <PlusCircle />
+                    More...
+                  </DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
+              <DropdownMenuItem>
+                <Plus />
+                New Team
+                <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Users />
-              Team
+              <Github />
+              GitHub
             </DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <UserPlus />
-                Invite users
-              </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>
-                  <Mail />
-                  Email
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <MessageSquare />
-                  Message
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PlusCircle />
-                  More...
-                </DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
+            <DropdownMenuItem>
+              <LifeBuoy />
+              Support
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Cloud />
+              API
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
               <LogOut />
@@ -93,9 +123,48 @@ export default function DropdownMenuPreview() {
         </DropdownMenu>
       </PreviewCard>
 
-      <PreviewCard label="With icons">
+      <PreviewCard label="Sizes">
+        {(["xs", "sm", "md", "lg"] as const).map((size) => (
+          <DropdownMenu key={size}>
+            <DropdownMenuTrigger render={<Button variant="outline">{size}</Button>} />
+            <DropdownMenuContent size={size} className="w-48">
+              <DropdownMenuItem>
+                <User />
+                Profile
+                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <CreditCard />
+                Billing
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive">
+                <LogOut />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ))}
+      </PreviewCard>
+
+      <PreviewCard label="Simple">
         <DropdownMenu>
-          <DropdownMenuTrigger render={<Button variant="outline">Format text</Button>} />
+          <DropdownMenuTrigger render={<Button variant="outline">Simple Menu</Button>} />
+          <DropdownMenuContent className="w-48">
+            <DropdownMenuItem>Option One</DropdownMenuItem>
+            <DropdownMenuItem>Option Two</DropdownMenuItem>
+            <DropdownMenuItem>Option Three</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </PreviewCard>
+
+      <PreviewCard label="With icons & shortcuts">
+        <DropdownMenu>
+          <DropdownMenuTrigger render={<Button variant="outline">With Icons</Button>} />
           <DropdownMenuContent className="w-48">
             <DropdownMenuItem>
               <Bold />
@@ -112,40 +181,6 @@ export default function DropdownMenuPreview() {
               Underline
               <DropdownMenuShortcut>⌘U</DropdownMenuShortcut>
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </PreviewCard>
-
-      <PreviewCard label="Sizes">
-        {(["xs", "sm", "md", "lg"] as const).map((size) => (
-          <DropdownMenu key={size}>
-            <DropdownMenuTrigger render={<Button variant="outline">{size}</Button>} />
-            <DropdownMenuContent size={size} className="w-48">
-              <DropdownMenuItem>
-                <User />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive">
-                <LogOut />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ))}
-      </PreviewCard>
-
-      <PreviewCard label="Simple">
-        <DropdownMenu>
-          <DropdownMenuTrigger render={<Button variant="outline">Options</Button>} />
-          <DropdownMenuContent className="w-48">
-            <DropdownMenuItem>Option One</DropdownMenuItem>
-            <DropdownMenuItem>Option Two</DropdownMenuItem>
-            <DropdownMenuItem disabled>Disabled Option</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </PreviewCard>

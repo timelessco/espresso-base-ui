@@ -7,32 +7,37 @@ import { Switch } from "@/components/ui/switch"
 export default function SwitchPreview() {
   return (
     <PreviewGrid>
-      <PreviewCard label="Sizes">
-        <Switch size="xs" defaultChecked />
-        <Switch size="sm" defaultChecked />
-        <Switch size="default" defaultChecked />
+      <PreviewCard label="Default">
+        <Switch />
+        <Switch defaultChecked />
       </PreviewCard>
 
-      <PreviewCard label="On / Off">
-        <Switch defaultChecked />
-        <Switch />
+      <PreviewCard label="Extra Small (xs)">
+        <Switch size="xs" />
+        <Switch size="xs" defaultChecked />
+      </PreviewCard>
+
+      <PreviewCard label="Small (sm)">
+        <Switch size="sm" />
+        <Switch size="sm" defaultChecked />
       </PreviewCard>
 
       <PreviewCard label="Disabled">
-        <Switch disabled defaultChecked />
         <Switch disabled />
+        <Switch disabled defaultChecked />
+        <Switch size="sm" disabled />
+        <Switch size="sm" disabled defaultChecked />
+        <Switch size="xs" disabled />
+        <Switch size="xs" disabled defaultChecked />
       </PreviewCard>
 
       <PreviewCard label="Invalid">
-        <Switch data-invalid="true" defaultChecked />
         <Switch data-invalid="true" />
-      </PreviewCard>
-
-      <PreviewCard label="With label">
-        <label className="flex items-center gap-2 text-sm text-foreground">
-          <Switch defaultChecked />
-          Notifications
-        </label>
+        <Switch data-invalid="true" defaultChecked />
+        <Switch size="sm" data-invalid="true" />
+        <Switch size="sm" data-invalid="true" defaultChecked />
+        <Switch size="xs" data-invalid="true" />
+        <Switch size="xs" data-invalid="true" defaultChecked />
       </PreviewCard>
     </PreviewGrid>
   )

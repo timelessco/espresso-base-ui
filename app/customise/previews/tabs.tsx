@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { User, Lock, Settings, Bell } from "lucide-react"
 import { PreviewCard, PreviewGrid } from "./preview-card"
 import {
   Tabs,
@@ -13,91 +14,270 @@ import {
 export default function TabsPreview() {
   return (
     <PreviewGrid>
-      <PreviewCard label="Default">
+      <PreviewCard label="Subtle — sm">
         <Tabs defaultValue="tab-1" className="w-full max-w-sm">
-          <TabsList variant="default">
+          <TabsList size="sm">
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
             <TabsTrigger value="tab-3">Settings</TabsTrigger>
             <TabsIndicator />
           </TabsList>
-          <TabsContent value="tab-1">Account content.</TabsContent>
-          <TabsContent value="tab-2">Password content.</TabsContent>
-          <TabsContent value="tab-3">Settings content.</TabsContent>
+          <TabsContent value="tab-1">
+            <p className="text-sm text-muted-foreground">
+              Account settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-2">
+            <p className="text-sm text-muted-foreground">
+              Password settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-3">
+            <p className="text-sm text-muted-foreground">
+              General settings content.
+            </p>
+          </TabsContent>
         </Tabs>
       </PreviewCard>
 
-      <PreviewCard label="Line">
+      <PreviewCard label="Subtle — default">
         <Tabs defaultValue="tab-1" className="w-full max-w-sm">
-          <TabsList variant="line">
-            <TabsTrigger value="tab-1">Overview</TabsTrigger>
-            <TabsTrigger value="tab-2">Analytics</TabsTrigger>
-            <TabsTrigger value="tab-3">Reports</TabsTrigger>
+          <TabsList size="default">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
             <TabsIndicator />
           </TabsList>
-          <TabsContent value="tab-1">Overview content.</TabsContent>
-          <TabsContent value="tab-2">Analytics content.</TabsContent>
-          <TabsContent value="tab-3">Reports content.</TabsContent>
+          <TabsContent value="tab-1">
+            <p className="text-sm text-muted-foreground">
+              Account settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-2">
+            <p className="text-sm text-muted-foreground">
+              Password settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-3">
+            <p className="text-sm text-muted-foreground">
+              General settings content.
+            </p>
+          </TabsContent>
         </Tabs>
       </PreviewCard>
 
-      <PreviewCard label="Ghost">
+      <PreviewCard label="Line — sm">
         <Tabs defaultValue="tab-1" className="w-full max-w-sm">
-          <TabsList variant="ghost">
-            <TabsTrigger value="tab-1">One</TabsTrigger>
-            <TabsTrigger value="tab-2">Two</TabsTrigger>
-            <TabsTrigger value="tab-3">Three</TabsTrigger>
+          <TabsList variant="line" size="sm">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
             <TabsIndicator />
           </TabsList>
-          <TabsContent value="tab-1">First panel.</TabsContent>
-          <TabsContent value="tab-2">Second panel.</TabsContent>
-          <TabsContent value="tab-3">Third panel.</TabsContent>
         </Tabs>
       </PreviewCard>
 
-      <PreviewCard label="Browser">
+      <PreviewCard label="Line — default">
         <Tabs defaultValue="tab-1" className="w-full max-w-sm">
-          <TabsList variant="browser">
-            <TabsTrigger value="tab-1">Home</TabsTrigger>
-            <TabsTrigger value="tab-2">Docs</TabsTrigger>
-            <TabsTrigger value="tab-3">API</TabsTrigger>
+          <TabsList variant="line" size="default">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
             <TabsIndicator />
           </TabsList>
-          <TabsContent value="tab-1">Home content.</TabsContent>
-          <TabsContent value="tab-2">Docs content.</TabsContent>
-          <TabsContent value="tab-3">API content.</TabsContent>
         </Tabs>
       </PreviewCard>
 
-      <PreviewCard label="Sizes">
-        <div className="flex w-full max-w-sm flex-col gap-4">
-          <Tabs defaultValue="tab-1">
-            <TabsList size="sm">
-              <TabsTrigger value="tab-1">Small</TabsTrigger>
-              <TabsTrigger value="tab-2">Tabs</TabsTrigger>
-              <TabsIndicator />
-            </TabsList>
-          </Tabs>
-          <Tabs defaultValue="tab-1">
-            <TabsList size="default">
-              <TabsTrigger value="tab-1">Default</TabsTrigger>
-              <TabsTrigger value="tab-2">Tabs</TabsTrigger>
-              <TabsIndicator />
-            </TabsList>
-          </Tabs>
-        </div>
+      <PreviewCard label="Ghost — sm">
+        <Tabs defaultValue="tab-1" className="w-full max-w-sm">
+          <TabsList variant="ghost" size="sm">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
       </PreviewCard>
 
-      <PreviewCard label="Disabled tab">
+      <PreviewCard label="Ghost — default">
         <Tabs defaultValue="tab-1" className="w-full max-w-sm">
-          <TabsList variant="default">
-            <TabsTrigger value="tab-1">Active</TabsTrigger>
-            <TabsTrigger value="tab-2" disabled>
-              Disabled
+          <TabsList variant="ghost" size="default">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Browser — sm">
+        <Tabs defaultValue="tab-3" className="w-full max-w-md">
+          <TabsList variant="browser" size="sm">
+            <TabsTrigger value="tab-1">Tab</TabsTrigger>
+            <TabsTrigger value="tab-2">Tab</TabsTrigger>
+            <TabsTrigger value="tab-3">Tab</TabsTrigger>
+            <TabsTrigger value="tab-4">Tab</TabsTrigger>
+            <TabsTrigger value="tab-5">Tab</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Browser — default">
+        <Tabs defaultValue="tab-3" className="w-full max-w-md">
+          <TabsList variant="browser" size="default">
+            <TabsTrigger value="tab-1">Tab</TabsTrigger>
+            <TabsTrigger value="tab-2">Tab</TabsTrigger>
+            <TabsTrigger value="tab-3">Tab</TabsTrigger>
+            <TabsTrigger value="tab-4">Tab</TabsTrigger>
+            <TabsTrigger value="tab-5">Tab</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="With Icons">
+        <Tabs defaultValue="tab-1" className="w-full max-w-md">
+          <TabsList>
+            <TabsTrigger value="tab-1">
+              <User /> Account
             </TabsTrigger>
-            <TabsTrigger value="tab-3">Enabled</TabsTrigger>
+            <TabsTrigger value="tab-2">
+              <Lock /> Password
+            </TabsTrigger>
+            <TabsTrigger value="tab-3">
+              <Settings /> Settings
+            </TabsTrigger>
+            <TabsTrigger value="tab-4">
+              <Bell /> Notifications
+            </TabsTrigger>
             <TabsIndicator />
           </TabsList>
+          <TabsContent value="tab-1">
+            <p className="text-sm text-muted-foreground">
+              Account settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-2">
+            <p className="text-sm text-muted-foreground">
+              Password settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-3">
+            <p className="text-sm text-muted-foreground">
+              General settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-4">
+            <p className="text-sm text-muted-foreground">
+              Notification settings content.
+            </p>
+          </TabsContent>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="With Icons — Line">
+        <Tabs defaultValue="tab-1" className="w-full max-w-md">
+          <TabsList variant="line">
+            <TabsTrigger value="tab-1">
+              <User /> Account
+            </TabsTrigger>
+            <TabsTrigger value="tab-2">
+              <Lock /> Password
+            </TabsTrigger>
+            <TabsTrigger value="tab-3">
+              <Settings /> Settings
+            </TabsTrigger>
+            <TabsTrigger value="tab-4">
+              <Bell /> Notifications
+            </TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Icon Only">
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger value="tab-1">
+              <User />
+            </TabsTrigger>
+            <TabsTrigger value="tab-2">
+              <Lock />
+            </TabsTrigger>
+            <TabsTrigger value="tab-3">
+              <Settings />
+            </TabsTrigger>
+            <TabsTrigger value="tab-4">
+              <Bell />
+            </TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Disabled Tab">
+        <Tabs defaultValue="tab-1" className="w-full max-w-sm">
+          <TabsList>
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2" disabled>
+              Password
+            </TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Vertical">
+        <Tabs defaultValue="tab-1" orientation="vertical">
+          <TabsList>
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+          <TabsContent value="tab-1">
+            <p className="text-sm text-muted-foreground">
+              Account settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-2">
+            <p className="text-sm text-muted-foreground">
+              Password settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-3">
+            <p className="text-sm text-muted-foreground">
+              General settings content.
+            </p>
+          </TabsContent>
+        </Tabs>
+      </PreviewCard>
+
+      <PreviewCard label="Vertical — Line">
+        <Tabs defaultValue="tab-1" orientation="vertical">
+          <TabsList variant="line">
+            <TabsTrigger value="tab-1">Account</TabsTrigger>
+            <TabsTrigger value="tab-2">Password</TabsTrigger>
+            <TabsTrigger value="tab-3">Settings</TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+          <TabsContent value="tab-1">
+            <p className="text-sm text-muted-foreground">
+              Account settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-2">
+            <p className="text-sm text-muted-foreground">
+              Password settings content.
+            </p>
+          </TabsContent>
+          <TabsContent value="tab-3">
+            <p className="text-sm text-muted-foreground">
+              General settings content.
+            </p>
+          </TabsContent>
         </Tabs>
       </PreviewCard>
     </PreviewGrid>

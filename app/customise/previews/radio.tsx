@@ -8,47 +8,71 @@ export default function RadioPreview() {
   return (
     <PreviewGrid>
       <PreviewCard label="Default">
-        <RadioGroup defaultValue="a">
-          <label className="flex items-center gap-2 text-sm text-foreground">
-            <RadioGroupItem value="a" />
-            Option A
-          </label>
-          <label className="flex items-center gap-2 text-sm text-foreground">
-            <RadioGroupItem value="b" />
-            Option B
-          </label>
-          <label className="flex items-center gap-2 text-sm text-foreground">
-            <RadioGroupItem value="c" />
-            Option C
-          </label>
+        <RadioGroup defaultValue="option-1">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem value="option-1" />
+            <RadioGroupItem value="option-2" />
+          </div>
         </RadioGroup>
       </PreviewCard>
 
-      <PreviewCard label="Sizes">
-        <RadioGroup defaultValue="x" className="flex-row items-center gap-4">
-          <RadioGroupItem value="x" size="xs" />
-          <RadioGroupItem value="y" size="sm" />
-          <RadioGroupItem value="z" size="default" />
+      <PreviewCard label="Extra Small (xs)">
+        <RadioGroup defaultValue="option-1">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem size="xs" value="option-1" />
+            <RadioGroupItem size="xs" value="option-2" />
+          </div>
+        </RadioGroup>
+      </PreviewCard>
+
+      <PreviewCard label="Small (sm)">
+        <RadioGroup defaultValue="option-1">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem size="sm" value="option-1" />
+            <RadioGroupItem size="sm" value="option-2" />
+          </div>
         </RadioGroup>
       </PreviewCard>
 
       <PreviewCard label="Disabled">
-        <RadioGroup defaultValue="on" disabled>
-          <label className="flex items-center gap-2 text-sm text-foreground">
-            <RadioGroupItem value="on" />
-            Selected
-          </label>
-          <label className="flex items-center gap-2 text-sm text-foreground">
-            <RadioGroupItem value="off" />
-            Unselected
-          </label>
+        <RadioGroup defaultValue="dis-2" disabled className="w-auto">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem value="dis-1" />
+            <RadioGroupItem value="dis-2" />
+          </div>
+        </RadioGroup>
+        <RadioGroup defaultValue="dis-4" disabled className="w-auto">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem size="sm" value="dis-3" />
+            <RadioGroupItem size="sm" value="dis-4" />
+          </div>
+        </RadioGroup>
+        <RadioGroup defaultValue="dis-6" disabled className="w-auto">
+          <div className="flex items-center gap-4">
+            <RadioGroupItem size="xs" value="dis-5" />
+            <RadioGroupItem size="xs" value="dis-6" />
+          </div>
         </RadioGroup>
       </PreviewCard>
 
       <PreviewCard label="Invalid">
-        <RadioGroup defaultValue="one" className="flex-row items-center gap-4">
-          <RadioGroupItem value="one" data-invalid="true" />
-          <RadioGroupItem value="two" data-invalid="true" />
+        <RadioGroup value="" className="w-auto">
+          <RadioGroupItem data-invalid="true" value="inv-1" />
+        </RadioGroup>
+        <RadioGroup value="inv-2" className="w-auto">
+          <RadioGroupItem data-invalid="true" value="inv-2" />
+        </RadioGroup>
+        <RadioGroup value="" className="w-auto">
+          <RadioGroupItem size="sm" data-invalid="true" value="inv-3" />
+        </RadioGroup>
+        <RadioGroup value="inv-4" className="w-auto">
+          <RadioGroupItem size="sm" data-invalid="true" value="inv-4" />
+        </RadioGroup>
+        <RadioGroup value="" className="w-auto">
+          <RadioGroupItem size="xs" data-invalid="true" value="inv-5" />
+        </RadioGroup>
+        <RadioGroup value="inv-6" className="w-auto">
+          <RadioGroupItem size="xs" data-invalid="true" value="inv-6" />
         </RadioGroup>
       </PreviewCard>
     </PreviewGrid>

@@ -1,7 +1,13 @@
 "use client"
 
 import * as React from "react"
-import { CheckCheckIcon, CopyIcon, RotateCcwIcon } from "lucide-react"
+import {
+  CheckCheckIcon,
+  CopyIcon,
+  RotateCcwIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+} from "lucide-react"
 
 import { PreviewCard, PreviewGrid } from "./preview-card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -15,6 +21,16 @@ import {
   MessageGroup,
   MessageHeader,
 } from "@/components/ui/message"
+
+const BUBBLE_VARIANTS = [
+  "default",
+  "secondary",
+  "muted",
+  "tinted",
+  "outline",
+  "ghost",
+  "destructive",
+] as const
 
 export default function MessagePreview() {
   return (
@@ -94,38 +110,67 @@ export default function MessagePreview() {
         </div>
       </PreviewCard>
 
-      <PreviewCard label="With actions & reactions">
-        <div className="flex w-full max-w-sm flex-col gap-4">
-          <Message>
-            <MessageAvatar>
-              <Avatar className="size-8">
-                <AvatarFallback>AI</AvatarFallback>
-              </Avatar>
-            </MessageAvatar>
-            <MessageContent>
-              <Bubble variant="secondary">
-                <BubbleContent>
-                  Here&apos;s a summary of the three options.
-                </BubbleContent>
-              </Bubble>
-              <MessageFooter className="gap-0.5">
-                <Button variant="ghost" size="icon-xs" aria-label="Copy">
-                  <CopyIcon />
-                </Button>
-                <Button variant="ghost" size="icon-xs" aria-label="Regenerate">
-                  <RotateCcwIcon />
-                </Button>
-              </MessageFooter>
-            </MessageContent>
-          </Message>
-          <Message align="end">
-            <MessageContent>
-              <Bubble className="mb-4">
-                <BubbleContent>Just merged it 🎉</BubbleContent>
-                <BubbleReactions>👍 3 ❤️ 2</BubbleReactions>
-              </Bubble>
-            </MessageContent>
-          </Message>
+      <PreviewCard label="With actions">
+        <Message className="max-w-sm">
+          <MessageAvatar>
+            <Avatar className="size-8">
+              <AvatarFallback>AI</AvatarFallback>
+            </Avatar>
+          </MessageAvatar>
+          <MessageContent>
+            <Bubble variant="secondary">
+              <BubbleContent>
+                Here&apos;s a summary of the three options with their
+                trade-offs.
+              </BubbleContent>
+            </Bubble>
+            <MessageFooter className="gap-0.5">
+              <Button variant="ghost" size="icon-xs" aria-label="Copy message">
+                <CopyIcon />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                aria-label="Regenerate response"
+              >
+                <RotateCcwIcon />
+              </Button>
+              <Button variant="ghost" size="icon-xs" aria-label="Good response">
+                <ThumbsUpIcon />
+              </Button>
+              <Button variant="ghost" size="icon-xs" aria-label="Bad response">
+                <ThumbsDownIcon />
+              </Button>
+            </MessageFooter>
+          </MessageContent>
+        </Message>
+      </PreviewCard>
+
+      <PreviewCard label="With reactions">
+        <Message align="end" className="max-w-sm">
+          <MessageContent>
+            <Bubble className="mb-4">
+              <BubbleContent>Just merged it 🎉</BubbleContent>
+              <BubbleReactions>👍 3 ❤️ 2</BubbleReactions>
+            </Bubble>
+          </MessageContent>
+        </Message>
+      </PreviewCard>
+
+      <PreviewCard label="Bubble variants">
+        <div className="flex w-full max-w-sm flex-col gap-3">
+          {BUBBLE_VARIANTS.map((variant) => (
+            <Message key={variant}>
+              <MessageContent>
+                <Bubble variant={variant}>
+                  <BubbleContent>
+                    This is the <span className="font-medium">{variant}</span>{" "}
+                    bubble variant.
+                  </BubbleContent>
+                </Bubble>
+              </MessageContent>
+            </Message>
+          ))}
         </div>
       </PreviewCard>
     </PreviewGrid>

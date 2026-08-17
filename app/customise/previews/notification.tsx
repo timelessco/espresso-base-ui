@@ -141,6 +141,24 @@ export default function NotificationPreview() {
                 title: "System Update Available",
                 description:
                   "A new update is available. Update now to enjoy new features and improvements.",
+                actionType: "single",
+                actions: [
+                  { label: "Update now", onClick: noop },
+                  { label: "Update now", onClick: noop },
+                ],
+              })
+            }
+          >
+            Stacked
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              notify({
+                variant: "modal",
+                title: "System Update Available",
+                description:
+                  "A new update is available. Update now to enjoy new features and improvements.",
                 actionType: "dual",
                 actions: [
                   { label: "Update now", onClick: noop },

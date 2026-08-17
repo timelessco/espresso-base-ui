@@ -8,6 +8,10 @@ import { PreviewCard, PreviewGrid } from "./preview-card"
 export default function SpinnerPreview() {
   return (
     <PreviewGrid>
+      <PreviewCard label="Default">
+        <Spinner />
+      </PreviewCard>
+
       <PreviewCard label="Sizes">
         <Spinner size="sm" />
         <Spinner size="default" />
@@ -15,7 +19,7 @@ export default function SpinnerPreview() {
         <Spinner size="xl" />
       </PreviewCard>
 
-      <PreviewCard label="With track">
+      <PreviewCard label="With Track">
         <Spinner size="sm" track />
         <Spinner size="default" track />
         <Spinner size="lg" track />
@@ -29,7 +33,14 @@ export default function SpinnerPreview() {
         <Spinner size="xl" className="text-red-500" />
       </PreviewCard>
 
-      <PreviewCard label="On background">
+      <PreviewCard label="Colors with Track">
+        <Spinner size="xl" track className="text-blue-500" />
+        <Spinner size="xl" track className="text-green-500" />
+        <Spinner size="xl" track className="text-amber-500" />
+        <Spinner size="xl" track className="text-red-500" />
+      </PreviewCard>
+
+      <PreviewCard label="On Background">
         <div className="flex size-12 items-center justify-center rounded-lg bg-primary">
           <Spinner size="xl" className="text-primary-foreground" />
         </div>

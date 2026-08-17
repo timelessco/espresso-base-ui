@@ -779,7 +779,7 @@ function AlertPreview() {
 
         <PreviewCard label="Banner">
           <div className="flex w-full max-w-xl flex-col gap-3">
-            <Alert type="banner" variant="default">
+            <Alert type="banner">
               <Info />
               <AlertTitle>Your trial ends soon!</AlertTitle>
               <AlertAction>
@@ -791,12 +791,32 @@ function AlertPreview() {
                 </Button>
               </AlertAction>
             </Alert>
+            <Alert type="banner" variant="info">
+              <Info />
+              <AlertTitle>Your trial ends soon!</AlertTitle>
+              <AlertAction>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-blue-600 dark:text-blue-300"
+                >
+                  Explore now
+                </Button>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
             <Alert type="banner" variant="success">
               <CircleCheck />
               <AlertTitle>Source successfully added</AlertTitle>
               <AlertAction>
-                <Button variant="ghost" size="sm">
-                  Explore
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-green-600 dark:text-green-300"
+                >
+                  Explore now
                 </Button>
                 <Button variant="ghost" size="icon-xs">
                   <X />
@@ -807,7 +827,11 @@ function AlertPreview() {
               <TriangleAlert />
               <AlertTitle>Changes will affect all warehouses</AlertTitle>
               <AlertAction>
-                <Button variant="ghost" size="sm">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-amber-600 dark:text-amber-300"
+                >
                   Confirm
                 </Button>
                 <Button variant="ghost" size="icon-xs">
@@ -817,9 +841,13 @@ function AlertPreview() {
             </Alert>
             <Alert type="banner" variant="destructive">
               <CircleX />
-              <AlertTitle>Failed to save changes</AlertTitle>
+              <AlertTitle>Changes will affect all warehouses</AlertTitle>
               <AlertAction>
-                <Button variant="ghost" size="sm">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-red-600 dark:text-red-300"
+                >
                   Retry
                 </Button>
                 <Button variant="ghost" size="icon-xs">
@@ -830,24 +858,57 @@ function AlertPreview() {
           </div>
         </PreviewCard>
 
-        <PreviewCard label="Banner with description">
-          <Alert type="banner" variant="info" className="w-full max-w-xl">
-            <Info />
-            <AlertTitle>New Feature Available</AlertTitle>
-            <AlertDescription>
-              Discover the new feature to enhance your experience.
-            </AlertDescription>
-            <AlertHandlers>
-              <Button variant="secondary" size="sm">
-                Learn more
-              </Button>
-            </AlertHandlers>
-            <AlertAction>
-              <Button variant="ghost" size="icon-xs">
-                <X />
-              </Button>
-            </AlertAction>
-          </Alert>
+        <PreviewCard label="Banner — with description">
+          <div className="flex w-full max-w-xl flex-col gap-3">
+            <Alert type="banner" variant="info">
+              <Info />
+              <AlertTitle>New Feature Available</AlertTitle>
+              <AlertDescription>
+                Discover the new feature to enhance your experience.
+              </AlertDescription>
+              <AlertHandlers>
+                <Button variant="secondary">Explore now</Button>
+                <Button variant="ghost">Dismiss</Button>
+              </AlertHandlers>
+              <AlertAction>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert type="banner" variant="warning">
+              <TriangleAlert />
+              <AlertTitle>Subscription expiring soon</AlertTitle>
+              <AlertDescription>
+                Your subscription will expire in 7 days.
+              </AlertDescription>
+              <AlertHandlers>
+                <Button variant="secondary">Renew now</Button>
+                <Button variant="ghost">Remind me later</Button>
+              </AlertHandlers>
+              <AlertAction>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert type="banner" variant="destructive">
+              <CircleX />
+              <AlertTitle>Failed to save changes</AlertTitle>
+              <AlertDescription>
+                There was a problem processing your request.
+              </AlertDescription>
+              <AlertHandlers>
+                <Button variant="secondary">Try again</Button>
+                <Button variant="ghost">Dismiss</Button>
+              </AlertHandlers>
+              <AlertAction>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+          </div>
         </PreviewCard>
       </div>
     </div>

@@ -30,16 +30,45 @@ export default function SonnerPreview() {
           >
             With description
           </Button>
+        </PreviewCard>
+
+        <PreviewCard label="With prefix icon">
           <Button
             variant="outline"
             onClick={() =>
               toast("You have a new notification", {
                 icon: <BellIcon className="size-4" />,
+              })
+            }
+          >
+            Notification
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Dismissible notification", {
+                duration: 90000,
+                icon: <BellIcon className="size-4" />,
                 closeButton: true,
               })
             }
           >
-            Icon + close
+            With close icon
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Event has been created", {
+                description: "December 03, 2023 at 9:00 AM",
+                action: {
+                  label: "Undo",
+                  onClick: () => toast("Undone"),
+                },
+                closeButton: true,
+              })
+            }
+          >
+            Close + Action
           </Button>
         </PreviewCard>
 
@@ -116,6 +145,61 @@ export default function SonnerPreview() {
             }}
           >
             Run promise
+          </Button>
+        </PreviewCard>
+
+        <PreviewCard label="Position">
+          <Button
+            variant="outline"
+            onClick={() => toast("Top left", { position: "top-left" })}
+          >
+            Top left
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast("Top center", { position: "top-center" })}
+          >
+            Top center
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast("Top right", { position: "top-right" })}
+          >
+            Top right
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast("Bottom left", { position: "bottom-left" })}
+          >
+            Bottom left
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Bottom center", { position: "bottom-center" })
+            }
+          >
+            Bottom center
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => toast("Bottom right", { position: "bottom-right" })}
+          >
+            Bottom right
+          </Button>
+        </PreviewCard>
+
+        <PreviewCard label="Custom">
+          <Button
+            variant="outline"
+            onClick={() =>
+              toast("Custom duration", {
+                description: "This toast stays for 10 seconds",
+                duration: 10000,
+              })
+            }
+          >
+            Long duration
           </Button>
           <Button variant="outline" onClick={() => toast.dismiss()}>
             Dismiss all
