@@ -1266,45 +1266,77 @@ export default function CustomiseView({ active }: { active: string }) {
   const activeLabel =
     RAIL_ITEMS.find((item) => item.id === active)?.label ?? active
 
-  // Scoped CSS: only tokens that differ from the theme default are overridden,
-  // split into light and `.dark [data-preview-scope]` rules.
+  // Overrides are applied at `:root` so that portaled overlays (Base UI
+  // Select/Popover/Dropdown popups render to document.body, outside the
+  // preview) also pick them up. The customiser panel is then reset back to the
+  // theme defaults via `[data-customise-panel]` so the tool chrome stays stable.
   const previewCss = React.useMemo(() => {
-    const fontVars = Object.entries(TEXT_TOKENS)
-      .map(
-        ([name, base]) => `--text-${name}:${(base * fontScale).toFixed(4)}rem;`
-      )
-      .join("")
-    const leadingVars = [
-      ...Object.entries(LEADING_TOKENS).map(
-        ([name, base]) => `--leading-${name}:${(base * lineScale).toFixed(4)};`
-      ),
-      ...Object.entries(TEXT_LEADING_TOKENS).map(
-        ([name, base]) =>
-          `--text-${name}--line-height:${(base * lineScale).toFixed(4)};`
-      ),
-    ].join("")
-    const trackingVars = Object.entries(TRACKING_TOKENS)
-      .map(
-        ([name, base]) =>
-          `--tracking-${name}:${(base + letterSpacing).toFixed(4)}em;`
-      )
-      .join("")
-    const shared = `--radius:${radius}px;--spacing:${(SPACING_BASE * spacingScale).toFixed(4)}rem;${fontVars}${leadingVars}${trackingVars}`
+    const buildShared = (
+      fs: number,
+      ls: number,
+      letter: number,
+      ss: number,
+      r: number
+    ) => {
+      const fontVars = Object.entries(TEXT_TOKENS)
+        .map(([name, base]) => `--text-${name}:${(base * fs).toFixed(4)}rem;`)
+        .join("")
+      const leadingVars = [
+        ...Object.entries(LEADING_TOKENS).map(
+          ([name, base]) => `--leading-${name}:${(base * ls).toFixed(4)};`
+        ),
+        ...Object.entries(TEXT_LEADING_TOKENS).map(
+          ([name, base]) =>
+            `--text-${name}--line-height:${(base * ls).toFixed(4)};`
+        ),
+      ].join("")
+      const trackingVars = Object.entries(TRACKING_TOKENS)
+        .map(([name, base]) => `--tracking-${name}:${(base + letter).toFixed(4)}em;`)
+        .join("")
+      return `--radius:${r}px;--spacing:${(SPACING_BASE * ss).toFixed(4)}rem;${fontVars}${leadingVars}${trackingVars}`
+    }
 
+    const sharedCurrent = buildShared(
+      fontScale,
+      lineScale,
+      letterSpacing,
+      spacingScale,
+      radius
+    )
+    const sharedDefault = buildShared(
+      DEFAULTS.fontScale,
+      DEFAULTS.lineScale,
+      DEFAULTS.letterSpacing,
+      DEFAULTS.spacingScale,
+      DEFAULTS.radius
+    )
+
+    // color overrides (only tokens that differ) + their panel resets
     const light: string[] = []
     const dark: string[] = []
+    const resetLight: string[] = []
+    const resetDark: string[] = []
     for (const token of ALL_COLOR_TOKENS) {
       const pair = colors[token]
       const def = themeDefaults[token]
       if (!pair || !def) continue
-      if (pair.light.toLowerCase() !== def.light.toLowerCase())
+      if (pair.light.toLowerCase() !== def.light.toLowerCase()) {
         light.push(`--${token}:${pair.light};`)
-      if (pair.dark.toLowerCase() !== def.dark.toLowerCase())
+        resetLight.push(`--${token}:${def.light};`)
+      }
+      if (pair.dark.toLowerCase() !== def.dark.toLowerCase()) {
         dark.push(`--${token}:${pair.dark};`)
+        resetDark.push(`--${token}:${def.dark};`)
+      }
     }
+
     return (
-      `[data-preview-scope]{${shared}${light.join("")}}` +
-      (dark.length ? `.dark [data-preview-scope]{${dark.join("")}}` : "")
+      `:root{${sharedCurrent}${light.join("")}}` +
+      (dark.length ? `.dark{${dark.join("")}}` : "") +
+      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}}` +
+      (resetDark.length
+        ? `.dark [data-customise-panel]{${resetDark.join("")}}`
+        : "")
     )
   }, [
     colors,
@@ -1327,11 +1359,14 @@ export default function CustomiseView({ active }: { active: string }) {
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-secondary">
-      {/* Scoped token overrides (light + dark) for the preview only */}
+      {/* Token overrides applied at :root (so portaled overlays inherit them);
+          the tool chrome (rail + panel) is reset via [data-customise-panel]. */}
       <style dangerouslySetInnerHTML={{ __html: previewCss }} />
 
       {/* Left rail + hover flyout navigation */}
-      <PreviewRail active={active} onSelect={setActive} />
+      <div data-customise-panel className="contents">
+        <PreviewRail active={active} onSelect={setActive} />
+      </div>
 
       {/* Preview — CSS var overrides cascade in; `transform-gpu` makes this the
           containing block so the CRM's fixed sidebar aligns to it, not the viewport */}
@@ -1357,7 +1392,10 @@ export default function CustomiseView({ active }: { active: string }) {
       </div>
 
       {/* Customiser panel — floating card */}
-      <aside className="m-3 flex w-80 shrink-0 flex-col overflow-hidden rounded-2xl border border-border-soft bg-background shadow-elevation-xl">
+      <aside
+        data-customise-panel
+        className="m-3 flex w-80 shrink-0 flex-col overflow-hidden rounded-2xl border border-border-soft bg-background shadow-elevation-xl"
+      >
         <Tabs
           defaultValue="style"
           className="flex min-h-0 flex-1 flex-col gap-0"
