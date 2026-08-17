@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { RotateCcw } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -46,7 +47,44 @@ import {
   Ellipsis,
   Settings,
   Paperclip,
+  Info,
+  CircleCheck,
+  CircleX,
+  TriangleAlert,
+  X,
+  FileText,
+  FileSpreadsheet,
+  Download,
+  User,
+  Moon,
 } from "lucide-react"
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertHandlers,
+  AlertTitle,
+} from "@/components/ui/alert"
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentGroup,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment"
+import { Spinner } from "@/components/ui/spinner"
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import { PreviewCard } from "./previews/preview-card"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -353,7 +391,7 @@ function FlyoutItem({
       className={cn(
         "flex w-full items-center rounded-md px-2 py-1.5 text-left text-base transition-colors",
         active
-          ? "font-medium text-primary"
+          ? "font-medium text-blue-500"
           : "text-secondary-foreground hover:bg-secondary"
       )}
     >
@@ -387,7 +425,7 @@ function PreviewRail({
               <span
                 className={cn(
                   "h-0.5 rounded-full transition-all",
-                  isActive ? "w-6 bg-primary" : "w-4 bg-border"
+                  isActive ? "w-6 bg-blue-500" : "w-4 bg-border"
                 )}
               />
             </button>
@@ -589,25 +627,6 @@ function ShadowsSection() {
 }
 
 // A bordered showcase card with a bottom-left label (component preview grid).
-function PreviewCard({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
-  return (
-    <div className="flex min-h-64 flex-col rounded-xl border border-border-soft bg-background">
-      <div className="flex flex-1 flex-wrap items-center justify-center gap-3 p-10">
-        {children}
-      </div>
-      <div className="border-t border-border-soft px-4 py-3 text-sm text-muted-foreground">
-        {label}
-      </div>
-    </div>
-  )
-}
-
 function ButtonPreview() {
   return (
     <div className="h-full overflow-y-auto bg-secondary p-6">
@@ -686,6 +705,455 @@ function ButtonPreview() {
       </div>
     </div>
   )
+}
+
+function AlertPreview() {
+  return (
+    <div className="h-full overflow-y-auto bg-secondary p-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <PreviewCard label="Variants">
+          <div className="flex w-full max-w-md flex-col gap-3">
+            <Alert variant="default">
+              <Info />
+              <AlertTitle>Heads up</AlertTitle>
+              <AlertDescription>
+                This is a default informational alert.
+              </AlertDescription>
+            </Alert>
+            <Alert variant="success">
+              <CircleCheck />
+              <AlertTitle>Payment received</AlertTitle>
+              <AlertDescription>Your invoice has been paid.</AlertDescription>
+            </Alert>
+            <Alert variant="warning">
+              <TriangleAlert />
+              <AlertTitle>Storage almost full</AlertTitle>
+              <AlertDescription>You have used 90% of space.</AlertDescription>
+            </Alert>
+            <Alert variant="destructive">
+              <CircleX />
+              <AlertTitle>Something went wrong</AlertTitle>
+              <AlertDescription>Please try again later.</AlertDescription>
+            </Alert>
+          </div>
+        </PreviewCard>
+
+        <PreviewCard label="With actions">
+          <div className="flex flex-wrap items-start justify-center gap-3">
+            <Alert variant="info" className="w-full max-w-[220px]">
+              <Info />
+              <AlertTitle>Your trial ends soon!</AlertTitle>
+              <AlertDescription>
+                Upgrade to keep enjoying features.
+              </AlertDescription>
+              <AlertHandlers>
+                <Button variant="secondary" size="sm" className="w-full">
+                  Update now
+                </Button>
+              </AlertHandlers>
+              <AlertAction>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert variant="success" className="w-full max-w-[220px]">
+              <CircleCheck />
+              <AlertTitle>Source added</AlertTitle>
+              <AlertDescription>
+                Your data source is now connected.
+              </AlertDescription>
+              <AlertHandlers>
+                <Button variant="secondary" size="sm" className="w-full">
+                  View changes
+                </Button>
+              </AlertHandlers>
+              <AlertAction>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+          </div>
+        </PreviewCard>
+
+        <PreviewCard label="Banner">
+          <div className="flex w-full max-w-xl flex-col gap-3">
+            <Alert type="banner" variant="default">
+              <Info />
+              <AlertTitle>Your trial ends soon!</AlertTitle>
+              <AlertAction>
+                <Button variant="ghost" size="sm">
+                  Update
+                </Button>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert type="banner" variant="success">
+              <CircleCheck />
+              <AlertTitle>Source successfully added</AlertTitle>
+              <AlertAction>
+                <Button variant="ghost" size="sm">
+                  Explore
+                </Button>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert type="banner" variant="warning">
+              <TriangleAlert />
+              <AlertTitle>Changes will affect all warehouses</AlertTitle>
+              <AlertAction>
+                <Button variant="ghost" size="sm">
+                  Confirm
+                </Button>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+            <Alert type="banner" variant="destructive">
+              <CircleX />
+              <AlertTitle>Failed to save changes</AlertTitle>
+              <AlertAction>
+                <Button variant="ghost" size="sm">
+                  Retry
+                </Button>
+                <Button variant="ghost" size="icon-xs">
+                  <X />
+                </Button>
+              </AlertAction>
+            </Alert>
+          </div>
+        </PreviewCard>
+
+        <PreviewCard label="Banner with description">
+          <Alert type="banner" variant="info" className="w-full max-w-xl">
+            <Info />
+            <AlertTitle>New Feature Available</AlertTitle>
+            <AlertDescription>
+              Discover the new feature to enhance your experience.
+            </AlertDescription>
+            <AlertHandlers>
+              <Button variant="secondary" size="sm">
+                Learn more
+              </Button>
+            </AlertHandlers>
+            <AlertAction>
+              <Button variant="ghost" size="icon-xs">
+                <X />
+              </Button>
+            </AlertAction>
+          </Alert>
+        </PreviewCard>
+      </div>
+    </div>
+  )
+}
+
+function AttachmentPreview() {
+  return (
+    <div className="h-full overflow-y-auto bg-secondary p-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <PreviewCard label="File">
+          <Attachment className="w-full max-w-sm">
+            <AttachmentMedia>
+              <FileText />
+            </AttachmentMedia>
+            <AttachmentContent>
+              <AttachmentTitle>sales-dashboard.pdf</AttachmentTitle>
+              <AttachmentDescription>PDF · 2.4 MB</AttachmentDescription>
+            </AttachmentContent>
+            <AttachmentActions>
+              <AttachmentAction aria-label="Remove">
+                <X />
+              </AttachmentAction>
+            </AttachmentActions>
+          </Attachment>
+        </PreviewCard>
+
+        <PreviewCard label="Image">
+          <Attachment className="w-full max-w-sm">
+            <AttachmentMedia variant="image">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=200&dpr=2&q=80"
+                alt="Cover"
+              />
+            </AttachmentMedia>
+            <AttachmentContent>
+              <AttachmentTitle>cover-art.png</AttachmentTitle>
+              <AttachmentDescription>PNG · 840 KB</AttachmentDescription>
+            </AttachmentContent>
+            <AttachmentActions>
+              <AttachmentAction aria-label="Download">
+                <Download />
+              </AttachmentAction>
+              <AttachmentAction aria-label="Remove">
+                <X />
+              </AttachmentAction>
+            </AttachmentActions>
+          </Attachment>
+        </PreviewCard>
+
+        <PreviewCard label="Sizes">
+          <div className="flex w-full max-w-sm flex-col gap-3">
+            {(["default", "sm", "xs"] as const).map((size) => (
+              <Attachment key={size} size={size}>
+                <AttachmentMedia>
+                  <FileText />
+                </AttachmentMedia>
+                <AttachmentContent>
+                  <AttachmentTitle>proposal.docx</AttachmentTitle>
+                  <AttachmentDescription>size = {size}</AttachmentDescription>
+                </AttachmentContent>
+                <AttachmentActions>
+                  <AttachmentAction aria-label="Remove">
+                    <X />
+                  </AttachmentAction>
+                </AttachmentActions>
+              </Attachment>
+            ))}
+          </div>
+        </PreviewCard>
+
+        <PreviewCard label="States">
+          <div className="flex w-full max-w-sm flex-col gap-3">
+            <Attachment state="uploading">
+              <AttachmentMedia>
+                <Spinner />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>report-q3.pdf</AttachmentTitle>
+                <AttachmentDescription>Uploading · 62%</AttachmentDescription>
+              </AttachmentContent>
+            </Attachment>
+            <Attachment state="processing">
+              <AttachmentMedia>
+                <Spinner />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>keynote.mov</AttachmentTitle>
+                <AttachmentDescription>Processing…</AttachmentDescription>
+              </AttachmentContent>
+            </Attachment>
+            <Attachment state="error">
+              <AttachmentMedia>
+                <TriangleAlert />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>archive.zip</AttachmentTitle>
+                <AttachmentDescription>Upload failed</AttachmentDescription>
+              </AttachmentContent>
+              <AttachmentActions>
+                <AttachmentAction aria-label="Remove">
+                  <X />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+          </div>
+        </PreviewCard>
+
+        <PreviewCard label="Vertical (media on top)">
+          <AttachmentGroup>
+            <Attachment orientation="vertical">
+              <AttachmentMedia variant="image">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&dpr=2&q=80"
+                  alt="Headphones"
+                />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>headphones.jpg</AttachmentTitle>
+                <AttachmentDescription>JPG · 1.2 MB</AttachmentDescription>
+              </AttachmentContent>
+              <AttachmentActions>
+                <AttachmentAction aria-label="Remove">
+                  <X />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+            <Attachment orientation="vertical">
+              <AttachmentMedia>
+                <FileSpreadsheet />
+              </AttachmentMedia>
+              <AttachmentContent>
+                <AttachmentTitle>budget.xlsx</AttachmentTitle>
+                <AttachmentDescription>XLSX · 320 KB</AttachmentDescription>
+              </AttachmentContent>
+              <AttachmentActions>
+                <AttachmentAction aria-label="Remove">
+                  <X />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+          </AttachmentGroup>
+        </PreviewCard>
+      </div>
+    </div>
+  )
+}
+
+const AVATAR_SIZES = ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"] as const
+const AVATAR_SRC = "https://github.com/shadcn.png"
+
+function AvatarPreview() {
+  return (
+    <div className="h-full overflow-y-auto bg-secondary p-6">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <PreviewCard label="Sizes">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size}>
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Fallback">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size}>
+              <AvatarFallback>N</AvatarFallback>
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Icon">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size}>
+              <User className="text-muted-foreground" />
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Square">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size} variant="square">
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="With badge">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size}>
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>N</AvatarFallback>
+              <AvatarBadge />
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Badge with icon">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size}>
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>N</AvatarFallback>
+              <AvatarBadge className="bg-blue-500">
+                <Moon />
+              </AvatarBadge>
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Square with badge">
+          {AVATAR_SIZES.map((size) => (
+            <Avatar key={size} size={size} variant="square">
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>CN</AvatarFallback>
+              <AvatarBadge />
+            </Avatar>
+          ))}
+        </PreviewCard>
+
+        <PreviewCard label="Group — images">
+          <AvatarGroup>
+            <Avatar>
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>A</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarFallback>B</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarImage src={AVATAR_SRC} alt="User" />
+              <AvatarFallback>C</AvatarFallback>
+            </Avatar>
+            <AvatarGroupCount>+3</AvatarGroupCount>
+          </AvatarGroup>
+        </PreviewCard>
+
+        <PreviewCard label="Group — icons">
+          <AvatarGroup>
+            <Avatar>
+              <User className="text-muted-foreground" />
+            </Avatar>
+            <Avatar>
+              <User className="text-muted-foreground" />
+            </Avatar>
+            <Avatar>
+              <User className="text-muted-foreground" />
+            </Avatar>
+            <AvatarGroupCount>+5</AvatarGroupCount>
+          </AvatarGroup>
+        </PreviewCard>
+      </div>
+    </div>
+  )
+}
+
+// Each remaining component has a bespoke block/card-grid preview under
+// `./previews/<id>`. Loaded client-only (ssr: false) to avoid Base UI useId
+// hydration mismatches across the dynamic boundary.
+const lp = (loader: () => Promise<{ default: React.ComponentType }>) =>
+  dynamic(loader, { ssr: false })
+
+const PREVIEWS: Record<string, React.ComponentType> = {
+  badge: lp(() => import("./previews/badge")),
+  breadcrumb: lp(() => import("./previews/breadcrumb")),
+  "button-group": lp(() => import("./previews/button-group")),
+  calendar: lp(() => import("./previews/calendar")),
+  card: lp(() => import("./previews/card")),
+  checkbox: lp(() => import("./previews/checkbox")),
+  "color-picker": lp(() => import("./previews/color-picker")),
+  "color-swatch": lp(() => import("./previews/color-swatch")),
+  combobox: lp(() => import("./previews/combobox")),
+  command: lp(() => import("./previews/command")),
+  dialog: lp(() => import("./previews/dialog")),
+  "dropdown-menu": lp(() => import("./previews/dropdown-menu")),
+  empty: lp(() => import("./previews/empty")),
+  field: lp(() => import("./previews/field")),
+  "file-upload": lp(() => import("./previews/file-upload")),
+  header: lp(() => import("./previews/header")),
+  input: lp(() => import("./previews/input")),
+  "input-group": lp(() => import("./previews/input-group")),
+  "input-otp": lp(() => import("./previews/input-otp")),
+  item: lp(() => import("./previews/item")),
+  kanban: lp(() => import("./previews/kanban")),
+  kbd: lp(() => import("./previews/kbd")),
+  message: lp(() => import("./previews/message")),
+  notification: lp(() => import("./previews/notification")),
+  popover: lp(() => import("./previews/popover")),
+  progress: lp(() => import("./previews/progress")),
+  radio: lp(() => import("./previews/radio")),
+  rating: lp(() => import("./previews/rating")),
+  select: lp(() => import("./previews/select")),
+  separator: lp(() => import("./previews/separator")),
+  slider: lp(() => import("./previews/slider")),
+  sonner: lp(() => import("./previews/sonner")),
+  spinner: lp(() => import("./previews/spinner")),
+  switch: lp(() => import("./previews/switch")),
+  table: lp(() => import("./previews/table")),
+  tabs: lp(() => import("./previews/tabs")),
+  tag: lp(() => import("./previews/tag")),
+  textarea: lp(() => import("./previews/textarea")),
+  timeline: lp(() => import("./previews/timeline")),
+  tooltip: lp(() => import("./previews/tooltip")),
 }
 
 function PreviewPlaceholder({ label }: { label: string }) {
@@ -814,6 +1282,14 @@ export default function CustomiseView({ active }: { active: string }) {
           <CrmPage />
         ) : active === "button" ? (
           <ButtonPreview />
+        ) : active === "alert" ? (
+          <AlertPreview />
+        ) : active === "attachment" ? (
+          <AttachmentPreview />
+        ) : active === "avatar" ? (
+          <AvatarPreview />
+        ) : PREVIEWS[active] ? (
+          React.createElement(PREVIEWS[active])
         ) : (
           <PreviewPlaceholder label={activeLabel} />
         )}
