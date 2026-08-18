@@ -30,15 +30,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { ChevronsUpDown } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
 import CrmPage from "../crm/page"
 
@@ -536,52 +527,6 @@ function VariablesTab({
   )
 }
 
-const ELEVATION_SHADOWS = ["sm", "base", "md", "lg", "xl", "2xl"]
-const SHADOW_ITEMS = ELEVATION_SHADOWS.map((s) => ({
-  label: s,
-  value: s,
-}))
-
-function ShadowsSection() {
-  const [shadow, setShadow] = React.useState("md")
-  return (
-    <div className="flex flex-col gap-3">
-      <SectionLabel>Shadows</SectionLabel>
-      <div className="flex items-stretch gap-3">
-        <Select
-          items={SHADOW_ITEMS}
-          value={shadow}
-          onValueChange={(v) => typeof v === "string" && setShadow(v)}
-        >
-          <SelectTrigger
-            variant="subtle"
-            size="sm"
-            suffix={<ChevronsUpDown />}
-            className="w-full flex-1"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent align="start" alignItemWithTrigger={false}>
-            <SelectGroup>
-              {SHADOW_ITEMS.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {/* live preview of the selected elevation — matches the select height */}
-        <div
-          className="aspect-square h-full shrink-0 self-stretch rounded-lg border border-border-soft bg-background"
-          style={{ boxShadow: `var(--shadow-elevation-${shadow})` }}
-        />
-      </div>
-    </div>
-  )
-}
-
-
 // Centered spinner shown while a preview chunk loads or the route transitions.
 function LoadingPreview() {
   return (
@@ -930,10 +875,15 @@ export default function CustomiseView({ active }: { active: string }) {
           >
             <div className="flex flex-col gap-6">
               <VariablesTab getPair={getPair} onChange={setPair} />
-              <ShadowsSection />
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Footer actions (functionality TBD) */}
+        <div className="flex gap-2 border-t border-border-soft p-3">
+          <Button className="flex-1">Apply</Button>
+          <Button className="flex-1">Apply to all</Button>
+        </div>
       </aside>
     </div>
   )
