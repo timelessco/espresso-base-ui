@@ -53,3 +53,25 @@ export async function resetAllCustomisations() {
   await fs.writeFile(file, `${content.trimEnd()}\n`, "utf8")
   return { ok: true as const }
 }
+
+const REGISTRY_ORIGIN = "https://espresso-base-ui.vercel.app"
+const REGISTRY_NAME = "custom-theme"
+
+/**
+ * Write the exported customisation as a shadcn registry item to
+ * public/r/<name>.json so it can be installed with
+ *   npx shadcn@latest add <origin>/r/<name>.json
+ */
+export async function writeRegistryTheme(item: unknown) {
+  const file = path.join(
+    process.cwd(),
+    "public",
+    "r",
+    `${REGISTRY_NAME}.json`
+  )
+  await fs.writeFile(file, `${JSON.stringify(item, null, 2)}\n`, "utf8")
+  return {
+    ok: true as const,
+    url: `${REGISTRY_ORIGIN}/r/${REGISTRY_NAME}.json`,
+  }
+}

@@ -43,7 +43,11 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
-import { applyCustomisation, resetAllCustomisations } from "./actions"
+import {
+  applyCustomisation,
+  resetAllCustomisations,
+  writeRegistryTheme,
+} from "./actions"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -634,21 +638,45 @@ type Snapshot = {
   colors: Record<string, ColorPair>
 }
 
-// Pretty-print our flat (non-nested) generated CSS for the "Get code" dialog.
-function prettyCss(css: string): string {
-  const rules = css.match(/[^{}]+\{[^}]*\}/g) ?? []
-  return rules
-    .map((rule) => {
-      const open = rule.indexOf("{")
-      const sel = rule.slice(0, open).trim()
-      const body = rule.slice(open + 1, rule.lastIndexOf("}"))
-      const decls = body
-        .split(";")
-        .map((d) => d.trim())
-        .filter(Boolean)
-      return `${sel} {\n${decls.map((d) => `  ${d};`).join("\n")}\n}`
-    })
-    .join("\n\n")
+// Build a map of changed CSS variables ({ "--radius": "6px", ... }) from a set
+// of slider/colour values, split into mode-independent+light (`main`) and dark.
+// Used to export the shadcn registry item.
+type VarValues = {
+  radius: number
+  spacingScale: number
+  fontScale: number
+  letterSpacing: number
+  colors: Record<string, ColorPair>
+}
+function buildVarMap(v: VarValues, themeDefaults: Record<string, ColorPair>) {
+  const main: Record<string, string> = {}
+  const dark: Record<string, string> = {}
+  if (v.radius !== DEFAULTS.radius) main["--radius"] = `${v.radius}px`
+  if (v.spacingScale !== DEFAULTS.spacingScale)
+    main["--spacing"] = `${(SPACING_BASE * v.spacingScale).toFixed(4)}rem`
+  if (v.fontScale !== DEFAULTS.fontScale)
+    for (const [name, base] of Object.entries(TEXT_TOKENS))
+      main[`--text-${name}`] = `${(base * v.fontScale).toFixed(4)}rem`
+  if (v.letterSpacing !== DEFAULTS.letterSpacing)
+    for (const [name, base] of Object.entries(TRACKING_TOKENS))
+      main[`--tracking-${name}`] = `${(base + v.letterSpacing).toFixed(4)}em`
+  for (const token of ALL_COLOR_TOKENS) {
+    const pair = v.colors[token]
+    if (!pair) continue
+    const def = themeDefaults[token]
+    if (!def || pair.light.toLowerCase() !== def.light.toLowerCase())
+      main[`--${token}`] = pair.light
+    if (!def || pair.dark.toLowerCase() !== def.dark.toLowerCase())
+      dark[`--${token}`] = pair.dark
+  }
+  return { main, dark }
+}
+
+// Strip the leading `--` from a var map's keys (shadcn cssVars want bare names).
+function stripDashes(map: Record<string, string>) {
+  const out: Record<string, string> = {}
+  for (const [k, val] of Object.entries(map)) out[k.replace(/^--/, "")] = val
+  return out
 }
 
 const SNAPSHOT_PREFIX = "customise:v1:"
@@ -873,7 +901,10 @@ export default function CustomiseView({ active }: { active: string }) {
     return (
       `:root{${sharedCurrent}${light.join("")}}` +
       (dark.length ? `.dark{${dark.join("")}}` : "") +
-      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}}` +
+      // `letter-spacing` is applied once on <body> (tracking-normal) and
+      // inherited as a computed length, so resetting the var alone doesn't
+      // reach the panel — re-derive it here from the reset --tracking-normal.
+      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
       (resetDark.length
         ? `.dark [data-customise-panel]{${resetDark.join("")}}`
         : "")
@@ -1086,23 +1117,86 @@ export default function CustomiseView({ active }: { active: string }) {
     })
   }, [reset, isDirty, customisedIds, globalSnap])
 
-  // Scoped CSS shown in the "Get code" dialog (same block that Apply writes).
-  const componentCss = React.useMemo(() => {
-    if (active === "crm") return ""
-    const sel = `[data-slot="${active}"]:not([data-customise-panel] *)`
-    const { main, dark } = buildDecls()
-    const css =
-      (main ? `${sel}{${main}}` : "") + (dark ? `.dark ${sel}{${dark}}` : "")
-    return prettyCss(css)
-  }, [active, buildDecls])
-
+  // --- "Get code": export all customisations as a shadcn registry item ------
+  const [codeOpen, setCodeOpen] = React.useState(false)
+  const [installUrl, setInstallUrl] = React.useState("")
+  const [registryJson, setRegistryJson] = React.useState("")
   const [copied, setCopied] = React.useState(false)
-  const copyCode = React.useCallback(() => {
-    navigator.clipboard?.writeText(componentCss).then(() => {
+
+  // Assemble the registry item: global changes → cssVars, per-component
+  // overrides → css (each [data-slot=…]). The active component uses its live
+  // slider state; others read their saved snapshots.
+  const buildRegistryItem = React.useCallback(() => {
+    const currentVals: VarValues = {
+      radius,
+      spacingScale,
+      fontScale,
+      letterSpacing,
+      colors,
+    }
+
+    const cssVars: { light?: Record<string, string>; dark?: Record<string, string> } = {}
+    if (globalSnap) {
+      const g = buildVarMap(globalSnap, themeDefaults)
+      if (Object.keys(g.main).length) cssVars.light = stripDashes(g.main)
+      if (Object.keys(g.dark).length) cssVars.dark = stripDashes(g.dark)
+    }
+
+    const css: Record<string, Record<string, string>> = {}
+    const ids = new Set(customisedIds)
+    if (isDirty && active !== "crm") ids.add(active)
+    for (const id of ids) {
+      const vals = id === active ? currentVals : loadSnapshot(id)
+      if (!vals) continue
+      const { main, dark } = buildVarMap(vals, themeDefaults)
+      if (Object.keys(main).length) css[`[data-slot="${id}"]`] = main
+      if (Object.keys(dark).length) css[`.dark [data-slot="${id}"]`] = dark
+    }
+
+    const item: Record<string, unknown> = {
+      $schema: "https://ui.shadcn.com/schema/registry-item.json",
+      name: "custom-theme",
+      type: "registry:style",
+      title: "Custom theme",
+      description: "Theme customisation exported from the Espresso customiser.",
+    }
+    if (cssVars.light || cssVars.dark) item.cssVars = cssVars
+    if (Object.keys(css).length) item.css = css
+    return item
+  }, [
+    radius,
+    spacingScale,
+    fontScale,
+    letterSpacing,
+    colors,
+    globalSnap,
+    themeDefaults,
+    customisedIds,
+    isDirty,
+    active,
+  ])
+
+  const openGetCode = React.useCallback(() => {
+    const item = buildRegistryItem()
+    setRegistryJson(JSON.stringify(item, null, 2))
+    setCodeOpen(true)
+    startApply(async () => {
+      const res = await writeRegistryTheme(item)
+      setInstallUrl(res.url)
+    })
+  }, [buildRegistryItem])
+
+  const installCommand = installUrl
+    ? `npx shadcn@latest add ${installUrl}`
+    : "Generating…"
+
+  const copyCommand = React.useCallback(() => {
+    if (!installUrl) return
+    navigator.clipboard?.writeText(`npx shadcn@latest add ${installUrl}`).then(() => {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1500)
     })
-  }, [componentCss])
+  }, [installUrl])
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#f3f3f3] dark:bg-[#2b2b2b]">
@@ -1293,44 +1387,44 @@ export default function CustomiseView({ active }: { active: string }) {
           <Button onClick={resetComponent} disabled={active === "crm"}>
             Reset
           </Button>
-          <Dialog>
-            <DialogTrigger
-              className="w-full"
-              render={
-                <Button className="w-full" disabled={active === "crm"}>
-                  Get code
-                </Button>
-              }
-            />
+          <Button onClick={openGetCode}>Get code</Button>
+          <Dialog open={codeOpen} onOpenChange={setCodeOpen}>
             <DialogContent size="lg" data-customise-panel>
               <DialogHeader>
-                <DialogTitle>{activeLabel} — CSS</DialogTitle>
+                <DialogTitle>Install your theme</DialogTitle>
                 <DialogDescription>
-                  Add this to your global stylesheet to apply the current
-                  settings to the {activeLabel} component.
+                  Run this in a shadcn project to apply your global and
+                  per-component customisations via the registry.
                 </DialogDescription>
               </DialogHeader>
-              <div className="relative">
+              <div className="flex items-center gap-2 rounded-lg border border-border-soft bg-secondary p-3">
+                <code className="min-w-0 flex-1 overflow-x-auto text-sm whitespace-nowrap">
+                  {installCommand}
+                </code>
                 <Button
                   variant="secondary"
                   size="icon-sm"
-                  className="absolute top-2 right-2 z-10"
-                  onClick={copyCode}
-                  aria-label="Copy code"
+                  className="shrink-0"
+                  onClick={copyCommand}
+                  disabled={!installUrl}
+                  aria-label="Copy command"
                 >
                   {copied ? <Check /> : <Copy />}
                 </Button>
-                <pre className="max-h-[50vh] overflow-auto rounded-lg border border-border-soft bg-secondary p-4 text-xs leading-relaxed">
-                  <code>
-                    {componentCss || "/* No changes yet — adjust a value. */"}
-                  </code>
-                </pre>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Registry item that gets installed:
+              </p>
+              <pre className="max-h-[40vh] overflow-auto rounded-lg border border-border-soft bg-secondary p-4 text-xs leading-relaxed">
+                <code>
+                  {registryJson || "/* No customisations yet — adjust a value. */"}
+                </code>
+              </pre>
             </DialogContent>
           </Dialog>
         </div>
       </aside>
-      <Toaster />
+      {mounted && <Toaster />}
     </div>
   )
 }
