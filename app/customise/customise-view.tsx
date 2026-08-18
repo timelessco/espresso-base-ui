@@ -165,6 +165,20 @@ function toLabel(id: string) {
 const COMPONENT_ITEMS = COMPONENT_IDS.map((id) => ({ id, label: toLabel(id) }))
 const RAIL_ITEMS = [...PREVIEW_ITEMS, ...COMPONENT_ITEMS]
 
+// Most components expose a bare `data-slot="<id>"`, but a few use a different
+// root name or split across prefixed parts (portaled content, sub-elements).
+// Map those to the correct selector so scoped overrides actually land.
+// `sonner` and `kanban` have no data-slot and aren't targetable.
+const SLOT_SELECTORS: Record<string, string> = {
+  radio: '[data-slot="radio-group"]',
+  select: '[data-slot^="select-"]',
+  combobox: '[data-slot^="combobox-"]',
+  "color-picker": '[data-slot^="color-picker-"]',
+}
+function slotSelector(id: string) {
+  return SLOT_SELECTORS[id] ?? `[data-slot="${id}"]`
+}
+
 const SPACING_BASE = 0.25 // rem — matches --spacing: 0.25rem
 
 type ColorPair = { light: string; dark: string }
@@ -1032,7 +1046,7 @@ export default function CustomiseView({ active }: { active: string }) {
     if (active === "crm") return
     // Nothing to do if it matches the baseline and has no existing override.
     if (!isDirty && !customisedIds.has(active)) return
-    const sel = `[data-slot="${active}"]:not([data-customise-panel] *)`
+    const sel = `${slotSelector(active)}:not([data-customise-panel] *)`
     const { main, dark } = buildDecls()
     const css =
       (main ? `${sel}{${main}}` : "") + (dark ? `.dark ${sel}{${dark}}` : "")
@@ -1149,8 +1163,9 @@ export default function CustomiseView({ active }: { active: string }) {
       const vals = id === active ? currentVals : loadSnapshot(id)
       if (!vals) continue
       const { main, dark } = buildVarMap(vals, themeDefaults)
-      if (Object.keys(main).length) css[`[data-slot="${id}"]`] = main
-      if (Object.keys(dark).length) css[`.dark [data-slot="${id}"]`] = dark
+      const sel = slotSelector(id)
+      if (Object.keys(main).length) css[sel] = main
+      if (Object.keys(dark).length) css[`.dark ${sel}`] = dark
     }
 
     const item: Record<string, unknown> = {
