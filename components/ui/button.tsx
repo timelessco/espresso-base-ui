@@ -33,7 +33,7 @@ const buttonVariants = cva(
         default:
           "h-8 gap-2 rounded-md px-2 text-base leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5", // md
         lg: "h-10 gap-2 rounded-lg px-3 text-lg leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
-        xl: "h-[46px] gap-2 rounded-xl px-3.5 text-xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+        xl: "h-11.5 gap-2 rounded-xl px-3.5 text-xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
         "2xl":
           "h-13 gap-2 rounded-2xl px-4 text-2xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
 
