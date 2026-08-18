@@ -3,7 +3,7 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
-import { RotateCcw } from "lucide-react"
+import { RotateCcw, Copy, Check } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
@@ -31,15 +31,23 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { ChevronsUpDown } from "lucide-react"
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Spinner } from "@/components/ui/spinner"
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+import {
+  applyCustomisation,
+  resetAllCustomisations,
+  writeRegistryTheme,
+} from "./actions"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -156,6 +164,20 @@ function toLabel(id: string) {
 
 const COMPONENT_ITEMS = COMPONENT_IDS.map((id) => ({ id, label: toLabel(id) }))
 const RAIL_ITEMS = [...PREVIEW_ITEMS, ...COMPONENT_ITEMS]
+
+// Most components expose a bare `data-slot="<id>"`, but a few use a different
+// root name or split across prefixed parts (portaled content, sub-elements).
+// Map those to the correct selector so scoped overrides actually land.
+// `sonner` and `kanban` have no data-slot and aren't targetable.
+const SLOT_SELECTORS: Record<string, string> = {
+  radio: '[data-slot="radio-group"]',
+  select: '[data-slot^="select-"]',
+  combobox: '[data-slot^="combobox-"]',
+  "color-picker": '[data-slot^="color-picker-"]',
+}
+function slotSelector(id: string) {
+  return SLOT_SELECTORS[id] ?? `[data-slot="${id}"]`
+}
 
 const SPACING_BASE = 0.25 // rem — matches --spacing: 0.25rem
 
@@ -333,10 +355,12 @@ function SliderRow({
 function FlyoutItem({
   label,
   active,
+  dot,
   onSelect,
 }: {
   label: string
   active: boolean
+  dot?: boolean
   onSelect: () => void
 }) {
   return (
@@ -344,22 +368,30 @@ function FlyoutItem({
       type="button"
       onClick={onSelect}
       className={cn(
-        "flex w-full items-center rounded-md px-2 py-1.5 text-left text-base transition-colors",
+        "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-base transition-colors",
         active
           ? "font-medium text-blue-500"
           : "text-secondary-foreground hover:bg-secondary"
       )}
     >
-      {label}
+      <span className="truncate">{label}</span>
+      {dot && (
+        <span
+          aria-label="customised"
+          className="ml-auto size-1.5 shrink-0 rounded-full bg-blue-500"
+        />
+      )}
     </button>
   )
 }
 
 function PreviewRail({
   active,
+  customised,
   onSelect,
 }: {
   active: string
+  customised: Set<string>
   onSelect: (id: string) => void
 }) {
   return (
@@ -407,6 +439,7 @@ function PreviewRail({
               key={item.id}
               label={item.label}
               active={item.id === active}
+              dot={customised.has(item.id)}
               onSelect={() => onSelect(item.id)}
             />
           ))}
@@ -421,6 +454,7 @@ function PreviewRail({
               key={item.id}
               label={item.label}
               active={item.id === active}
+              dot={customised.has(item.id)}
               onSelect={() => onSelect(item.id)}
             />
           ))}
@@ -536,52 +570,6 @@ function VariablesTab({
   )
 }
 
-const ELEVATION_SHADOWS = ["sm", "base", "md", "lg", "xl", "2xl"]
-const SHADOW_ITEMS = ELEVATION_SHADOWS.map((s) => ({
-  label: s,
-  value: s,
-}))
-
-function ShadowsSection() {
-  const [shadow, setShadow] = React.useState("md")
-  return (
-    <div className="flex flex-col gap-3">
-      <SectionLabel>Shadows</SectionLabel>
-      <div className="flex items-stretch gap-3">
-        <Select
-          items={SHADOW_ITEMS}
-          value={shadow}
-          onValueChange={(v) => typeof v === "string" && setShadow(v)}
-        >
-          <SelectTrigger
-            variant="subtle"
-            size="sm"
-            suffix={<ChevronsUpDown />}
-            className="w-full flex-1"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent align="start" alignItemWithTrigger={false}>
-            <SelectGroup>
-              {SHADOW_ITEMS.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        {/* live preview of the selected elevation — matches the select height */}
-        <div
-          className="aspect-square h-full shrink-0 self-stretch rounded-lg border border-border-soft bg-background"
-          style={{ boxShadow: `var(--shadow-elevation-${shadow})` }}
-        />
-      </div>
-    </div>
-  )
-}
-
-
 // Centered spinner shown while a preview chunk loads or the route transitions.
 function LoadingPreview() {
   return (
@@ -655,6 +643,88 @@ function PreviewPlaceholder({ label }: { label: string }) {
   )
 }
 
+type Snapshot = {
+  fontScale: number
+  lineScale: number
+  letterSpacing: number
+  spacingScale: number
+  radius: number
+  colors: Record<string, ColorPair>
+}
+
+// Build a map of changed CSS variables ({ "--radius": "6px", ... }) from a set
+// of slider/colour values, split into mode-independent+light (`main`) and dark.
+// Used to export the shadcn registry item.
+type VarValues = {
+  radius: number
+  spacingScale: number
+  fontScale: number
+  letterSpacing: number
+  colors: Record<string, ColorPair>
+}
+function buildVarMap(v: VarValues, themeDefaults: Record<string, ColorPair>) {
+  const main: Record<string, string> = {}
+  const dark: Record<string, string> = {}
+  if (v.radius !== DEFAULTS.radius) main["--radius"] = `${v.radius}px`
+  if (v.spacingScale !== DEFAULTS.spacingScale)
+    main["--spacing"] = `${(SPACING_BASE * v.spacingScale).toFixed(4)}rem`
+  if (v.fontScale !== DEFAULTS.fontScale)
+    for (const [name, base] of Object.entries(TEXT_TOKENS))
+      main[`--text-${name}`] = `${(base * v.fontScale).toFixed(4)}rem`
+  if (v.letterSpacing !== DEFAULTS.letterSpacing)
+    for (const [name, base] of Object.entries(TRACKING_TOKENS))
+      main[`--tracking-${name}`] = `${(base + v.letterSpacing).toFixed(4)}em`
+  for (const token of ALL_COLOR_TOKENS) {
+    const pair = v.colors[token]
+    if (!pair) continue
+    const def = themeDefaults[token]
+    if (!def || pair.light.toLowerCase() !== def.light.toLowerCase())
+      main[`--${token}`] = pair.light
+    if (!def || pair.dark.toLowerCase() !== def.dark.toLowerCase())
+      dark[`--${token}`] = pair.dark
+  }
+  return { main, dark }
+}
+
+// Strip the leading `--` from a var map's keys (shadcn cssVars want bare names).
+function stripDashes(map: Record<string, string>) {
+  const out: Record<string, string> = {}
+  for (const [k, val] of Object.entries(map)) out[k.replace(/^--/, "")] = val
+  return out
+}
+
+const SNAPSHOT_PREFIX = "customise:v1:"
+// Reserved id for the "Apply to all" (global) snapshot, stored alongside the
+// per-component ones. Never a real component, so it never gets a rail dot.
+const GLOBAL_ID = "__global__"
+
+// Per-component slider/colour state, so re-opening a component shows what was
+// last applied to it. globals.css holds the real styles; this holds the UI.
+function loadSnapshot(id: string): Snapshot | null {
+  try {
+    const raw = localStorage.getItem(SNAPSHOT_PREFIX + id)
+    return raw ? (JSON.parse(raw) as Snapshot) : null
+  } catch {
+    return null
+  }
+}
+
+function saveSnapshot(id: string, snap: Snapshot) {
+  try {
+    localStorage.setItem(SNAPSHOT_PREFIX + id, JSON.stringify(snap))
+  } catch {
+    /* storage unavailable — non-fatal */
+  }
+}
+
+function clearSnapshot(id: string) {
+  try {
+    localStorage.removeItem(SNAPSHOT_PREFIX + id)
+  } catch {
+    /* storage unavailable — non-fatal */
+  }
+}
+
 export default function CustomiseView({ active }: { active: string }) {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
@@ -681,10 +751,89 @@ export default function CustomiseView({ active }: { active: string }) {
   const [spacingScale, setSpacingScale] = React.useState(DEFAULTS.spacingScale)
   const [radius, setRadius] = React.useState(DEFAULTS.radius)
 
-  // once theme defaults are read, adopt them as the baseline for every token
+  // The global ("Apply to all") snapshot — the shared baseline every component
+  // inherits. Seeded from localStorage, updated on apply-to-all / reset.
+  const [globalSnap, setGlobalSnap] = React.useState<Snapshot | null>(null)
   React.useEffect(() => {
-    if (Object.keys(themeDefaults).length) setColors(themeDefaults)
-  }, [themeDefaults])
+    setGlobalSnap(loadSnapshot(GLOBAL_ID))
+  }, [])
+
+  // Effective baseline for the active component: theme defaults, overlaid with
+  // whatever was applied globally. A component's own snapshot layers on top.
+  const baseline = React.useMemo(
+    () => ({
+      fontScale: globalSnap?.fontScale ?? DEFAULTS.fontScale,
+      lineScale: globalSnap?.lineScale ?? DEFAULTS.lineScale,
+      letterSpacing: globalSnap?.letterSpacing ?? DEFAULTS.letterSpacing,
+      spacingScale: globalSnap?.spacingScale ?? DEFAULTS.spacingScale,
+      radius: globalSnap?.radius ?? DEFAULTS.radius,
+      colors: { ...themeDefaults, ...(globalSnap?.colors ?? {}) },
+    }),
+    [globalSnap, themeDefaults]
+  )
+
+  // Once theme defaults are read (and whenever the active component or global
+  // baseline changes), set the sliders from: defaults → global → component.
+  React.useEffect(() => {
+    if (!Object.keys(themeDefaults).length) return
+    const c = loadSnapshot(active)
+    setColors({ ...baseline.colors, ...(c?.colors ?? {}) })
+    setFontScale(c?.fontScale ?? baseline.fontScale)
+    setLineScale(c?.lineScale ?? baseline.lineScale)
+    setLetterSpacing(c?.letterSpacing ?? baseline.letterSpacing)
+    setSpacingScale(c?.spacingScale ?? baseline.spacingScale)
+    setRadius(c?.radius ?? baseline.radius)
+  }, [themeDefaults, active, baseline])
+
+  // Components that carry a saved (applied) customisation — drives the rail's
+  // blue dots. Seeded from localStorage, then kept in sync on apply/reset.
+  const [customisedIds, setCustomisedIds] = React.useState<Set<string>>(
+    () => new Set()
+  )
+  React.useEffect(() => {
+    const ids = new Set<string>()
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        if (!key?.startsWith(SNAPSHOT_PREFIX)) continue
+        const id = key.slice(SNAPSHOT_PREFIX.length)
+        if (id !== GLOBAL_ID) ids.add(id)
+      }
+    } catch {
+      /* storage unavailable */
+    }
+    setCustomisedIds(ids)
+  }, [])
+
+  // Whether the active component differs from its baseline (global + defaults).
+  // A global change alone isn't "dirty" — only a component-specific deviation.
+  const isDirty = React.useMemo(() => {
+    if (
+      radius !== baseline.radius ||
+      spacingScale !== baseline.spacingScale ||
+      fontScale !== baseline.fontScale ||
+      letterSpacing !== baseline.letterSpacing
+    )
+      return true
+    for (const token of ALL_COLOR_TOKENS) {
+      const pair = colors[token]
+      const base = baseline.colors[token]
+      if (!pair || !base) continue
+      if (
+        pair.light.toLowerCase() !== base.light.toLowerCase() ||
+        pair.dark.toLowerCase() !== base.dark.toLowerCase()
+      )
+        return true
+    }
+    return false
+  }, [radius, spacingScale, fontScale, letterSpacing, colors, baseline])
+
+  // Dotted = applied customisations, plus the active one while being edited.
+  const dottedIds = React.useMemo(() => {
+    const ids = new Set(customisedIds)
+    if (isDirty && active !== "crm") ids.add(active)
+    return ids
+  }, [customisedIds, isDirty, active])
 
   const getPair = React.useCallback(
     (token: string): ColorPair =>
@@ -766,7 +915,10 @@ export default function CustomiseView({ active }: { active: string }) {
     return (
       `:root{${sharedCurrent}${light.join("")}}` +
       (dark.length ? `.dark{${dark.join("")}}` : "") +
-      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}}` +
+      // `letter-spacing` is applied once on <body> (tracking-normal) and
+      // inherited as a computed length, so resetting the var alone doesn't
+      // reach the panel — re-derive it here from the reset --tracking-normal.
+      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
       (resetDark.length
         ? `.dark [data-customise-panel]{${resetDark.join("")}}`
         : "")
@@ -790,6 +942,277 @@ export default function CustomiseView({ active }: { active: string }) {
     setRadius(DEFAULTS.radius)
   }, [themeDefaults])
 
+  // Revert the sliders to the shared baseline (global override, else defaults).
+  const resetToBaseline = React.useCallback(() => {
+    setColors(baseline.colors)
+    setFontScale(baseline.fontScale)
+    setLineScale(baseline.lineScale)
+    setLetterSpacing(baseline.letterSpacing)
+    setSpacingScale(baseline.spacingScale)
+    setRadius(baseline.radius)
+  }, [baseline])
+
+  // Serialise only the changed values into CSS declarations.
+  // `main` = mode-independent + light colors; `dark` = dark-mode colours.
+  const buildDecls = React.useCallback(() => {
+    const main: string[] = []
+    const dark: string[] = []
+    if (radius !== DEFAULTS.radius) main.push(`--radius:${radius}px;`)
+    if (spacingScale !== DEFAULTS.spacingScale)
+      main.push(`--spacing:${(SPACING_BASE * spacingScale).toFixed(4)}rem;`)
+    if (fontScale !== DEFAULTS.fontScale)
+      for (const [name, base] of Object.entries(TEXT_TOKENS))
+        main.push(`--text-${name}:${(base * fontScale).toFixed(4)}rem;`)
+    if (letterSpacing !== DEFAULTS.letterSpacing)
+      for (const [name, base] of Object.entries(TRACKING_TOKENS))
+        main.push(`--tracking-${name}:${(base + letterSpacing).toFixed(4)}em;`)
+    for (const token of ALL_COLOR_TOKENS) {
+      const pair = colors[token]
+      const def = themeDefaults[token]
+      if (!pair || !def) continue
+      if (pair.light.toLowerCase() !== def.light.toLowerCase())
+        main.push(`--${token}:${pair.light};`)
+      if (pair.dark.toLowerCase() !== def.dark.toLowerCase())
+        dark.push(`--${token}:${pair.dark};`)
+    }
+    return { main: main.join(""), dark: dark.join("") }
+  }, [radius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
+
+  // Writes are fast + idempotent, so we don't disable buttons while pending —
+  // toggling `disabled` mid-write causes a visible flash of the disabled style.
+  const [, startApply] = React.useTransition()
+
+  // "Apply to all" → global override written to :root / .dark in globals.css.
+  // Colour overrides that differ from the theme defaults (for snapshots).
+  const colorDiff = React.useCallback(() => {
+    const diff: Record<string, ColorPair> = {}
+    for (const token of ALL_COLOR_TOKENS) {
+      const pair = colors[token]
+      const def = themeDefaults[token]
+      if (!pair || !def) continue
+      if (
+        pair.light.toLowerCase() !== def.light.toLowerCase() ||
+        pair.dark.toLowerCase() !== def.dark.toLowerCase()
+      )
+        diff[token] = pair
+    }
+    return diff
+  }, [colors, themeDefaults])
+
+  const applyGlobal = React.useCallback(() => {
+    if (!isDirty) return // nothing differs from the current baseline
+    const { main, dark } = buildDecls()
+    const css =
+      (main ? `:root{${main}}` : "") + (dark ? `.dark{${dark}}` : "")
+
+    // persist as the shared baseline so every component's sliders reflect it
+    if (css) {
+      const snap: Snapshot = {
+        fontScale,
+        lineScale,
+        letterSpacing,
+        spacingScale,
+        radius,
+        colors: colorDiff(),
+      }
+      saveSnapshot(GLOBAL_ID, snap)
+      setGlobalSnap(snap)
+    } else {
+      clearSnapshot(GLOBAL_ID)
+      setGlobalSnap(null)
+    }
+
+    startApply(async () => {
+      await applyCustomisation("global", css)
+      toast.success(
+        css ? "Applied to all components" : "Global customisation cleared"
+      )
+    })
+  }, [
+    isDirty,
+    buildDecls,
+    colorDiff,
+    fontScale,
+    lineScale,
+    letterSpacing,
+    spacingScale,
+    radius,
+  ])
+
+  // "Apply" → scoped to this component only, via its root data-slot. The
+  // `:not([data-customise-panel] *)` excludes the customiser's own chrome so the
+  // sidebar's buttons/inputs don't change (a no-op in the real app).
+  const applyComponent = React.useCallback(() => {
+    if (active === "crm") return
+    // Nothing to do if it matches the baseline and has no existing override.
+    if (!isDirty && !customisedIds.has(active)) return
+    const sel = `${slotSelector(active)}:not([data-customise-panel] *)`
+    const { main, dark } = buildDecls()
+    const css =
+      (main ? `${sel}{${main}}` : "") + (dark ? `.dark ${sel}{${dark}}` : "")
+
+    // persist the slider/colour positions for this component only
+    if (css)
+      saveSnapshot(active, {
+        fontScale,
+        lineScale,
+        letterSpacing,
+        spacingScale,
+        radius,
+        colors: colorDiff(),
+      })
+    else clearSnapshot(active)
+
+    setCustomisedIds((prev) => {
+      const next = new Set(prev)
+      if (css) next.add(active)
+      else next.delete(active)
+      return next
+    })
+
+    startApply(async () => {
+      await applyCustomisation(active, css)
+      toast.success(
+        css ? `Applied to ${activeLabel}` : `${activeLabel} reset to default`
+      )
+    })
+  }, [
+    active,
+    activeLabel,
+    isDirty,
+    customisedIds,
+    buildDecls,
+    colorDiff,
+    fontScale,
+    lineScale,
+    letterSpacing,
+    spacingScale,
+    radius,
+  ])
+
+  // "Reset" → revert this component to its baseline (global override, else
+  // defaults): reset the sliders, drop its globals.css block + snapshot.
+  const resetComponent = React.useCallback(() => {
+    if (active === "crm") return
+    const wasCustomised = customisedIds.has(active)
+    if (!isDirty && !wasCustomised) return // already at baseline, nothing to do
+    resetToBaseline()
+    if (wasCustomised) {
+      clearSnapshot(active)
+      setCustomisedIds((prev) => {
+        const next = new Set(prev)
+        next.delete(active)
+        return next
+      })
+    }
+    startApply(async () => {
+      if (wasCustomised) await applyCustomisation(active, "")
+      toast.success(`${activeLabel} reset to default`)
+    })
+  }, [active, activeLabel, isDirty, customisedIds, resetToBaseline])
+
+  // Global reset — every component + global override back to theme defaults.
+  const resetAll = React.useCallback(() => {
+    const hadAny = isDirty || customisedIds.size > 0 || globalSnap !== null
+    reset()
+    setGlobalSnap(null)
+    try {
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i)
+        if (key?.startsWith(SNAPSHOT_PREFIX)) localStorage.removeItem(key)
+      }
+    } catch {
+      /* storage unavailable */
+    }
+    setCustomisedIds(new Set())
+    startApply(async () => {
+      await resetAllCustomisations()
+      if (hadAny) toast.success("All customisations reset")
+    })
+  }, [reset, isDirty, customisedIds, globalSnap])
+
+  // --- "Get code": export all customisations as a shadcn registry item ------
+  const [codeOpen, setCodeOpen] = React.useState(false)
+  const [installUrl, setInstallUrl] = React.useState("")
+  const [registryJson, setRegistryJson] = React.useState("")
+  const [copied, setCopied] = React.useState(false)
+
+  // Assemble the registry item: global changes → cssVars, per-component
+  // overrides → css (each [data-slot=…]). The active component uses its live
+  // slider state; others read their saved snapshots.
+  const buildRegistryItem = React.useCallback(() => {
+    const currentVals: VarValues = {
+      radius,
+      spacingScale,
+      fontScale,
+      letterSpacing,
+      colors,
+    }
+
+    const cssVars: { light?: Record<string, string>; dark?: Record<string, string> } = {}
+    if (globalSnap) {
+      const g = buildVarMap(globalSnap, themeDefaults)
+      if (Object.keys(g.main).length) cssVars.light = stripDashes(g.main)
+      if (Object.keys(g.dark).length) cssVars.dark = stripDashes(g.dark)
+    }
+
+    const css: Record<string, Record<string, string>> = {}
+    const ids = new Set(customisedIds)
+    if (isDirty && active !== "crm") ids.add(active)
+    for (const id of ids) {
+      const vals = id === active ? currentVals : loadSnapshot(id)
+      if (!vals) continue
+      const { main, dark } = buildVarMap(vals, themeDefaults)
+      const sel = slotSelector(id)
+      if (Object.keys(main).length) css[sel] = main
+      if (Object.keys(dark).length) css[`.dark ${sel}`] = dark
+    }
+
+    const item: Record<string, unknown> = {
+      $schema: "https://ui.shadcn.com/schema/registry-item.json",
+      name: "custom-theme",
+      type: "registry:style",
+      title: "Custom theme",
+      description: "Theme customisation exported from the Espresso customiser.",
+    }
+    if (cssVars.light || cssVars.dark) item.cssVars = cssVars
+    if (Object.keys(css).length) item.css = css
+    return item
+  }, [
+    radius,
+    spacingScale,
+    fontScale,
+    letterSpacing,
+    colors,
+    globalSnap,
+    themeDefaults,
+    customisedIds,
+    isDirty,
+    active,
+  ])
+
+  const openGetCode = React.useCallback(() => {
+    const item = buildRegistryItem()
+    setRegistryJson(JSON.stringify(item, null, 2))
+    setCodeOpen(true)
+    startApply(async () => {
+      const res = await writeRegistryTheme(item)
+      setInstallUrl(res.url)
+    })
+  }, [buildRegistryItem])
+
+  const installCommand = installUrl
+    ? `npx shadcn@latest add ${installUrl}`
+    : "Generating…"
+
+  const copyCommand = React.useCallback(() => {
+    if (!installUrl) return
+    navigator.clipboard?.writeText(`npx shadcn@latest add ${installUrl}`).then(() => {
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    })
+  }, [installUrl])
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-[#f3f3f3] dark:bg-[#2b2b2b]">
       {/* Token overrides applied at :root (so portaled overlays inherit them);
@@ -798,7 +1221,11 @@ export default function CustomiseView({ active }: { active: string }) {
 
       {/* Left rail + hover flyout navigation */}
       <div data-customise-panel className="contents">
-        <PreviewRail active={active} onSelect={setActive} />
+        <PreviewRail
+          active={active}
+          customised={dottedIds}
+          onSelect={setActive}
+        />
       </div>
 
       {/* Preview — CSS var overrides cascade in; `transform-gpu` makes this the
@@ -837,9 +1264,41 @@ export default function CustomiseView({ active }: { active: string }) {
                 Variables
               </TabsTrigger>
             </TabsList>
-            <Button variant="ghost" size="icon-sm" onClick={reset}>
-              <RotateCcw />
-            </Button>
+            <Dialog>
+              <DialogTrigger
+                className="shrink-0"
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    className="size-7! shrink-0"
+                    aria-label="Reset all components"
+                  >
+                    <RotateCcw />
+                  </Button>
+                }
+              />
+              <DialogContent size="sm" data-customise-panel>
+                <DialogHeader>
+                  <DialogTitle>Reset all customisations?</DialogTitle>
+                  <DialogDescription>
+                    This resets every component and the global theme back to
+                    their default values, and removes all customise overrides
+                    from your stylesheet. This can&apos;t be undone.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose render={<Button variant="secondary">Back</Button>} />
+                  <DialogClose
+                    render={
+                      <Button variant="destructive" onClick={resetAll}>
+                        Okay
+                      </Button>
+                    }
+                  />
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <TabsContent
@@ -930,11 +1389,57 @@ export default function CustomiseView({ active }: { active: string }) {
           >
             <div className="flex flex-col gap-6">
               <VariablesTab getPair={getPair} onChange={setPair} />
-              <ShadowsSection />
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Footer actions — persist overrides to app/globals.css */}
+        <div className="grid grid-cols-2 gap-2 border-t border-border-soft p-3">
+          <Button onClick={applyComponent} disabled={active === "crm"}>
+            Apply
+          </Button>
+          <Button onClick={applyGlobal}>Apply to all</Button>
+          <Button onClick={resetComponent} disabled={active === "crm"}>
+            Reset
+          </Button>
+          <Button onClick={openGetCode}>Get code</Button>
+          <Dialog open={codeOpen} onOpenChange={setCodeOpen}>
+            <DialogContent size="lg" data-customise-panel>
+              <DialogHeader>
+                <DialogTitle>Install your theme</DialogTitle>
+                <DialogDescription>
+                  Run this in a shadcn project to apply your global and
+                  per-component customisations via the registry.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex items-center gap-2 rounded-lg border border-border-soft bg-secondary p-3">
+                <code className="min-w-0 flex-1 overflow-x-auto text-sm whitespace-nowrap">
+                  {installCommand}
+                </code>
+                <Button
+                  variant="secondary"
+                  size="icon-sm"
+                  className="shrink-0"
+                  onClick={copyCommand}
+                  disabled={!installUrl}
+                  aria-label="Copy command"
+                >
+                  {copied ? <Check /> : <Copy />}
+                </Button>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Registry item that gets installed:
+              </p>
+              <pre className="max-h-[40vh] overflow-auto rounded-lg border border-border-soft bg-secondary p-4 text-xs leading-relaxed">
+                <code>
+                  {registryJson || "/* No customisations yet — adjust a value. */"}
+                </code>
+              </pre>
+            </DialogContent>
+          </Dialog>
+        </div>
       </aside>
+      {mounted && <Toaster />}
     </div>
   )
 }
