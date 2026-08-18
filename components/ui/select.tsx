@@ -81,9 +81,9 @@ const selectTriggerVariants = cva(
         outline:
           "border border-transparent bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-[size=lg]:h-9.5! data-[size=md]:h-7.5! data-[size=sm]:h-6.5! data-[size=xs]:h-5.5! data-disabled:bg-transparent data-disabled:shadow-default",
         subtle:
-          "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-input",
+          "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] data-invalid:bg-error data-valid:bg-success dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] data-disabled:bg-secondary",
         ghost:
-          "border border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted focus-visible:bg-transparent! data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent",
+          "border border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] focus-visible:bg-transparent! not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] data-invalid:bg-error data-valid:bg-success dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] data-disabled:bg-transparent",
       },
     },
     defaultVariants: {
@@ -194,7 +194,7 @@ function SelectItem({
       data-slot="select-item"
       value={value}
       className={cn(
-        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-1.5 text-base text-muted-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-muted-foreground not-data-[variant=destructive]:focus:**:text-muted-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-highlighted:active:bg-muted data-highlighted:active:text-muted-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-1.5 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-secondary focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-secondary! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-secondary data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
