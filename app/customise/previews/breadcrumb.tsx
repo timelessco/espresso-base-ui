@@ -16,9 +16,11 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 import { PreviewCard, PreviewGrid } from "./preview-card"
 
 export default function BreadcrumbPreview() {
@@ -118,13 +120,23 @@ export default function BreadcrumbPreview() {
             <BreadcrumbItem>
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  nativeButton={false}
-                  render={<BreadcrumbEllipsis />}
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="ghost"
+                      className="hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)]"
+                    >
+                      <BreadcrumbEllipsis />
+                      <span className="sr-only">Toggle menu</span>
+                    </Button>
+                  }
                 />
                 <DropdownMenuContent align="start">
-                  <DropdownMenuItem>Documentation</DropdownMenuItem>
-                  <DropdownMenuItem>Themes</DropdownMenuItem>
-                  <DropdownMenuItem>GitHub</DropdownMenuItem>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>Documentation</DropdownMenuItem>
+                    <DropdownMenuItem>Themes</DropdownMenuItem>
+                    <DropdownMenuItem>GitHub</DropdownMenuItem>
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             </BreadcrumbItem>
@@ -260,12 +272,22 @@ export default function BreadcrumbPreview() {
             <BreadcrumbItem>
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  nativeButton={false}
-                  render={<BreadcrumbEllipsis />}
+                  render={
+                    <Button
+                      size="icon-sm"
+                      variant="ghost"
+                      className="hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)]"
+                    >
+                      <BreadcrumbEllipsis />
+                      <span className="sr-only">Toggle menu</span>
+                    </Button>
+                  }
                 />
                 <DropdownMenuContent align="start">
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             </BreadcrumbItem>
