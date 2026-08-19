@@ -430,7 +430,7 @@ function PreviewRail({
           the inner container does the scrolling. */}
       <div
         className={cn(
-          "opacity- 0 invisible absolute top-1/2 left-full z-50 ml-2 flex max-h-[80vh] w-56 -translate-x-1 -translate-y-1/2 flex-col rounded-xl border border-border-soft bg-popover p-1.5 shadow-elevation-xl transition duration-150",
+          "opacity- 0 invisible absolute top-1/2 left-full z-50 ml-2 flex max-h-[80vh] w-56 -translate-x-1 -translate-y-1/2 flex-col rounded-xl bg-popover p-1.5 shadow-elevation-xl transition duration-150",
           "before:absolute before:top-0 before:-left-3 before:h-full before:w-3 before:content-['']",
           "group-hover/rail:visible group-hover/rail:translate-x-0 group-hover/rail:opacity-100"
         )}
@@ -468,7 +468,6 @@ function PreviewRail({
     </div>
   )
 }
-
 
 // Semantic theme tokens shown in the Variables tab (each + its foreground).
 const VARIABLE_TOKENS = [
@@ -825,19 +824,110 @@ export default function CustomiseView() {
     [globalSnap, themeDefaults]
   )
 
+  // Snapshot of the last loaded/applied slider state, so we can detect *unsaved*
+  // edits (differs from committed) — distinct from `isDirty` (differs from
+  // baseline, which is true even for an already-applied component).
+  type EditState = {
+    fontScale: number
+    lineScale: number
+    letterSpacing: number
+    spacingScale: number
+    radius: number
+    iconRadius: number
+    colors: Record<string, ColorPair>
+  }
+  const committedRef = React.useRef<EditState | null>(null)
+
   // Once theme defaults are read (and whenever the active component or global
   // baseline changes), set the sliders from: defaults → global → component.
   React.useEffect(() => {
     if (!Object.keys(themeDefaults).length) return
     const c = loadSnapshot(active)
-    setColors({ ...baseline.colors, ...(c?.colors ?? {}) })
-    setFontScale(c?.fontScale ?? baseline.fontScale)
-    setLineScale(c?.lineScale ?? baseline.lineScale)
-    setLetterSpacing(c?.letterSpacing ?? baseline.letterSpacing)
-    setSpacingScale(c?.spacingScale ?? baseline.spacingScale)
-    setRadius(c?.radius ?? baseline.radius)
-    setIconRadius(c?.iconRadius ?? baseline.iconRadius)
+    const loaded: EditState = {
+      fontScale: c?.fontScale ?? baseline.fontScale,
+      lineScale: c?.lineScale ?? baseline.lineScale,
+      letterSpacing: c?.letterSpacing ?? baseline.letterSpacing,
+      spacingScale: c?.spacingScale ?? baseline.spacingScale,
+      radius: c?.radius ?? baseline.radius,
+      iconRadius: c?.iconRadius ?? baseline.iconRadius,
+      colors: { ...baseline.colors, ...(c?.colors ?? {}) },
+    }
+    setColors(loaded.colors)
+    setFontScale(loaded.fontScale)
+    setLineScale(loaded.lineScale)
+    setLetterSpacing(loaded.letterSpacing)
+    setSpacingScale(loaded.spacingScale)
+    setRadius(loaded.radius)
+    setIconRadius(loaded.iconRadius)
+    committedRef.current = loaded
   }, [themeDefaults, active, baseline])
+
+  // Current slider/colour state, and whether it differs from what was last
+  // loaded or applied (i.e. unsaved edits).
+  const currentEditState = React.useCallback(
+    (): EditState => ({
+      fontScale,
+      lineScale,
+      letterSpacing,
+      spacingScale,
+      radius,
+      iconRadius,
+      colors,
+    }),
+    [
+      fontScale,
+      lineScale,
+      letterSpacing,
+      spacingScale,
+      radius,
+      iconRadius,
+      colors,
+    ]
+  )
+  const hasUnsavedChanges = React.useCallback(() => {
+    const cm = committedRef.current
+    if (!cm) return false
+    if (
+      fontScale !== cm.fontScale ||
+      lineScale !== cm.lineScale ||
+      letterSpacing !== cm.letterSpacing ||
+      spacingScale !== cm.spacingScale ||
+      radius !== cm.radius ||
+      iconRadius !== cm.iconRadius
+    )
+      return true
+    for (const token of ALL_COLOR_TOKENS) {
+      const a = colors[token]
+      const b = cm.colors[token]
+      if (!a || !b) continue
+      if (
+        a.light.toLowerCase() !== b.light.toLowerCase() ||
+        a.dark.toLowerCase() !== b.dark.toLowerCase()
+      )
+        return true
+    }
+    return false
+  }, [
+    fontScale,
+    lineScale,
+    letterSpacing,
+    spacingScale,
+    radius,
+    iconRadius,
+    colors,
+  ])
+
+  // Guard navigation: if there are unsaved edits, stash the target and prompt
+  // before switching (rather than discarding silently).
+  const [pendingNav, setPendingNav] = React.useState<string | null>(null)
+  const requestActive = React.useCallback(
+    (id: string) => {
+      if (id === active) return
+      if (hasUnsavedChanges()) setPendingNav(id)
+      else setActive(id)
+    },
+    [active, hasUnsavedChanges, setActive]
+  )
 
   // Components that carry a saved (applied) customisation — drives the rail's
   // blue dots. Seeded from localStorage, then kept in sync on apply/reset.
@@ -881,7 +971,15 @@ export default function CustomiseView() {
         return true
     }
     return false
-  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, baseline])
+  }, [
+    radius,
+    iconRadius,
+    spacingScale,
+    fontScale,
+    letterSpacing,
+    colors,
+    baseline,
+  ])
 
   // Dotted = applied customisations, plus the active one while being edited.
   const dottedIds = React.useMemo(() => {
@@ -928,7 +1026,10 @@ export default function CustomiseView() {
         ),
       ].join("")
       const trackingVars = Object.entries(TRACKING_TOKENS)
-        .map(([name, base]) => `--tracking-${name}:${(base + letter).toFixed(4)}em;`)
+        .map(
+          ([name, base]) =>
+            `--tracking-${name}:${(base + letter).toFixed(4)}em;`
+        )
         .join("")
       return `--radius:${r}px;--spacing:${(SPACING_BASE * ss).toFixed(4)}rem;${fontVars}${leadingVars}${trackingVars}`
     }
@@ -1058,7 +1159,15 @@ export default function CustomiseView() {
         dark.push(`--${token}:${pair.dark};`)
     }
     return { main: main.join(""), dark: dark.join("") }
-  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
+  }, [
+    radius,
+    iconRadius,
+    spacingScale,
+    fontScale,
+    letterSpacing,
+    colors,
+    themeDefaults,
+  ])
 
   // Writes are fast + idempotent, so we don't disable buttons while pending —
   // toggling `disabled` mid-write causes a visible flash of the disabled style.
@@ -1084,8 +1193,7 @@ export default function CustomiseView() {
   const applyGlobal = React.useCallback(() => {
     if (!isDirty) return // nothing differs from the current baseline
     const { main, dark } = buildDecls()
-    const css =
-      (main ? `:root{${main}}` : "") + (dark ? `.dark{${dark}}` : "")
+    const css = (main ? `:root{${main}}` : "") + (dark ? `.dark{${dark}}` : "")
 
     // persist as the shared baseline so every component's sliders reflect it
     if (css) {
@@ -1104,6 +1212,7 @@ export default function CustomiseView() {
       clearSnapshot(GLOBAL_ID)
       setGlobalSnap(null)
     }
+    committedRef.current = currentEditState()
 
     startApply(async () => {
       await applyCustomisation("global", css)
@@ -1115,6 +1224,7 @@ export default function CustomiseView() {
     isDirty,
     buildDecls,
     colorDiff,
+    currentEditState,
     fontScale,
     lineScale,
     letterSpacing,
@@ -1154,6 +1264,7 @@ export default function CustomiseView() {
       else next.delete(active)
       return next
     })
+    committedRef.current = currentEditState()
 
     startApply(async () => {
       await applyCustomisation(active, css)
@@ -1168,6 +1279,7 @@ export default function CustomiseView() {
     customisedIds,
     buildDecls,
     colorDiff,
+    currentEditState,
     fontScale,
     lineScale,
     letterSpacing,
@@ -1191,11 +1303,12 @@ export default function CustomiseView() {
         return next
       })
     }
+    committedRef.current = { ...baseline }
     startApply(async () => {
       if (wasCustomised) await applyCustomisation(active, "")
       toast.success(`${activeLabel} reset to default`)
     })
-  }, [active, activeLabel, isDirty, customisedIds, resetToBaseline])
+  }, [active, activeLabel, isDirty, customisedIds, resetToBaseline, baseline])
 
   // Global reset — every component + global override back to theme defaults.
   const resetAll = React.useCallback(() => {
@@ -1211,11 +1324,20 @@ export default function CustomiseView() {
       /* storage unavailable */
     }
     setCustomisedIds(new Set())
+    committedRef.current = {
+      fontScale: DEFAULTS.fontScale,
+      lineScale: DEFAULTS.lineScale,
+      letterSpacing: DEFAULTS.letterSpacing,
+      spacingScale: DEFAULTS.spacingScale,
+      radius: DEFAULTS.radius,
+      iconRadius: DEFAULTS.iconRadius,
+      colors: themeDefaults,
+    }
     startApply(async () => {
       await resetAllCustomisations()
       if (hadAny) toast.success("All customisations reset")
     })
-  }, [reset, isDirty, customisedIds, globalSnap])
+  }, [reset, isDirty, customisedIds, globalSnap, themeDefaults])
 
   // --- "Get code": export all customisations as a shadcn registry item ------
   const [codeOpen, setCodeOpen] = React.useState(false)
@@ -1235,7 +1357,10 @@ export default function CustomiseView() {
       colors,
     }
 
-    const cssVars: { light?: Record<string, string>; dark?: Record<string, string> } = {}
+    const cssVars: {
+      light?: Record<string, string>
+      dark?: Record<string, string>
+    } = {}
     if (globalSnap) {
       const g = buildVarMap(globalSnap, themeDefaults)
       if (Object.keys(g.main).length) cssVars.light = stripDashes(g.main)
@@ -1287,9 +1412,7 @@ export default function CustomiseView() {
       .replace(/\+/g, "-")
       .replace(/\//g, "_")
       .replace(/=+$/, "")
-    setInstallUrl(
-      `${window.location.origin}/r/custom-theme.json?d=${payload}`
-    )
+    setInstallUrl(`${window.location.origin}/r/custom-theme.json?d=${payload}`)
     setCodeOpen(true)
   }, [buildRegistryItem])
 
@@ -1299,10 +1422,12 @@ export default function CustomiseView() {
 
   const copyCommand = React.useCallback(() => {
     if (!installUrl) return
-    navigator.clipboard?.writeText(`npx shadcn@latest add ${installUrl}`).then(() => {
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1500)
-    })
+    navigator.clipboard
+      ?.writeText(`npx shadcn@latest add ${installUrl}`)
+      .then(() => {
+        setCopied(true)
+        window.setTimeout(() => setCopied(false), 1500)
+      })
   }, [installUrl])
 
   return (
@@ -1316,7 +1441,7 @@ export default function CustomiseView() {
         <PreviewRail
           active={active}
           customised={dottedIds}
-          onSelect={setActive}
+          onSelect={requestActive}
         />
       </div>
 
@@ -1380,7 +1505,9 @@ export default function CustomiseView() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <DialogClose render={<Button variant="secondary">Back</Button>} />
+                  <DialogClose
+                    render={<Button variant="secondary">Back</Button>}
+                  />
                   <DialogClose
                     render={
                       <Button variant="destructive" onClick={resetAll}>
@@ -1533,6 +1660,37 @@ export default function CustomiseView() {
           </Dialog>
         </div>
       </aside>
+
+      {/* Unsaved-changes guard when switching components */}
+      <Dialog
+        open={pendingNav !== null}
+        onOpenChange={(open) => !open && setPendingNav(null)}
+      >
+        <DialogContent size="sm" data-customise-panel>
+          <DialogHeader>
+            <DialogTitle>Discard unsaved changes?</DialogTitle>
+            <DialogDescription>
+              You have unsaved changes to {activeLabel}. Switching components
+              will discard them - apply first to keep them.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setPendingNav(null)}>
+              Keep editing
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                const target = pendingNav
+                setPendingNav(null)
+                if (target) setActive(target)
+              }}
+            >
+              Discard
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       {mounted && <Toaster />}
     </div>
   )
