@@ -43,11 +43,7 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
-import {
-  applyCustomisation,
-  resetAllCustomisations,
-  writeRegistryTheme,
-} from "./actions"
+import { applyCustomisation, resetAllCustomisations } from "./actions"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -1282,11 +1278,17 @@ export default function CustomiseView() {
 
   const openGetCode = React.useCallback(() => {
     const item = buildRegistryItem()
+    // Encode the registry item into the URL (base64url) rather than writing a
+    // file — a route handler serves it, so this works on read-only serverless
+    // filesystems (Vercel) too.
+    const payload = btoa(JSON.stringify(item))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "")
+    setInstallUrl(
+      `${window.location.origin}/r/custom-theme.json?d=${payload}`
+    )
     setCodeOpen(true)
-    startApply(async () => {
-      const res = await writeRegistryTheme(item)
-      setInstallUrl(res.url)
-    })
   }, [buildRegistryItem])
 
   const installCommand = installUrl
