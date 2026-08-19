@@ -31,7 +31,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
-          "--normal-bg": "var(--secondary-foreground)",
+          "--normal-bg":
+            "color-mix(in oklch, var(--primary), var(--background) 17%)",
           "--normal-text": "var(--primary-foreground)",
           "--normal-border": "var(--border)",
           "--border-radius": "var(--radius)",
