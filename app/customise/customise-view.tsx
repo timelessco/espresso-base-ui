@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import dynamic from "next/dynamic"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { RotateCcw, Copy, Check } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -192,6 +192,15 @@ const DEFAULTS = {
   letterSpacing: 0, // em offset added to tracking tokens
   spacingScale: 1,
   radius: 10, // px — matches --radius: 0.625rem
+  iconRadius: 10, // px — icon-only button radius (--radius-btn-icon); off at default
+}
+
+// Known-exact pristine values for the Style-tab colours, so the panel chrome
+// (which uses --primary / --destructive) resets correctly even when the DOM's
+// `themeDefaults` is polluted by an already-applied global override.
+const PRISTINE_STYLE_COLORS: Record<string, ColorPair> = {
+  primary: DEFAULTS.accent,
+  destructive: DEFAULTS.danger,
 }
 
 function toNumber(value: number | readonly number[]): number {
@@ -649,6 +658,7 @@ type Snapshot = {
   letterSpacing: number
   spacingScale: number
   radius: number
+  iconRadius: number
   colors: Record<string, ColorPair>
 }
 
@@ -657,6 +667,7 @@ type Snapshot = {
 // Used to export the shadcn registry item.
 type VarValues = {
   radius: number
+  iconRadius: number
   spacingScale: number
   fontScale: number
   letterSpacing: number
@@ -666,6 +677,8 @@ function buildVarMap(v: VarValues, themeDefaults: Record<string, ColorPair>) {
   const main: Record<string, string> = {}
   const dark: Record<string, string> = {}
   if (v.radius !== DEFAULTS.radius) main["--radius"] = `${v.radius}px`
+  if (v.iconRadius !== DEFAULTS.iconRadius)
+    main["--radius-btn-icon"] = `${v.iconRadius}px`
   if (v.spacingScale !== DEFAULTS.spacingScale)
     main["--spacing"] = `${(SPACING_BASE * v.spacingScale).toFixed(4)}rem`
   if (v.fontScale !== DEFAULTS.fontScale)
@@ -697,6 +710,25 @@ const SNAPSHOT_PREFIX = "customise:v1:"
 // Reserved id for the "Apply to all" (global) snapshot, stored alongside the
 // per-component ones. Never a real component, so it never gets a rail dot.
 const GLOBAL_ID = "__global__"
+// Original theme colours captured before any "Apply to all" is baked into
+// globals.css. Once a global apply exists, `themeDefaults` (read from the DOM)
+// reflects the applied colour, so we need this to keep the tool chrome fixed.
+const PRISTINE_KEY = "customise:pristine:v1"
+function loadPristine(): Record<string, ColorPair> {
+  try {
+    const raw = localStorage.getItem(PRISTINE_KEY)
+    return raw ? (JSON.parse(raw) as Record<string, ColorPair>) : {}
+  } catch {
+    return {}
+  }
+}
+function savePristine(v: Record<string, ColorPair>) {
+  try {
+    localStorage.setItem(PRISTINE_KEY, JSON.stringify(v))
+  } catch {
+    /* storage unavailable — non-fatal */
+  }
+}
 
 // Per-component slider/colour state, so re-opening a component shows what was
 // last applied to it. globals.css holds the real styles; this holds the UI.
@@ -725,8 +757,13 @@ function clearSnapshot(id: string) {
   }
 }
 
-export default function CustomiseView({ active }: { active: string }) {
+export default function CustomiseView() {
   const router = useRouter()
+  // Derived from the URL rather than a prop so this component can live in the
+  // persistent layout and NOT remount on component switches (which would re-run
+  // the theme read + snapshot load and cause a colour flash).
+  const pathname = usePathname()
+  const active = pathname.split("/").filter(Boolean)[1] ?? "crm"
   const [isPending, startTransition] = React.useTransition()
   const setActive = React.useCallback(
     (id: string) => startTransition(() => router.push(`/customise/${id}`)),
@@ -750,13 +787,32 @@ export default function CustomiseView({ active }: { active: string }) {
   )
   const [spacingScale, setSpacingScale] = React.useState(DEFAULTS.spacingScale)
   const [radius, setRadius] = React.useState(DEFAULTS.radius)
+  const [iconRadius, setIconRadius] = React.useState(DEFAULTS.iconRadius)
 
   // The global ("Apply to all") snapshot — the shared baseline every component
   // inherits. Seeded from localStorage, updated on apply-to-all / reset.
   const [globalSnap, setGlobalSnap] = React.useState<Snapshot | null>(null)
+  const [globalLoaded, setGlobalLoaded] = React.useState(false)
   React.useEffect(() => {
     setGlobalSnap(loadSnapshot(GLOBAL_ID))
+    setGlobalLoaded(true)
   }, [])
+
+  // Pristine (pre-global-apply) theme colours — used to keep the tool chrome
+  // fixed. When nothing is applied globally, the read defaults ARE pristine, so
+  // capture + persist them; otherwise trust the persisted copy over the
+  // now-polluted `themeDefaults`.
+  const [pristine, setPristine] = React.useState<Record<string, ColorPair>>({})
+  React.useEffect(() => {
+    if (!globalLoaded || !Object.keys(themeDefaults).length) return
+    if (globalSnap === null) {
+      setPristine(themeDefaults)
+      savePristine(themeDefaults)
+    } else {
+      const saved = loadPristine()
+      setPristine(Object.keys(saved).length ? saved : themeDefaults)
+    }
+  }, [globalLoaded, globalSnap, themeDefaults])
 
   // Effective baseline for the active component: theme defaults, overlaid with
   // whatever was applied globally. A component's own snapshot layers on top.
@@ -767,6 +823,7 @@ export default function CustomiseView({ active }: { active: string }) {
       letterSpacing: globalSnap?.letterSpacing ?? DEFAULTS.letterSpacing,
       spacingScale: globalSnap?.spacingScale ?? DEFAULTS.spacingScale,
       radius: globalSnap?.radius ?? DEFAULTS.radius,
+      iconRadius: globalSnap?.iconRadius ?? DEFAULTS.iconRadius,
       colors: { ...themeDefaults, ...(globalSnap?.colors ?? {}) },
     }),
     [globalSnap, themeDefaults]
@@ -783,6 +840,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(c?.letterSpacing ?? baseline.letterSpacing)
     setSpacingScale(c?.spacingScale ?? baseline.spacingScale)
     setRadius(c?.radius ?? baseline.radius)
+    setIconRadius(c?.iconRadius ?? baseline.iconRadius)
   }, [themeDefaults, active, baseline])
 
   // Components that carry a saved (applied) customisation — drives the rail's
@@ -810,6 +868,7 @@ export default function CustomiseView({ active }: { active: string }) {
   const isDirty = React.useMemo(() => {
     if (
       radius !== baseline.radius ||
+      iconRadius !== baseline.iconRadius ||
       spacingScale !== baseline.spacingScale ||
       fontScale !== baseline.fontScale ||
       letterSpacing !== baseline.letterSpacing
@@ -826,7 +885,7 @@ export default function CustomiseView({ active }: { active: string }) {
         return true
     }
     return false
-  }, [radius, spacingScale, fontScale, letterSpacing, colors, baseline])
+  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, baseline])
 
   // Dotted = applied customisations, plus the active one while being edited.
   const dottedIds = React.useMemo(() => {
@@ -893,7 +952,9 @@ export default function CustomiseView({ active }: { active: string }) {
       DEFAULTS.radius
     )
 
-    // color overrides (only tokens that differ) + their panel resets
+    // `:root` gets the live colour overrides (vs the baked-in theme). The panel
+    // is reset to the *pristine* theme (not `themeDefaults`, which is polluted
+    // once a global apply is baked into globals.css) so the chrome never shifts.
     const light: string[] = []
     const dark: string[] = []
     const resetLight: string[] = []
@@ -902,23 +963,40 @@ export default function CustomiseView({ active }: { active: string }) {
       const pair = colors[token]
       const def = themeDefaults[token]
       if (!pair || !def) continue
-      if (pair.light.toLowerCase() !== def.light.toLowerCase()) {
+      const pris = PRISTINE_STYLE_COLORS[token] ?? pristine[token] ?? def
+      if (pair.light.toLowerCase() !== def.light.toLowerCase())
         light.push(`--${token}:${pair.light};`)
-        resetLight.push(`--${token}:${def.light};`)
-      }
-      if (pair.dark.toLowerCase() !== def.dark.toLowerCase()) {
+      if (pair.dark.toLowerCase() !== def.dark.toLowerCase())
         dark.push(`--${token}:${pair.dark};`)
-        resetDark.push(`--${token}:${def.dark};`)
-      }
+      // reset the panel to pristine whenever :root would otherwise show a
+      // non-pristine value (live change OR a baked-in global apply)
+      if (
+        pair.light.toLowerCase() !== pris.light.toLowerCase() ||
+        def.light.toLowerCase() !== pris.light.toLowerCase()
+      )
+        resetLight.push(`--${token}:${pris.light};`)
+      if (
+        pair.dark.toLowerCase() !== pris.dark.toLowerCase() ||
+        def.dark.toLowerCase() !== pris.dark.toLowerCase()
+      )
+        resetDark.push(`--${token}:${pris.dark};`)
     }
 
+    // Icon-only button radius override (--radius-btn-icon). Only emitted when
+    // changed so icon buttons keep their per-size defaults otherwise; the panel
+    // resets it to `initial` so the tool chrome's icon buttons stay unaffected.
+    const iconRadiusCss =
+      iconRadius !== DEFAULTS.iconRadius
+        ? `--radius-btn-icon:${iconRadius}px;`
+        : ""
+
     return (
-      `:root{${sharedCurrent}${light.join("")}}` +
+      `:root{${sharedCurrent}${iconRadiusCss}${light.join("")}}` +
       (dark.length ? `.dark{${dark.join("")}}` : "") +
       // `letter-spacing` is applied once on <body> (tracking-normal) and
       // inherited as a computed length, so resetting the var alone doesn't
       // reach the panel — re-derive it here from the reset --tracking-normal.
-      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
+      `[data-customise-panel]{${sharedDefault}--radius-btn-icon:initial;${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
       (resetDark.length
         ? `.dark [data-customise-panel]{${resetDark.join("")}}`
         : "")
@@ -926,11 +1004,13 @@ export default function CustomiseView({ active }: { active: string }) {
   }, [
     colors,
     themeDefaults,
+    pristine,
     fontScale,
     lineScale,
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   const reset = React.useCallback(() => {
@@ -940,6 +1020,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(DEFAULTS.letterSpacing)
     setSpacingScale(DEFAULTS.spacingScale)
     setRadius(DEFAULTS.radius)
+    setIconRadius(DEFAULTS.iconRadius)
   }, [themeDefaults])
 
   // Revert the sliders to the shared baseline (global override, else defaults).
@@ -950,6 +1031,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(baseline.letterSpacing)
     setSpacingScale(baseline.spacingScale)
     setRadius(baseline.radius)
+    setIconRadius(baseline.iconRadius)
   }, [baseline])
 
   // Serialise only the changed values into CSS declarations.
@@ -958,6 +1040,8 @@ export default function CustomiseView({ active }: { active: string }) {
     const main: string[] = []
     const dark: string[] = []
     if (radius !== DEFAULTS.radius) main.push(`--radius:${radius}px;`)
+    if (iconRadius !== DEFAULTS.iconRadius)
+      main.push(`--radius-btn-icon:${iconRadius}px;`)
     if (spacingScale !== DEFAULTS.spacingScale)
       main.push(`--spacing:${(SPACING_BASE * spacingScale).toFixed(4)}rem;`)
     if (fontScale !== DEFAULTS.fontScale)
@@ -976,7 +1060,7 @@ export default function CustomiseView({ active }: { active: string }) {
         dark.push(`--${token}:${pair.dark};`)
     }
     return { main: main.join(""), dark: dark.join("") }
-  }, [radius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
+  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
 
   // Writes are fast + idempotent, so we don't disable buttons while pending —
   // toggling `disabled` mid-write causes a visible flash of the disabled style.
@@ -1013,6 +1097,7 @@ export default function CustomiseView({ active }: { active: string }) {
         letterSpacing,
         spacingScale,
         radius,
+        iconRadius,
         colors: colorDiff(),
       }
       saveSnapshot(GLOBAL_ID, snap)
@@ -1037,6 +1122,7 @@ export default function CustomiseView({ active }: { active: string }) {
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   // "Apply" → scoped to this component only, via its root data-slot. The
@@ -1059,6 +1145,7 @@ export default function CustomiseView({ active }: { active: string }) {
         letterSpacing,
         spacingScale,
         radius,
+        iconRadius,
         colors: colorDiff(),
       })
     else clearSnapshot(active)
@@ -1088,6 +1175,7 @@ export default function CustomiseView({ active }: { active: string }) {
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   // "Reset" → revert this component to its baseline (global override, else
@@ -1143,6 +1231,7 @@ export default function CustomiseView({ active }: { active: string }) {
   const buildRegistryItem = React.useCallback(() => {
     const currentVals: VarValues = {
       radius,
+      iconRadius,
       spacingScale,
       fontScale,
       letterSpacing,
@@ -1180,6 +1269,7 @@ export default function CustomiseView({ active }: { active: string }) {
     return item
   }, [
     radius,
+    iconRadius,
     spacingScale,
     fontScale,
     letterSpacing,
@@ -1380,6 +1470,17 @@ export default function CustomiseView({ active }: { active: string }) {
                 step={1}
                 onChange={setRadius}
               />
+              {active === "button" && (
+                <SliderRow
+                  label="Icon Button Radius"
+                  value={iconRadius}
+                  display={`${iconRadius}px`}
+                  min={0}
+                  max={20}
+                  step={1}
+                  onChange={setIconRadius}
+                />
+              )}
             </div>
           </TabsContent>
 
