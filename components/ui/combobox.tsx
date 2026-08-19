@@ -192,7 +192,7 @@ function ComboboxList({ className, ...props }: ComboboxPrimitive.List.Props) {
       data-slot="combobox-list"
       data-variant={variant}
       className={cn(
-        "no-scrollbar scroll-fade max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0",
+        "no-scrollbar max-h-[min(calc(--spacing(72)---spacing(9)),calc(var(--available-height)---spacing(9)))] scroll-fade scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0",
         className
       )}
       {...props}
@@ -217,7 +217,7 @@ function ComboboxItem({
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
       className={cn(
-        "not-data-[variant=destructive]:focus:**:text-secondaey-foreground relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-secondary-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "not-data-[variant=destructive]:focus:**:text-secondaey-foreground relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-2 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-secondary-foreground aria-selected:bg-secondary! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-secondary data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         comboboxItemSizeClasses[size],
         className
       )}
@@ -298,7 +298,12 @@ const comboboxChipsMinHClasses: Record<
   ComboboxVariant,
   Record<ComboboxSize, string>
 > = {
-  outline: { xs: "min-h-5.5!", sm: "min-h-6.5!", md: "min-h-7.5!", lg: "min-h-9.5!" },
+  outline: {
+    xs: "min-h-5.5!",
+    sm: "min-h-6.5!",
+    md: "min-h-7.5!",
+    lg: "min-h-9.5!",
+  },
   subtle: { xs: "min-h-6!", sm: "min-h-7!", md: "min-h-8!", lg: "min-h-10!" },
   ghost: { xs: "min-h-6!", sm: "min-h-7!", md: "min-h-8!", lg: "min-h-10!" },
 }
@@ -363,7 +368,7 @@ function ComboboxChip({
       data-variant={variant}
       data-size={size}
       className={cn(
-        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised data-[variant=ghost]:bg-secondary",
+        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=ghost]:bg-secondary data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised",
         comboboxChipSizeClasses[size],
         className
       )}
