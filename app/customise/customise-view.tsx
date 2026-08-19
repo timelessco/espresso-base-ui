@@ -992,9 +992,11 @@ export default function CustomiseView() {
       // `letter-spacing` is applied once on <body> (tracking-normal) and
       // inherited as a computed length, so resetting the var alone doesn't
       // reach the panel — re-derive it here from the reset --tracking-normal.
-      `[data-customise-panel]{${sharedDefault}--radius-btn-icon:initial;${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
+      // Also reset sonner's toaster (portaled to <body>, so it inherits the
+      // :root overrides) so toast messages stay at the theme defaults.
+      `[data-customise-panel],[data-sonner-toaster]{${sharedDefault}--radius-btn-icon:initial;${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
       (resetDark.length
-        ? `.dark [data-customise-panel]{${resetDark.join("")}}`
+        ? `.dark [data-customise-panel],.dark [data-sonner-toaster]{${resetDark.join("")}}`
         : "")
     )
   }, [
