@@ -192,6 +192,7 @@ const DEFAULTS = {
   letterSpacing: 0, // em offset added to tracking tokens
   spacingScale: 1,
   radius: 10, // px — matches --radius: 0.625rem
+  iconRadius: 10, // px — icon-only button radius (--radius-btn-icon); off at default
 }
 
 function toNumber(value: number | readonly number[]): number {
@@ -649,6 +650,7 @@ type Snapshot = {
   letterSpacing: number
   spacingScale: number
   radius: number
+  iconRadius: number
   colors: Record<string, ColorPair>
 }
 
@@ -657,6 +659,7 @@ type Snapshot = {
 // Used to export the shadcn registry item.
 type VarValues = {
   radius: number
+  iconRadius: number
   spacingScale: number
   fontScale: number
   letterSpacing: number
@@ -666,6 +669,8 @@ function buildVarMap(v: VarValues, themeDefaults: Record<string, ColorPair>) {
   const main: Record<string, string> = {}
   const dark: Record<string, string> = {}
   if (v.radius !== DEFAULTS.radius) main["--radius"] = `${v.radius}px`
+  if (v.iconRadius !== DEFAULTS.iconRadius)
+    main["--radius-btn-icon"] = `${v.iconRadius}px`
   if (v.spacingScale !== DEFAULTS.spacingScale)
     main["--spacing"] = `${(SPACING_BASE * v.spacingScale).toFixed(4)}rem`
   if (v.fontScale !== DEFAULTS.fontScale)
@@ -750,6 +755,7 @@ export default function CustomiseView({ active }: { active: string }) {
   )
   const [spacingScale, setSpacingScale] = React.useState(DEFAULTS.spacingScale)
   const [radius, setRadius] = React.useState(DEFAULTS.radius)
+  const [iconRadius, setIconRadius] = React.useState(DEFAULTS.iconRadius)
 
   // The global ("Apply to all") snapshot — the shared baseline every component
   // inherits. Seeded from localStorage, updated on apply-to-all / reset.
@@ -767,6 +773,7 @@ export default function CustomiseView({ active }: { active: string }) {
       letterSpacing: globalSnap?.letterSpacing ?? DEFAULTS.letterSpacing,
       spacingScale: globalSnap?.spacingScale ?? DEFAULTS.spacingScale,
       radius: globalSnap?.radius ?? DEFAULTS.radius,
+      iconRadius: globalSnap?.iconRadius ?? DEFAULTS.iconRadius,
       colors: { ...themeDefaults, ...(globalSnap?.colors ?? {}) },
     }),
     [globalSnap, themeDefaults]
@@ -783,6 +790,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(c?.letterSpacing ?? baseline.letterSpacing)
     setSpacingScale(c?.spacingScale ?? baseline.spacingScale)
     setRadius(c?.radius ?? baseline.radius)
+    setIconRadius(c?.iconRadius ?? baseline.iconRadius)
   }, [themeDefaults, active, baseline])
 
   // Components that carry a saved (applied) customisation — drives the rail's
@@ -810,6 +818,7 @@ export default function CustomiseView({ active }: { active: string }) {
   const isDirty = React.useMemo(() => {
     if (
       radius !== baseline.radius ||
+      iconRadius !== baseline.iconRadius ||
       spacingScale !== baseline.spacingScale ||
       fontScale !== baseline.fontScale ||
       letterSpacing !== baseline.letterSpacing
@@ -826,7 +835,7 @@ export default function CustomiseView({ active }: { active: string }) {
         return true
     }
     return false
-  }, [radius, spacingScale, fontScale, letterSpacing, colors, baseline])
+  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, baseline])
 
   // Dotted = applied customisations, plus the active one while being edited.
   const dottedIds = React.useMemo(() => {
@@ -912,13 +921,21 @@ export default function CustomiseView({ active }: { active: string }) {
       }
     }
 
+    // Icon-only button radius override (--radius-btn-icon). Only emitted when
+    // changed so icon buttons keep their per-size defaults otherwise; the panel
+    // resets it to `initial` so the tool chrome's icon buttons stay unaffected.
+    const iconRadiusCss =
+      iconRadius !== DEFAULTS.iconRadius
+        ? `--radius-btn-icon:${iconRadius}px;`
+        : ""
+
     return (
-      `:root{${sharedCurrent}${light.join("")}}` +
+      `:root{${sharedCurrent}${iconRadiusCss}${light.join("")}}` +
       (dark.length ? `.dark{${dark.join("")}}` : "") +
       // `letter-spacing` is applied once on <body> (tracking-normal) and
       // inherited as a computed length, so resetting the var alone doesn't
       // reach the panel — re-derive it here from the reset --tracking-normal.
-      `[data-customise-panel]{${sharedDefault}${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
+      `[data-customise-panel]{${sharedDefault}--radius-btn-icon:initial;${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
       (resetDark.length
         ? `.dark [data-customise-panel]{${resetDark.join("")}}`
         : "")
@@ -931,6 +948,7 @@ export default function CustomiseView({ active }: { active: string }) {
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   const reset = React.useCallback(() => {
@@ -940,6 +958,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(DEFAULTS.letterSpacing)
     setSpacingScale(DEFAULTS.spacingScale)
     setRadius(DEFAULTS.radius)
+    setIconRadius(DEFAULTS.iconRadius)
   }, [themeDefaults])
 
   // Revert the sliders to the shared baseline (global override, else defaults).
@@ -950,6 +969,7 @@ export default function CustomiseView({ active }: { active: string }) {
     setLetterSpacing(baseline.letterSpacing)
     setSpacingScale(baseline.spacingScale)
     setRadius(baseline.radius)
+    setIconRadius(baseline.iconRadius)
   }, [baseline])
 
   // Serialise only the changed values into CSS declarations.
@@ -958,6 +978,8 @@ export default function CustomiseView({ active }: { active: string }) {
     const main: string[] = []
     const dark: string[] = []
     if (radius !== DEFAULTS.radius) main.push(`--radius:${radius}px;`)
+    if (iconRadius !== DEFAULTS.iconRadius)
+      main.push(`--radius-btn-icon:${iconRadius}px;`)
     if (spacingScale !== DEFAULTS.spacingScale)
       main.push(`--spacing:${(SPACING_BASE * spacingScale).toFixed(4)}rem;`)
     if (fontScale !== DEFAULTS.fontScale)
@@ -976,7 +998,7 @@ export default function CustomiseView({ active }: { active: string }) {
         dark.push(`--${token}:${pair.dark};`)
     }
     return { main: main.join(""), dark: dark.join("") }
-  }, [radius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
+  }, [radius, iconRadius, spacingScale, fontScale, letterSpacing, colors, themeDefaults])
 
   // Writes are fast + idempotent, so we don't disable buttons while pending —
   // toggling `disabled` mid-write causes a visible flash of the disabled style.
@@ -1013,6 +1035,7 @@ export default function CustomiseView({ active }: { active: string }) {
         letterSpacing,
         spacingScale,
         radius,
+        iconRadius,
         colors: colorDiff(),
       }
       saveSnapshot(GLOBAL_ID, snap)
@@ -1037,6 +1060,7 @@ export default function CustomiseView({ active }: { active: string }) {
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   // "Apply" → scoped to this component only, via its root data-slot. The
@@ -1059,6 +1083,7 @@ export default function CustomiseView({ active }: { active: string }) {
         letterSpacing,
         spacingScale,
         radius,
+        iconRadius,
         colors: colorDiff(),
       })
     else clearSnapshot(active)
@@ -1088,6 +1113,7 @@ export default function CustomiseView({ active }: { active: string }) {
     letterSpacing,
     spacingScale,
     radius,
+    iconRadius,
   ])
 
   // "Reset" → revert this component to its baseline (global override, else
@@ -1143,6 +1169,7 @@ export default function CustomiseView({ active }: { active: string }) {
   const buildRegistryItem = React.useCallback(() => {
     const currentVals: VarValues = {
       radius,
+      iconRadius,
       spacingScale,
       fontScale,
       letterSpacing,
@@ -1180,6 +1207,7 @@ export default function CustomiseView({ active }: { active: string }) {
     return item
   }, [
     radius,
+    iconRadius,
     spacingScale,
     fontScale,
     letterSpacing,
@@ -1380,6 +1408,17 @@ export default function CustomiseView({ active }: { active: string }) {
                 step={1}
                 onChange={setRadius}
               />
+              {active === "button" && (
+                <SliderRow
+                  label="Icon Button Radius"
+                  value={iconRadius}
+                  display={`${iconRadius}px`}
+                  min={0}
+                  max={20}
+                  step={1}
+                  onChange={setIconRadius}
+                />
+              )}
             </div>
           </TabsContent>
 
