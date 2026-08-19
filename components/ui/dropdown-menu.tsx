@@ -14,7 +14,7 @@ type DropdownMenuSize = "xs" | "sm" | "md" | "lg"
 const DropdownMenuSizeContext = React.createContext<DropdownMenuSize>("sm")
 
 const dropdownMenuItemVariants = cva(
-  "group/dropdown-menu-item relative flex w-auto cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:*:[svg]:text-destructive",
+  "group/dropdown-menu-item relative flex w-auto cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:*:[svg]:text-destructive",
   {
     variants: {
       size: {
@@ -127,7 +127,10 @@ function DropdownMenuItem({
       data-inset={inset}
       data-variant={variant}
       data-size={resolvedSize}
-      className={cn(dropdownMenuItemVariants({ size: resolvedSize }), className)}
+      className={cn(
+        dropdownMenuItemVariants({ size: resolvedSize }),
+        className
+      )}
       {...props}
     />
   )
@@ -150,7 +153,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-base leading-base font-normal tracking-normal text-muted-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-inset:pl-7 data-popup-open:bg-muted data-popup-open:text-secondary-foreground data-open:bg-muted data-open:text-secondary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-inset:pl-7 data-popup-open:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-popup-open:text-secondary-foreground data-open:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-open:text-secondary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -279,7 +282,7 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground group-data-[variant=destructive]/dropdown-menu-item:text-destructive",
+        "ml-auto text-xs tracking-widest text-secondary-foreground group-data-[variant=destructive]/dropdown-menu-item:text-destructive",
         className
       )}
       {...props}

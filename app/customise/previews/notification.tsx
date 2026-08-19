@@ -6,7 +6,6 @@ import { Info } from "lucide-react"
 import { PreviewCard, PreviewGrid } from "./preview-card"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Toaster } from "@/components/ui/sonner"
 import { notify } from "@/components/ui/notification"
 
 const noop = () => {}
@@ -14,7 +13,6 @@ const noop = () => {}
 export default function NotificationPreview() {
   return (
     <>
-      <Toaster />
       <PreviewGrid>
         <PreviewCard label="Inline">
           <Button

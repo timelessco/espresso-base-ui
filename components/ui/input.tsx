@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
   [
-    "w-full min-w-0 leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-card-foreground data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-popover-foreground",
+    "w-full min-w-0 leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_52%)] dark:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_37%)] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] dark:data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)] dark:data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)]",
   ],
   {
     variants: {
@@ -14,9 +14,9 @@ const inputVariants = cva(
         outline:
           "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised not-data-disabled:focus:shadow-raised! data-filled:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-disabled:bg-transparent [&:-webkit-autofill]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--filled-outline)]",
         subtle:
-          "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input [&:-webkit-autofill]:bg-filled",
+          "bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-input [&:-webkit-autofill]:bg-filled",
         ghost:
-          "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
       },
       size: {
         xs: "h-6 rounded-md px-2 py-1 text-sm",

@@ -112,7 +112,7 @@ function FieldLabel({
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:px-1.5 has-[>[data-slot=field]]:py-1.75 *:data-[slot=field]:p-1.5",
         // interactive styles only when wrapping a Field (choice card)
         "has-[>[data-slot=field]]:group-data-[disabled=true]/field:pointer-events-none",
-        "has-[>[data-slot=field]]:hover:bg-muted has-[>[data-slot=field]]:active:bg-accent has-[>[data-slot=field]]:has-[:focus-visible]:bg-secondary has-[>[data-slot=field]]:has-[:focus-visible]:shadow-3xs",
+        "has-[>[data-slot=field]]:hover:bg-muted has-[>[data-slot=field]]:active:bg-[color-mix(in_oklch,var(--muted),black_4%)] dark:has-[>[data-slot=field]]:active:bg-[color-mix(in_oklch,var(--muted),white_8%)] has-[>[data-slot=field]]:has-[:focus-visible]:bg-secondary has-[>[data-slot=field]]:has-[:focus-visible]:shadow-3xs",
         // checkbox hover/active from FieldLabel (choice card only)
         "has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-unchecked]]:shadow-sm",
         "has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-checked]]:bg-primary/86 has-[>[data-slot=field]]:[&:hover_[data-slot=checkbox][data-checked]]:shadow-sm",
@@ -123,9 +123,9 @@ function FieldLabel({
         "has-[>[data-slot=field]]:[&:active_[data-slot=radio-group-item][data-unchecked]]:bg-secondary has-[>[data-slot=field]]:[&:active_[data-slot=radio-group-item][data-unchecked]]:shadow-none",
         "has-[>[data-slot=field]]:[&:active_[data-slot=radio-group-item][data-checked]]:bg-primary/74",
         // switch hover/active from FieldLabel (choice card only)
-        "has-[>[data-slot=field]]:[&:hover_[data-slot=switch][data-unchecked]]:bg-popover-foreground",
+        "has-[>[data-slot=field]]:[&:hover_[data-slot=switch][data-unchecked]]:bg-[color-mix(in_oklch,var(--primary),var(--background)_79%)] dark:has-[>[data-slot=field]]:[&:hover_[data-slot=switch][data-unchecked]]:bg-[color-mix(in_oklch,var(--primary),var(--background)_67%)]",
         "has-[>[data-slot=field]]:[&:hover_[data-slot=switch][data-checked]]:bg-primary/86",
-        "has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-unchecked]]:bg-card-foreground",
+        "has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-unchecked]]:bg-[color-mix(in_oklch,var(--primary),var(--background)_60%)] dark:has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-unchecked]]:bg-[color-mix(in_oklch,var(--primary),var(--background)_56%)]",
         "has-[>[data-slot=field]]:[&:active_[data-slot=switch][data-checked]]:bg-primary/74",
         // switch thumb stretch on FieldLabel press (works for choice card AND simple label)
         "[&:active_[data-slot=switch][data-size=xs]_[data-slot=switch-thumb]]:w-[13px]",

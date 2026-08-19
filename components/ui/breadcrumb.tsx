@@ -76,7 +76,7 @@ function BreadcrumbLink({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-muted focus-visible:bg-secondary focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-secondary-foreground active:ring-0",
+          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-secondary-foreground active:ring-0 dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)]",
           className
         ),
       },
@@ -136,7 +136,7 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex size-7 items-center justify-center rounded-md transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        "flex size-7 items-center justify-center rounded-md text-accent-foreground transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)] group-data-[size=md]/breadcrumb:[&>svg]:size-4",
         className
       )}
       {...props}

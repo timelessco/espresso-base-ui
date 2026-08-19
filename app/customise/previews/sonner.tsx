@@ -6,12 +6,10 @@ import { BellIcon } from "lucide-react"
 
 import { PreviewCard, PreviewGrid } from "./preview-card"
 import { Button } from "@/components/ui/button"
-import { Toaster } from "@/components/ui/sonner"
 
 export default function SonnerPreview() {
   return (
     <>
-      <Toaster />
       <PreviewGrid>
         <PreviewCard label="Basic">
           <Button
