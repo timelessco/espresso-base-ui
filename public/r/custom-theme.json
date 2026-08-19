@@ -1,0 +1,7 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "custom-theme",
+  "type": "registry:style",
+  "title": "Custom theme",
+  "description": "Theme customisation exported from the Espresso customiser."
+}
