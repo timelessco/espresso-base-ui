@@ -7,6 +7,12 @@ function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
 
+// These write to the project's source (app/globals.css) — a dev-only convenience.
+// On a read-only serverless filesystem (e.g. the deployed demo on Vercel) the
+// write throws, so we catch it and report `ok: false` instead of crashing; the
+// live preview still works client-side.
+const GLOBALS_CSS = () => path.join(process.cwd(), "app", "globals.css")
+
 /**
  * Write (or update / clear) a managed block of CSS in app/globals.css.
  *
@@ -15,28 +21,32 @@ function escapeRegExp(value: string) {
  * Re-applying the same scope replaces its block; an empty `css` removes it.
  */
 export async function applyCustomisation(scope: string, css: string) {
-  const file = path.join(process.cwd(), "app", "globals.css")
-  let content = await fs.readFile(file, "utf8")
+  try {
+    const file = GLOBALS_CSS()
+    let content = await fs.readFile(file, "utf8")
 
-  const start = `/* customise:${scope}:start */`
-  const end = `/* customise:${scope}:end */`
-  const re = new RegExp(
-    `\\n*${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}`,
-    "g"
-  )
+    const start = `/* customise:${scope}:start */`
+    const end = `/* customise:${scope}:end */`
+    const re = new RegExp(
+      `\\n*${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}`,
+      "g"
+    )
 
-  // remove any existing block for this scope
-  content = content.replace(re, "")
+    // remove any existing block for this scope
+    content = content.replace(re, "")
 
-  const trimmed = css.trim()
-  if (trimmed) {
-    content = `${content.trimEnd()}\n\n${start}\n${trimmed}\n${end}\n`
-  } else {
-    content = `${content.trimEnd()}\n`
+    const trimmed = css.trim()
+    if (trimmed) {
+      content = `${content.trimEnd()}\n\n${start}\n${trimmed}\n${end}\n`
+    } else {
+      content = `${content.trimEnd()}\n`
+    }
+
+    await fs.writeFile(file, content, "utf8")
+    return { ok: true as const }
+  } catch {
+    return { ok: false as const }
   }
-
-  await fs.writeFile(file, content, "utf8")
-  return { ok: true as const }
 }
 
 /**
@@ -44,34 +54,16 @@ export async function applyCustomisation(scope: string, css: string) {
  * app/globals.css — a full reset back to the theme defaults.
  */
 export async function resetAllCustomisations() {
-  const file = path.join(process.cwd(), "app", "globals.css")
-  let content = await fs.readFile(file, "utf8")
-  content = content.replace(
-    /\n*\/\* customise:[\w-]+:start \*\/[\s\S]*?\/\* customise:[\w-]+:end \*\//g,
-    ""
-  )
-  await fs.writeFile(file, `${content.trimEnd()}\n`, "utf8")
-  return { ok: true as const }
-}
-
-const REGISTRY_ORIGIN = "https://espresso-base-ui.vercel.app"
-const REGISTRY_NAME = "custom-theme"
-
-/**
- * Write the exported customisation as a shadcn registry item to
- * public/r/<name>.json so it can be installed with
- *   npx shadcn@latest add <origin>/r/<name>.json
- */
-export async function writeRegistryTheme(item: unknown) {
-  const file = path.join(
-    process.cwd(),
-    "public",
-    "r",
-    `${REGISTRY_NAME}.json`
-  )
-  await fs.writeFile(file, `${JSON.stringify(item, null, 2)}\n`, "utf8")
-  return {
-    ok: true as const,
-    url: `${REGISTRY_ORIGIN}/r/${REGISTRY_NAME}.json`,
+  try {
+    const file = GLOBALS_CSS()
+    let content = await fs.readFile(file, "utf8")
+    content = content.replace(
+      /\n*\/\* customise:[\w-]+:start \*\/[\s\S]*?\/\* customise:[\w-]+:end \*\//g,
+      ""
+    )
+    await fs.writeFile(file, `${content.trimEnd()}\n`, "utf8")
+    return { ok: true as const }
+  } catch {
+    return { ok: false as const }
   }
 }

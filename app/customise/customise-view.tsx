@@ -43,11 +43,7 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
-import {
-  applyCustomisation,
-  resetAllCustomisations,
-  writeRegistryTheme,
-} from "./actions"
+import { applyCustomisation, resetAllCustomisations } from "./actions"
 import CrmPage from "../crm/page"
 
 // base font-size tokens (rem) — scaled by the font-size control below
@@ -1222,7 +1218,6 @@ export default function CustomiseView() {
   // --- "Get code": export all customisations as a shadcn registry item ------
   const [codeOpen, setCodeOpen] = React.useState(false)
   const [installUrl, setInstallUrl] = React.useState("")
-  const [registryJson, setRegistryJson] = React.useState("")
   const [copied, setCopied] = React.useState(false)
 
   // Assemble the registry item: global changes → cssVars, per-component
@@ -1283,12 +1278,17 @@ export default function CustomiseView() {
 
   const openGetCode = React.useCallback(() => {
     const item = buildRegistryItem()
-    setRegistryJson(JSON.stringify(item, null, 2))
+    // Encode the registry item into the URL (base64url) rather than writing a
+    // file — a route handler serves it, so this works on read-only serverless
+    // filesystems (Vercel) too.
+    const payload = btoa(JSON.stringify(item))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "")
+    setInstallUrl(
+      `${window.location.origin}/r/custom-theme.json?d=${payload}`
+    )
     setCodeOpen(true)
-    startApply(async () => {
-      const res = await writeRegistryTheme(item)
-      setInstallUrl(res.url)
-    })
   }, [buildRegistryItem])
 
   const installCommand = installUrl
@@ -1505,16 +1505,15 @@ export default function CustomiseView() {
           </Button>
           <Button onClick={openGetCode}>Get code</Button>
           <Dialog open={codeOpen} onOpenChange={setCodeOpen}>
-            <DialogContent size="lg" data-customise-panel>
+            <DialogContent size="default" data-customise-panel>
               <DialogHeader>
                 <DialogTitle>Install your theme</DialogTitle>
                 <DialogDescription>
-                  Run this in a shadcn project to apply your global and
-                  per-component customisations via the registry.
+                  Run this in a shadcn project to apply your customisations.
                 </DialogDescription>
               </DialogHeader>
-              <div className="flex items-center gap-2 rounded-lg border border-border-soft bg-secondary p-3">
-                <code className="min-w-0 flex-1 overflow-x-auto text-sm whitespace-nowrap">
+              <div className="flex items-start gap-2 rounded-lg border border-border-soft bg-secondary p-3">
+                <code className="min-w-0 flex-1 text-sm break-all">
                   {installCommand}
                 </code>
                 <Button
@@ -1528,14 +1527,6 @@ export default function CustomiseView() {
                   {copied ? <Check /> : <Copy />}
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Registry item that gets installed:
-              </p>
-              <pre className="max-h-[40vh] overflow-auto rounded-lg border border-border-soft bg-secondary p-4 text-xs leading-relaxed">
-                <code>
-                  {registryJson || "/* No customisations yet — adjust a value. */"}
-                </code>
-              </pre>
             </DialogContent>
           </Dialog>
         </div>
