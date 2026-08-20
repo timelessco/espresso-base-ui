@@ -9,14 +9,14 @@ const switchVariants = cva(
   [
     "peer group/switch relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute after:-inset-x-3 after:-inset-y-2",
     // unchecked states
-    "data-unchecked:bg-[color-mix(in_oklch,var(--primary),var(--background)_89%)] dark:data-unchecked:bg-[color-mix(in_oklch,var(--primary),var(--background)_77%)] not-data-disabled:data-unchecked:hover:bg-[color-mix(in_oklch,var(--primary),var(--background)_79%)] dark:not-data-disabled:data-unchecked:hover:bg-[color-mix(in_oklch,var(--primary),var(--background)_67%)] not-data-disabled:data-unchecked:focus-visible:bg-[color-mix(in_oklch,var(--primary),var(--background)_89%)] dark:not-data-disabled:data-unchecked:focus-visible:bg-[color-mix(in_oklch,var(--primary),var(--background)_77%)] not-data-disabled:data-unchecked:focus-visible:shadow-3xs not-data-disabled:data-unchecked:active:bg-[color-mix(in_oklch,var(--primary),var(--background)_60%)] dark:not-data-disabled:data-unchecked:active:bg-[color-mix(in_oklch,var(--primary),var(--background)_56%)]",
+    "data-unchecked:bg-accent not-data-disabled:data-unchecked:hover:bg-popover-foreground not-data-disabled:data-unchecked:focus-visible:bg-accent not-data-disabled:data-unchecked:focus-visible:shadow-3xs not-data-disabled:data-unchecked:active:bg-card-foreground",
     // checked states
     "data-checked:bg-primary not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:bg-primary not-data-disabled:data-checked:focus-visible:shadow-3xs not-data-disabled:data-checked:active:bg-primary/74",
     // invalid state (self + Field context)
     "data-invalid:border-destructive! data-invalid:ring-2! data-invalid:ring-destructive/20!",
     "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20!",
     // disabled
-    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-[color-mix(in_oklch,var(--primary),var(--background)_93%)] dark:data-disabled:bg-[color-mix(in_oklch,var(--primary),var(--background)_84%)]",
+    "data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:bg-muted",
   ],
   {
     variants: {
