@@ -384,9 +384,7 @@
       "title": "Notification",
       "description": "Toast notification with variants and action types.",
       "dependencies": [
-        "class-variance-authority",
-        "sonner",
-        "lucide-react"
+        "class-variance-authority"
       ],
       "files": [
         {
@@ -396,7 +394,8 @@
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
-        "https://espresso-base-ui.vercel.app/r/button.json"
+        "https://espresso-base-ui.vercel.app/r/button.json",
+        "https://espresso-base-ui.vercel.app/r/toast.json"
       ]
     },
     {
@@ -597,6 +596,27 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Toast notifications built on Base UI with success, info, warning, error, and loading types.",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/toast/toast.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
@@ -732,7 +752,10 @@
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
-      "description": "A card container component.",
+      "description": "A card container component with sm, md, lg, and xl size variants.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
       ],
