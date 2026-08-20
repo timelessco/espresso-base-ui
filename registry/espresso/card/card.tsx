@@ -9,7 +9,7 @@ const cardVariants = cva(
     variants: {
       variant: {
         default:
-          "rounded-xl bg-card py-4 data-[size=sm]:py-3 data-[size=lg]:py-5 data-[size=xl]:py-6",
+          "rounded-xl bg-card py-4 data-[size=sm]:pt-3 data-[size=lg]:pt-5 data-[size=xl]:pt-6",
         mail: "rounded-lg bg-card px-3 py-2.5",
         message: "rounded-lg bg-input px-3 py-2",
         call: "rounded-lg bg-card px-3 py-2.5",
