@@ -2,27 +2,89 @@
 
 import * as React from "react"
 import { OTPInput, OTPInputContext } from "input-otp"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { MinusIcon } from "lucide-react"
 
+// Variant/size are driven entirely from the container via descendant selectors
+// (`[&_[data-slot=input-otp-slot]]`), so no React context is needed — the slots
+// stay "dumb" and only carry layout + their own active/invalid state classes.
+const inputOTPVariants = cva(
+  "cn-input-otp flex items-center gap-2 has-disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        outline: [
+          "[&_[data-slot=input-otp-slot]]:bg-transparent [&_[data-slot=input-otp-slot]]:shadow-default",
+          "[&_[data-slot=input-otp-slot][data-active=true]]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]",
+          "[&_[aria-invalid=true]_[data-slot=input-otp-slot]]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]",
+          "[&_[aria-invalid=true]_[data-slot=input-otp-slot][data-active=true]]:shadow-[0px_0px_0px_1px_var(--destructive)]",
+        ],
+        subtle: [
+          "[&_[data-slot=input-otp-slot]]:bg-secondary",
+          "[&_[data-slot=input-otp-slot]:not([data-active=true])]:hover:bg-muted",
+          "[&_[data-slot=input-otp-slot][data-active=true]]:bg-background",
+          "[&_[aria-invalid=true]_[data-slot=input-otp-slot]]:bg-error",
+        ],
+      },
+      size: {
+        xs: "[&_[data-slot=input-otp-slot]]:size-6 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-sm",
+        sm: "[&_[data-slot=input-otp-slot]]:size-7 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-base",
+        md: "[&_[data-slot=input-otp-slot]]:size-8 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-base",
+        lg: "[&_[data-slot=input-otp-slot]]:size-10 [&_[data-slot=input-otp-slot]]:rounded-lg [&_[data-slot=input-otp-slot]]:text-lg",
+      },
+    },
+    compoundVariants: [
+      // outline variant: reduce slot size by 2px to account for the outer shadow ring
+      {
+        variant: "outline",
+        size: "xs",
+        className: "[&_[data-slot=input-otp-slot]]:size-5.5!",
+      },
+      {
+        variant: "outline",
+        size: "sm",
+        className: "[&_[data-slot=input-otp-slot]]:size-6.5!",
+      },
+      {
+        variant: "outline",
+        size: "md",
+        className: "[&_[data-slot=input-otp-slot]]:size-7.5!",
+      },
+      {
+        variant: "outline",
+        size: "lg",
+        className: "[&_[data-slot=input-otp-slot]]:size-9.5!",
+      },
+    ],
+    defaultVariants: {
+      variant: "outline",
+      size: "md",
+    },
+  }
+)
+
 function InputOTP({
   className,
   containerClassName,
+  variant,
+  size,
   ...props
-}: React.ComponentProps<typeof OTPInput> & {
-  containerClassName?: string
-}) {
+}: Omit<React.ComponentProps<typeof OTPInput>, "size"> &
+  VariantProps<typeof inputOTPVariants> & {
+    containerClassName?: string
+  }) {
   return (
     <OTPInput
       data-slot="input-otp"
       containerClassName={cn(
-        "cn-input-otp flex items-center has-disabled:opacity-50",
+        inputOTPVariants({ variant, size }),
         containerClassName
       )}
       spellCheck={false}
       className={cn("disabled:cursor-not-allowed", className)}
-      {...props}
+      {...(props as React.ComponentProps<typeof OTPInput>)}
     />
   )
 }
@@ -31,10 +93,7 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="input-otp-group"
-      className={cn(
-        "flex items-center rounded-lg has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40",
-        className
-      )}
+      className={cn("group/input-otp-group flex items-center gap-2", className)}
       {...props}
     />
   )
@@ -55,7 +114,10 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "relative flex size-8 items-center justify-center border-y border-r border-border text-sm text-secondary-foreground transition-all outline-none first:rounded-l-lg first:border-l last:rounded-r-lg aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-3 data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40",
+        // structural + variant-independent state (bg / shadow / size come from the container)
+        "relative flex items-center justify-center font-medium text-secondary-foreground transition-shadow duration-150 outline-none",
+        "data-[active=true]:z-10 data-[active=true]:ring-3 data-[active=true]:ring-ring/50",
+        "group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/20 dark:group-aria-invalid/input-otp-group:data-[active=true]:ring-destructive/40",
         className
       )}
       {...props}
@@ -78,8 +140,7 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
       role="separator"
       {...props}
     >
-      <MinusIcon
-      />
+      <MinusIcon />
     </div>
   )
 }

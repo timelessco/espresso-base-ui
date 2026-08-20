@@ -48,7 +48,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-0.5 text-base leading-base tracking-normal wrap-break-word text-accent-foreground group-data-[size=md]/breadcrumb:text-lg [&>[data-slot=breadcrumb-separator]:has(+*>[data-slot=breadcrumb-page])]:text-foreground",
+        "flex flex-wrap items-center gap-0.5 text-base leading-base tracking-normal wrap-break-word text-accent-foreground group-data-[size=md]/breadcrumb:text-lg group-data-[size=md]/breadcrumb:font-medium",
         className
       )}
       {...props}
@@ -76,7 +76,7 @@ function BreadcrumbLink({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-muted hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-foreground active:ring-0",
+          "flex h-7 items-center rounded-md px-2 transition-colors outline-none group-data-[size=md]/breadcrumb:px-[5px] hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-transparent active:text-secondary-foreground active:ring-0 dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)]",
           className
         ),
       },
@@ -97,7 +97,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       aria-disabled="true"
       aria-current="page"
       className={cn(
-        "flex h-7 items-center px-2 font-normal text-foreground group-data-[size=md]/breadcrumb:px-[5px]",
+        "flex h-7 items-center px-2 font-normal text-secondary-foreground group-data-[size=md]/breadcrumb:px-[5px] group-data-[size=md]/breadcrumb:font-medium",
         className
       )}
       {...props}
@@ -136,7 +136,7 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex size-7 items-center justify-center rounded-md transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-secondary hover:text-secondary-foreground focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        "flex size-7 items-center justify-center rounded-md text-accent-foreground transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)] group-data-[size=md]/breadcrumb:[&>svg]:size-4",
         className
       )}
       {...props}

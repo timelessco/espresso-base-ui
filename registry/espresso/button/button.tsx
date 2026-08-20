@@ -11,18 +11,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/86 disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 [@media(hover:none)]:active:bg-primary/75",
+          "bg-primary text-primary-foreground hover:bg-primary/86 disabled:bg-[color-mix(in_oklch,var(--primary),var(--background)_95%)] disabled:text-[color-mix(in_oklch,var(--primary),var(--background)_60%)] in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 [@media(hover:none)]:active:bg-primary/75",
         outline:
-          "bg-background text-secondary-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:enabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)] [@media(hover:none)]:active:bg-secondary",
+          "bg-transparent text-secondary-foreground shadow-default [transition-duration:0.25s,0.1s,150ms]! hover:shadow-raised focus-visible:shadow-3xs! disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent [@media(hover:none)]:active:bg-accent",
+          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)]",
         ghost:
-          "text-secondary-foreground hover:bg-muted disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
+          "bg-transparent text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)]",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-destructive-active [@media(hover:none)]:active:bg-destructive-active",
+          "bg-destructive text-destructive-foreground hover:bg-[color-mix(in_oklch,var(--destructive),black_11%)] focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 disabled:bg-destructive-disabled disabled:text-destructive-disabled-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--destructive),black_27%)] dark:hover:bg-[color-mix(in_oklch,var(--destructive),white_17%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--destructive),black_16%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--destructive),black_27%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--destructive),black_16%)]",
         link: "text-secondary-foreground underline-offset-4 hover:underline disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
         inverted:
-          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
+          "bg-[var(--btn-inverted-bg,#fff)] text-[var(--btn-inverted-fg,#171717)] shadow-default hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_2%)] hover:shadow-raised in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),black_3%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-bg,#fff),white_12%)]",
         "inverted-ghost":
           "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)] [@media(hover:none)]:active:bg-accent dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
       },
@@ -33,21 +33,21 @@ const buttonVariants = cva(
         default:
           "h-8 gap-2 rounded-md px-2 text-base leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5", // md
         lg: "h-10 gap-2 rounded-lg px-3 text-lg leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
-        xl: "h-[46px] gap-2 rounded-xl px-3.5 text-xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+        xl: "h-11.5 gap-2 rounded-xl px-3.5 text-xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
         "2xl":
           "h-13 gap-2 rounded-2xl px-4 text-2xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
 
         "icon-xs":
-          "size-6 rounded-md in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
+          "size-6 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
         "icon-sm":
-          "size-7 rounded-md in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-h-4 [&_svg:not([class*='size-'])]:max-w-4",
-        icon: "size-8 rounded-md [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5",
+          "size-7 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-h-4 [&_svg:not([class*='size-'])]:max-w-4",
+        icon: "size-8 rounded-[var(--radius-btn-icon,var(--radius-md))] [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5",
         "icon-lg":
-          "size-10 rounded-lg [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
+          "size-10 rounded-[var(--radius-btn-icon,var(--radius-lg))] [&_svg:not([class*='size-'])]:size-5 [&_svg:not([class*='size-'])]:max-h-5 [&_svg:not([class*='size-'])]:max-w-5",
         "icon-xl":
-          "size-11.5 rounded-xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+          "size-11.5 rounded-[var(--radius-btn-icon,var(--radius-xl))] [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
         "icon-2xl":
-          "size-13 rounded-2xl [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
+          "size-13 rounded-[var(--radius-btn-icon,var(--radius-2xl))] [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
       },
     },
     compoundVariants: [

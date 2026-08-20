@@ -37,7 +37,7 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   return (
     <SelectPrimitive.Group
       data-slot="select-group"
-      className={cn("scroll-my-1 p-1", className)}
+      className={cn("scroll-my-1", className)}
       {...props}
     />
   )
@@ -74,16 +74,16 @@ function SelectValue({
 }
 
 const selectTriggerVariants = cva(
-  "flex w-fit items-center justify-between gap-2 rounded-md p-2 text-base leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs data-placeholder:text-card-foreground data-[size=default]:h-8 data-[size=lg]:h-10 data-[size=lg]:rounded-lg data-[size=lg]:px-3 data-[size=lg]:text-lg data-[size=sm]:h-7 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "flex w-fit items-center justify-between gap-2 rounded-md p-2 text-base leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground transition-colors outline-none select-none focus-visible:bg-secondary focus-visible:text-secondary-foreground focus-visible:shadow-3xs data-placeholder:text-card-foreground data-[size=lg]:h-10 data-[size=lg]:rounded-lg data-[size=lg]:px-3 data-[size=lg]:text-lg data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=xs]:h-6 data-[size=xs]:text-sm *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-popover-foreground! [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         outline:
-          "border border-border bg-background group-data-[invalid=true]/field:border-error-outline! not-data-disabled:hover:border-border-normal data-invalid:border-error-outline data-valid:border-success-outline data-disabled:border-border data-disabled:bg-input",
+          "border border-transparent bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-[size=lg]:h-9.5! data-[size=md]:h-7.5! data-[size=sm]:h-6.5! data-[size=xs]:h-5.5! data-disabled:bg-transparent data-disabled:shadow-default",
         subtle:
-          "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-input",
+          "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] data-invalid:bg-error data-valid:bg-success dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] data-disabled:bg-secondary",
         ghost:
-          "border border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-muted data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent",
+          "border border-transparent bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] focus-visible:bg-transparent! not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] data-invalid:bg-error data-valid:bg-success dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] data-disabled:bg-transparent",
       },
     },
     defaultVariants: {
@@ -95,13 +95,13 @@ const selectTriggerVariants = cva(
 function SelectTrigger({
   className,
   variant,
-  size = "default",
+  size = "md",
   suffix,
   children,
   ...props
 }: SelectPrimitive.Trigger.Props &
   VariantProps<typeof selectTriggerVariants> & {
-    size?: "sm" | "default" | "lg"
+    size?: "xs" | "sm" | "md" | "lg"
     suffix?: React.ReactElement
   }) {
   return (
@@ -150,7 +150,7 @@ function SelectContent({
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
           className={cn(
-            "relative isolate z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-popover text-muted-foreground shadow-5xs duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "relative isolate z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-popover p-1 text-muted-foreground shadow-5xs duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
             className
           )}
           {...props}
@@ -194,7 +194,7 @@ function SelectItem({
       data-slot="select-item"
       value={value}
       className={cn(
-        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-1.5 text-base text-muted-foreground outline-hidden select-none last:mb-0 focus:bg-accent focus:text-muted-foreground not-data-[variant=destructive]:focus:**:text-muted-foreground aria-selected:bg-muted! data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-highlighted:active:bg-muted data-highlighted:active:text-muted-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "relative mb-px flex w-full cursor-default items-center gap-2 rounded-md py-1.5 pr-8 pl-1.5 text-base text-secondary-foreground outline-hidden select-none last:mb-0 focus:bg-secondary focus:text-secondary-foreground not-data-[variant=destructive]:focus:**:text-secondary-foreground aria-selected:bg-secondary! data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-secondary data-highlighted:active:text-secondary-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className
       )}
       {...props}
