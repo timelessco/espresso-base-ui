@@ -35,7 +35,7 @@ function Toast({ className, ...props }: ToastPrimitive.Root.Props) {
     <ToastPrimitive.Root
       data-slot="toast"
       className={cn(
-        "group/toast pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-2xl border bg-popover text-popover-foreground shadow-lg will-change-transform outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
+        "group/toast pointer-events-auto absolute right-0 bottom-0 z-[calc(1000-var(--toast-index))] w-full origin-bottom rounded-[var(--radius)] bg-[color-mix(in_oklch,var(--primary),var(--background)_17%)] text-primary-foreground shadow-3xl will-change-transform outline-none select-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
         "[--gap:0.75rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)*-1+calc(var(--toast-index)*var(--gap)*-1)+var(--toast-swipe-movement-y))] [--peek:0.75rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
         "h-(--height) [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)-(var(--toast-index)*var(--peek))-(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
         "after:absolute after:top-full after:left-0 after:h-[calc(var(--gap)+1px)] after:w-full after:content-['']",
@@ -62,7 +62,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
     <ToastPrimitive.Content
       data-slot="toast-content"
       className={cn(
-        "flex h-full items-center gap-3 overflow-hidden p-4 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
+        "flex h-full items-center gap-2 overflow-hidden px-4 py-2.5 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
         className
       )}
       {...props}
@@ -74,7 +74,10 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
   return (
     <ToastPrimitive.Title
       data-slot="toast-title"
-      className={cn("text-sm font-medium", className)}
+      className={cn(
+        "text-base leading-base font-medium tracking-wider",
+        className
+      )}
       {...props}
     />
   )
@@ -87,7 +90,10 @@ function ToastDescription({
   return (
     <ToastPrimitive.Description
       data-slot="toast-description"
-      className={cn("text-sm text-muted-foreground", className)}
+      className={cn(
+        "text-base leading-base font-medium tracking-wider text-primary-foreground",
+        className
+      )}
       {...props}
     />
   )
@@ -102,7 +108,10 @@ function ToastAction({
     <ToastPrimitive.Action
       data-slot="toast-action"
       render={render}
-      className={cn("shrink-0", className)}
+      className={cn(
+        "shrink-0 cursor-pointer bg-transparent p-0 text-base leading-base font-medium tracking-wider text-[var(--color-blue-400)] transition-opacity outline-none hover:opacity-80",
+        className
+      )}
       {...props}
     />
   )
@@ -120,14 +129,12 @@ function ToastClose({
       aria-label="Close toast"
       render={render}
       className={cn(
-        "relative shrink-0 text-muted-foreground after:absolute after:-inset-2 after:content-[''] hover:text-foreground",
+        "relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-secondary-foreground p-0.5 text-primary-foreground transition-opacity outline-none after:absolute after:-inset-2 after:content-[''] hover:opacity-80",
         className
       )}
       {...props}
     >
-      {children ?? (
-        <XIcon aria-hidden="true" />
-      )}
+      {children ?? <XIcon className="size-3.5" aria-hidden="true" />}
     </ToastPrimitive.Close>
   )
 }
@@ -137,32 +144,39 @@ function ToastIcon({ type }: { type: string | undefined }) {
 
   if (type === "success") {
     icon = (
-      <CircleCheckIcon aria-hidden="true" />
+      <CircleCheckIcon
+        className="text-[var(--color-green-400)]"
+        aria-hidden="true"
+      />
     )
   }
 
   if (type === "info") {
     icon = (
-      <InfoIcon aria-hidden="true" />
+      <InfoIcon className="text-[var(--color-blue-400)]" aria-hidden="true" />
     )
   }
 
   if (type === "warning") {
     icon = (
-      <TriangleAlertIcon aria-hidden="true" />
+      <TriangleAlertIcon
+        className="text-[var(--color-amber-400)]"
+        aria-hidden="true"
+      />
     )
   }
 
   if (type === "error") {
     icon = (
-      <OctagonXIcon className="text-destructive" aria-hidden="true" />
+      <OctagonXIcon
+        className="text-[var(--color-red-400)]"
+        aria-hidden="true"
+      />
     )
   }
 
   if (type === "loading") {
-    icon = (
-      <Loader2Icon className="animate-spin" aria-hidden="true" />
-    )
+    icon = <Loader2Icon className="animate-spin" aria-hidden="true" />
   }
 
   if (!icon) {
