@@ -1087,15 +1087,24 @@ export default function CustomiseView() {
         ? `--radius-btn-icon:${iconRadius}px;`
         : ""
 
+    // Icon sizing uses `--spacing` (size-* = calc(var(--spacing) * n)), which
+    // would make icons scale with the Spacing control. Instead pin the SVG's
+    // `--spacing` to the *font* scale so icons follow Font Size, not Density.
+    // The chrome (panel/toaster) is reset to the default so it never shifts.
+    const iconSpacing = `svg{--spacing:${(SPACING_BASE * fontScale).toFixed(4)}rem;}`
+    const iconSpacingReset = `[data-customise-panel] svg,[data-sonner-toaster] svg{--spacing:${SPACING_BASE.toFixed(4)}rem;}`
+
     return (
       `:root{${sharedCurrent}${iconRadiusCss}${light.join("")}}` +
       (dark.length ? `.dark{${dark.join("")}}` : "") +
+      iconSpacing +
       // `letter-spacing` is applied once on <body> (tracking-normal) and
       // inherited as a computed length, so resetting the var alone doesn't
       // reach the panel — re-derive it here from the reset --tracking-normal.
       // Also reset sonner's toaster (portaled to <body>, so it inherits the
       // :root overrides) so toast messages stay at the theme defaults.
       `[data-customise-panel],[data-sonner-toaster]{${sharedDefault}--radius-btn-icon:initial;${resetLight.join("")}letter-spacing:var(--tracking-normal);}` +
+      iconSpacingReset +
       (resetDark.length
         ? `.dark [data-customise-panel],.dark [data-sonner-toaster]{${resetDark.join("")}}`
         : "")

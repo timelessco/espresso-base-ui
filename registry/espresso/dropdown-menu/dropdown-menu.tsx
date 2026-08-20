@@ -2,9 +2,33 @@
 
 import * as React from "react"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
+import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { ChevronRightIcon, CheckIcon } from "lucide-react"
+
+type DropdownMenuSize = "xs" | "sm" | "md" | "lg"
+
+// size flows from DropdownMenuContent (or a per-item override) via context, so
+// `<DropdownMenuContent size="lg">` sizes every item; submenus inherit it.
+const DropdownMenuSizeContext = React.createContext<DropdownMenuSize>("sm")
+
+const dropdownMenuItemVariants = cva(
+  "group/dropdown-menu-item relative flex w-auto cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 data-[variant=destructive]:*:[svg]:text-destructive",
+  {
+    variants: {
+      size: {
+        xs: "min-h-6 text-sm [&_svg:not([class*='size-'])]:size-3.5",
+        sm: "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
+        md: "min-h-8 text-base [&_svg:not([class*='size-'])]:size-4",
+        lg: "min-h-10 text-lg [&_svg:not([class*='size-'])]:size-4.5",
+      },
+    },
+    defaultVariants: {
+      size: "sm",
+    },
+  }
+)
 
 function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
   return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
@@ -23,13 +47,18 @@ function DropdownMenuContent({
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
+  size,
   className,
   ...props
 }: MenuPrimitive.Popup.Props &
   Pick<
     MenuPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
-  >) {
+  > & {
+    size?: DropdownMenuSize
+  }) {
+  const inheritedSize = React.useContext(DropdownMenuSizeContext)
+  const resolvedSize = size ?? inheritedSize
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
@@ -39,14 +68,17 @@ function DropdownMenuContent({
         side={side}
         sideOffset={sideOffset}
       >
-        <MenuPrimitive.Popup
-          data-slot="dropdown-menu-content"
-          className={cn(
-            "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-popover p-1 text-popover-foreground shadow-5xs duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
-            className
-          )}
-          {...props}
-        />
+        <DropdownMenuSizeContext.Provider value={resolvedSize}>
+          <MenuPrimitive.Popup
+            data-slot="dropdown-menu-content"
+            data-size={resolvedSize}
+            className={cn(
+              "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-popover p-1 text-popover-foreground shadow-elevation-xl duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+              className
+            )}
+            {...props}
+          />
+        </DropdownMenuSizeContext.Provider>
       </MenuPrimitive.Positioner>
     </MenuPrimitive.Portal>
   )
@@ -80,18 +112,23 @@ function DropdownMenuItem({
   className,
   inset,
   variant = "default",
+  size,
   ...props
 }: MenuPrimitive.Item.Props & {
   inset?: boolean
   variant?: "default" | "destructive"
+  size?: DropdownMenuSize
 }) {
+  const inheritedSize = React.useContext(DropdownMenuSizeContext)
+  const resolvedSize = size ?? inheritedSize
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
+      data-size={resolvedSize}
       className={cn(
-        "group/dropdown-menu-item relative flex w-auto cursor-default items-center gap-1.5 rounded-md p-1.5 text-base leading-base font-normal tracking-normal text-muted-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-highlighted:active:bg-muted data-highlighted:active:text-muted-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive",
+        dropdownMenuItemVariants({ size: resolvedSize }),
         className
       )}
       {...props}
@@ -116,7 +153,7 @@ function DropdownMenuSubTrigger({
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
-        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-base leading-base font-normal tracking-normal text-muted-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-muted-foreground data-inset:pl-7 data-popup-open:bg-muted data-popup-open:text-muted-foreground data-open:bg-muted data-open:text-secondary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex cursor-default items-center gap-1.5 rounded-md p-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-inset:pl-7 data-popup-open:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-popup-open:text-secondary-foreground data-open:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-open:text-secondary-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
@@ -139,7 +176,7 @@ function DropdownMenuSubContent({
     <DropdownMenuContent
       data-slot="dropdown-menu-sub-content"
       className={cn(
-        "w-auto min-w-[96px] rounded-lg bg-popover p-1 text-popover-foreground shadow-5xs duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+        "w-auto min-w-[96px] rounded-lg bg-popover p-1 text-popover-foreground shadow-elevation-xl duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
         className
       )}
       align={align}
@@ -231,7 +268,7 @@ function DropdownMenuSeparator({
   return (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
-      className={cn("mx-2 my-1.5 h-px bg-muted", className)}
+      className={cn("mx-0 my-1 h-px bg-muted", className)}
       {...props}
     />
   )
@@ -245,7 +282,7 @@ function DropdownMenuShortcut({
     <span
       data-slot="dropdown-menu-shortcut"
       className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground group-data-[variant=destructive]/dropdown-menu-item:text-destructive",
+        "ml-auto text-xs tracking-widest text-secondary-foreground group-data-[variant=destructive]/dropdown-menu-item:text-destructive",
         className
       )}
       {...props}

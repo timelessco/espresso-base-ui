@@ -335,7 +335,11 @@ export default function TabsPage() {
       {/* Vertical */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical</SectionTitle>
-        <Tabs defaultValue="tab-1" orientation="vertical">
+        <Tabs
+          defaultValue="tab-1"
+          orientation="vertical"
+          className="w-full max-w-md"
+        >
           <TabsList>
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
@@ -363,7 +367,11 @@ export default function TabsPage() {
       {/* Vertical — Line */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Vertical — Line</SectionTitle>
-        <Tabs defaultValue="tab-1" orientation="vertical">
+        <Tabs
+          defaultValue="tab-1"
+          orientation="vertical"
+          className="w-full max-w-md"
+        >
           <TabsList variant="line">
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>

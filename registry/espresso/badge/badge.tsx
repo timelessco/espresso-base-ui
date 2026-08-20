@@ -5,15 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent leading-base font-normal tracking-normal whitespace-nowrap transition-all [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  "group/badge inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl leading-base font-normal tracking-normal whitespace-nowrap transition-all [&>svg]:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground",
         secondary: "bg-secondary text-muted-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-        outline:
-          "bg-background text-muted-foreground shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)]",
+        outline: "bg-background text-muted-foreground shadow-default",
         ghost: "text-muted-foreground",
         link: "overflow-visible text-muted-foreground underline-offset-4 hover:underline",
       },
@@ -24,6 +23,12 @@ const badgeVariants = cva(
         lg: "h-6 px-2 text-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&>svg]:size-3!",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "default", className: "h-3.5!" },
+      { variant: "outline", size: "md", className: "h-4.5!" },
+      { variant: "outline", size: "lg", className: "h-5.5!" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

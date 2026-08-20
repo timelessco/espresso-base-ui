@@ -10,31 +10,40 @@ import { Textarea } from "@/components/ui/textarea"
 
 const inputGroupVariants = cva(
   [
-    "group/input-group relative flex w-full min-w-0 items-center outline-none",
+    "group/input-group relative flex w-full min-w-0 items-center overflow-hidden outline-none",
     // disabled
-    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:bg-input has-disabled:text-popover-foreground",
+    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:text-popover-foreground",
     // focus-within
-    "has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! dark:has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]!",
+    "has-[[data-slot=input-group-control]:focus-visible]:shadow-raised!",
     // invalid
     "has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
     // block/textarea layout
-    "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto",
+    "has-[>[data-align=block-end]]:h-auto! has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto! has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto!",
   ],
   {
     variants: {
       variant: {
         outline:
-          "bg-background shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#00000012] group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)] data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_rgba(255,255,255,0.1)] dark:not-has-disabled:hover:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_rgba(255,255,255,0.2)]",
+          "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-raised has-disabled:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
         subtle:
-          "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-muted has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
+          "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] has-disabled:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
+        ghost:
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
+        xs: "h-6 rounded-md [&_svg:not([class*='size-'])]:size-4",
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
         md: "h-8 rounded-md [&_svg:not([class*='size-'])]:size-4",
         lg: "h-10 rounded-lg [&_svg:not([class*='size-'])]:size-4",
-        xl: "h-10 rounded-lg [&_svg:not([class*='size-'])]:size-4.5",
       },
     },
+    compoundVariants: [
+      // outline variant: reduce height by 2px for each size to account for outer shadow ring
+      { variant: "outline", size: "xs", className: "h-5.5!" },
+      { variant: "outline", size: "sm", className: "h-6.5!" },
+      { variant: "outline", size: "md", className: "h-7.5!" },
+      { variant: "outline", size: "lg", className: "h-9.5!" },
+    ],
     defaultVariants: {
       variant: "outline",
       size: "md",
@@ -162,7 +171,7 @@ function InputGroupInput({
     <Input
       data-slot="input-group-control"
       className={cn(
-        "flex-1 rounded-none border-0 bg-transparent shadow-none! ring-0 group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=xl]/input-group:h-10 group-data-[size=xl]/input-group:px-3 group-data-[size=xl]/input-group:text-xl group-data-[invalid=true]/field:shadow-none! not-data-disabled:hover:border-0 not-data-disabled:hover:shadow-none! not-data-disabled:focus:border-0 not-data-disabled:focus:shadow-none! not-data-disabled:focus:ring-0 not-data-disabled:focus-visible:ring-0 not-data-disabled:active:border-0 not-data-disabled:active:shadow-none! not-data-disabled:active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:shadow-none! dark:not-data-disabled:hover:shadow-none! dark:not-data-disabled:focus:shadow-none! dark:not-data-disabled:active:shadow-none! dark:disabled:bg-transparent",
+        "flex-1 rounded-none border-0 bg-transparent ring-0 [--shadow-default:none] [--shadow-raised:none] group-data-[size=xs]/input-group:h-6 group-data-[size=xs]/input-group:px-2 group-data-[size=xs]/input-group:text-sm group-data-[size=sm]/input-group:h-7 group-data-[size=sm]/input-group:px-2 group-data-[size=sm]/input-group:text-base group-data-[size=md]/input-group:h-8 group-data-[size=md]/input-group:px-2.5 group-data-[size=md]/input-group:text-base group-data-[size=lg]/input-group:h-10 group-data-[size=lg]/input-group:px-3 group-data-[size=lg]/input-group:text-lg not-data-disabled:hover:border-0 not-data-disabled:focus:border-0 not-data-disabled:focus:ring-0 not-data-disabled:focus-visible:ring-0 not-data-disabled:active:border-0 not-data-disabled:active:ring-0 disabled:bg-transparent aria-invalid:ring-0 group-data-[invalid=true]/field:shadow-none! data-invalid:shadow-none! data-valid:shadow-none! data-filled:shadow-none! dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
@@ -178,7 +187,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none! ring-0 hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:shadow-none! focus:ring-0 active:border-0 active:bg-transparent! active:shadow-none! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 ring-0 [--shadow-default:none] [--shadow-raised:none] hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:ring-0 active:border-0 active:bg-transparent! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}

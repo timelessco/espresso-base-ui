@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils"
 
 const checkboxVariants = cva(
   [
-    "peer relative flex shrink-0 items-center justify-center rounded-2xs border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:border-popover-foreground data-disabled:bg-input data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-checked:[&_svg]:text-card-foreground",
+    "peer relative flex shrink-0 items-center justify-center rounded-2xs border border-transparent transition-all duration-[250ms] ease-[ease] outline-none after:absolute after:-inset-x-3 after:-inset-y-2 not-data-disabled:active:scale-[0.97] not-data-disabled:data-pressed:scale-[0.97] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:border-popover-foreground data-disabled:bg-input data-disabled:data-checked:border-muted data-disabled:data-checked:bg-muted data-disabled:data-checked:[&_svg]:text-card-foreground",
     // unchecked states
-    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-sm not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground",
+    "data-unchecked:border-card-foreground not-data-disabled:data-unchecked:hover:border-accent-foreground not-data-disabled:data-unchecked:hover:shadow-elevation-sm not-data-disabled:data-unchecked:focus-visible:border-primary not-data-disabled:data-unchecked:focus-visible:ring-2 not-data-disabled:data-unchecked:focus-visible:ring-ring not-data-disabled:data-unchecked:active:border-muted-foreground",
     // checked states
-    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:hover:shadow-sm not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
+    "data-checked:bg-primary data-checked:text-primary-foreground not-data-disabled:data-checked:hover:bg-primary/86 not-data-disabled:data-checked:focus-visible:ring-2 not-data-disabled:data-checked:focus-visible:ring-ring not-data-disabled:data-checked:active:bg-primary/74",
     // indeterminate states
-    "data-indeterminate:bg-primary data-indeterminate:text-primary-foreground not-data-disabled:data-indeterminate:hover:bg-primary/86 not-data-disabled:data-indeterminate:hover:shadow-sm not-data-disabled:data-indeterminate:focus-visible:ring-2 not-data-disabled:data-indeterminate:focus-visible:ring-ring not-data-disabled:data-indeterminate:active:bg-primary/74",
+    "data-indeterminate:bg-primary data-indeterminate:text-primary-foreground not-data-disabled:data-indeterminate:hover:bg-primary/86 not-data-disabled:data-indeterminate:focus-visible:ring-2 not-data-disabled:data-indeterminate:focus-visible:ring-ring not-data-disabled:data-indeterminate:active:bg-primary/74",
     // invalid states (self + Field context)
     "data-invalid:border-destructive! data-invalid:ring-2! data-invalid:ring-destructive/20! data-invalid:data-checked:border-destructive!",
     "group-data-[invalid=true]/field:border-destructive! group-data-[invalid=true]/field:ring-2! group-data-[invalid=true]/field:ring-destructive/20! group-data-[invalid=true]/field:data-checked:border-destructive!",
@@ -21,6 +21,7 @@ const checkboxVariants = cva(
   {
     variants: {
       size: {
+        xs: "size-[13px]",
         sm: "size-3.5",
         default: "size-4",
       },
@@ -32,10 +33,11 @@ const checkboxVariants = cva(
 )
 
 const checkboxIndicatorVariants = cva(
-  "grid place-content-center text-current [clip-path:inset(0_0_0_0)] transition-[clip-path] duration-200 ease-out data-starting-style:[clip-path:inset(0_100%_0_0)]",
+  "grid place-content-center text-current transition-[clip-path] duration-200 ease-out [clip-path:inset(0_0_0_0)] data-starting-style:[clip-path:inset(0_100%_0_0)]",
   {
     variants: {
       size: {
+        xs: "[&>svg]:size-2",
         sm: "[&>svg]:size-2.5",
         default: "[&>svg]:size-3",
       },
