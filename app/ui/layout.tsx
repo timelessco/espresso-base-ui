@@ -176,6 +176,7 @@ const components = [
   { label: "Tags", href: "/ui/tag", icon: Tags },
   { label: "Text Area", href: "/ui/textarea", icon: CaseSensitive },
   { label: "Timeline", href: "/ui/timeline", icon: History },
+  { label: "Toast", href: "/ui/toast", icon: Bell },
   { label: "Tooltip", href: "/ui/tooltip", icon: BoxSelect },
 ]
 

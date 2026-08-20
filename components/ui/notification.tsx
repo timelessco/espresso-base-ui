@@ -1,10 +1,23 @@
 "use client"
 
 import * as React from "react"
-import { toast } from "sonner"
+import {
+  Toast,
+  ToastPortal,
+  ToastProvider,
+  ToastViewport,
+  createToastManager,
+  useToastManager,
+} from "@/components/ui/toast"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+
+type NotificationToastData = { render: (id: string) => React.ReactNode }
+
+// A dedicated toast manager so notifications stack/animate independently of the
+// standard toast Toaster, while reusing the Toast primitives for rendering.
+const notificationManager = createToastManager<NotificationToastData>()
 
 function CloseIcon({ className }: { className?: string }) {
   return (
@@ -82,77 +95,72 @@ function notify(options: NotificationOptions) {
     timestamp,
     unread,
     duration,
-    position,
   } = options
 
   const isSplit = actionType === "split"
 
-  return toast.custom(
-    (id) => (
-      <div
-        data-slot="notification"
-        data-variant={variant}
-        className={cn(
-          notificationVariants({ variant }),
-          suffix && "pr-10 tracking-wider",
-          isSplit && "flex-row! items-stretch! gap-0! p-0! tracking-wider"
-        )}
-      >
-        {isSplit ? (
-          <SplitLayout
-            id={id}
-            title={title}
-            description={description}
-            prefix={prefix}
-            actions={actions}
-          />
-        ) : variant === "modal" ? (
-          <ModalLayout
-            id={id}
-            title={title}
-            description={description}
-            actionType={actionType}
-            actions={actions}
-          />
-        ) : (
-          <DefaultLayout
-            id={id}
-            variant={variant!}
-            title={title}
-            description={description}
-            prefix={prefix}
-            timestamp={timestamp}
-            unread={unread}
-            actionType={actionType}
-            actions={actions}
-          />
-        )}
+  return notificationManager.add({
+    timeout: duration ?? 90000,
+    data: {
+      render: (id) => (
+        <div
+          data-slot="notification"
+          data-variant={variant}
+          className={cn(
+            notificationVariants({ variant }),
+            suffix && "pr-10 tracking-wider",
+            isSplit && "flex-row! items-stretch! gap-0! p-0! tracking-wider"
+          )}
+        >
+          {isSplit ? (
+            <SplitLayout
+              id={id}
+              title={title}
+              description={description}
+              prefix={prefix}
+              actions={actions}
+            />
+          ) : variant === "modal" ? (
+            <ModalLayout
+              id={id}
+              title={title}
+              description={description}
+              actionType={actionType}
+              actions={actions}
+            />
+          ) : (
+            <DefaultLayout
+              id={id}
+              variant={variant!}
+              title={title}
+              description={description}
+              prefix={prefix}
+              timestamp={timestamp}
+              unread={unread}
+              actionType={actionType}
+              actions={actions}
+            />
+          )}
 
-        {suffix && !isSplit && (
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            className={cn(
-              "absolute",
-              variant === "inline"
-                ? "top-1/2 right-3 -translate-y-1/2"
-                : "top-2 right-2"
-            )}
-            onClick={() => toast.dismiss(id)}
-          >
-            <CloseIcon className="size-3.5" />
-          </Button>
-        )}
-      </div>
-    ),
-    {
-      duration: duration ?? 90000,
-      position,
-      unstyled: true,
-      className:
-        "!p-0 !shadow-none !border-none !bg-transparent !gap-0 [&_[data-content]]:!p-0 [&_[data-content]]:!m-0 [&_[data-title]]:!p-0 [&_[data-title]]:!m-0 [&_[data-content]]:!gap-0 [&_[data-title]]:!gap-0",
-    }
-  )
+          {suffix && !isSplit && (
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              className={cn(
+                "absolute",
+                variant === "inline"
+                  ? "top-1/2 right-3 -translate-y-1/2"
+                  : "top-2 right-2"
+              )}
+              onClick={() => notificationManager.close(id)}
+            >
+              <CloseIcon className="size-3.5" />
+            </Button>
+          )}
+        </div>
+      ),
+    },
+  })
 }
 
 // --- Layouts ---
@@ -168,7 +176,7 @@ function DefaultLayout({
   actionType,
   actions,
 }: {
-  id: string | number
+  id: string
   variant: string
   title: string
   description?: string
@@ -219,7 +227,7 @@ function DefaultLayout({
                   size="sm"
                   onClick={() => {
                     a.onClick()
-                    toast.dismiss(id)
+                    notificationManager.close(id)
                   }}
                 >
                   {a.label}
@@ -237,7 +245,7 @@ function DefaultLayout({
                 className="w-full tracking-wider"
                 onClick={() => {
                   actions[0].onClick()
-                  toast.dismiss(id)
+                  notificationManager.close(id)
                 }}
               >
                 {actions[0].label}
@@ -254,7 +262,7 @@ function DefaultLayout({
             className="shrink-0 tracking-wider"
             onClick={() => {
               actions[0].onClick()
-              toast.dismiss(id)
+              notificationManager.close(id)
             }}
           >
             {actions[0].label}
@@ -276,7 +284,7 @@ function SplitLayout({
   prefix,
   actions,
 }: {
-  id: string | number
+  id: string
   title: string
   description?: string
   prefix?: React.ReactNode
@@ -320,7 +328,7 @@ function SplitLayout({
               )}
               onClick={() => {
                 a.onClick()
-                toast.dismiss(id)
+                notificationManager.close(id)
               }}
             >
               {a.label}
@@ -339,7 +347,7 @@ function ModalLayout({
   actionType,
   actions,
 }: {
-  id: string | number
+  id: string
   title: string
   description?: string
   actionType: ActionType
@@ -382,7 +390,7 @@ function ModalLayout({
               )}
               onClick={() => {
                 a.onClick()
-                toast.dismiss(id)
+                notificationManager.close(id)
               }}
             >
               {a.label}
@@ -394,8 +402,42 @@ function ModalLayout({
   )
 }
 
+// --- Toaster ---
+
+// Renders each notification's custom card inside a Toast root, stripped of the
+// standard toast shell (bg/shadow/radius/padding) so only the card's own styles
+// show — while keeping the root's stacking/slide animation.
+function NotificationList() {
+  const { toasts } = useToastManager()
+
+  return toasts.map((toastItem) => (
+    <Toast
+      key={toastItem.id}
+      toast={toastItem}
+      className="w-auto rounded-none bg-transparent p-0 text-foreground shadow-none"
+    >
+      {(toastItem.data as NotificationToastData | undefined)?.render?.(
+        toastItem.id
+      )}
+    </Toast>
+  ))
+}
+
+function NotificationToaster() {
+  return (
+    <ToastProvider toastManager={notificationManager}>
+      <ToastPortal>
+        <ToastViewport className="max-w-[26rem]">
+          <NotificationList />
+        </ToastViewport>
+      </ToastPortal>
+    </ToastProvider>
+  )
+}
+
 export {
   notify,
+  NotificationToaster,
   notificationVariants,
   type NotificationOptions,
   type NotificationAction,

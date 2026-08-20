@@ -3,7 +3,7 @@
 import { Info } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { notify } from "@/components/ui/notification"
+import { notify, NotificationToaster } from "@/components/ui/notification"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -460,6 +460,8 @@ export default function NotificationPage() {
           </Button>
         </div>
       </div>
+
+      <NotificationToaster />
     </div>
   )
 }
