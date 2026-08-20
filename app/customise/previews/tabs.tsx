@@ -230,7 +230,11 @@ export default function TabsPreview() {
       </PreviewCard>
 
       <PreviewCard label="Vertical">
-        <Tabs defaultValue="tab-1" orientation="vertical">
+        <Tabs
+          defaultValue="tab-1"
+          orientation="vertical"
+          className="w-full max-w-md"
+        >
           <TabsList>
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
@@ -256,7 +260,11 @@ export default function TabsPreview() {
       </PreviewCard>
 
       <PreviewCard label="Vertical — Line">
-        <Tabs defaultValue="tab-1" orientation="vertical">
+        <Tabs
+          defaultValue="tab-1"
+          orientation="vertical"
+          className="w-full max-w-md"
+        >
           <TabsList variant="line">
             <TabsTrigger value="tab-1">Account</TabsTrigger>
             <TabsTrigger value="tab-2">Password</TabsTrigger>
