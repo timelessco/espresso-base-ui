@@ -95,24 +95,6 @@ export default function CardPage() {
         </Card>
       </div>
 
-      {/* Size sm */}
-      <div className="flex max-w-md flex-col gap-4">
-        <SectionTitle>Size: sm (tighter spacing + smaller title)</SectionTitle>
-        <Card size="sm">
-          <CardHeader>
-            <CardTitle>Compact card</CardTitle>
-            <CardDescription>
-              Uses gap-3 / py-3 / px-3 and a smaller title.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Useful for dense layouts — sidebars, list rows, dashboard widgets.
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Image top */}
       <div className="flex max-w-md flex-col gap-4">
         <SectionTitle>Image at top (auto-rounds, no top padding)</SectionTitle>
