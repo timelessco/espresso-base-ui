@@ -7,6 +7,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  Label,
   Line,
   LineChart,
   Pie,
@@ -124,6 +125,27 @@ function formatSalesDate(value: unknown) {
   return `${MONTHS[Number(month) - 1]} ${year}`
 }
 
+// Income per capita (illustrative), sorted high → low.
+const incomeData = [
+  { country: "India", income: 66000 },
+  { country: "South Africa", income: 58000 },
+  { country: "Japan", income: 54000 },
+  { country: "Germany", income: 47000 },
+  { country: "Canada", income: 44000 },
+  { country: "Brazil", income: 39000 },
+  { country: "Australia", income: 32000 },
+  { country: "France", income: 24000 },
+  { country: "Italy", income: 14000 },
+  { country: "Spain", income: 11000 },
+  { country: "United States", income: 7000 },
+]
+
+const incomeConfig = {
+  income: { label: "Income per Capita", color: "var(--chart-2)" },
+} satisfies ChartConfig
+
+const incomeTicks = [0, 10000, 20000, 30000, 40000, 50000, 60000, 70000]
+
 export default function ChartPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
@@ -176,6 +198,73 @@ export default function ChartPage() {
                   fill="var(--color-sales)"
                   barSize={14}
                   radius={[2, 2, 0, 0]}
+                />
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Horizontal Bar Chart (in a card) */}
+      <div className="flex max-w-3xl flex-col gap-4">
+        <SectionTitle>Horizontal</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Horizontal</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={incomeConfig}
+              className="aspect-auto h-[283px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                data={incomeData}
+                margin={{ top: 8, right: 16, bottom: 24, left: 24 }}
+              >
+                <CartesianGrid horizontal={false} strokeDasharray="4 4" />
+                <XAxis
+                  type="number"
+                  dataKey="income"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  domain={[0, 70000]}
+                  ticks={incomeTicks}
+                  tickFormatter={(value) => `$${value / 1000}k`}
+                >
+                  <Label
+                    value="Income per Capita (USD)"
+                    position="insideBottom"
+                    offset={-16}
+                  />
+                </XAxis>
+                <YAxis
+                  type="category"
+                  dataKey="country"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={132}
+                  interval={0}
+                >
+                  <Label
+                    value="Top countries"
+                    angle={-90}
+                    position="insideLeft"
+                    style={{ textAnchor: "middle" }}
+                  />
+                </YAxis>
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar
+                  dataKey="income"
+                  fill="var(--color-income)"
+                  barSize={12}
+                  radius={[0, 2, 2, 0]}
                 />
               </BarChart>
             </ChartContainer>
