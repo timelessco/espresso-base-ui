@@ -50,11 +50,11 @@ const donutData = [
 
 const donutConfig = {
   value: { label: "Value" },
-  d1: { label: "Data (11%)", color: "var(--chart-1)" },
-  d2: { label: "Data (17.2%)", color: "var(--chart-2)" },
-  d3: { label: "Data (8%)", color: "var(--chart-3)" },
-  d4: { label: "Data (14%)", color: "var(--chart-4)" },
-  d5: { label: "Data (14%)", color: "var(--chart-5)" },
+  d1: { label: "Data (11%)", color: "var(--chart-8)" },
+  d2: { label: "Data (17.2%)", color: "var(--chart-7)" },
+  d3: { label: "Data (8%)", color: "var(--chart-6)" },
+  d4: { label: "Data (14%)", color: "var(--chart-5)" },
+  d5: { label: "Data (14%)", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
 // Monthly sales from Jan 2021 through Jan 2023.
@@ -87,7 +87,7 @@ const salesData = [
 ]
 
 const salesConfig = {
-  sales: { label: "Sales", color: "var(--chart-2)" },
+  sales: { label: "Sales", color: "var(--chart-7)" },
 } satisfies ChartConfig
 
 const salesTicks = [0, 3000, 6000, 9000, 12000, 15000, 18000, 21000, 24000]
@@ -137,7 +137,7 @@ const incomeData = [
 ]
 
 const incomeConfig = {
-  income: { label: "Income per Capita", color: "var(--chart-2)" },
+  income: { label: "Income per Capita", color: "var(--chart-7)" },
 } satisfies ChartConfig
 
 const incomeTicks = [0, 10000, 20000, 30000, 40000, 50000, 60000, 70000]
@@ -153,10 +153,10 @@ const groupData = [
 ]
 
 const groupConfig = {
-  a: { label: "Series 1", color: "var(--chart-1)" },
-  b: { label: "Series 2", color: "var(--chart-2)" },
-  c: { label: "Series 3", color: "var(--chart-5)" },
-  d: { label: "Series 4", color: "var(--chart-3)" },
+  a: { label: "Series 1", color: "var(--chart-9)" },
+  b: { label: "Series 2", color: "var(--chart-8)" },
+  c: { label: "Series 3", color: "var(--chart-7)" },
+  d: { label: "Series 4", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 // Label the year at January, month name otherwise.
@@ -202,11 +202,11 @@ const channelData = [
 ]
 
 const channelConfig = {
-  organic: { label: "Google organic", color: "var(--chart-5)" },
-  paid: { label: "Google paid", color: "var(--chart-4)" },
-  facebook: { label: "Facebook ads", color: "var(--chart-3)" },
-  referral: { label: "Referral", color: "var(--chart-2)" },
-  others: { label: "Others", color: "var(--chart-1)" },
+  organic: { label: "Google organic", color: "var(--chart-9)" },
+  paid: { label: "Google paid", color: "var(--chart-8)" },
+  facebook: { label: "Facebook ads", color: "var(--chart-7)" },
+  referral: { label: "Referral", color: "var(--chart-5)" },
+  others: { label: "Others", color: "var(--chart-3)" },
 } satisfies ChartConfig
 
 // Monthly sales & orders (Jan 2021 → Jan 2023) for the line charts.
@@ -239,12 +239,12 @@ const lineData = [
 ]
 
 const lineConfig = {
-  sales: { label: "Sales", color: "var(--chart-5)" },
+  sales: { label: "Sales", color: "var(--chart-9)" },
 } satisfies ChartConfig
 
 const multiConfig = {
-  sales: { label: "Sales", color: "var(--chart-5)" },
-  orders: { label: "Orders", color: "var(--chart-2)" },
+  sales: { label: "Sales", color: "var(--chart-9)" },
+  orders: { label: "Orders", color: "var(--chart-8)" },
 } satisfies ChartConfig
 
 // Price (x) vs Total sales (y), with No. of units driving bubble size (z).
@@ -267,13 +267,13 @@ const bubbleData = [
 ]
 
 const bubbleConfig = {
-  price: { label: "Price", color: "var(--chart-2)" },
+  price: { label: "Price", color: "var(--chart-8)" },
   units: { label: "No. of units" },
   sales: { label: "Total sales" },
 } satisfies ChartConfig
 
 const areaConfig = {
-  sales: { label: "Sales", color: "var(--chart-2)" },
+  sales: { label: "Sales", color: "var(--chart-8)" },
 } satisfies ChartConfig
 
 // Four stacked series (bottom → top) for the stacked area chart.
@@ -306,34 +306,33 @@ const stackedData = [
 ]
 
 const stackedConfig = {
-  a: { label: "Direct", color: "var(--chart-4)" },
-  b: { label: "Referral", color: "var(--chart-3)" },
-  c: { label: "Organic", color: "var(--chart-2)" },
-  d: { label: "Social", color: "var(--chart-1)" },
+  a: { label: "Direct", color: "var(--chart-9)" },
+  b: { label: "Referral", color: "var(--chart-8)" },
+  c: { label: "Organic", color: "var(--chart-7)" },
+  d: { label: "Social", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
-// Five stacked segments per month for the stacked bar chart.
+// Four stacked segments per month for the stacked bar chart.
 const stackedBarData = [
-  { date: "2021-01", a: 1100, b: 3400, c: 2200, d: 1500, e: 1500 },
-  { date: "2021-02", a: 3900, b: 4000, c: 2500, d: 2500, e: 2200 },
-  { date: "2021-03", a: 2200, b: 2800, c: 2300, d: 1800, e: 1800 },
-  { date: "2021-04", a: 2500, b: 2000, c: 2300, d: 1800, e: 1500 },
-  { date: "2021-05", a: 2300, b: 2200, c: 2200, d: 2300, e: 2100 },
-  { date: "2021-06", a: 1900, b: 2300, c: 2300, d: 2300, e: 1400 },
-  { date: "2021-07", a: 2300, b: 1300, c: 2300, d: 2300, e: 1400 },
-  { date: "2021-08", a: 2300, b: 2300, c: 2300, d: 1600, e: 1600 },
-  { date: "2021-09", a: 3300, b: 3300, c: 3200, d: 3300, e: 2900 },
-  { date: "2021-10", a: 1900, b: 2200, c: 2300, d: 1300, e: 1300 },
-  { date: "2021-11", a: 2300, b: 1900, c: 800, d: 1100, e: 1100 },
-  { date: "2021-12", a: 1300, b: 2000, c: 2300, d: 1800, e: 1800 },
+  { date: "2021-01", a: 1100, b: 3400, c: 2200, d: 1500 },
+  { date: "2021-02", a: 3900, b: 4000, c: 2500, d: 2500 },
+  { date: "2021-03", a: 2200, b: 2800, c: 2300, d: 1800 },
+  { date: "2021-04", a: 2500, b: 2000, c: 2300, d: 1800 },
+  { date: "2021-05", a: 2300, b: 2200, c: 2200, d: 2300 },
+  { date: "2021-06", a: 1900, b: 2300, c: 2300, d: 2300 },
+  { date: "2021-07", a: 2300, b: 1300, c: 2300, d: 2300 },
+  { date: "2021-08", a: 2300, b: 2300, c: 2300, d: 1600 },
+  { date: "2021-09", a: 3300, b: 3300, c: 3200, d: 3300 },
+  { date: "2021-10", a: 1900, b: 2200, c: 2300, d: 1300 },
+  { date: "2021-11", a: 2300, b: 1900, c: 800, d: 1100 },
+  { date: "2021-12", a: 1300, b: 2000, c: 2300, d: 1800 },
 ]
 
 const stackedBarConfig = {
-  a: { label: "Segment 1", color: "var(--chart-5)" },
-  b: { label: "Segment 2", color: "var(--chart-4)" },
-  c: { label: "Segment 3", color: "var(--chart-3)" },
-  d: { label: "Segment 4", color: "var(--chart-2)" },
-  e: { label: "Segment 5", color: "var(--chart-1)" },
+  a: { label: "Segment 1", color: "var(--chart-9)" },
+  b: { label: "Segment 2", color: "var(--chart-8)" },
+  c: { label: "Segment 3", color: "var(--chart-7)" },
+  d: { label: "Segment 4", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 // Show the year at January and month names for other odd months.
@@ -950,12 +949,7 @@ export default function ChartPage() {
                   cursor={false}
                   content={<ChartTooltipContent labelFormatter={formatSalesDate} />}
                 />
-                <Bar
-                  dataKey="a"
-                  stackId="s"
-                  fill="var(--color-a)"
-                  radius={[0, 0, 2, 2]}
-                >
+                <Bar dataKey="a" stackId="s" fill="var(--color-a)">
                   <LabelList
                     dataKey="a"
                     position="center"
@@ -985,20 +979,6 @@ export default function ChartPage() {
                 <Bar dataKey="d" stackId="s" fill="var(--color-d)">
                   <LabelList
                     dataKey="d"
-                    position="center"
-                    fill="#fff"
-                    fontSize={10}
-                    formatter={formatStackLabel}
-                  />
-                </Bar>
-                <Bar
-                  dataKey="e"
-                  stackId="s"
-                  fill="var(--color-e)"
-                  radius={[2, 2, 0, 0]}
-                >
-                  <LabelList
-                    dataKey="e"
                     position="center"
                     fill="#171717"
                     fontSize={10}
