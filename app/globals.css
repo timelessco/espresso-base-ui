@@ -777,11 +777,15 @@
   --border: var(--color-gray-300); /* #E2E2E2 */ /*outline/gray-2*/
   --input: var(--color-gray-50); /* #f8f8f8 */ /*surface/gray-1*/
 
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
+  --chart-1: oklch(97% 0.013 228.9);
+  --chart-2: oklch(93.9% 0.024 234.4);
+  --chart-3: oklch(88% 0.049 231);
+  --chart-4: oklch(83.4% 0.068 232.6);
+  --chart-5: oklch(81.6% 0.076 232.6);
+  --chart-6: oklch(76.4% 0.095 232.9);
+  --chart-7: oklch(70.9% 0.116 235.4);
+  --chart-8: oklch(58.7% 0.13 243.5);
+  --chart-9: oklch(45.1% 0.121 249.3);
 
   --ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
   --sidebar: var(--color-gray-50); /* #f8f8f8 */ /*surface/menu-bar*/
@@ -1038,11 +1042,15 @@
   --border: var(--color-gray-600); /* #343434 */ /*outline/gray-2*/
   --input: var(--color-gray-900); /* #1f1f1f */ /*surface/gray-1*/
 
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
+  --chart-1: oklch(83.1% 0.01 228.9);
+  --chart-2: oklch(80.6% 0.02 235.8);
+  --chart-3: oklch(74.6% 0.041 230.4);
+  --chart-4: oklch(70.6% 0.057 232.5);
+  --chart-5: oklch(69.1% 0.063 233.1);
+  --chart-6: oklch(64.8% 0.079 232.7);
+  --chart-7: oklch(60.3% 0.096 234.5);
+  --chart-8: oklch(50.1% 0.109 243);
+  --chart-9: oklch(38.6% 0.101 248.9);
 
   --ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
   --sidebar: var(--color-gray-950); /* #171717 */
@@ -1082,6 +1090,10 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-chart-9: var(--chart-9);
+  --color-chart-8: var(--chart-8);
+  --color-chart-7: var(--chart-7);
+  --color-chart-6: var(--chart-6);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
