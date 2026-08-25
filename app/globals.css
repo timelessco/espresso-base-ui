@@ -959,6 +959,42 @@
   --tracking-wider: 0.04em;
 }
 
+/* Mobile: bump every font-size token by +1px (0.0625rem). Utilities resolve
+   `font-size: var(--text-*)`, so overriding the tokens here scales text app-wide
+   without touching components. Line-height ratios are unitless, so they stay. */
+@media (max-width: 767.98px) {
+  :root {
+    --text-tiny: 0.75rem !important; /* 12px */
+    --text-2xs: 0.75rem !important; /* 12px */
+    --text-xs: 0.8125rem !important; /* 13px */
+    --text-sm: 0.875rem !important; /* 14px */
+    --text-base: 0.9375rem !important; /* 15px */
+    --text-normal: 1rem !important; /* 16px */
+    --text-lg: 1.0625rem !important; /* 17px */
+    --text-xl: 1.1875rem !important; /* 19px */
+    --text-2xl: 1.3125rem !important; /* 21px */
+    --text-3xl: 1.5625rem !important; /* 25px */
+    --text-4xl: 1.6875rem !important; /* 27px */
+    --text-5xl: 1.8125rem !important; /* 29px */
+    --text-6xl: 2.0625rem !important; /* 33px */
+    --text-7xl: 2.5625rem !important; /* 41px */
+    --text-8xl: 2.8125rem !important; /* 45px */
+    --text-9xl: 3.0625rem !important; /* 49px */
+    --text-10xl: 3.3125rem !important; /* 53px */
+    --text-11xl: 3.5625rem !important; /* 57px */
+    --text-12xl: 4.0625rem !important; /* 65px */
+    --text-13xl: 4.5625rem !important; /* 73px */
+    --text-14xl: 5.0625rem !important; /* 81px */
+    --text-15xl: 5.5625rem !important; /* 89px */
+  }
+
+  /* Icons scale with --spacing (size-* = calc(var(--spacing) * n)). Bump it on
+     SVGs so icons go up one step on mobile (e.g. size-4: 16px → 17px). */
+  svg {
+    --spacing: 0.265625rem !important;
+  }
+}
+
 .dark {
   --background: var(--color-gray-950); /* #171717 */
   --foreground: var(--color-gray-100); /* #d9d9d9 */ /*ink/gray-8*/
