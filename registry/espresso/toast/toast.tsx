@@ -5,7 +5,14 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { XIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
+import {
+  XIcon,
+  CircleCheckIcon,
+  InfoIcon,
+  TriangleAlertIcon,
+  OctagonXIcon,
+  Loader2Icon,
+} from "lucide-react"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -101,7 +108,7 @@ function ToastDescription({
 
 function ToastAction({
   className,
-  render = <Button variant="outline" size="sm" />,
+  render = <Button variant="ghost" size="sm" />,
   ...props
 }: ToastPrimitive.Action.Props) {
   return (
@@ -109,7 +116,7 @@ function ToastAction({
       data-slot="toast-action"
       render={render}
       className={cn(
-        "shrink-0 cursor-pointer bg-transparent p-0 text-base leading-base font-medium tracking-wider text-[var(--color-blue-400)] transition-opacity outline-none hover:opacity-80",
+        "ml-1 shrink-0 text-base leading-base font-medium tracking-wider text-[var(--color-blue-400)] hover:bg-primary-foreground/10 hover:text-[var(--color-blue-400)] dark:hover:bg-primary-foreground/10",
         className
       )}
       {...props}
@@ -129,12 +136,12 @@ function ToastClose({
       aria-label="Close toast"
       render={render}
       className={cn(
-        "relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-secondary-foreground p-0.5 text-primary-foreground transition-opacity outline-none after:absolute after:-inset-2 after:content-[''] hover:opacity-80",
+        "relative shrink-0 text-primary-foreground after:absolute after:-inset-2 after:content-[''] hover:bg-primary-foreground/10 hover:text-primary-foreground dark:hover:bg-primary-foreground/10",
         className
       )}
       {...props}
     >
-      {children ?? <XIcon className="size-3.5" aria-hidden="true" />}
+      {children ?? <XIcon aria-hidden="true" />}
     </ToastPrimitive.Close>
   )
 }
