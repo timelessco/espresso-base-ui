@@ -365,7 +365,7 @@ export default function ChartPage() {
                 accessibilityLayer
                 data={salesData}
                 barCategoryGap={10}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -489,7 +489,7 @@ export default function ChartPage() {
                 data={groupData}
                 barGap={2}
                 barCategoryGap={40}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -615,7 +615,7 @@ export default function ChartPage() {
               <LineChart
                 accessibilityLayer
                 data={lineData}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -668,7 +668,7 @@ export default function ChartPage() {
               <LineChart
                 accessibilityLayer
                 data={lineData}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -725,7 +725,7 @@ export default function ChartPage() {
               config={bubbleConfig}
               className="aspect-auto h-[400px] w-full"
             >
-              <ScatterChart margin={{ top: 12, left: 0, right: 12, bottom: 8 }}>
+              <ScatterChart margin={{ top: 12, left: 0, right: 24, bottom: 8 }}>
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
                   type="number"
@@ -789,7 +789,7 @@ export default function ChartPage() {
               <AreaChart
                 accessibilityLayer
                 data={lineData}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -844,7 +844,7 @@ export default function ChartPage() {
               <AreaChart
                 accessibilityLayer
                 data={stackedData}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
@@ -923,7 +923,7 @@ export default function ChartPage() {
                 accessibilityLayer
                 data={stackedBarData}
                 barSize={28}
-                margin={{ top: 12, left: 0, right: 12 }}
+                margin={{ top: 12, left: 0, right: 24 }}
               >
                 <CartesianGrid vertical={false} strokeDasharray="4 4" />
                 <XAxis
