@@ -5,7 +5,14 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { XIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from "lucide-react"
+import {
+  XIcon,
+  CircleCheckIcon,
+  InfoIcon,
+  TriangleAlertIcon,
+  OctagonXIcon,
+  Loader2Icon,
+} from "lucide-react"
 
 const toast = ToastPrimitive.createToastManager()
 
@@ -109,7 +116,7 @@ function ToastAction({
       data-slot="toast-action"
       render={render}
       className={cn(
-        "shrink-0 cursor-pointer bg-transparent p-0 text-base leading-base font-medium tracking-wider text-[var(--color-blue-400)] transition-opacity outline-none hover:opacity-80",
+        "ml-1 h-auto w-auto shrink-0 cursor-pointer border-none bg-transparent p-0 text-base leading-base font-medium tracking-wider text-[var(--color-blue-400)] shadow-none transition-opacity outline-none hover:bg-transparent hover:opacity-80",
         className
       )}
       {...props}
@@ -129,7 +136,7 @@ function ToastClose({
       aria-label="Close toast"
       render={render}
       className={cn(
-        "relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-secondary-foreground p-0.5 text-primary-foreground transition-opacity outline-none after:absolute after:-inset-2 after:content-[''] hover:opacity-80",
+        "relative flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-secondary-foreground p-0.5 text-primary-foreground transition-opacity outline-none after:absolute after:-inset-2 after:content-[''] hover:bg-secondary-foreground hover:text-primary-foreground hover:opacity-80",
         className
       )}
       {...props}
