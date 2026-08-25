@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Cell,
   Label,
+  LabelList,
   Line,
   LineChart,
   Pie,
@@ -310,6 +311,41 @@ const stackedConfig = {
   c: { label: "Organic", color: "var(--chart-2)" },
   d: { label: "Social", color: "var(--chart-1)" },
 } satisfies ChartConfig
+
+// Five stacked segments per month for the stacked bar chart.
+const stackedBarData = [
+  { date: "2021-01", a: 1100, b: 3400, c: 2200, d: 1500, e: 1500 },
+  { date: "2021-02", a: 3900, b: 4000, c: 2500, d: 2500, e: 2200 },
+  { date: "2021-03", a: 2200, b: 2800, c: 2300, d: 1800, e: 1800 },
+  { date: "2021-04", a: 2500, b: 2000, c: 2300, d: 1800, e: 1500 },
+  { date: "2021-05", a: 2300, b: 2200, c: 2200, d: 2300, e: 2100 },
+  { date: "2021-06", a: 1900, b: 2300, c: 2300, d: 2300, e: 1400 },
+  { date: "2021-07", a: 2300, b: 1300, c: 2300, d: 2300, e: 1400 },
+  { date: "2021-08", a: 2300, b: 2300, c: 2300, d: 1600, e: 1600 },
+  { date: "2021-09", a: 3300, b: 3300, c: 3200, d: 3300, e: 2900 },
+  { date: "2021-10", a: 1900, b: 2200, c: 2300, d: 1300, e: 1300 },
+  { date: "2021-11", a: 2300, b: 1900, c: 800, d: 1100, e: 1100 },
+  { date: "2021-12", a: 1300, b: 2000, c: 2300, d: 1800, e: 1800 },
+]
+
+const stackedBarConfig = {
+  a: { label: "Segment 1", color: "var(--chart-5)" },
+  b: { label: "Segment 2", color: "var(--chart-4)" },
+  c: { label: "Segment 3", color: "var(--chart-3)" },
+  d: { label: "Segment 4", color: "var(--chart-2)" },
+  e: { label: "Segment 5", color: "var(--chart-1)" },
+} satisfies ChartConfig
+
+// Show the year at January and month names for other odd months.
+function formatStackAxis(value: string) {
+  const month = Number(value.split("-")[1])
+  if (month === 1) return value.split("-")[0]
+  return month % 2 === 1 ? MONTHS[month - 1] : ""
+}
+
+function formatStackLabel(value: React.ReactNode) {
+  return `$${(Number(value) / 1000).toFixed(1)}k`
+}
 
 export default function ChartPage() {
   return (
@@ -867,6 +903,109 @@ export default function ChartPage() {
                   fillOpacity={0.4}
                 />
               </AreaChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Stacked Bar Chart (in a card) */}
+      <div className="flex max-w-[612px] flex-col gap-4">
+        <SectionTitle>Stacked Bar Chart</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Stacked Bar Chart</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={stackedBarConfig}
+              className="aspect-auto h-[400px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                data={stackedBarData}
+                barSize={28}
+                margin={{ top: 12, left: 0, right: 12 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="4 4" />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={12}
+                  interval={0}
+                  tickFormatter={formatStackAxis}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={40}
+                  domain={[0, 24000]}
+                  ticks={salesTicks}
+                  tickFormatter={(value) =>
+                    value === 0 ? "0" : `${value / 1000}k`
+                  }
+                />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent labelFormatter={formatSalesDate} />}
+                />
+                <Bar
+                  dataKey="a"
+                  stackId="s"
+                  fill="var(--color-a)"
+                  radius={[0, 0, 2, 2]}
+                >
+                  <LabelList
+                    dataKey="a"
+                    position="center"
+                    fill="#fff"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="b" stackId="s" fill="var(--color-b)">
+                  <LabelList
+                    dataKey="b"
+                    position="center"
+                    fill="#fff"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="c" stackId="s" fill="var(--color-c)">
+                  <LabelList
+                    dataKey="c"
+                    position="center"
+                    fill="#fff"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="d" stackId="s" fill="var(--color-d)">
+                  <LabelList
+                    dataKey="d"
+                    position="center"
+                    fill="#fff"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar
+                  dataKey="e"
+                  stackId="s"
+                  fill="var(--color-e)"
+                  radius={[2, 2, 0, 0]}
+                >
+                  <LabelList
+                    dataKey="e"
+                    position="center"
+                    fill="#171717"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
