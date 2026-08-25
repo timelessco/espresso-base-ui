@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import {
   Area,
   AreaChart,
@@ -15,6 +16,7 @@ import {
   PieChart,
   Scatter,
   ScatterChart,
+  Sector,
   XAxis,
   YAxis,
   ZAxis,
@@ -38,6 +40,35 @@ import {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
+}
+
+// Custom tooltip cursor rendered as a <rect> (recharts' default is a <path>,
+// whose `d` can't be CSS-transitioned cross-browser). A rect's x/y/width/height
+// are animatable, so the hover background glides between categories.
+function ChartCursor({
+  x,
+  y,
+  width,
+  height,
+}: {
+  x?: number
+  y?: number
+  width?: number
+  height?: number
+}) {
+  return (
+    <rect
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      className="fill-muted"
+      style={{
+        transition:
+          "x 0.15s ease, y 0.15s ease, width 0.15s ease, height 0.15s ease",
+      }}
+    />
+  )
 }
 
 const donutData = [
@@ -347,6 +378,9 @@ function formatStackLabel(value: React.ReactNode) {
 }
 
 export default function ChartPage() {
+  // Index of the hovered bubble; other bubbles fade out.
+  const [activeBubble, setActiveBubble] = React.useState<number | null>(null)
+
   return (
     <div className="flex flex-col gap-12 p-8">
       {/* Default Bar Chart (in a card) */}
@@ -388,7 +422,7 @@ export default function ChartPage() {
                   }
                 />
                 <ChartTooltip
-                  cursor={false}
+                  cursor={<ChartCursor />}
                   content={
                     <ChartTooltipContent labelFormatter={formatSalesDate} />
                   }
@@ -457,7 +491,7 @@ export default function ChartPage() {
                   />
                 </YAxis>
                 <ChartTooltip
-                  cursor={false}
+                  cursor={<ChartCursor />}
                   content={<ChartTooltipContent hideLabel />}
                 />
                 <Bar
@@ -511,7 +545,7 @@ export default function ChartPage() {
                   }
                 />
                 <ChartTooltip
-                  cursor={false}
+                  cursor={<ChartCursor />}
                   content={
                     <ChartTooltipContent labelFormatter={formatSalesDate} />
                   }
@@ -567,7 +601,10 @@ export default function ChartPage() {
                   width={110}
                   interval={0}
                 />
-                <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={<ChartTooltipContent />}
+                />
                 <ChartLegend content={<ChartLegendContent />} />
                 <Bar
                   dataKey="organic"
@@ -765,8 +802,20 @@ export default function ChartPage() {
                 <Scatter
                   data={bubbleData}
                   fill="var(--color-price)"
-                  fillOpacity={0.7}
-                />
+                  onMouseEnter={(_, index) => setActiveBubble(index)}
+                  onMouseLeave={() => setActiveBubble(null)}
+                >
+                  {bubbleData.map((_, index) => (
+                    <Cell
+                      key={index}
+                      fillOpacity={
+                        activeBubble === null || activeBubble === index
+                          ? 0.7
+                          : 0.2
+                      }
+                    />
+                  ))}
+                </Scatter>
               </ScatterChart>
             </ChartContainer>
           </CardContent>
@@ -946,7 +995,7 @@ export default function ChartPage() {
                   }
                 />
                 <ChartTooltip
-                  cursor={false}
+                  cursor={<ChartCursor />}
                   content={<ChartTooltipContent labelFormatter={formatSalesDate} />}
                 />
                 <Bar dataKey="a" stackId="s" fill="var(--color-a)">
@@ -992,44 +1041,87 @@ export default function ChartPage() {
       </div>
 
       {/* Doughnut Chart (in a card) */}
-      <div className="flex max-w-3xl flex-col gap-4">
-        <SectionTitle>Doughnut Chart</SectionTitle>
-        <Card>
-          <CardHeader>
-            <CardTitle>Doughnut Chart</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer
-              config={donutConfig}
-              className="mx-auto aspect-square max-h-[360px]"
-            >
-              <PieChart>
-                <ChartTooltip
-                  content={<ChartTooltipContent nameKey="name" hideLabel />}
-                />
-                <Pie
-                  data={donutData}
-                  dataKey="value"
-                  nameKey="name"
-                  innerRadius={80}
-                  outerRadius={120}
-                  paddingAngle={3}
-                  cornerRadius={6}
-                  strokeWidth={0}
-                >
-                  {donutData.map((entry) => (
-                    <Cell key={entry.name} fill={entry.fill} />
-                  ))}
-                </Pie>
-                <ChartLegend
-                  content={<ChartLegendContent nameKey="name" />}
-                  className="flex-wrap gap-x-4 gap-y-2"
-                />
-              </PieChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-      </div>
+      <DoughnutChart />
+    </div>
+  )
+}
+
+// Isolated so the requestAnimationFrame-driven radius growth only re-renders
+// the donut, not the whole page (which caused lag).
+function DoughnutChart() {
+  const [donutActive, setDonutActive] = React.useState<number | null>(null)
+  const [donutGrow, setDonutGrow] = React.useState(0)
+  const donutGrowRef = React.useRef(0)
+  donutGrowRef.current = donutGrow
+
+  React.useEffect(() => {
+    const target = donutActive === null ? 0 : 6
+    const from = donutGrowRef.current
+    let raf = 0
+    let start: number | null = null
+    const duration = 200
+    const step = (now: number) => {
+      if (start === null) start = now
+      const t = Math.min(1, (now - start) / duration)
+      const eased = 1 - Math.pow(1 - t, 3) // easeOutCubic
+      setDonutGrow(from + (target - from) * eased)
+      if (t < 1) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [donutActive])
+
+  return (
+    <div className="flex max-w-3xl flex-col gap-4">
+      <SectionTitle>Doughnut Chart</SectionTitle>
+      <Card>
+        <CardHeader>
+          <CardTitle>Doughnut Chart</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer
+            config={donutConfig}
+            className="mx-auto aspect-square max-h-[360px] [&_.recharts-sector]:cursor-pointer [&_.recharts-sector]:transition-opacity [&_.recharts-sector]:duration-200 [&_.recharts-sector]:ease-out"
+          >
+            <PieChart>
+              <ChartTooltip
+                content={<ChartTooltipContent nameKey="name" hideLabel />}
+              />
+              <Pie
+                data={donutData}
+                dataKey="value"
+                nameKey="name"
+                innerRadius={80}
+                outerRadius={120}
+                paddingAngle={3}
+                cornerRadius={6}
+                strokeWidth={0}
+                onMouseEnter={(_, index) => {
+                  donutGrowRef.current = 0
+                  setDonutGrow(0)
+                  setDonutActive(index)
+                }}
+                onMouseLeave={() => setDonutActive(null)}
+                activeShape={(props) => (
+                  <Sector
+                    {...props}
+                    outerRadius={(props.outerRadius ?? 120) + donutGrow}
+                  />
+                )}
+                inactiveShape={{ opacity: 0.6 }}
+              >
+                {donutData.map((entry) => (
+                  <Cell key={entry.name} fill={entry.fill} />
+                ))}
+              </Pie>
+              <ChartLegend
+                content={<ChartLegendContent nameKey="name" />}
+                className="flex-wrap gap-x-4 gap-y-2"
+              />
+            </PieChart>
+          </ChartContainer>
+        </CardContent>
+      </Card>
     </div>
   )
 }
