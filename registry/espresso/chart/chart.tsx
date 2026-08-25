@@ -114,14 +114,7 @@ ${colorConfig
   )
 }
 
-// Default the tooltip's position animation off: with hover-driven re-renders
-// (e.g. fading non-active bars) the animated variant re-plays from the chart
-// origin (top-left) on every update. Callers can still override.
-function ChartTooltip(
-  props: React.ComponentProps<typeof RechartsPrimitive.Tooltip>
-) {
-  return <RechartsPrimitive.Tooltip isAnimationActive={false} {...props} />
-}
+const ChartTooltip = RechartsPrimitive.Tooltip
 
 function ChartTooltipContent({
   active,
