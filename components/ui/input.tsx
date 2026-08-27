@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
   [
-    "w-full min-w-0 leading-base font-normal tracking-normal text-secondary-foreground outline-none placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_52%)] dark:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_37%)] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] dark:data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)] dark:data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)]",
+    "w-full min-w-0 leading-base font-normal tracking-normal text-secondary-foreground outline-none focus-visible:ring-2 focus-visible:ring-[rgba(201,201,201,0.9)] placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_52%)] dark:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_37%)] data-disabled:pointer-events-none data-disabled:cursor-not-allowed data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] dark:data-disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)] dark:data-disabled:placeholder:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)]",
   ],
   {
     variants: {
