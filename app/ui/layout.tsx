@@ -500,12 +500,22 @@ function UISidebar() {
 }
 
 export default function UILayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const activeComponent =
+    components.find((item) => item.href === pathname)?.label ?? "Components"
+
   return (
     <SidebarProvider>
       <UISidebar />
-      <SidebarInset className="relative h-screen min-w-0 overflow-hidden">
-        <SidebarTrigger className="absolute top-3 right-3 z-50 md:hidden" />
-        <main className="scrollbar-hide h-full min-h-0 min-w-0 flex-1 overflow-auto">
+      <SidebarInset className="relative flex h-screen min-w-0 flex-col overflow-hidden">
+        {/* Mobile-only header: sidebar toggle left, component name centered. */}
+        <header className="relative flex h-12 shrink-0 items-center border-b border-border-soft bg-background px-2 md:hidden">
+          <SidebarTrigger />
+          <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-base font-medium text-foreground">
+            {activeComponent}
+          </span>
+        </header>
+        <main className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto">
           {children}
         </main>
         <Toaster />
