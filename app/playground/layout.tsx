@@ -67,6 +67,14 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 
 const quickLinks = [
   { label: "Home", href: "#", icon: Home },
@@ -88,6 +96,13 @@ const teams = [
 ]
 
 const components = [
+  { label: "Avatar", href: "/playground/avatar", icon: User },
+  { label: "Button", href: "/playground/button", icon: Asterisk },
+]
+
+// Top-level destinations for the mobile bottom nav (below `md`).
+const mobileNav = [
+  { label: "Home", href: "/playground", icon: Home },
   { label: "Avatar", href: "/playground/avatar", icon: User },
   { label: "Button", href: "/playground/button", icon: Asterisk },
 ]
@@ -410,6 +425,40 @@ export default function PlaygroundLayout({
 }: {
   children: React.ReactNode
 }) {
+  const isMobile = useIsMobile()
+  const pathname = usePathname()
+
+  // Below `md`, use the mobile shell (bottom nav) instead of the sidebar —
+  // mobile and desktop are different navigation models, not one responsive
+  // component. See DesktopShell vs MobileShell in frappe-ui.
+  if (isMobile) {
+    const activeLabel =
+      mobileNav.find((item) => item.href === pathname)?.label ?? "Playground"
+
+    return (
+      <MobileShell>
+        <MobileShellHeader>
+          <span className="text-base font-medium text-foreground">
+            {activeLabel}
+          </span>
+        </MobileShellHeader>
+        <MobileShellContent>{children}</MobileShellContent>
+        <MobileNav>
+          {mobileNav.map((item) => (
+            <MobileNavItem
+              key={item.href}
+              label={item.label}
+              icon={<item.icon />}
+              href={item.href}
+              active={pathname === item.href}
+            />
+          ))}
+        </MobileNav>
+        <Toaster />
+      </MobileShell>
+    )
+  }
+
   return (
     <SidebarProvider>
       <PlaygroundSidebar />

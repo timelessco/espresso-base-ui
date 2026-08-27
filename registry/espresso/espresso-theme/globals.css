@@ -1416,8 +1416,8 @@
 button:not([data-slot="tabs-trigger"]) {
   transition:
     transform 0.25s ease,
-    background-color 0.1s cubic-bezier(0, 0, 0.2, 1),
-    box-shadow 0.1s cubic-bezier(0, 0, 0.2, 1);
+    background-color 0.2s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1);
 }
 
 button:not([data-slot="tabs-trigger"]):active,
@@ -1429,8 +1429,8 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
 [data-slot="sidebar-menu-button"] {
   transition:
     transform 0.25s ease,
-    background-color 0.1s cubic-bezier(0, 0, 0.2, 1),
-    box-shadow 0.1s cubic-bezier(0, 0, 0.2, 1);
+    background-color 0.2s cubic-bezier(0, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0, 0, 0.2, 1);
 }
 
 [data-slot="sidebar-menu-sub-button"]:active,
