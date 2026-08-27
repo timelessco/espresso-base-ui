@@ -743,7 +743,7 @@ export default function GameplanPage() {
         />
 
         <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
-          <div className="[&>[data-slot=table-container]]:overflow-visible">
+          <div className="md:[&>[data-slot=table-container]]:overflow-visible">
             <Table
               className="table-fixed"
               style={{
@@ -863,7 +863,7 @@ export default function GameplanPage() {
             </Drawer>
           </div>
         </MobileShellHeader>
-        <MobileShellContent className="flex flex-col overflow-hidden">
+        <MobileShellContent>
           {content}
         </MobileShellContent>
         <MobileNav>
