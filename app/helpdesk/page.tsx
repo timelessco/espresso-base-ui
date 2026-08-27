@@ -121,6 +121,14 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 
 const statusColors: Record<string, string> = {
   New: "#3B82F6",
@@ -1097,266 +1105,324 @@ export default function HelpdeskPage() {
     columnResizeMode: "onChange",
   })
 
+  // Below `md` the page renders in a MobileShell (bottom nav) instead of the
+  // sidebar layout — two navigation models, chosen by viewport.
+  const isMobile = useIsMobile()
+  const [mobileTab, setMobileTab] = useState("tickets")
+
+  const header = (
+    <Header
+      leftControls={
+        <>
+          <SidebarTrigger className="md:hidden" />
+          <Breadcrumb size="md">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage>Tickets</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
+      }
+      rightControls={
+        <Button size="sm">
+          <Plus />
+          New Ticket
+        </Button>
+      }
+    />
+  )
+
+  const content = (
+    <>
+      <SubHeader
+        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        leftControls={
+          <div className="relative">
+            <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder='Try "first due" or ticket type'
+              className="h-7 w-64 pl-8 text-sm"
+            />
+          </div>
+        }
+        rightControls={
+          <>
+            <Button variant="secondary" size="icon-sm">
+              <RefreshCw className="size-4" />
+            </Button>
+
+            <Select
+              items={[
+                { label: "Title", value: "title" },
+                { label: "Id", value: "id" },
+                { label: "Status", value: "status" },
+                { label: "Priority", value: "priority" },
+              ]}
+              defaultValue="title"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Title", value: "title" },
+                      { label: "Id", value: "id" },
+                      { label: "Status", value: "status" },
+                      { label: "Priority", value: "priority" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <ListFilter className="size-4" />
+                        {item?.label ?? "Title"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="title">Title</SelectItem>
+                  <SelectItem value="id">Id</SelectItem>
+                  <SelectItem value="status">Status</SelectItem>
+                  <SelectItem value="priority">Priority</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Name", value: "name" },
+                { label: "Assignee", value: "assignee" },
+                { label: "Customer", value: "customer" },
+              ]}
+              defaultValue="name"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="assignee">Assignee</SelectItem>
+                  <SelectItem value="customer">Customer</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Column", value: "column" },
+                { label: "Id", value: "id" },
+                { label: "Ticket", value: "ticket" },
+                { label: "Status", value: "status" },
+                { label: "First due", value: "first-due" },
+                { label: "Resolution", value: "resolution" },
+                { label: "Priority", value: "priority" },
+                { label: "Type", value: "type" },
+                { label: "Assignee", value: "assignee" },
+                { label: "Team", value: "team" },
+                { label: "Customer", value: "customer" },
+              ]}
+              defaultValue="column"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Column", value: "column" },
+                      { label: "Id", value: "id" },
+                      { label: "Ticket", value: "ticket" },
+                      { label: "Status", value: "status" },
+                      { label: "First due", value: "first-due" },
+                      { label: "Resolution", value: "resolution" },
+                      { label: "Priority", value: "priority" },
+                      { label: "Type", value: "type" },
+                      { label: "Assignee", value: "assignee" },
+                      { label: "Team", value: "team" },
+                      { label: "Customer", value: "customer" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <Columns3 className="size-4" />
+                        {item?.label ?? "Column"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="column">Column</SelectItem>
+                  <SelectItem value="id">Id</SelectItem>
+                  <SelectItem value="ticket">Ticket</SelectItem>
+                  <SelectItem value="status">Status</SelectItem>
+                  <SelectItem value="first-due">First due</SelectItem>
+                  <SelectItem value="resolution">Resolution</SelectItem>
+                  <SelectItem value="priority">Priority</SelectItem>
+                  <SelectItem value="type">Type</SelectItem>
+                  <SelectItem value="assignee">Assignee</SelectItem>
+                  <SelectItem value="team">Team</SelectItem>
+                  <SelectItem value="customer">Customer</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </>
+        }
+      />
+
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+        <div className="[&>[data-slot=table-container]]:overflow-visible">
+          <Table
+            className="table-fixed"
+            style={{
+              width: Math.max(table.getTotalSize(), 0),
+              minWidth: "100%",
+            }}
+          >
+            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="relative"
+                      style={{ width: header.getSize() }}
+                    >
+                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        <div
+                          className="flex cursor-pointer items-center gap-1 select-none"
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <ArrowUp className="size-3.5" />,
+                            desc: <ArrowDown className="size-3.5" />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      ) : (
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )
+                      )}
+                      {header.column.getCanResize() && (
+                        <div
+                          onDoubleClick={() => header.column.resetSize()}
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                            header.column.getIsResizing()
+                              ? "opacity-100 before:bg-primary"
+                              : "opacity-0 before:bg-border"
+                          }`}
+                        />
+                      )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+        <Tabs defaultValue="20">
+          <TabsList>
+            <TabsIndicator />
+            <TabsTrigger value="20">20</TabsTrigger>
+            <TabsTrigger value="50">50</TabsTrigger>
+            <TabsTrigger value="80">80</TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <span className="text-base text-muted-foreground">18 of 32</span>
+      </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader className="justify-between">
+          <span className="text-base font-medium text-foreground">Tickets</span>
+          <Button size="sm">
+            <Plus />
+            New Ticket
+          </Button>
+        </MobileShellHeader>
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Tickets"
+            icon={<Ticket />}
+            active={mobileTab === "tickets"}
+            onClick={() => setMobileTab("tickets")}
+          />
+          <MobileNavItem
+            label="Knowledge"
+            icon={<BookOpen />}
+            active={mobileTab === "knowledge-base"}
+            onClick={() => setMobileTab("knowledge-base")}
+          />
+          <MobileNavItem
+            label="Customers"
+            icon={<Users />}
+            active={mobileTab === "customers"}
+            onClick={() => setMobileTab("customers")}
+          />
+          <MobileNavItem
+            label="Contacts"
+            icon={<Contact />}
+            active={mobileTab === "contacts"}
+            onClick={() => setMobileTab("contacts")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
   return (
     <SidebarProvider>
       <HelpdeskSidebar />
       <SidebarInset className="h-screen min-w-0 overflow-hidden">
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
-          <Header
-            leftControls={
-              <>
-                <SidebarTrigger className="md:hidden" />
-                <Breadcrumb size="md">
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Tickets</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-              </>
-            }
-            rightControls={
-              <Button size="sm">
-                <Plus />
-                New Ticket
-              </Button>
-            }
-          />
-          <SubHeader
-            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
-            leftControls={
-              <div className="relative">
-                <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder='Try "first due" or ticket type'
-                  className="h-7 w-64 pl-8 text-sm"
-                />
-              </div>
-            }
-            rightControls={
-              <>
-                <Button variant="secondary" size="icon-sm">
-                  <RefreshCw className="size-4" />
-                </Button>
-
-                <Select
-                  items={[
-                    { label: "Title", value: "title" },
-                    { label: "Id", value: "id" },
-                    { label: "Status", value: "status" },
-                    { label: "Priority", value: "priority" },
-                  ]}
-                  defaultValue="title"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Title", value: "title" },
-                          { label: "Id", value: "id" },
-                          { label: "Status", value: "status" },
-                          { label: "Priority", value: "priority" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ListFilter className="size-4" />
-                            {item?.label ?? "Title"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="title">Title</SelectItem>
-                      <SelectItem value="id">Id</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                      <SelectItem value="priority">Priority</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Name", value: "name" },
-                    { label: "Assignee", value: "assignee" },
-                    { label: "Customer", value: "customer" },
-                  ]}
-                  defaultValue="name"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="name">Name</SelectItem>
-                      <SelectItem value="assignee">Assignee</SelectItem>
-                      <SelectItem value="customer">Customer</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Column", value: "column" },
-                    { label: "Id", value: "id" },
-                    { label: "Ticket", value: "ticket" },
-                    { label: "Status", value: "status" },
-                    { label: "First due", value: "first-due" },
-                    { label: "Resolution", value: "resolution" },
-                    { label: "Priority", value: "priority" },
-                    { label: "Type", value: "type" },
-                    { label: "Assignee", value: "assignee" },
-                    { label: "Team", value: "team" },
-                    { label: "Customer", value: "customer" },
-                  ]}
-                  defaultValue="column"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Column", value: "column" },
-                          { label: "Id", value: "id" },
-                          { label: "Ticket", value: "ticket" },
-                          { label: "Status", value: "status" },
-                          { label: "First due", value: "first-due" },
-                          { label: "Resolution", value: "resolution" },
-                          { label: "Priority", value: "priority" },
-                          { label: "Type", value: "type" },
-                          { label: "Assignee", value: "assignee" },
-                          { label: "Team", value: "team" },
-                          { label: "Customer", value: "customer" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <Columns3 className="size-4" />
-                            {item?.label ?? "Column"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="column">Column</SelectItem>
-                      <SelectItem value="id">Id</SelectItem>
-                      <SelectItem value="ticket">Ticket</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                      <SelectItem value="first-due">First due</SelectItem>
-                      <SelectItem value="resolution">Resolution</SelectItem>
-                      <SelectItem value="priority">Priority</SelectItem>
-                      <SelectItem value="type">Type</SelectItem>
-                      <SelectItem value="assignee">Assignee</SelectItem>
-                      <SelectItem value="team">Team</SelectItem>
-                      <SelectItem value="customer">Customer</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </>
-            }
-          />
-
-          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
-            <div className="[&>[data-slot=table-container]]:overflow-visible">
-              <Table
-                className="table-fixed"
-                style={{
-                  width: Math.max(table.getTotalSize(), 0),
-                  minWidth: "100%",
-                }}
-              >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead
-                          key={header.id}
-                          className="relative"
-                          style={{ width: header.getSize() }}
-                        >
-                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                            <div
-                              className="flex cursor-pointer items-center gap-1 select-none"
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: <ArrowUp className="size-3.5" />,
-                                desc: <ArrowDown className="size-3.5" />,
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          ) : (
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                          )}
-                          {header.column.getCanResize() && (
-                            <div
-                              onDoubleClick={() => header.column.resetSize()}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                                header.column.getIsResizing()
-                                  ? "opacity-100 before:bg-primary"
-                                  : "opacity-0 before:bg-border"
-                              }`}
-                            />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
-            <Tabs defaultValue="20">
-              <TabsList>
-                <TabsIndicator />
-                <TabsTrigger value="20">20</TabsTrigger>
-                <TabsTrigger value="50">50</TabsTrigger>
-                <TabsTrigger value="80">80</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            <span className="text-base text-muted-foreground">18 of 32</span>
-          </div>
+          {header}
+          {content}
         </div>
       </SidebarInset>
     </SidebarProvider>

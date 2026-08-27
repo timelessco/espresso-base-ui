@@ -115,6 +115,14 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -1163,271 +1171,326 @@ export default function MailPage() {
     columnResizeMode: "onChange",
   })
 
+  // Below `md` the page renders in a MobileShell (bottom nav) instead of the
+  // sidebar layout — two navigation models, chosen by viewport.
+  const isMobile = useIsMobile()
+  const [mobileTab, setMobileTab] = useState("inbox")
+
+  const header = (
+    <Header
+      className="scrollbar-hide relative overflow-x-auto border-b-0 py-0 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border-soft after:content-[''] [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
+      leftControls={
+        <>
+          <SidebarTrigger className="md:hidden" />
+          <Breadcrumb size="md">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage>Inbox</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
+      }
+      centerControls={
+        <Tabs defaultValue="primary" className="relative z-10">
+          <TabsList
+            variant="line"
+            className="py-2.25 group-data-horizontal/tabs:h-auto"
+          >
+            <TabsIndicator />
+            <TabsTrigger value="primary">
+              Primary{" "}
+              <Badge variant="secondary" size="md">
+                24
+              </Badge>
+            </TabsTrigger>
+            <TabsTrigger value="updates">Updates</TabsTrigger>
+            <TabsTrigger value="social">Social</TabsTrigger>
+            <TabsTrigger value="promotions">Promotions</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      }
+      rightControls={
+        <>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="text-muted-foreground"
+          >
+            <Search className="size-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="text-muted-foreground"
+          >
+            <Workflow className="size-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="text-muted-foreground"
+          >
+            <Grid3X3 className="size-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="text-muted-foreground"
+          >
+            <Sparkles className="size-4" />
+          </Button>
+          <Button size="sm">
+            <Pencil className="size-4" />
+            Compose
+          </Button>
+        </>
+      }
+    />
+  )
+
+  const content = (
+    <>
+      <SubHeader
+        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        leftControls={
+          <>
+            <Checkbox />
+            <Button variant="outline" size="sm">
+              <CheckCircle2 className="size-3" />
+              Has attachment
+            </Button>
+            <Button variant="outline" size="sm">
+              <CheckCircle2 className="size-3" />
+              Image
+            </Button>
+            <Button variant="outline" size="sm">
+              PDF
+            </Button>
+            <Select
+              items={[
+                { label: "From", value: "from" },
+                { label: "Anyone", value: "anyone" },
+                { label: "Me", value: "me" },
+              ]}
+              defaultValue="from"
+            >
+              <SelectTrigger
+                variant="outline"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="from">From</SelectItem>
+                  <SelectItem value="anyone">Anyone</SelectItem>
+                  <SelectItem value="me">Me</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Any time", value: "anytime" },
+                { label: "Today", value: "today" },
+                { label: "This week", value: "week" },
+                { label: "This month", value: "month" },
+                { label: "This year", value: "year" },
+              ]}
+              defaultValue="anytime"
+            >
+              <SelectTrigger
+                variant="outline"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="anytime">Any time</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">This week</SelectItem>
+                  <SelectItem value="month">This month</SelectItem>
+                  <SelectItem value="year">This year</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "To", value: "to" },
+                { label: "Me", value: "me-to" },
+                { label: "Anyone", value: "anyone-to" },
+              ]}
+              defaultValue="to"
+            >
+              <SelectTrigger
+                variant="outline"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="to">To</SelectItem>
+                  <SelectItem value="me-to">Me</SelectItem>
+                  <SelectItem value="anyone-to">Anyone</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" size="sm">
+              Is unread
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-blue-600 hover:text-blue-700"
+            >
+              Advanced search
+            </Button>
+          </>
+        }
+        rightControls={
+          <span className="text-xs text-muted-foreground">1-50 of 2,000</span>
+        }
+      />
+
+      {/* Email list */}
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto pb-5">
+        <div className="[&>[data-slot=table-container]]:overflow-visible">
+          <Table
+            className="table-fixed"
+            style={{
+              width: Math.max(table.getTotalSize(), 0),
+              minWidth: "100%",
+            }}
+          >
+            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header, index) => (
+                    <TableHead
+                      key={header.id}
+                      className={`relative ${index === 0 ? "px-5" : ""}`}
+                      style={{ width: header.getSize() }}
+                    >
+                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        <div
+                          className="flex cursor-pointer items-center gap-1 select-none"
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <ArrowUp className="size-3.5" />,
+                            desc: <ArrowDown className="size-3.5" />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      ) : (
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )
+                      )}
+                      {header.column.getCanResize() && (
+                        <div
+                          onDoubleClick={() => header.column.resetSize()}
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                            header.column.getIsResizing()
+                              ? "opacity-100 before:bg-primary"
+                              : "opacity-0 before:bg-border"
+                          }`}
+                        />
+                      )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  className="cursor-pointer [&>*:first-child]:rounded-l-none [&>*:last-child]:rounded-r-none"
+                >
+                  {row.getVisibleCells().map((cell, index) => (
+                    <TableCell
+                      key={cell.id}
+                      className={index === 0 ? "pl-5" : ""}
+                      style={{ width: cell.column.getSize() }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader className="justify-between">
+          <span className="text-base font-medium text-foreground">Inbox</span>
+          <Button size="sm">
+            <Pencil className="size-4" />
+            Compose
+          </Button>
+        </MobileShellHeader>
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Inbox"
+            icon={<Inbox />}
+            active={mobileTab === "inbox"}
+            onClick={() => setMobileTab("inbox")}
+          />
+          <MobileNavItem
+            label="Starred"
+            icon={<Star />}
+            active={mobileTab === "starred"}
+            onClick={() => setMobileTab("starred")}
+          />
+          <MobileNavItem
+            label="Sent"
+            icon={<Send />}
+            active={mobileTab === "sent"}
+            onClick={() => setMobileTab("sent")}
+          />
+          <MobileNavItem
+            label="Drafts"
+            icon={<FileText />}
+            active={mobileTab === "drafts"}
+            onClick={() => setMobileTab("drafts")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
   return (
     <SidebarProvider>
       <MailSidebar />
       <SidebarInset className="h-screen min-w-0 overflow-hidden">
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
-          <Header
-            className="scrollbar-hide relative overflow-x-auto border-b-0 py-0 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border-soft after:content-[''] [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
-            leftControls={
-              <>
-                <SidebarTrigger className="md:hidden" />
-                <Breadcrumb size="md">
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>Inbox</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-              </>
-            }
-            centerControls={
-              <Tabs defaultValue="primary" className="relative z-10">
-                <TabsList
-                  variant="line"
-                  className="py-2.25 group-data-horizontal/tabs:h-auto"
-                >
-                  <TabsIndicator />
-                  <TabsTrigger value="primary">
-                    Primary{" "}
-                    <Badge variant="secondary" size="md">
-                      24
-                    </Badge>
-                  </TabsTrigger>
-                  <TabsTrigger value="updates">Updates</TabsTrigger>
-                  <TabsTrigger value="social">Social</TabsTrigger>
-                  <TabsTrigger value="promotions">Promotions</TabsTrigger>
-                </TabsList>
-              </Tabs>
-            }
-            rightControls={
-              <>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-muted-foreground"
-                >
-                  <Search className="size-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-muted-foreground"
-                >
-                  <Workflow className="size-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-muted-foreground"
-                >
-                  <Grid3X3 className="size-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  className="text-muted-foreground"
-                >
-                  <Sparkles className="size-4" />
-                </Button>
-                <Button size="sm">
-                  <Pencil className="size-4" />
-                  Compose
-                </Button>
-              </>
-            }
-          />
-
-          <SubHeader
-            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
-            leftControls={
-              <>
-                <Checkbox />
-                <Button variant="outline" size="sm">
-                  <CheckCircle2 className="size-3" />
-                  Has attachment
-                </Button>
-                <Button variant="outline" size="sm">
-                  <CheckCircle2 className="size-3" />
-                  Image
-                </Button>
-                <Button variant="outline" size="sm">
-                  PDF
-                </Button>
-                <Select
-                  items={[
-                    { label: "From", value: "from" },
-                    { label: "Anyone", value: "anyone" },
-                    { label: "Me", value: "me" },
-                  ]}
-                  defaultValue="from"
-                >
-                  <SelectTrigger
-                    variant="outline"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="from">From</SelectItem>
-                      <SelectItem value="anyone">Anyone</SelectItem>
-                      <SelectItem value="me">Me</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Any time", value: "anytime" },
-                    { label: "Today", value: "today" },
-                    { label: "This week", value: "week" },
-                    { label: "This month", value: "month" },
-                    { label: "This year", value: "year" },
-                  ]}
-                  defaultValue="anytime"
-                >
-                  <SelectTrigger
-                    variant="outline"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="anytime">Any time</SelectItem>
-                      <SelectItem value="today">Today</SelectItem>
-                      <SelectItem value="week">This week</SelectItem>
-                      <SelectItem value="month">This month</SelectItem>
-                      <SelectItem value="year">This year</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "To", value: "to" },
-                    { label: "Me", value: "me-to" },
-                    { label: "Anyone", value: "anyone-to" },
-                  ]}
-                  defaultValue="to"
-                >
-                  <SelectTrigger
-                    variant="outline"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="to">To</SelectItem>
-                      <SelectItem value="me-to">Me</SelectItem>
-                      <SelectItem value="anyone-to">Anyone</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Button variant="outline" size="sm">
-                  Is unread
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-blue-600 hover:text-blue-700"
-                >
-                  Advanced search
-                </Button>
-              </>
-            }
-            rightControls={
-              <span className="text-xs text-muted-foreground">
-                1-50 of 2,000
-              </span>
-            }
-          />
-
-          {/* Email list */}
-          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto pb-5">
-            <div className="[&>[data-slot=table-container]]:overflow-visible">
-              <Table
-                className="table-fixed"
-                style={{
-                  width: Math.max(table.getTotalSize(), 0),
-                  minWidth: "100%",
-                }}
-              >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header, index) => (
-                        <TableHead
-                          key={header.id}
-                          className={`relative ${index === 0 ? "px-5" : ""}`}
-                          style={{ width: header.getSize() }}
-                        >
-                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                            <div
-                              className="flex cursor-pointer items-center gap-1 select-none"
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: <ArrowUp className="size-3.5" />,
-                                desc: <ArrowDown className="size-3.5" />,
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          ) : (
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                          )}
-                          {header.column.getCanResize() && (
-                            <div
-                              onDoubleClick={() => header.column.resetSize()}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                                header.column.getIsResizing()
-                                  ? "opacity-100 before:bg-primary"
-                                  : "opacity-0 before:bg-border"
-                              }`}
-                            />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      className="cursor-pointer [&>*:first-child]:rounded-l-none [&>*:last-child]:rounded-r-none"
-                    >
-                      {row.getVisibleCells().map((cell, index) => (
-                        <TableCell
-                          key={cell.id}
-                          className={index === 0 ? "pl-5" : ""}
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
+          {header}
+          {content}
         </div>
       </SidebarInset>
     </SidebarProvider>

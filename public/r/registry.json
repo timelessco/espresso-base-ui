@@ -224,6 +224,25 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "Swipeable drawer with snap points, built on Base UI.",
+      "dependencies": [
+        "@base-ui/react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/drawer/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "dropdown-menu",
       "type": "registry:ui",
       "title": "Dropdown Menu",

@@ -45,6 +45,7 @@ import {
   MessageSquare,
   MessagesSquare,
   Moon,
+  PanelBottom,
   PanelLeft,
   PanelRight,
   PanelTop,
@@ -53,6 +54,7 @@ import {
   Radio,
   Search,
   SlidersHorizontal,
+  Smartphone,
   SquareCheckBig,
   SquareDashed,
   Star,
@@ -145,6 +147,7 @@ const components = [
   { label: "Command", href: "/ui/command", icon: SquareDashed },
   { label: "Dialog", href: "/ui/dialog", icon: AppWindow },
   { label: "Divider", href: "/ui/separator", icon: Divide },
+  { label: "Drawer", href: "/ui/drawer", icon: PanelBottom },
   { label: "Dropdown Menu", href: "/ui/dropdown-menu", icon: ChevronDown },
   { label: "Empty", href: "/ui/empty", icon: Box },
   { label: "Field", href: "/ui/field", icon: FormInput },
@@ -162,6 +165,7 @@ const components = [
     href: "/ui/message-scroller",
     icon: MessagesSquare,
   },
+  { label: "Mobile Shell", href: "/ui/mobile-shell", icon: Smartphone },
   { label: "Notification", href: "/ui/notification", icon: BellRing },
   { label: "Popover", href: "/ui/popover", icon: MessageCircle },
   { label: "Progress Bar", href: "/ui/progress", icon: LoaderCircle },
@@ -496,12 +500,22 @@ function UISidebar() {
 }
 
 export default function UILayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const activeComponent =
+    components.find((item) => item.href === pathname)?.label ?? "Components"
+
   return (
     <SidebarProvider>
       <UISidebar />
-      <SidebarInset className="relative h-screen min-w-0 overflow-hidden">
-        <SidebarTrigger className="absolute top-3 right-3 z-50 md:hidden" />
-        <main className="scrollbar-hide h-full min-h-0 min-w-0 flex-1 overflow-auto">
+      <SidebarInset className="relative flex h-screen min-w-0 flex-col overflow-hidden">
+        {/* Mobile-only header: sidebar toggle left, component name centered. */}
+        <header className="relative flex h-12 shrink-0 items-center border-b border-border-soft bg-background px-2 md:hidden">
+          <SidebarTrigger />
+          <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 text-base font-medium text-foreground">
+            {activeComponent}
+          </span>
+        </header>
+        <main className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto">
           {children}
         </main>
         <Toaster />
