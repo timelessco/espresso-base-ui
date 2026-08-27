@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { DocsSearch } from "./_components/docs-search"
+import { DocsToc } from "./_components/docs-toc"
 import { docsComponents } from "./_components/nav"
 
 function ThemeToggle() {
@@ -123,9 +124,17 @@ export default function DocsLayout({
             <ThemeToggle />
           </div>
         </header>
-        <main className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto">
-          {children}
-        </main>
+        <div className="flex min-h-0 flex-1">
+          <main
+            id="docs-scroll-container"
+            className="scrollbar-hide min-h-0 min-w-0 flex-1 overflow-auto"
+          >
+            {children}
+          </main>
+          <div className="hidden xl:block">
+            <DocsToc />
+          </div>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

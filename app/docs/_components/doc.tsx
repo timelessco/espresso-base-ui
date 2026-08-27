@@ -33,6 +33,13 @@ function DocHeader({
   )
 }
 
+function slugify(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+}
+
 function DocSection({
   title,
   children,
@@ -41,7 +48,12 @@ function DocSection({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col gap-3">
+    <section
+      id={slugify(title)}
+      data-doc-section=""
+      data-doc-title={title}
+      className="flex scroll-mt-6 flex-col gap-3"
+    >
       <h2 className="text-xl font-medium text-foreground">{title}</h2>
       {children}
     </section>
