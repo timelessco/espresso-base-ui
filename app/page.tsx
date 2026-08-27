@@ -8,12 +8,11 @@ import { ArrowUpRight, Monitor, Moon, Smartphone, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Tabs,
+  TabsIndicator,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs"
 
 // Dashboards shown on the home page. Add more entries as demos are built.
 const demos = [
@@ -22,11 +21,6 @@ const demos = [
   { name: "Drive", href: "/drive" },
   { name: "Mail", href: "/mail" },
   { name: "Gameplan", href: "/gameplan" },
-]
-
-const viewports = [
-  { label: "Desktop", value: "desktop", icon: Monitor },
-  { label: "Mobile", value: "mobile", icon: Smartphone },
 ]
 
 function SiteHeader({ scrolled }: { scrolled: boolean }) {
@@ -48,10 +42,10 @@ function SiteHeader({ scrolled }: { scrolled: boolean }) {
         </span>
         <div className="flex items-center gap-1">
           <Button
-            variant="ghost"
+            variant="secondary"
             size="sm"
             nativeButton={false}
-            render={<Link href="/docs">Docs</Link>}
+            render={<Link href="/docs/components/avatar">Docs</Link>}
           />
           <Button
             variant="ghost"
@@ -113,22 +107,20 @@ function DemoViewer({ name, href }: { name: string; href: string }) {
           <ArrowUpRight className="size-4 text-muted-foreground transition-colors group-hover:text-foreground" />
         </a>
 
-        <Select
-          items={viewports}
+        <Tabs
           value={viewport}
           onValueChange={(value) => setViewport(value as string)}
         >
-          <SelectTrigger variant="subtle" size="md">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent align="end">
-            {viewports.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          <TabsList size="sm">
+            <TabsTrigger value="desktop" aria-label="Desktop view">
+              <Monitor />
+            </TabsTrigger>
+            <TabsTrigger value="mobile" aria-label="Mobile view">
+              <Smartphone />
+            </TabsTrigger>
+            <TabsIndicator />
+          </TabsList>
+        </Tabs>
       </div>
 
       {/* Constant-size block: desktop fills it; mobile floats a phone frame

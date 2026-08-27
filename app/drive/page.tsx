@@ -1019,29 +1019,6 @@ export default function DrivePage() {
           {content}
         </div>
       </SidebarInset>
-      <aside className="flex w-12 shrink-0 flex-col items-center gap-3 border-l border-border-soft bg-background py-4">
-        <Button
-          variant="ghost"
-          size="icon-xs"
-          className="text-muted-foreground"
-        >
-          <InfoIcon className="size-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-xs"
-          className="text-muted-foreground"
-        >
-          <MessageCircle className="size-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon-xs"
-          className="text-muted-foreground"
-        >
-          <History className="size-4" />
-        </Button>
-      </aside>
     </SidebarProvider>
   )
 }
