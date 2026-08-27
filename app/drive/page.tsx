@@ -113,6 +113,14 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -731,171 +739,232 @@ export default function DrivePage() {
     columnResizeMode: "onChange",
   })
 
+  // Below `md` the page renders in a MobileShell (bottom nav) instead of the
+  // sidebar layout — two navigation models, chosen by viewport.
+  const isMobile = useIsMobile()
+  const [mobileTab, setMobileTab] = useState("home")
+
+  const header = (
+    <Header
+      leftControls={
+        <>
+          <SidebarTrigger className="md:hidden" />
+          <Breadcrumb size="md">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage>My Drive</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
+      }
+      rightControls={
+        <Button size="sm">
+          <Upload />
+          Upload
+          <ChevronDown className="size-4" />
+        </Button>
+      }
+    />
+  )
+
+  const content = (
+    <>
+      <SubHeader
+        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        leftControls={
+          <span className="text-sm font-medium text-foreground">All</span>
+        }
+        rightControls={
+          <>
+            <Select
+              items={[
+                { label: "Open", value: "open" },
+                { label: "Preview", value: "preview" },
+                { label: "Download", value: "download" },
+              ]}
+              defaultValue="open"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Open", value: "open" },
+                      { label: "Preview", value: "preview" },
+                      { label: "Download", value: "download" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <ArrowUpDown className="size-4" />
+                        {item?.label ?? "Open"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="open">Open</SelectItem>
+                  <SelectItem value="preview">Preview</SelectItem>
+                  <SelectItem value="download">Download</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button variant="secondary" size="icon-sm">
+              <Search className="size-4" />
+            </Button>
+            <Tabs defaultValue="list">
+              <TabsList>
+                <TabsIndicator />
+                <TabsTrigger value="grid">
+                  <LayoutGrid className="size-4" />
+                </TabsTrigger>
+                <TabsTrigger value="list">
+                  <AlignJustify className="size-4" />
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </>
+        }
+      />
+
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+        <div className="[&>[data-slot=table-container]]:overflow-visible">
+          <Table
+            className="table-fixed"
+            style={{
+              width: Math.max(table.getTotalSize(), 0),
+              minWidth: "100%",
+            }}
+          >
+            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="relative"
+                      style={{ width: header.getSize() }}
+                    >
+                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        <div
+                          className="flex cursor-pointer items-center gap-1 select-none"
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <ArrowUp className="size-3.5" />,
+                            desc: <ArrowDown className="size-3.5" />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      ) : (
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )
+                      )}
+                      {header.column.getCanResize() && (
+                        <div
+                          onDoubleClick={() => header.column.resetSize()}
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                            header.column.getIsResizing()
+                              ? "opacity-100 before:bg-primary"
+                              : "opacity-0 before:bg-border"
+                          }`}
+                        />
+                      )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader className="justify-between">
+          <span className="text-base font-medium text-foreground">
+            My Drive
+          </span>
+          <Button size="sm">
+            <Upload />
+            Upload
+            <ChevronDown className="size-4" />
+          </Button>
+        </MobileShellHeader>
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Home"
+            icon={<Home />}
+            active={mobileTab === "home"}
+            onClick={() => setMobileTab("home")}
+          />
+          <MobileNavItem
+            label="Recents"
+            icon={<Clock />}
+            active={mobileTab === "recents"}
+            onClick={() => setMobileTab("recents")}
+          />
+          <MobileNavItem
+            label="Shared"
+            icon={<Share2 />}
+            active={mobileTab === "shared"}
+            onClick={() => setMobileTab("shared")}
+          />
+          <MobileNavItem
+            label="Trash"
+            icon={<Trash2 />}
+            active={mobileTab === "trash"}
+            onClick={() => setMobileTab("trash")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
   return (
     <SidebarProvider className="h-screen overflow-hidden">
       <DriveSidebar />
       <SidebarInset className="min-w-0 overflow-hidden">
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
-          <Header
-            leftControls={
-              <>
-                <SidebarTrigger className="md:hidden" />
-                <Breadcrumb size="md">
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbPage>My Drive</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-              </>
-            }
-            rightControls={
-              <Button size="sm">
-                <Upload />
-                Upload
-                <ChevronDown className="size-4" />
-              </Button>
-            }
-          />
-          <SubHeader
-            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
-            leftControls={
-              <span className="text-sm font-medium text-foreground">All</span>
-            }
-            rightControls={
-              <>
-                <Select
-                  items={[
-                    { label: "Open", value: "open" },
-                    { label: "Preview", value: "preview" },
-                    { label: "Download", value: "download" },
-                  ]}
-                  defaultValue="open"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Open", value: "open" },
-                          { label: "Preview", value: "preview" },
-                          { label: "Download", value: "download" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ArrowUpDown className="size-4" />
-                            {item?.label ?? "Open"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="open">Open</SelectItem>
-                      <SelectItem value="preview">Preview</SelectItem>
-                      <SelectItem value="download">Download</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Button variant="secondary" size="icon-sm">
-                  <Search className="size-4" />
-                </Button>
-                <Tabs defaultValue="list">
-                  <TabsList>
-                    <TabsIndicator />
-                    <TabsTrigger value="grid">
-                      <LayoutGrid className="size-4" />
-                    </TabsTrigger>
-                    <TabsTrigger value="list">
-                      <AlignJustify className="size-4" />
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </>
-            }
-          />
-
-          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
-            <div className="[&>[data-slot=table-container]]:overflow-visible">
-              <Table
-                className="table-fixed"
-                style={{
-                  width: Math.max(table.getTotalSize(), 0),
-                  minWidth: "100%",
-                }}
-              >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead
-                          key={header.id}
-                          className="relative"
-                          style={{ width: header.getSize() }}
-                        >
-                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                            <div
-                              className="flex cursor-pointer items-center gap-1 select-none"
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: <ArrowUp className="size-3.5" />,
-                                desc: <ArrowDown className="size-3.5" />,
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          ) : (
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                          )}
-                          {header.column.getCanResize() && (
-                            <div
-                              onDoubleClick={() => header.column.resetSize()}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                                header.column.getIsResizing()
-                                  ? "opacity-100 before:bg-primary"
-                                  : "opacity-0 before:bg-border"
-                              }`}
-                            />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
+          {header}
+          {content}
         </div>
       </SidebarInset>
       <aside className="flex w-12 shrink-0 flex-col items-center gap-3 border-l border-border-soft bg-background py-4">

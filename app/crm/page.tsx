@@ -132,6 +132,14 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 
 const views = [
   { label: "List view", value: "list-view", icon: AlignJustify },
@@ -1035,443 +1043,499 @@ export default function CrmPage() {
     columnResizeMode: "onChange",
   })
 
+  // Below `md` the page renders in a MobileShell (bottom nav) instead of the
+  // sidebar layout — two navigation models, chosen by viewport.
+  const isMobile = useIsMobile()
+  const [mobileTab, setMobileTab] = useState("leads")
+
+  const header = (
+    <Header
+      leftControls={
+        <>
+          <SidebarTrigger className="md:hidden" />
+          <Breadcrumb size="md">
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbItem>
+                <Select
+                  items={[...views, ...savedViews]}
+                  defaultValue="list-view"
+                >
+                  <SelectTrigger
+                    variant="ghost"
+                    size="sm"
+                    suffix={<ChevronDown />}
+                  >
+                    <SelectValue className="text-lg font-medium text-foreground" />
+                  </SelectTrigger>
+                  <SelectContent align="start">
+                    <SelectGroup>
+                      {views.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                      <SelectSeparator />
+                      {savedViews.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </>
+      }
+      rightControls={
+        <Button size="sm">
+          <Plus />
+          Create
+        </Button>
+      }
+    />
+  )
+
+  const content = (
+    <>
+      <SubHeader
+        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        leftControls={
+          <>
+            <Select
+              items={[
+                { label: "Lead owner", value: "lead-owner" },
+                { label: "Jenny Wilson", value: "jenny-wilson" },
+                { label: "Mariana Rodriguez", value: "mariana" },
+                { label: "Sophie Chen", value: "sophie-chen" },
+                { label: "David Lee", value: "david-lee" },
+              ]}
+              defaultValue="lead-owner"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="lead-owner">Lead owner</SelectItem>
+                  <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
+                  <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
+                  <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
+                  <SelectItem value="david-lee">David Lee</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select items={organisationItems} defaultValue="gumroad">
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  {organisationItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select items={statusItems} defaultValue="open">
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  {statusItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </>
+        }
+        rightControls={
+          <>
+            <Select
+              items={[
+                { label: "Column", value: "column" },
+                { label: "Name", value: "name" },
+                { label: "Organisation", value: "organisation" },
+                { label: "Start Date", value: "start-date" },
+                { label: "Status", value: "status" },
+                { label: "Email", value: "email" },
+                { label: "Mobile No", value: "mobile" },
+                { label: "Assigned To", value: "assigned" },
+              ]}
+              defaultValue="column"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const item = [
+                      { label: "Column", value: "column" },
+                      { label: "Name", value: "name" },
+                      { label: "Organisation", value: "organisation" },
+                      { label: "Start Date", value: "start-date" },
+                      { label: "Status", value: "status" },
+                      { label: "Email", value: "email" },
+                      { label: "Mobile No", value: "mobile" },
+                      { label: "Assigned To", value: "assigned" },
+                    ].find((i) => i.value === value)
+                    return (
+                      <>
+                        <Columns3 className="size-4" />
+                        {item?.label ?? "Column"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="column">Column</SelectItem>
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="organisation">Organisation</SelectItem>
+                  <SelectItem value="start-date">Start Date</SelectItem>
+                  <SelectItem value="status">Status</SelectItem>
+                  <SelectItem value="email">Email</SelectItem>
+                  <SelectItem value="mobile">Mobile No</SelectItem>
+                  <SelectItem value="assigned">Assigned To</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Group", value: "group" },
+                { label: "Options", value: "option-1" },
+                { label: "Options", value: "option-2" },
+                { label: "Options", value: "option-3" },
+              ]}
+              defaultValue="group"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Group", value: "group" },
+                      { label: "Options", value: "option-1" },
+                      { label: "Options", value: "option-2" },
+                      { label: "Options", value: "option-3" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <Group className="size-4" />
+                        {item?.label ?? "Group"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="group">Group</SelectItem>
+                  <SelectItem value="option-1">Options</SelectItem>
+                  <SelectItem value="option-2">Options</SelectItem>
+                  <SelectItem value="option-3">Options</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Filter", value: "filter" },
+                { label: "Title", value: "title" },
+                { label: "Priority", value: "priority" },
+                { label: "Start Date", value: "start-date" },
+                { label: "Reference Document Type", value: "ref-doc-type" },
+                { label: "Reference Doc", value: "ref-doc" },
+                { label: "Assigned To", value: "assigned" },
+                { label: "Status", value: "status" },
+              ]}
+              defaultValue="filter"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Filter", value: "filter" },
+                      { label: "Title", value: "title" },
+                      { label: "Priority", value: "priority" },
+                      { label: "Start Date", value: "start-date" },
+                      {
+                        label: "Reference Document Type",
+                        value: "ref-doc-type",
+                      },
+                      { label: "Reference Doc", value: "ref-doc" },
+                      { label: "Assigned To", value: "assigned" },
+                      { label: "Status", value: "status" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <ListFilter className="size-4" />
+                        {item?.label ?? "Filter"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="filter">Filter</SelectItem>
+                  <SelectItem value="title">Title</SelectItem>
+                  <SelectItem value="priority">Priority</SelectItem>
+                  <SelectItem value="start-date">Start Date</SelectItem>
+                  <SelectItem value="ref-doc-type">
+                    Reference Document Type
+                  </SelectItem>
+                  <SelectItem value="ref-doc">Reference Doc</SelectItem>
+                  <SelectItem value="assigned">Assigned To</SelectItem>
+                  <SelectItem value="status">Status</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              items={[
+                { label: "Sort", value: "short" },
+                { label: "Status", value: "status" },
+                { label: "Name", value: "name" },
+                { label: "Created", value: "created" },
+              ]}
+              defaultValue="short"
+            >
+              <SelectTrigger
+                variant="subtle"
+                size="sm"
+                suffix={<ChevronDown />}
+              >
+                <SelectValue>
+                  {(value) => {
+                    const items = [
+                      { label: "Sort", value: "short" },
+                      { label: "Status", value: "status" },
+                      { label: "Name", value: "name" },
+                      { label: "Created", value: "created" },
+                    ]
+                    const item = items.find((i) => i.value === value)
+                    return (
+                      <>
+                        <ArrowUpDown className="size-4" />
+                        {item?.label ?? "Sort"}
+                      </>
+                    )
+                  }}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false} align="start">
+                <SelectGroup>
+                  <SelectItem value="short">Sort</SelectItem>
+                  <SelectItem value="status">Status</SelectItem>
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="created">Created</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={<Button variant="secondary" size="icon-sm" />}
+              >
+                <Ellipsis />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem>Import</DropdownMenuItem>
+                <DropdownMenuItem>User Permissions</DropdownMenuItem>
+                <DropdownMenuItem>Role Permissions Manager</DropdownMenuItem>
+                <DropdownMenuItem>
+                  Customize
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    ⌘+Y
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  Toggle Sidebar
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    ⌘+G
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>List Settings</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        }
+      />
+
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+        <div className="[&>[data-slot=table-container]]:overflow-visible">
+          <Table
+            className="table-fixed"
+            style={{
+              width: Math.max(table.getTotalSize(), 0),
+              minWidth: "100%",
+            }}
+          >
+            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="relative"
+                      style={{ width: header.getSize() }}
+                    >
+                      {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        <div
+                          className="flex cursor-pointer items-center gap-1 select-none"
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <ArrowUp className="size-3.5" />,
+                            desc: <ArrowDown className="size-3.5" />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+                      ) : (
+                        flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )
+                      )}
+                      {header.column.getCanResize() && (
+                        <div
+                          onDoubleClick={() => header.column.resetSize()}
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
+                            header.column.getIsResizing()
+                              ? "opacity-100 before:bg-primary"
+                              : "opacity-0 before:bg-border"
+                          }`}
+                        />
+                      )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+        <Tabs defaultValue="20">
+          <TabsList>
+            <TabsIndicator />
+            <TabsTrigger value="20">20</TabsTrigger>
+            <TabsTrigger value="50">50</TabsTrigger>
+            <TabsTrigger value="80">80</TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <span className="text-base text-muted-foreground">18 of 32</span>
+      </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader className="justify-between">
+          <span className="text-base font-medium text-foreground">Leads</span>
+          <Button size="sm">
+            <Plus />
+            Create
+          </Button>
+        </MobileShellHeader>
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Leads"
+            icon={<Users />}
+            active={mobileTab === "leads"}
+            onClick={() => setMobileTab("leads")}
+          />
+          <MobileNavItem
+            label="Deals"
+            icon={<Handshake />}
+            active={mobileTab === "deals"}
+            onClick={() => setMobileTab("deals")}
+          />
+          <MobileNavItem
+            label="Contacts"
+            icon={<Contact />}
+            active={mobileTab === "contacts"}
+            onClick={() => setMobileTab("contacts")}
+          />
+          <MobileNavItem
+            label="Tasks"
+            icon={<ClipboardList />}
+            active={mobileTab === "tasks"}
+            onClick={() => setMobileTab("tasks")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
   return (
     <SidebarProvider>
       <CrmSidebar />
       <SidebarInset className="h-screen min-w-0 overflow-hidden">
         <SidebarTrigger className="sr-only" />
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
-          <Header
-            leftControls={
-              <>
-                <SidebarTrigger className="md:hidden" />
-                <Breadcrumb size="md">
-                  <BreadcrumbList>
-                    <BreadcrumbItem>
-                      <BreadcrumbLink href="/crm">Leads</BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                    <BreadcrumbItem>
-                      <Select
-                        items={[...views, ...savedViews]}
-                        defaultValue="list-view"
-                      >
-                        <SelectTrigger
-                          variant="ghost"
-                          size="sm"
-                          suffix={<ChevronDown />}
-                        >
-                          <SelectValue className="text-lg font-medium text-foreground" />
-                        </SelectTrigger>
-                        <SelectContent align="start">
-                          <SelectGroup>
-                            {views.map((item) => (
-                              <SelectItem key={item.value} value={item.value}>
-                                {item.label}
-                              </SelectItem>
-                            ))}
-                            <SelectSeparator />
-                            {savedViews.map((item) => (
-                              <SelectItem key={item.value} value={item.value}>
-                                {item.label}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </BreadcrumbItem>
-                  </BreadcrumbList>
-                </Breadcrumb>
-              </>
-            }
-            rightControls={
-              <Button size="sm">
-                <Plus />
-                Create
-              </Button>
-            }
-          />
-          <SubHeader
-            className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
-            leftControls={
-              <>
-                <Select
-                  items={[
-                    { label: "Lead owner", value: "lead-owner" },
-                    { label: "Jenny Wilson", value: "jenny-wilson" },
-                    { label: "Mariana Rodriguez", value: "mariana" },
-                    { label: "Sophie Chen", value: "sophie-chen" },
-                    { label: "David Lee", value: "david-lee" },
-                  ]}
-                  defaultValue="lead-owner"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="lead-owner">Lead owner</SelectItem>
-                      <SelectItem value="jenny-wilson">Jenny Wilson</SelectItem>
-                      <SelectItem value="mariana">Mariana Rodriguez</SelectItem>
-                      <SelectItem value="sophie-chen">Sophie Chen</SelectItem>
-                      <SelectItem value="david-lee">David Lee</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select items={organisationItems} defaultValue="gumroad">
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      {organisationItems.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select items={statusItems} defaultValue="open">
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      {statusItems.map((item) => (
-                        <SelectItem key={item.value} value={item.value}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </>
-            }
-            rightControls={
-              <>
-                <Select
-                  items={[
-                    { label: "Column", value: "column" },
-                    { label: "Name", value: "name" },
-                    { label: "Organisation", value: "organisation" },
-                    { label: "Start Date", value: "start-date" },
-                    { label: "Status", value: "status" },
-                    { label: "Email", value: "email" },
-                    { label: "Mobile No", value: "mobile" },
-                    { label: "Assigned To", value: "assigned" },
-                  ]}
-                  defaultValue="column"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const item = [
-                          { label: "Column", value: "column" },
-                          { label: "Name", value: "name" },
-                          { label: "Organisation", value: "organisation" },
-                          { label: "Start Date", value: "start-date" },
-                          { label: "Status", value: "status" },
-                          { label: "Email", value: "email" },
-                          { label: "Mobile No", value: "mobile" },
-                          { label: "Assigned To", value: "assigned" },
-                        ].find((i) => i.value === value)
-                        return (
-                          <>
-                            <Columns3 className="size-4" />
-                            {item?.label ?? "Column"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="column">Column</SelectItem>
-                      <SelectItem value="name">Name</SelectItem>
-                      <SelectItem value="organisation">Organisation</SelectItem>
-                      <SelectItem value="start-date">Start Date</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                      <SelectItem value="email">Email</SelectItem>
-                      <SelectItem value="mobile">Mobile No</SelectItem>
-                      <SelectItem value="assigned">Assigned To</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Group", value: "group" },
-                    { label: "Options", value: "option-1" },
-                    { label: "Options", value: "option-2" },
-                    { label: "Options", value: "option-3" },
-                  ]}
-                  defaultValue="group"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Group", value: "group" },
-                          { label: "Options", value: "option-1" },
-                          { label: "Options", value: "option-2" },
-                          { label: "Options", value: "option-3" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <Group className="size-4" />
-                            {item?.label ?? "Group"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="group">Group</SelectItem>
-                      <SelectItem value="option-1">Options</SelectItem>
-                      <SelectItem value="option-2">Options</SelectItem>
-                      <SelectItem value="option-3">Options</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Filter", value: "filter" },
-                    { label: "Title", value: "title" },
-                    { label: "Priority", value: "priority" },
-                    { label: "Start Date", value: "start-date" },
-                    { label: "Reference Document Type", value: "ref-doc-type" },
-                    { label: "Reference Doc", value: "ref-doc" },
-                    { label: "Assigned To", value: "assigned" },
-                    { label: "Status", value: "status" },
-                  ]}
-                  defaultValue="filter"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Filter", value: "filter" },
-                          { label: "Title", value: "title" },
-                          { label: "Priority", value: "priority" },
-                          { label: "Start Date", value: "start-date" },
-                          {
-                            label: "Reference Document Type",
-                            value: "ref-doc-type",
-                          },
-                          { label: "Reference Doc", value: "ref-doc" },
-                          { label: "Assigned To", value: "assigned" },
-                          { label: "Status", value: "status" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ListFilter className="size-4" />
-                            {item?.label ?? "Filter"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="filter">Filter</SelectItem>
-                      <SelectItem value="title">Title</SelectItem>
-                      <SelectItem value="priority">Priority</SelectItem>
-                      <SelectItem value="start-date">Start Date</SelectItem>
-                      <SelectItem value="ref-doc-type">
-                        Reference Document Type
-                      </SelectItem>
-                      <SelectItem value="ref-doc">Reference Doc</SelectItem>
-                      <SelectItem value="assigned">Assigned To</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={[
-                    { label: "Sort", value: "short" },
-                    { label: "Status", value: "status" },
-                    { label: "Name", value: "name" },
-                    { label: "Created", value: "created" },
-                  ]}
-                  defaultValue="short"
-                >
-                  <SelectTrigger
-                    variant="subtle"
-                    size="sm"
-                    suffix={<ChevronDown />}
-                  >
-                    <SelectValue>
-                      {(value) => {
-                        const items = [
-                          { label: "Sort", value: "short" },
-                          { label: "Status", value: "status" },
-                          { label: "Name", value: "name" },
-                          { label: "Created", value: "created" },
-                        ]
-                        const item = items.find((i) => i.value === value)
-                        return (
-                          <>
-                            <ArrowUpDown className="size-4" />
-                            {item?.label ?? "Sort"}
-                          </>
-                        )
-                      }}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent alignItemWithTrigger={false} align="start">
-                    <SelectGroup>
-                      <SelectItem value="short">Sort</SelectItem>
-                      <SelectItem value="status">Status</SelectItem>
-                      <SelectItem value="name">Name</SelectItem>
-                      <SelectItem value="created">Created</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    render={<Button variant="secondary" size="icon-sm" />}
-                  >
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    <DropdownMenuItem>Import</DropdownMenuItem>
-                    <DropdownMenuItem>User Permissions</DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Role Permissions Manager
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Customize
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+Y
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Toggle Sidebar
-                      <span className="ml-auto text-xs text-muted-foreground">
-                        ⌘+G
-                      </span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>List Settings</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            }
-          />
-
-          <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
-            <div className="[&>[data-slot=table-container]]:overflow-visible">
-              <Table
-                className="table-fixed"
-                style={{
-                  width: Math.max(table.getTotalSize(), 0),
-                  minWidth: "100%",
-                }}
-              >
-                <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead
-                          key={header.id}
-                          className="relative"
-                          style={{ width: header.getSize() }}
-                        >
-                          {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                            <div
-                              className="flex cursor-pointer items-center gap-1 select-none"
-                              onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              {{
-                                asc: <ArrowUp className="size-3.5" />,
-                                desc: <ArrowDown className="size-3.5" />,
-                              }[header.column.getIsSorted() as string] ?? null}
-                            </div>
-                          ) : (
-                            flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )
-                          )}
-                          {header.column.getCanResize() && (
-                            <div
-                              onDoubleClick={() => header.column.resetSize()}
-                              onMouseDown={header.getResizeHandler()}
-                              onTouchStart={header.getResizeHandler()}
-                              className={`absolute top-0 right-0 h-full w-1 cursor-col-resize touch-none select-none group-hover/thead:opacity-100 before:absolute before:top-1/2 before:left-1/2 before:h-5 before:w-0.5 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full ${
-                                header.column.getIsResizing()
-                                  ? "opacity-100 before:bg-primary"
-                                  : "opacity-0 before:bg-border"
-                              }`}
-                            />
-                          )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell
-                          key={cell.id}
-                          style={{ width: cell.column.getSize() }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
-            <Tabs defaultValue="20">
-              <TabsList>
-                <TabsIndicator />
-                <TabsTrigger value="20">20</TabsTrigger>
-                <TabsTrigger value="50">50</TabsTrigger>
-                <TabsTrigger value="80">80</TabsTrigger>
-              </TabsList>
-            </Tabs>
-            <span className="text-base text-muted-foreground">18 of 32</span>
-          </div>
+          {header}
+          {content}
         </div>
       </SidebarInset>
     </SidebarProvider>
