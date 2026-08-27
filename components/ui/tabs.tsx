@@ -28,7 +28,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "overflow-hidden rounded-md bg-secondary p-px",
+        default: "rounded-md bg-secondary p-px",
         line: "rounded-md bg-transparent p-px group-data-horizontal/tabs:border-b group-data-horizontal/tabs:border-border-soft group-data-vertical/tabs:border-r group-data-vertical/tabs:border-border-soft",
         ghost: "rounded-md bg-transparent p-px",
         browser:
@@ -108,9 +108,11 @@ function TabsList({
 }
 
 const tabsTriggerVariants = cva([
-  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-normal text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none focus-visible:ring-inset disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-normal text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:z-[2] focus-visible:[outline:2px_solid_#c9c9c9e5] dark:focus-visible:[outline:2px_solid_#575757e5] disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   // active text color (background handled by TabsIndicator)
   "z-[1] data-active:text-foreground",
+  // line variant is flat — square corners so the focus outline has no radius
+  "group-data-[variant=line]/tabs-list:rounded-none",
   // browser variant keeps per-tab border structure for its unique look
   "group-data-[variant=browser]/tabs-list:h-full group-data-[variant=browser]/tabs-list:border-transparent group-data-[variant=browser]/tabs-list:bg-transparent group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:-bottom-px group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:rounded-b-none! group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-x group-data-[variant=browser]/tabs-list:group-data-horizontal/tabs:border-t group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:-right-px group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:rounded-r-none! group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-y group-data-[variant=browser]/tabs-list:group-data-vertical/tabs:border-l",
   // size sm
