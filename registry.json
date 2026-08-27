@@ -961,6 +961,194 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "mobile-shell",
+      "type": "registry:ui",
+      "title": "Mobile Shell",
+      "description": "Mobile app frame with pinned header, scrolling content, and bottom tab bar.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/mobile-shell/mobile-shell.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "message",
+      "type": "registry:ui",
+      "title": "Message",
+      "description": "Chat message row layout with avatar, content, and footer parts.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/message/message.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "bubble",
+      "type": "registry:ui",
+      "title": "Bubble",
+      "description": "Chat bubble surface used inside Message content.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/bubble/bubble.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "attachment",
+      "type": "registry:ui",
+      "title": "Attachment",
+      "description": "File chip for uploads, previews, and link cards with upload states.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/attachment/attachment.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "color-swatch",
+      "type": "registry:ui",
+      "title": "Color Swatch",
+      "description": "Circular chip previewing a CSS color, with transparency checkerboard and selected state.",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react",
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/color-swatch/color-swatch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "message-scroller",
+      "type": "registry:ui",
+      "title": "Message Scroller",
+      "description": "Auto-scrolling chat viewport that pins to the latest message.",
+      "dependencies": [
+        "@shadcn/react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/message-scroller/message-scroller.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "File Upload",
+      "description": "Headless file picker with drag-and-drop, validation, and upload progress.",
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/file-upload/file-upload.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/espresso/hooks/use-as-ref.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-as-ref.ts"
+        },
+        {
+          "path": "registry/espresso/hooks/use-lazy-ref.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-lazy-ref.ts"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "Popover color picker with saturation area, hue and alpha sliders, and an eye dropper.",
+      "dependencies": [
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
+        "https://espresso-base-ui.vercel.app/r/button.json",
+        "https://espresso-base-ui.vercel.app/r/input.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/color-picker/color-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/espresso/visually-hidden-input/visually-hidden-input.tsx",
+          "type": "registry:component",
+          "target": "components/visually-hidden-input.tsx"
+        },
+        {
+          "path": "registry/espresso/hooks/use-as-ref.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-as-ref.ts"
+        },
+        {
+          "path": "registry/espresso/hooks/use-lazy-ref.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-lazy-ref.ts"
+        },
+        {
+          "path": "registry/espresso/hooks/use-isomorphic-layout-effect.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-isomorphic-layout-effect.ts"
+        },
+        {
+          "path": "registry/espresso/lib/compose-refs.ts",
+          "type": "registry:lib",
+          "target": "lib/compose-refs.ts"
+        }
+      ]
     }
   ]
 }
