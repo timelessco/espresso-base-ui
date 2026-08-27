@@ -15,8 +15,68 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const noop = () => {}
+
+function playgroundActions(actionType: string) {
+  return actionType === "single"
+    ? [{ label: "Update", onClick: noop }]
+    : [
+        { label: "Update", onClick: noop },
+        { label: "Later", onClick: noop },
+      ]
+}
+
+function notificationPlaygroundCode(v: PlaygroundValues) {
+  const actionType = v.actionType as string
+  const lines = [`notify({`]
+  if (v.variant !== "inline") lines.push(`  variant: "${v.variant}",`)
+  lines.push(`  title: "${v.title}",`)
+  if (v.description) lines.push(`  description: "${v.description}",`)
+  if (actionType !== "none") {
+    lines.push(`  actionType: "${actionType}",`)
+    if (actionType === "single") {
+      lines.push(`  actions: [{ label: "Update", onClick: () => {} }],`)
+    } else {
+      lines.push(
+        `  actions: [`,
+        `    { label: "Update", onClick: () => {} },`,
+        `    { label: "Later", onClick: () => {} },`,
+        `  ],`
+      )
+    }
+  }
+  lines.push(`})`)
+  return lines.join("\n")
+}
+
+function NotificationPlaygroundPreview(v: PlaygroundValues) {
+  const actionType = v.actionType as "none" | "single" | "dual" | "split"
+  return (
+    <Button
+      variant="outline"
+      onClick={() =>
+        notify({
+          variant: v.variant as
+            | "inline"
+            | "long-text"
+            | "notification"
+            | "modal",
+          title: v.title as string,
+          description: (v.description as string) || undefined,
+          actionType,
+          actions: actionType === "none" ? [] : playgroundActions(actionType),
+        })
+      }
+    >
+      Notify
+    </Button>
+  )
+}
 
 export default function NotificationDocsPage() {
   return (
@@ -25,6 +85,33 @@ export default function NotificationDocsPage() {
         title="Notification"
         description="Imperative toast-style notifications fired with notify(). Four card layouts, from a one-line strip to a centered modal card."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: {
+              type: "text",
+              defaultValue: "System Update Available",
+            },
+            description: {
+              type: "text",
+              defaultValue: "Update now to enjoy new features.",
+            },
+            variant: {
+              type: "options",
+              options: ["inline", "long-text", "notification", "modal"],
+              defaultValue: "inline",
+            },
+            actionType: {
+              type: "options",
+              options: ["none", "single", "dual", "split"],
+              defaultValue: "single",
+            },
+          }}
+          renderPreview={NotificationPlaygroundPreview}
+          renderCode={notificationPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

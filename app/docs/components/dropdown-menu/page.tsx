@@ -39,6 +39,87 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function dropdownMenuPlaygroundCode(v: PlaygroundValues) {
+  const sizeAttr = v.size !== "sm" ? ` size="${v.size}"` : ""
+  const lines = [
+    `<DropdownMenu>`,
+    `  <DropdownMenuTrigger render={<Button variant="outline" />}>`,
+    `    Open Menu`,
+    `  </DropdownMenuTrigger>`,
+    `  <DropdownMenuContent${sizeAttr} className="w-48">`,
+    `    <DropdownMenuItem>`,
+    `      <User />`,
+    `      Profile`,
+    `    </DropdownMenuItem>`,
+    `    <DropdownMenuItem>`,
+    `      <Settings />`,
+    `      Settings`,
+    `    </DropdownMenuItem>`,
+  ]
+  if (v.checkboxItems) {
+    lines.push(
+      `    <DropdownMenuSeparator />`,
+      `    <DropdownMenuCheckboxItem defaultChecked>`,
+      `      Status Bar`,
+      `    </DropdownMenuCheckboxItem>`,
+      `    <DropdownMenuCheckboxItem>Activity Bar</DropdownMenuCheckboxItem>`
+    )
+  }
+  lines.push(
+    `    <DropdownMenuSeparator />`,
+    `    <DropdownMenuItem variant="destructive">`,
+    `      <LogOut />`,
+    `      Log out`,
+    `    </DropdownMenuItem>`,
+    `  </DropdownMenuContent>`,
+    `</DropdownMenu>`
+  )
+  return lines.join("\n")
+}
+
+function DropdownMenuPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button className="w-fit" variant="outline" />}
+      >
+        Open Menu
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        size={v.size as "xs" | "sm" | "md" | "lg"}
+        className="w-48"
+      >
+        <DropdownMenuItem>
+          <User />
+          Profile
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Settings />
+          Settings
+        </DropdownMenuItem>
+        {Boolean(v.checkboxItems) && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem defaultChecked>
+              Status Bar
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem>Activity Bar</DropdownMenuCheckboxItem>
+          </>
+        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">
+          <LogOut />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 function CheckboxRadioDemo() {
   const [showStatusBar, setShowStatusBar] = React.useState(true)
@@ -81,6 +162,21 @@ export default function DropdownMenuDocsPage() {
         title="Dropdown Menu"
         description="A menu of actions opened from a trigger, built on Base UI. Supports checkbox and radio items, nested submenus and four density sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "sm",
+            },
+            checkboxItems: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={DropdownMenuPlaygroundPreview}
+          renderCode={dropdownMenuPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

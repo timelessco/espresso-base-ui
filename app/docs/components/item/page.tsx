@@ -36,6 +36,74 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function itemPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "default" ? ` variant="${v.variant}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  const lines = [`<Item${attrs}>`]
+  if (v.media) {
+    lines.push(
+      `  <ItemMedia variant="icon">`,
+      `    <Sparkles />`,
+      `  </ItemMedia>`
+    )
+  }
+  lines.push(`  <ItemContent>`, `    <ItemTitle>Upgrade to Pro</ItemTitle>`)
+  if (v.description) {
+    lines.push(
+      `    <ItemDescription>`,
+      `      Unlock premium features and unlimited projects.`,
+      `    </ItemDescription>`
+    )
+  }
+  lines.push(`  </ItemContent>`)
+  if (v.actions) {
+    lines.push(
+      `  <ItemActions>`,
+      `    <Button size="sm">Upgrade</Button>`,
+      `  </ItemActions>`
+    )
+  }
+  lines.push(`</Item>`)
+  return lines.join("\n")
+}
+
+function ItemPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-md">
+      <Item
+        variant={v.variant as "default" | "outline" | "muted"}
+        size={v.size as "default" | "sm" | "xs"}
+      >
+        {Boolean(v.media) && (
+          <ItemMedia variant="icon">
+            <Sparkles />
+          </ItemMedia>
+        )}
+        <ItemContent>
+          <ItemTitle>Upgrade to Pro</ItemTitle>
+          {Boolean(v.description) && (
+            <ItemDescription>
+              Unlock premium features and unlimited projects.
+            </ItemDescription>
+          )}
+        </ItemContent>
+        {Boolean(v.actions) && (
+          <ItemActions>
+            <Button size="sm">Upgrade</Button>
+          </ItemActions>
+        )}
+      </Item>
+    </div>
+  )
+}
 
 export default function ItemDocsPage() {
   return (
@@ -44,6 +112,28 @@ export default function ItemDocsPage() {
         title="Item"
         description="A flexible list row with media, content, and action slots. Three variants, three sizes, and an ItemGroup for stacked lists with separators."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            variant: {
+              type: "options",
+              options: ["default", "outline", "muted"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["default", "sm", "xs"],
+              defaultValue: "default",
+            },
+            media: { type: "boolean", defaultValue: true },
+            description: { type: "boolean", defaultValue: true },
+            actions: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={ItemPlaygroundPreview}
+          renderCode={itemPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

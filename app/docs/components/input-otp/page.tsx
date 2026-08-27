@@ -18,6 +18,76 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function inputOtpPlaygroundCode(v: PlaygroundValues) {
+  const maxLength = Number(v.maxLength)
+  const attrs = [
+    ` maxLength={${maxLength}}`,
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  const slots = (from: number, to: number) =>
+    Array.from(
+      { length: to - from },
+      (_, i) => `    <InputOTPSlot index={${from + i}} />`
+    )
+
+  const lines = [`<InputOTP${attrs}>`]
+  if (v.separator) {
+    const half = maxLength / 2
+    lines.push(
+      `  <InputOTPGroup>`,
+      ...slots(0, half),
+      `  </InputOTPGroup>`,
+      `  <InputOTPSeparator />`,
+      `  <InputOTPGroup>`,
+      ...slots(half, maxLength),
+      `  </InputOTPGroup>`
+    )
+  } else {
+    lines.push(
+      `  <InputOTPGroup>`,
+      ...slots(0, maxLength),
+      `  </InputOTPGroup>`
+    )
+  }
+  lines.push(`</InputOTP>`)
+  return lines.join("\n")
+}
+
+function InputOTPPlaygroundPreview(v: PlaygroundValues) {
+  const maxLength = Number(v.maxLength)
+  const half = maxLength / 2
+
+  const slots = (from: number, to: number) =>
+    Array.from({ length: to - from }, (_, i) => (
+      <InputOTPSlot key={from + i} index={from + i} />
+    ))
+
+  return (
+    <InputOTP
+      key={maxLength}
+      maxLength={maxLength}
+      variant={v.variant as "outline" | "subtle"}
+      size={v.size as "xs" | "sm" | "md" | "lg"}
+    >
+      {v.separator ? (
+        <>
+          <InputOTPGroup>{slots(0, half)}</InputOTPGroup>
+          <InputOTPSeparator />
+          <InputOTPGroup>{slots(half, maxLength)}</InputOTPGroup>
+        </>
+      ) : (
+        <InputOTPGroup>{slots(0, maxLength)}</InputOTPGroup>
+      )}
+    </InputOTP>
+  )
+}
 
 export default function InputOTPDocsPage() {
   return (
@@ -26,6 +96,31 @@ export default function InputOTPDocsPage() {
         title="Input OTP"
         description="A one-time-passcode input rendered as character slots with a fake caret. Outline and subtle variants across four slot sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            variant: {
+              type: "options",
+              options: ["outline", "subtle"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            maxLength: {
+              type: "options",
+              options: ["4", "6"],
+              defaultValue: "6",
+            },
+            separator: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={InputOTPPlaygroundPreview}
+          renderCode={inputOtpPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

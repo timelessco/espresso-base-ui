@@ -30,6 +30,10 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const fruits = [
   { label: "Apple", value: "apple" },
@@ -87,6 +91,119 @@ function ChipsDemo() {
   )
 }
 
+function comboboxPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.multiple ? " multiple" : "",
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  if (v.multiple) {
+    return `<Combobox${attrs} items={fruits} value={value} onValueChange={setValue}>
+  <ComboboxChips ref={anchorRef}>
+    {value.map((v) => (
+      <ComboboxChip key={v}>
+        <ComboboxValue>{v}</ComboboxValue>
+      </ComboboxChip>
+    ))}
+    <ComboboxChipsInput placeholder="${v.placeholder}" />
+  </ComboboxChips>
+  <ComboboxContent anchor={anchorRef}>
+    <ComboboxList>...</ComboboxList>
+    <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+  </ComboboxContent>
+</Combobox>`
+  }
+
+  return `<Combobox${attrs} items={fruits}>
+  <ComboboxInput placeholder="${v.placeholder}" />
+  <ComboboxContent>
+    <ComboboxList>
+      <ComboboxCollection>
+        {(item) => (
+          <ComboboxItem key={item.value} value={item.value}>
+            {item.label}
+          </ComboboxItem>
+        )}
+      </ComboboxCollection>
+    </ComboboxList>
+    <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+  </ComboboxContent>
+</Combobox>`
+}
+
+function ComboboxPlaygroundChips({
+  variant,
+  size,
+  placeholder,
+}: {
+  variant: "outline" | "subtle" | "ghost"
+  size: "xs" | "sm" | "md" | "lg"
+  placeholder: string
+}) {
+  const [value, setValue] = React.useState<string[]>(["apple"])
+  const anchorRef = useComboboxAnchor()
+  return (
+    <Combobox
+      multiple
+      variant={variant}
+      size={size}
+      items={fruits}
+      value={value}
+      onValueChange={(v: unknown) => setValue(v as string[])}
+    >
+      <ComboboxChips ref={anchorRef}>
+        {value.map((v) => {
+          const item = fruits.find((f) => f.value === v)
+          return (
+            <ComboboxChip key={v}>
+              <ComboboxValue>{item?.label ?? v}</ComboboxValue>
+            </ComboboxChip>
+          )
+        })}
+        <ComboboxChipsInput placeholder={placeholder} />
+      </ComboboxChips>
+      <ComboboxContent anchor={anchorRef}>
+        <ComboboxList>
+          <FruitItems />
+        </ComboboxList>
+        <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+
+function ComboboxPlaygroundPreview(v: PlaygroundValues) {
+  const variant = v.variant as "outline" | "subtle" | "ghost"
+  const size = v.size as "xs" | "sm" | "md" | "lg"
+
+  if (v.multiple) {
+    return (
+      <div className="w-full max-w-sm">
+        <ComboboxPlaygroundChips
+          variant={variant}
+          size={size}
+          placeholder={v.placeholder as string}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="w-full max-w-60">
+      <Combobox variant={variant} size={size} items={fruits}>
+        <ComboboxInput placeholder={v.placeholder as string} />
+        <ComboboxContent>
+          <ComboboxList>
+            <FruitItems />
+          </ComboboxList>
+          <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+        </ComboboxContent>
+      </Combobox>
+    </div>
+  )
+}
+
 export default function ComboboxDocsPage() {
   return (
     <DocPage>
@@ -94,6 +211,27 @@ export default function ComboboxDocsPage() {
         title="Combobox"
         description="An autocomplete input that filters a popup list as you type, built on Base UI. Single or multiple selection, with a chips layout for multi-select."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            placeholder: { type: "text", defaultValue: "Pick a fruit..." },
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            multiple: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ComboboxPlaygroundPreview}
+          renderCode={comboboxPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

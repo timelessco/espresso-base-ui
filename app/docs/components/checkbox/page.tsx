@@ -11,6 +11,33 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function checkboxPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.checked ? " defaultChecked" : "",
+    v.indeterminate ? " indeterminate" : "",
+    v.disabled ? " disabled" : "",
+    v.invalid ? ` data-invalid="true"` : "",
+  ].join("")
+  return `<Checkbox${attrs} />`
+}
+
+function CheckboxPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Checkbox
+      size={v.size as "xs" | "sm" | "default"}
+      checked={Boolean(v.checked)}
+      indeterminate={Boolean(v.indeterminate)}
+      disabled={Boolean(v.disabled)}
+      data-invalid={v.invalid ? "true" : undefined}
+    />
+  )
+}
 
 export default function CheckboxDocsPage() {
   return (
@@ -19,6 +46,24 @@ export default function CheckboxDocsPage() {
         title="Checkbox"
         description="A control for toggling between checked and unchecked, built on Base UI. Supports an indeterminate state and three sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default"],
+              defaultValue: "default",
+            },
+            checked: { type: "boolean", defaultValue: true },
+            indeterminate: { type: "boolean", defaultValue: false },
+            disabled: { type: "boolean", defaultValue: false },
+            invalid: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={CheckboxPlaygroundPreview}
+          renderCode={checkboxPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

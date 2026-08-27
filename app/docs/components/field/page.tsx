@@ -1,6 +1,7 @@
 "use client"
 
 import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import {
@@ -26,6 +27,49 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function fieldPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.orientation !== "vertical" ? ` orientation="${v.orientation}"` : "",
+    v.invalid ? ` data-invalid="true"` : "",
+  ].join("")
+
+  const lines = [
+    `<Field${attrs}>`,
+    `  <FieldLabel>${v.label}</FieldLabel>`,
+    `  <Input placeholder="you@example.com" />`,
+  ]
+  if (v.description) {
+    lines.push(`  <FieldDescription>${v.description}</FieldDescription>`)
+  }
+  if (v.invalid) {
+    lines.push(`  <FieldError>This field is required.</FieldError>`)
+  }
+  lines.push(`</Field>`)
+  return lines.join("\n")
+}
+
+function FieldPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-sm">
+      <Field
+        orientation={v.orientation as "vertical" | "horizontal" | "responsive"}
+        data-invalid={v.invalid ? "true" : undefined}
+      >
+        <FieldLabel>{v.label}</FieldLabel>
+        <Input placeholder="you@example.com" />
+        {Boolean(v.description) && (
+          <FieldDescription>{v.description}</FieldDescription>
+        )}
+        {Boolean(v.invalid) && <FieldError>This field is required.</FieldError>}
+      </Field>
+    </div>
+  )
+}
 
 export default function FieldDocsPage() {
   return (
@@ -34,6 +78,26 @@ export default function FieldDocsPage() {
         title="Field"
         description="Layout primitives that wrap any control with a label, description and error message. Stacks vertically, inline or responsively."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            label: { type: "text", defaultValue: "Email address" },
+            description: {
+              type: "text",
+              defaultValue: "We'll never share your email.",
+            },
+            orientation: {
+              type: "options",
+              options: ["vertical", "horizontal", "responsive"],
+              defaultValue: "vertical",
+            },
+            invalid: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={FieldPlaygroundPreview}
+          renderCode={fieldPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

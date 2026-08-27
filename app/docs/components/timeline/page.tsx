@@ -24,6 +24,90 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const playgroundSteps = [
+  {
+    step: 1,
+    date: "Jan 2026",
+    title: "Project initialized",
+    body: "Bootstrapped the repository and set up CI.",
+  },
+  {
+    step: 2,
+    date: "Feb 2026",
+    title: "Beta release",
+    body: "Shipped to internal testers for feedback.",
+  },
+  {
+    step: 3,
+    date: "Mar 2026",
+    title: "Public launch",
+    body: "Docs published and signups open.",
+  },
+  {
+    step: 4,
+    date: "Apr 2026",
+    title: "v1.0 release",
+    body: "Stable API and upgrade guide shipped.",
+  },
+]
+
+function timelinePlaygroundCode(v: PlaygroundValues) {
+  const steps = playgroundSteps.slice(0, Number(v.steps))
+  const active = Math.min(Number(v.activeStep), steps.length)
+  const rootAttrs = [
+    ` defaultValue={${active}}`,
+    v.orientation === "horizontal" ? ` orientation="horizontal"` : "",
+  ].join("")
+
+  const lines = [`<Timeline${rootAttrs}>`]
+  for (const s of steps) {
+    lines.push(
+      `  <TimelineItem step={${s.step}}>`,
+      `    <TimelineHeader>`,
+      `      <TimelineDate>${s.date}</TimelineDate>`,
+      `      <TimelineTitle>${s.title}</TimelineTitle>`,
+      `    </TimelineHeader>`,
+      `    <TimelineIndicator />`,
+      `    <TimelineSeparator />`,
+      `    <TimelineContent>${s.body}</TimelineContent>`,
+      `  </TimelineItem>`
+    )
+  }
+  lines.push(`</Timeline>`)
+  return lines.join("\n")
+}
+
+function TimelinePlaygroundPreview(v: PlaygroundValues) {
+  const steps = playgroundSteps.slice(0, Number(v.steps))
+  const active = Math.min(Number(v.activeStep), steps.length)
+  const horizontal = v.orientation === "horizontal"
+
+  return (
+    <div className={horizontal ? "w-full max-w-2xl" : "w-full max-w-sm"}>
+      <Timeline
+        value={active}
+        orientation={horizontal ? "horizontal" : "vertical"}
+      >
+        {steps.map((s) => (
+          <TimelineItem key={s.step} step={s.step}>
+            <TimelineHeader>
+              <TimelineDate>{s.date}</TimelineDate>
+              <TimelineTitle>{s.title}</TimelineTitle>
+            </TimelineHeader>
+            <TimelineIndicator />
+            <TimelineSeparator />
+            <TimelineContent>{s.body}</TimelineContent>
+          </TimelineItem>
+        ))}
+      </Timeline>
+    </div>
+  )
+}
 
 const releaseSteps = [
   {
@@ -138,6 +222,30 @@ export default function TimelineDocsPage() {
         title="Timeline"
         description="An ordered list of steps connected by indicators and separator lines. Tracks an active step and lays out vertically or horizontally."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            orientation: {
+              type: "options",
+              options: ["vertical", "horizontal"],
+              defaultValue: "vertical",
+            },
+            steps: {
+              type: "options",
+              options: ["3", "4"],
+              defaultValue: "3",
+            },
+            activeStep: {
+              type: "options",
+              options: ["1", "2", "3", "4"],
+              defaultValue: "2",
+            },
+          }}
+          renderPreview={TimelinePlaygroundPreview}
+          renderCode={timelinePlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

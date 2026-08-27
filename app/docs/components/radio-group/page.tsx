@@ -12,6 +12,47 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function radioGroupPlaygroundCode(v: PlaygroundValues) {
+  const sizeAttr = v.size !== "default" ? ` size="${v.size}"` : ""
+  const items = Array.from(
+    { length: Number(v.options) },
+    (_, i) => `    <RadioGroupItem${sizeAttr} value="option-${i + 1}" />`
+  )
+  return [
+    `<RadioGroup defaultValue="option-1"${v.disabled ? " disabled" : ""}>`,
+    `  <div className="flex items-center gap-4">`,
+    ...items,
+    `  </div>`,
+    `</RadioGroup>`,
+  ].join("\n")
+}
+
+function RadioGroupPlaygroundPreview(v: PlaygroundValues) {
+  const count = Number(v.options)
+  return (
+    <RadioGroup
+      key={count}
+      defaultValue="option-1"
+      disabled={Boolean(v.disabled)}
+      className="w-auto"
+    >
+      <div className="flex items-center gap-4">
+        {Array.from({ length: count }, (_, i) => (
+          <RadioGroupItem
+            key={i}
+            size={v.size as "xs" | "sm" | "default"}
+            value={`option-${i + 1}`}
+          />
+        ))}
+      </div>
+    </RadioGroup>
+  )
+}
 
 export default function RadioGroupDocsPage() {
   return (
@@ -20,6 +61,26 @@ export default function RadioGroupDocsPage() {
         title="Radio Group"
         description="A set of mutually exclusive radio buttons built on Base UI. Three sizes, with automatic invalid styling inside a Field."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default"],
+              defaultValue: "default",
+            },
+            options: {
+              type: "options",
+              options: ["2", "3"],
+              defaultValue: "2",
+            },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={RadioGroupPlaygroundPreview}
+          renderCode={radioGroupPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

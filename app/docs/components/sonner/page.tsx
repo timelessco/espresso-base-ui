@@ -14,6 +14,45 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const toastFns = {
+  default: toast,
+  success: toast.success,
+  info: toast.info,
+  warning: toast.warning,
+  error: toast.error,
+} as const
+
+const playgroundDescription = "Sunday, December 03, 2023 at 9:00 AM"
+
+function sonnerPlaygroundCode(v: PlaygroundValues) {
+  const fn = v.type === "default" ? "toast" : `toast.${v.type}`
+  if (!v.description) return `${fn}("${v.message}")`
+  return [
+    `${fn}("${v.message}", {`,
+    `  description: "${playgroundDescription}",`,
+    `})`,
+  ].join("\n")
+}
+
+function SonnerPlaygroundPreview(v: PlaygroundValues) {
+  const fire = () => {
+    const fn = toastFns[v.type as keyof typeof toastFns]
+    fn(
+      v.message as string,
+      v.description ? { description: playgroundDescription } : undefined
+    )
+  }
+  return (
+    <Button variant="outline" onClick={fire}>
+      Show toast
+    </Button>
+  )
+}
 
 export default function SonnerDocsPage() {
   return (
@@ -26,6 +65,22 @@ export default function SonnerDocsPage() {
         title="Sonner"
         description="An opinionated toast component wrapping the sonner library, themed to the design system. Fire toasts from anywhere with toast()."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            message: { type: "text", defaultValue: "Event has been created" },
+            type: {
+              type: "options",
+              options: ["default", "success", "info", "warning", "error"],
+              defaultValue: "default",
+            },
+            description: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={SonnerPlaygroundPreview}
+          renderCode={sonnerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

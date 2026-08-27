@@ -21,6 +21,113 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const variantIcons = {
+  default: Info,
+  info: Info,
+  success: CheckCircle2,
+  warning: TriangleAlert,
+  destructive: XCircle,
+} as const
+
+const variantIconNames = {
+  default: "Info",
+  info: "Info",
+  success: "CheckCircle2",
+  warning: "TriangleAlert",
+  destructive: "XCircle",
+} as const
+
+function alertPlaygroundCode(v: PlaygroundValues) {
+  const variant = v.variant as keyof typeof variantIconNames
+  const isBanner = v.type === "banner"
+  const attrs = [
+    isBanner ? ` type="banner"` : "",
+    variant !== "default" ? ` variant="${variant}"` : "",
+  ].join("")
+
+  const lines = [`<Alert${attrs}>`]
+  if (v.icon) lines.push(`  <${variantIconNames[variant]} />`)
+  lines.push(`  <AlertTitle>${v.title}</AlertTitle>`)
+  if (!isBanner && v.description) {
+    lines.push(`  <AlertDescription>${v.description}</AlertDescription>`)
+  }
+  if (!isBanner && v.action) {
+    lines.push(
+      `  <AlertHandlers>`,
+      `    <Button variant="secondary" size="sm" className="w-full">`,
+      `      Update now`,
+      `    </Button>`,
+      `  </AlertHandlers>`
+    )
+  }
+  if (
+    (isBanner && (v.action || v.dismissible)) ||
+    (!isBanner && v.dismissible)
+  ) {
+    lines.push(`  <AlertAction>`)
+    if (isBanner && v.action) {
+      lines.push(
+        `    <Button variant="ghost" size="sm">`,
+        `      Update`,
+        `    </Button>`
+      )
+    }
+    if (v.dismissible) {
+      lines.push(
+        `    <Button variant="ghost" size="icon-xs">`,
+        `      <X />`,
+        `    </Button>`
+      )
+    }
+    lines.push(`  </AlertAction>`)
+  }
+  lines.push(`</Alert>`)
+  return lines.join("\n")
+}
+
+function AlertPlaygroundPreview(v: PlaygroundValues) {
+  const variant = v.variant as keyof typeof variantIcons
+  const isBanner = v.type === "banner"
+  const Icon = variantIcons[variant]
+
+  return (
+    <div className={isBanner ? "w-full max-w-xl" : "w-full max-w-[240px]"}>
+      <Alert type={isBanner ? "banner" : "default"} variant={variant}>
+        {Boolean(v.icon) && <Icon />}
+        <AlertTitle>{v.title}</AlertTitle>
+        {!isBanner && Boolean(v.description) && (
+          <AlertDescription>{v.description}</AlertDescription>
+        )}
+        {!isBanner && Boolean(v.action) && (
+          <AlertHandlers>
+            <Button variant="secondary" size="sm" className="w-full">
+              Update now
+            </Button>
+          </AlertHandlers>
+        )}
+        {((isBanner && Boolean(v.action)) || Boolean(v.dismissible)) && (
+          <AlertAction>
+            {isBanner && Boolean(v.action) && (
+              <Button variant="ghost" size="sm">
+                Update
+              </Button>
+            )}
+            {Boolean(v.dismissible) && (
+              <Button variant="ghost" size="icon-xs">
+                <X />
+              </Button>
+            )}
+          </AlertAction>
+        )}
+      </Alert>
+    </div>
+  )
+}
 
 export default function AlertDocsPage() {
   return (
@@ -29,6 +136,33 @@ export default function AlertDocsPage() {
         title="Alert"
         description="An inline status message with a next step. Renders as a vertical card or a one-line banner."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "Your trial ends soon!" },
+            description: {
+              type: "text",
+              defaultValue: "Upgrade to keep enjoying features.",
+            },
+            type: {
+              type: "options",
+              options: ["default", "banner"],
+              defaultValue: "default",
+            },
+            variant: {
+              type: "options",
+              options: ["default", "success", "destructive", "warning", "info"],
+              defaultValue: "default",
+            },
+            icon: { type: "boolean", defaultValue: true },
+            action: { type: "boolean", defaultValue: true },
+            dismissible: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={AlertPlaygroundPreview}
+          renderCode={alertPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>
@@ -110,10 +244,9 @@ import {
           <code>variant</code> sets the tone: <code>default</code>,{" "}
           <code>success</code>, <code>info</code>, <code>warning</code> and{" "}
           <code>destructive</code>. It tints the leading icon – and in the card
-          layout it also recolors the button inside{" "}
-          <code>AlertHandlers</code> (background, hover and active states), so
-          you pass a plain <code>secondary</code> Button and the alert themes
-          it.
+          layout it also recolors the button inside <code>AlertHandlers</code>{" "}
+          (background, hover and active states), so you pass a plain{" "}
+          <code>secondary</code> Button and the alert themes it.
         </DocProse>
         <DocExample
           code={`
@@ -278,12 +411,11 @@ import {
 
       <DocSection title="API reference">
         <DocProse>
-          <code>Alert</code> is a compound component – the root takes the
-          layout and tone props and shares them via context, so{" "}
-          <code>AlertTitle</code> and <code>AlertDescription</code>{" "}
-          automatically adapt their typography to the active layout. All parts
-          render a <code>div</code> and accept <code>className</code> plus
-          standard div props.
+          <code>Alert</code> is a compound component – the root takes the layout
+          and tone props and shares them via context, so <code>AlertTitle</code>{" "}
+          and <code>AlertDescription</code> automatically adapt their typography
+          to the active layout. All parts render a <code>div</code> and accept{" "}
+          <code>className</code> plus standard div props.
         </DocProse>
         <PropsTable
           title="Alert"
@@ -319,12 +451,12 @@ import {
             {
               part: "AlertHandlers",
               description:
-                "Action-buttons row (data-slot=\"alert-button\"). Buttons stretch full-width in the card layout; in banners a secondary button gets a raised surface background.",
+                'Action-buttons row (data-slot="alert-button"). Buttons stretch full-width in the card layout; in banners a secondary button gets a raised surface background.',
             },
             {
               part: "AlertAction",
               description:
-                "Floating top-right container (data-slot=\"alert-action\") – typically the close button. In a banner without AlertHandlers it flows inline at the trailing edge.",
+                'Floating top-right container (data-slot="alert-action") – typically the close button. In a banner without AlertHandlers it flows inline at the trailing edge.',
             },
           ]}
         />
@@ -343,8 +475,8 @@ import {
 
       <DocSection title="Accessibility & styling hooks">
         <DocProse>
-          The root renders <code>role="alert"</code>, so screen readers
-          announce it as a live status message. Every part exposes a{" "}
+          The root renders <code>role="alert"</code>, so screen readers announce
+          it as a live status message. Every part exposes a{" "}
           <code>data-slot</code> attribute (<code>alert</code>,{" "}
           <code>alert-title</code>, <code>alert-description</code>,{" "}
           <code>alert-button</code>, <code>alert-action</code>), and the root

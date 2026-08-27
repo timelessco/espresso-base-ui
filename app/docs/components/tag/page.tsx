@@ -13,6 +13,41 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function tagPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "primary" ? ` variant="${v.variant}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.disabled ? ` disabled` : "",
+    v.closable ? ` onClose={() => {}}` : "",
+  ].join("")
+
+  return `<Tag${attrs}>${v.label}</Tag>`
+}
+
+function TagPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Tag
+      variant={
+        v.variant as
+          | "primary"
+          | "secondary"
+          | "outline"
+          | "ghost"
+          | "destructive"
+      }
+      size={v.size as "sm" | "default" | "lg"}
+      disabled={Boolean(v.disabled)}
+      onClose={v.closable ? () => {} : undefined}
+    >
+      {v.label}
+    </Tag>
+  )
+}
 
 export default function TagDocsPage() {
   const [tags, setTags] = useState(["React", "Next.js", "TypeScript"])
@@ -23,6 +58,34 @@ export default function TagDocsPage() {
         title="Tag"
         description="A compact label for categorizing content. Five tonal variants, three sizes, and an optional close control for removable tags."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            label: { type: "text", defaultValue: "Design" },
+            variant: {
+              type: "options",
+              options: [
+                "primary",
+                "secondary",
+                "outline",
+                "ghost",
+                "destructive",
+              ],
+              defaultValue: "primary",
+            },
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg"],
+              defaultValue: "default",
+            },
+            closable: { type: "boolean", defaultValue: false },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={TagPlaygroundPreview}
+          renderCode={tagPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

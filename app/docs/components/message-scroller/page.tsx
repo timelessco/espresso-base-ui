@@ -26,6 +26,10 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const demoMessages = [
   { id: "m1", role: "user", text: "Can you summarize the launch checklist?" },
@@ -106,6 +110,39 @@ function ScrollControls() {
   )
 }
 
+function messageScrollerPlaygroundCode(v: PlaygroundValues) {
+  const direction = v.direction === "start" ? ` direction="start"` : ""
+  return `<MessageScrollerProvider autoScroll defaultScrollPosition="end">
+  <MessageScroller>
+    <MessageScrollerViewport>
+      <MessageScrollerContent>
+        {messages.map((message) => (
+          <MessageScrollerItem key={message.id} messageId={message.id}>
+            <ChatRow message={message} />
+          </MessageScrollerItem>
+        ))}
+      </MessageScrollerContent>
+    </MessageScrollerViewport>
+    <MessageScrollerButton${direction} />
+  </MessageScroller>
+</MessageScrollerProvider>`
+}
+
+function MessageScrollerPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <MessageScrollerProvider autoScroll defaultScrollPosition="end">
+      <div className="h-56 w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card">
+        <MessageScroller>
+          <Transcript />
+          <MessageScrollerButton
+            direction={v.direction === "start" ? "start" : "end"}
+          />
+        </MessageScroller>
+      </div>
+    </MessageScrollerProvider>
+  )
+}
+
 export default function MessageScrollerDocsPage() {
   return (
     <DocPage>
@@ -113,6 +150,20 @@ export default function MessageScrollerDocsPage() {
         title="Message Scroller"
         description="A chat viewport that starts at the latest message, auto-scrolls while replies stream in, and pauses when the reader scrolls up."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            direction: {
+              type: "options",
+              options: ["end", "start"],
+              defaultValue: "end",
+            },
+          }}
+          renderPreview={MessageScrollerPlaygroundPreview}
+          renderCode={messageScrollerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

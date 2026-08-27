@@ -20,6 +20,101 @@ import {
   DocSection,
   PartsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const playgroundRows = [
+  { invoice: "INV001", method: "Credit Card", amount: 250 },
+  { invoice: "INV002", method: "PayPal", amount: 150 },
+  { invoice: "INV003", method: "Bank Transfer", amount: 350 },
+  { invoice: "INV004", method: "Credit Card", amount: 450 },
+  { invoice: "INV005", method: "PayPal", amount: 200 },
+]
+
+const money = (amount: number) => `$${amount.toFixed(2)}`
+
+function tablePlaygroundCode(v: PlaygroundValues) {
+  const rows = playgroundRows.slice(0, Number(v.rows))
+  const total = rows.reduce((sum, row) => sum + row.amount, 0)
+
+  const lines = [
+    `<Table>`,
+    `  <TableHeader>`,
+    `    <TableRow>`,
+    `      <TableHead className="w-[100px]">Invoice</TableHead>`,
+    `      <TableHead>Method</TableHead>`,
+    `      <TableHead className="text-right">Amount</TableHead>`,
+    `    </TableRow>`,
+    `  </TableHeader>`,
+    `  <TableBody>`,
+  ]
+  rows.forEach((row, index) => {
+    const selected = Boolean(v.selectedRow) && index === 0
+    lines.push(
+      `    <TableRow${selected ? ` data-state="selected"` : ""}>`,
+      `      <TableCell className="font-medium">${row.invoice}</TableCell>`,
+      `      <TableCell>${row.method}</TableCell>`,
+      `      <TableCell className="text-right">${money(row.amount)}</TableCell>`,
+      `    </TableRow>`
+    )
+  })
+  lines.push(`  </TableBody>`)
+  if (v.footer) {
+    lines.push(
+      `  <TableFooter>`,
+      `    <TableRow>`,
+      `      <TableCell colSpan={2}>Total</TableCell>`,
+      `      <TableCell className="text-right">${money(total)}</TableCell>`,
+      `    </TableRow>`,
+      `  </TableFooter>`
+    )
+  }
+  lines.push(`</Table>`)
+  return lines.join("\n")
+}
+
+function TablePlaygroundPreview(v: PlaygroundValues) {
+  const rows = playgroundRows.slice(0, Number(v.rows))
+  const total = rows.reduce((sum, row) => sum + row.amount, 0)
+
+  return (
+    <div className="w-full max-w-xl">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Invoice</TableHead>
+            <TableHead>Method</TableHead>
+            <TableHead className="text-right">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row, index) => (
+            <TableRow
+              key={row.invoice}
+              data-state={
+                Boolean(v.selectedRow) && index === 0 ? "selected" : undefined
+              }
+            >
+              <TableCell className="font-medium">{row.invoice}</TableCell>
+              <TableCell>{row.method}</TableCell>
+              <TableCell className="text-right">{money(row.amount)}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        {Boolean(v.footer) && (
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell className="text-right">{money(total)}</TableCell>
+            </TableRow>
+          </TableFooter>
+        )}
+      </Table>
+    </div>
+  )
+}
 
 const invoices = [
   {
@@ -50,6 +145,22 @@ export default function TableDocsPage() {
         title="Table"
         description="Styled wrappers around the native HTML table elements. The root scrolls horizontally on overflow, and rows support hover and selected states."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            rows: {
+              type: "options",
+              options: ["3", "5"],
+              defaultValue: "3",
+            },
+            footer: { type: "boolean", defaultValue: false },
+            selectedRow: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={TablePlaygroundPreview}
+          renderCode={tablePlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

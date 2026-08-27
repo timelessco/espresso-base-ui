@@ -31,6 +31,85 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const stateMediaIcons = {
+  done: FileTextIcon,
+  idle: FileTextIcon,
+  uploading: Spinner,
+  processing: Spinner,
+  error: TriangleAlertIcon,
+} as const
+
+const stateMediaIconNames = {
+  done: "FileTextIcon",
+  idle: "FileTextIcon",
+  uploading: "Spinner",
+  processing: "Spinner",
+  error: "TriangleAlertIcon",
+} as const
+
+function attachmentPlaygroundCode(v: PlaygroundValues) {
+  const state = v.state as keyof typeof stateMediaIconNames
+  const attrs = [
+    state !== "done" ? ` state="${state}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.orientation !== "horizontal" ? ` orientation="${v.orientation}"` : "",
+  ].join("")
+
+  const lines = [
+    `<Attachment${attrs}>`,
+    `  <AttachmentMedia>`,
+    `    <${stateMediaIconNames[state]} />`,
+    `  </AttachmentMedia>`,
+    `  <AttachmentContent>`,
+    `    <AttachmentTitle>${v.title}</AttachmentTitle>`,
+    `    <AttachmentDescription>${v.description}</AttachmentDescription>`,
+    `  </AttachmentContent>`,
+  ]
+  if (v.removable) {
+    lines.push(
+      `  <AttachmentActions>`,
+      `    <AttachmentAction aria-label="Remove ${v.title}">`,
+      `      <XIcon />`,
+      `    </AttachmentAction>`,
+      `  </AttachmentActions>`
+    )
+  }
+  lines.push(`</Attachment>`)
+  return lines.join("\n")
+}
+
+function AttachmentPlaygroundPreview(v: PlaygroundValues) {
+  const state = v.state as keyof typeof stateMediaIcons
+  const MediaIcon = stateMediaIcons[state]
+
+  return (
+    <Attachment
+      state={state}
+      size={v.size as "xs" | "sm" | "default"}
+      orientation={v.orientation as "horizontal" | "vertical"}
+    >
+      <AttachmentMedia>
+        <MediaIcon />
+      </AttachmentMedia>
+      <AttachmentContent>
+        <AttachmentTitle>{v.title}</AttachmentTitle>
+        <AttachmentDescription>{v.description}</AttachmentDescription>
+      </AttachmentContent>
+      {Boolean(v.removable) && (
+        <AttachmentActions>
+          <AttachmentAction aria-label={`Remove ${v.title}`}>
+            <XIcon />
+          </AttachmentAction>
+        </AttachmentActions>
+      )}
+    </Attachment>
+  )
+}
 
 export default function AttachmentDocsPage() {
   return (
@@ -39,6 +118,33 @@ export default function AttachmentDocsPage() {
         title="Attachment"
         description="A file chip for uploads, previews and link cards. Composes media, title and actions through upload states in horizontal or vertical orientation."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "sales-dashboard.pdf" },
+            description: { type: "text", defaultValue: "PDF · 2.4 MB" },
+            state: {
+              type: "options",
+              options: ["done", "idle", "uploading", "processing", "error"],
+              defaultValue: "done",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default"],
+              defaultValue: "default",
+            },
+            orientation: {
+              type: "options",
+              options: ["horizontal", "vertical"],
+              defaultValue: "horizontal",
+            },
+            removable: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={AttachmentPlaygroundPreview}
+          renderCode={attachmentPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

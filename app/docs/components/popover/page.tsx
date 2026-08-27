@@ -24,6 +24,43 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function popoverPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.side !== "bottom" ? ` side="${v.side}"` : "",
+    v.align !== "center" ? ` align="${v.align}"` : "",
+  ].join("")
+  return `<Popover>
+  <PopoverTrigger render={<Button variant="outline">Open</Button>} />
+  <PopoverContent${attrs}>
+    <PopoverHeader>
+      <PopoverTitle>${v.title}</PopoverTitle>
+      <PopoverDescription>${v.description}</PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>`
+}
+
+function PopoverPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline">Open</Button>} />
+      <PopoverContent
+        side={v.side as "top" | "right" | "bottom" | "left"}
+        align={v.align as "start" | "center" | "end"}
+      >
+        <PopoverHeader>
+          <PopoverTitle>{v.title}</PopoverTitle>
+          <PopoverDescription>{v.description}</PopoverDescription>
+        </PopoverHeader>
+      </PopoverContent>
+    </Popover>
+  )
+}
 
 export default function PopoverDocsPage() {
   return (
@@ -32,6 +69,30 @@ export default function PopoverDocsPage() {
         title="Popover"
         description="A floating card anchored to a trigger, built on the Base UI popover. Composes headers, forms, or toolbars with side and alignment controls."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "Popover title" },
+            description: {
+              type: "text",
+              defaultValue: "A short description of this popover.",
+            },
+            side: {
+              type: "options",
+              options: ["top", "right", "bottom", "left"],
+              defaultValue: "bottom",
+            },
+            align: {
+              type: "options",
+              options: ["start", "center", "end"],
+              defaultValue: "center",
+            },
+          }}
+          renderPreview={PopoverPlaygroundPreview}
+          renderCode={popoverPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

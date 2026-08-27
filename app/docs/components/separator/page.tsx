@@ -14,6 +14,47 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function separatorPlaygroundCode(v: PlaygroundValues) {
+  const orientationAttr =
+    v.orientation === "vertical" ? ` orientation="vertical"` : ""
+  const slotText = (v.slot as string).trim()
+  if (!slotText) return `<Separator${orientationAttr} />`
+  const alignAttr =
+    v.slotAlign !== "center" ? ` slotAlign="${v.slotAlign}"` : ""
+  return [
+    `<Separator${orientationAttr} slot${alignAttr}>`,
+    `  <Button size="sm">${slotText}</Button>`,
+    `</Separator>`,
+  ].join("\n")
+}
+
+function SeparatorPlaygroundPreview(v: PlaygroundValues) {
+  const orientation = v.orientation as "horizontal" | "vertical"
+  const slotText = (v.slot as string).trim()
+
+  const separator = slotText ? (
+    <Separator
+      orientation={orientation}
+      slot
+      slotAlign={v.slotAlign as "start" | "center" | "end"}
+    >
+      <Button size="sm">{slotText}</Button>
+    </Separator>
+  ) : (
+    <Separator orientation={orientation} />
+  )
+
+  return orientation === "vertical" ? (
+    <div className="flex h-44 items-stretch">{separator}</div>
+  ) : (
+    <div className="w-full max-w-sm">{separator}</div>
+  )
+}
 
 export default function SeparatorDocsPage() {
   return (
@@ -22,6 +63,26 @@ export default function SeparatorDocsPage() {
         title="Separator"
         description="A thin rule that divides content horizontally or vertically. A slot mode floats any element on the line with start, center, or end alignment."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            slot: { type: "text", defaultValue: "Continue" },
+            orientation: {
+              type: "options",
+              options: ["horizontal", "vertical"],
+              defaultValue: "horizontal",
+            },
+            slotAlign: {
+              type: "options",
+              options: ["start", "center", "end"],
+              defaultValue: "center",
+            },
+          }}
+          renderPreview={SeparatorPlaygroundPreview}
+          renderCode={separatorPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

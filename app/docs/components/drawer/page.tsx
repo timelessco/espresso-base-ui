@@ -22,6 +22,56 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function drawerPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.swipeDirection !== "down" ? ` swipeDirection="${v.swipeDirection}"` : "",
+    v.showSwipeHandle ? " showSwipeHandle" : "",
+    v.snapPoints ? " snapPoints={[0.4, 1]}" : "",
+  ].join("")
+
+  return `<Drawer${attrs}>
+  <DrawerTrigger render={<Button variant="outline">Open drawer</Button>} />
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Drawer title</DrawerTitle>
+      <DrawerDescription>
+        A short description of the drawer contents.
+      </DrawerDescription>
+    </DrawerHeader>
+    <DrawerFooter>
+      <DrawerClose render={<Button variant="outline">Close</Button>} />
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>`
+}
+
+function DrawerPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Drawer
+      swipeDirection={v.swipeDirection as "down" | "up" | "left" | "right"}
+      showSwipeHandle={Boolean(v.showSwipeHandle)}
+      snapPoints={v.snapPoints ? [0.4, 1] : undefined}
+    >
+      <DrawerTrigger render={<Button variant="outline">Open drawer</Button>} />
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Drawer title</DrawerTitle>
+          <DrawerDescription>
+            A short description of the drawer contents.
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose render={<Button variant="outline">Close</Button>} />
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  )
+}
 
 export default function DrawerDocsPage() {
   return (
@@ -30,6 +80,22 @@ export default function DrawerDocsPage() {
         title="Drawer"
         description="A swipe-dismissable panel that slides in from any screen edge, built on Base UI. Supports snap points, a grab handle and nested stacking."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            swipeDirection: {
+              type: "options",
+              options: ["down", "up", "left", "right"],
+              defaultValue: "down",
+            },
+            showSwipeHandle: { type: "boolean", defaultValue: true },
+            snapPoints: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={DrawerPlaygroundPreview}
+          renderCode={drawerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

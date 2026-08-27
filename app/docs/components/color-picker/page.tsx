@@ -23,6 +23,56 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function colorPickerPlaygroundCode(v: PlaygroundValues) {
+  const size = v.size as string
+  const attrs = [
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    size !== "md" ? ` size="${size}"` : "",
+  ].join("")
+  return [
+    `<ColorPicker defaultValue="#3b82f6">`,
+    `  <ColorPickerTrigger${attrs}>`,
+    `    <ColorPickerSwatch${size !== "md" ? ` size="${size}"` : ""} />`,
+    `    ${v.label}`,
+    `  </ColorPickerTrigger>`,
+    `  <ColorPickerContent>`,
+    `    <ColorPickerArea />`,
+    `    <ColorPickerHueSlider />`,
+    `    <ColorPickerFormatSelect className="w-full" />`,
+    `    <ColorPickerInput className="flex-1"${v.withoutAlpha ? " withoutAlpha" : ""} />`,
+    `  </ColorPickerContent>`,
+    `</ColorPicker>`,
+  ].join("\n")
+}
+
+function ColorPickerPlaygroundPreview(v: PlaygroundValues) {
+  const size = v.size as "xs" | "sm" | "md" | "lg"
+  return (
+    <ColorPicker defaultValue="#3b82f6">
+      <ColorPickerTrigger
+        variant={v.variant as "outline" | "subtle" | "ghost"}
+        size={size}
+      >
+        <ColorPickerSwatch size={size} />
+        {v.label}
+      </ColorPickerTrigger>
+      <ColorPickerContent>
+        <ColorPickerArea />
+        <ColorPickerHueSlider />
+        <ColorPickerFormatSelect className="w-full" />
+        <ColorPickerInput
+          className="flex-1"
+          withoutAlpha={Boolean(v.withoutAlpha)}
+        />
+      </ColorPickerContent>
+    </ColorPicker>
+  )
+}
 
 export default function ColorPickerDocsPage() {
   return (
@@ -31,6 +81,27 @@ export default function ColorPickerDocsPage() {
         title="Color Picker"
         description="A popover color picker with saturation area, hue and alpha sliders and an eye-dropper. Switches between hex, RGB, HSL and HSB formats."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            label: { type: "text", defaultValue: "Pick a color" },
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            withoutAlpha: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ColorPickerPlaygroundPreview}
+          renderCode={colorPickerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

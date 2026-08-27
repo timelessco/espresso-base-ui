@@ -23,6 +23,47 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function calendarPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.numberOfMonths === "2" ? "\n  numberOfMonths={2}" : "",
+    v.captionLayout === "dropdown" ? `\n  captionLayout="dropdown"` : "",
+    v.showOutsideDays ? "" : "\n  showOutsideDays={false}",
+    v.showWeekNumber ? "\n  showWeekNumber" : "",
+    v.disableWeekends ? "\n  disabled={{ dayOfWeek: [0, 6] }}" : "",
+  ].join("")
+
+  return [
+    "const [date, setDate] = React.useState<Date | undefined>(new Date())",
+    "",
+    `<Calendar\n  mode="single"\n  selected={date}\n  onSelect={setDate}${attrs}\n/>`,
+  ].join("\n")
+}
+
+function CalendarPlaygroundDemo({ values: v }: { values: PlaygroundValues }) {
+  const [date, setDate] = React.useState<Date | undefined>(new Date())
+
+  return (
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      numberOfMonths={Number(v.numberOfMonths)}
+      captionLayout={v.captionLayout as "label" | "dropdown"}
+      showOutsideDays={Boolean(v.showOutsideDays)}
+      showWeekNumber={Boolean(v.showWeekNumber)}
+      disabled={v.disableWeekends ? { dayOfWeek: [0, 6] } : undefined}
+    />
+  )
+}
+
+function CalendarPlaygroundPreview(v: PlaygroundValues) {
+  return <CalendarPlaygroundDemo values={v} />
+}
 
 export default function CalendarDocsPage() {
   const [date, setDate] = React.useState<Date | undefined>(new Date())
@@ -39,6 +80,28 @@ export default function CalendarDocsPage() {
         title="Calendar"
         description="A date grid built on react-day-picker. Supports single, multiple and range selection, and composes into date pickers inside a Popover."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            numberOfMonths: {
+              type: "options",
+              options: ["1", "2"],
+              defaultValue: "1",
+            },
+            captionLayout: {
+              type: "options",
+              options: ["label", "dropdown"],
+              defaultValue: "label",
+            },
+            showOutsideDays: { type: "boolean", defaultValue: true },
+            showWeekNumber: { type: "boolean", defaultValue: false },
+            disableWeekends: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={CalendarPlaygroundPreview}
+          renderCode={calendarPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

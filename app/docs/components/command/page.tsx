@@ -26,6 +26,83 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function commandPlaygroundCode(v: PlaygroundValues) {
+  const lines = [
+    `<Command className="max-w-md rounded-xl shadow-5xs">`,
+    `  <CommandInput placeholder="${v.placeholder}" />`,
+    `  <CommandList>`,
+    `    <CommandEmpty>No results found.</CommandEmpty>`,
+    `    <CommandGroup heading="Suggestions">`,
+    `      <CommandItem>`,
+    `        <Calendar />`,
+    `        Calendar`,
+    `      </CommandItem>`,
+    `      <CommandItem>`,
+    `        <Smile />`,
+    `        Search Emoji`,
+    `      </CommandItem>`,
+    `    </CommandGroup>`,
+    `    <CommandSeparator />`,
+    `    <CommandGroup heading="Settings">`,
+    `      <CommandItem>`,
+    `        <User />`,
+    `        Profile`,
+  ]
+  if (v.shortcuts) lines.push(`        <CommandShortcut>⌘P</CommandShortcut>`)
+  lines.push(
+    `      </CommandItem>`,
+    `      <CommandItem>`,
+    `        <Settings />`,
+    `        Settings`
+  )
+  if (v.shortcuts) lines.push(`        <CommandShortcut>⌘S</CommandShortcut>`)
+  lines.push(
+    `      </CommandItem>`,
+    `    </CommandGroup>`,
+    `  </CommandList>`,
+    `</Command>`
+  )
+  return lines.join("\n")
+}
+
+function CommandPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Command className="w-full max-w-md rounded-xl shadow-5xs">
+      <CommandInput placeholder={v.placeholder as string} />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Suggestions">
+          <CommandItem>
+            <Calendar />
+            Calendar
+          </CommandItem>
+          <CommandItem>
+            <Smile />
+            Search Emoji
+          </CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="Settings">
+          <CommandItem>
+            <User />
+            Profile
+            {Boolean(v.shortcuts) && <CommandShortcut>⌘P</CommandShortcut>}
+          </CommandItem>
+          <CommandItem>
+            <Settings />
+            Settings
+            {Boolean(v.shortcuts) && <CommandShortcut>⌘S</CommandShortcut>}
+          </CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  )
+}
 
 function CommandDialogDemo() {
   const [open, setOpen] = React.useState(false)
@@ -80,6 +157,20 @@ export default function CommandDocsPage() {
         title="Command"
         description="A command palette that filters actions as you type, built on cmdk. Use it inline or in CommandDialog for a ⌘K-style overlay."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            placeholder: {
+              type: "text",
+              defaultValue: "Type a command or search...",
+            },
+            shortcuts: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={CommandPlaygroundPreview}
+          renderCode={commandPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>
