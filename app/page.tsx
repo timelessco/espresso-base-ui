@@ -51,7 +51,7 @@ function SiteHeader({ scrolled }: { scrolled: boolean }) {
             variant="ghost"
             size="sm"
             nativeButton={false}
-            render={<Link href="/ui/alert">Docs</Link>}
+            render={<Link href="/docs">Docs</Link>}
           />
           <Button
             variant="ghost"
