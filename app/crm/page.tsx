@@ -11,6 +11,7 @@ import {
   Handshake,
   LayoutDashboard,
   Mail,
+  PanelLeft,
   PanelLeftClose,
   Phone,
   Search,
@@ -140,6 +141,13 @@ import {
   MobileShellContent,
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 const views = [
   { label: "List view", value: "list-view", icon: AlignJustify },
@@ -1030,6 +1038,22 @@ const columns: ColumnDef<Lead>[] = [
   },
 ]
 
+// Sidebar destinations shown in the mobile bottom-sheet menu.
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Dashboard", icon: LayoutDashboard },
+  { label: "Tasks", icon: ClipboardList },
+  { label: "Notes", icon: StickyNote },
+  { label: "Emails", icon: Mail },
+  { label: "Leads", icon: Users },
+  { label: "Deals", icon: Handshake },
+  { label: "Organization", icon: Building2 },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Contacts", icon: Contact },
+  { label: "Call & Event Logs", icon: Phone },
+]
+
 export default function CrmPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -1490,10 +1514,42 @@ export default function CrmPage() {
       <MobileShell>
         <MobileShellHeader className="justify-between">
           <span className="text-base font-medium text-foreground">Leads</span>
-          <Button size="sm">
-            <Plus />
-            Create
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm">
+              <Plus />
+              Create
+            </Button>
+            <Drawer showSwipeHandle>
+              <DrawerTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Open menu"
+                  />
+                }
+              >
+                <PanelLeft />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>CRM</DrawerTitle>
+                </DrawerHeader>
+                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  {mobileSidebarItems.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                    >
+                      <item.icon />
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </MobileShellHeader>
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}

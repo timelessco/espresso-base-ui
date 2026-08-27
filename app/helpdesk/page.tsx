@@ -15,6 +15,7 @@ import {
   Boxes,
   Workflow,
   CircleHelp,
+  PanelLeft,
   PanelRight,
   ArrowRight,
   ArrowRightFromLine,
@@ -129,6 +130,13 @@ import {
   MobileShellContent,
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 const statusColors: Record<string, string> = {
   New: "#3B82F6",
@@ -1092,6 +1100,17 @@ function HelpdeskSidebar() {
   )
 }
 
+// Sidebar destinations shown in the mobile bottom-sheet menu.
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Tickets", icon: Ticket },
+  { label: "Knowledge Base", icon: BookOpen },
+  { label: "Canned response", icon: MessageSquareReply },
+  { label: "Customers", icon: Users },
+  { label: "Contacts", icon: Contact },
+]
+
 export default function HelpdeskPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -1377,10 +1396,42 @@ export default function HelpdeskPage() {
       <MobileShell>
         <MobileShellHeader className="justify-between">
           <span className="text-base font-medium text-foreground">Tickets</span>
-          <Button size="sm">
-            <Plus />
-            New Ticket
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm">
+              <Plus />
+              New Ticket
+            </Button>
+            <Drawer showSwipeHandle>
+              <DrawerTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Open menu"
+                  />
+                }
+              >
+                <PanelLeft />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Helpdesk</DrawerTitle>
+                </DrawerHeader>
+                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  {mobileSidebarItems.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                    >
+                      <item.icon />
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </MobileShellHeader>
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}

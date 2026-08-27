@@ -12,6 +12,7 @@ import {
   CircleAlert,
   Boxes,
   CircleHelp,
+  PanelLeft,
   PanelRight,
   ArrowRightFromLine,
   Zap,
@@ -132,6 +133,13 @@ import {
   MobileShellContent,
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 const tasks = [
   {
@@ -585,6 +593,17 @@ function GameplanSidebar() {
   )
 }
 
+// Sidebar destinations shown in the mobile bottom-sheet menu.
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Inbox", icon: Inbox },
+  { label: "Home", icon: Home },
+  { label: "Drafts", icon: FileText },
+  { label: "Tasks", icon: ListTodo },
+  { label: "Pages", icon: BookOpen },
+]
+
 export default function GameplanPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -807,10 +826,42 @@ export default function GameplanPage() {
       <MobileShell>
         <MobileShellHeader className="justify-between">
           <span className="text-base font-medium text-foreground">Tasks</span>
-          <Button size="sm">
-            <Plus />
-            New task
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm">
+              <Plus />
+              New task
+            </Button>
+            <Drawer showSwipeHandle>
+              <DrawerTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Open menu"
+                  />
+                }
+              >
+                <PanelLeft />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Gameplan</DrawerTitle>
+                </DrawerHeader>
+                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  {mobileSidebarItems.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                    >
+                      <item.icon />
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </MobileShellHeader>
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}
