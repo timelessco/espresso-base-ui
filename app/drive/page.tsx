@@ -13,6 +13,7 @@ import {
   Boxes,
   Workflow,
   CircleHelp,
+  PanelLeft,
   PanelRight,
   ArrowRight,
   ArrowRightFromLine,
@@ -121,6 +122,13 @@ import {
   MobileShellContent,
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -726,6 +734,18 @@ function DriveSidebar() {
   )
 }
 
+// Sidebar destinations shown in the mobile bottom-sheet menu.
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Home", icon: Home },
+  { label: "Recents", icon: Clock },
+  { label: "Shared", icon: Share2 },
+  { label: "Trash", icon: Trash2 },
+  { label: "Favorites", icon: Heart },
+  { label: "Documents", icon: FileText },
+]
+
 export default function DrivePage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -918,11 +938,43 @@ export default function DrivePage() {
           <span className="text-base font-medium text-foreground">
             My Drive
           </span>
-          <Button size="sm">
-            <Upload />
-            Upload
-            <ChevronDown className="size-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm">
+              <Upload />
+              Upload
+              <ChevronDown className="size-4" />
+            </Button>
+            <Drawer showSwipeHandle>
+              <DrawerTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Open menu"
+                  />
+                }
+              >
+                <PanelLeft />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Drive</DrawerTitle>
+                </DrawerHeader>
+                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  {mobileSidebarItems.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                    >
+                      <item.icon />
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </MobileShellHeader>
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}

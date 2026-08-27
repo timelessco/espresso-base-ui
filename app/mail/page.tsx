@@ -14,6 +14,7 @@ import {
   Boxes,
   Workflow,
   CircleHelp,
+  PanelLeft,
   PanelRight,
   ArrowRightFromLine,
   Zap,
@@ -123,6 +124,13 @@ import {
   MobileShellContent,
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -1158,6 +1166,24 @@ function MailSidebar() {
   )
 }
 
+// Sidebar destinations shown in the mobile bottom-sheet menu.
+const mobileSidebarItems = [
+  { label: "Home", icon: Home },
+  { label: "Inbox", icon: Inbox },
+  { label: "Starred", icon: Star },
+  { label: "Important", icon: AlertTriangle },
+  { label: "Sent", icon: Send },
+  { label: "Drafts", icon: FileText },
+  { label: "Categories", icon: Tag },
+  { label: "Contacts", icon: Users },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Schedules", icon: Clock },
+  { label: "Notebook", icon: BookOpen },
+  { label: "To-do's", icon: CheckCircle2 },
+  { label: "Spam", icon: ShieldAlert },
+  { label: "Trash", icon: Trash2 },
+]
+
 export default function MailPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -1445,10 +1471,42 @@ export default function MailPage() {
       <MobileShell>
         <MobileShellHeader className="justify-between">
           <span className="text-base font-medium text-foreground">Inbox</span>
-          <Button size="sm">
-            <Pencil className="size-4" />
-            Compose
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button size="sm">
+              <Pencil className="size-4" />
+              Compose
+            </Button>
+            <Drawer showSwipeHandle>
+              <DrawerTrigger
+                render={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label="Open menu"
+                  />
+                }
+              >
+                <PanelLeft />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Mail</DrawerTitle>
+                </DrawerHeader>
+                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  {mobileSidebarItems.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                    >
+                      <item.icon />
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </MobileShellHeader>
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}
