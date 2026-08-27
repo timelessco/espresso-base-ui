@@ -14,7 +14,7 @@ const inputGroupVariants = cva(
     // disabled
     "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:text-popover-foreground",
     // focus-within
-    "has-[[data-slot=input-group-control]:focus-visible]:shadow-raised!",
+    "has-[[data-slot=input-group-control]:focus-visible]:shadow-raised! has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-[rgba(201,201,201,0.9)]",
     // invalid
     "has-[[data-slot][aria-invalid=true]]:ring-3 has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
     // block/textarea layout
@@ -187,7 +187,7 @@ function InputGroupTextarea({
     <Textarea
       data-slot="input-group-control"
       className={cn(
-        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 ring-0 [--shadow-default:none] [--shadow-raised:none] hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:ring-0 active:border-0 active:bg-transparent! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
+        "flex-1 resize-none rounded-none border-0 bg-transparent py-2 ring-0 [--shadow-default:none] [--shadow-raised:none] hover:bg-transparent! focus:border-0 focus:bg-transparent! focus:ring-0 focus-visible:ring-0 active:border-0 active:bg-transparent! active:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
         className
       )}
       {...props}
