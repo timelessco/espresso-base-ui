@@ -13,6 +13,53 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function toastPlaygroundCode(v: PlaygroundValues) {
+  const lines = [
+    `toast.add({`,
+    `  type: "${v.type}",`,
+    `  title: "${v.title}",`,
+  ]
+  if (v.description) {
+    lines.push(`  description: "Sunday, December 03, 2023 at 9:00 AM",`)
+  }
+  if (v.action) {
+    lines.push(
+      `  actionProps: {`,
+      `    children: "Undo",`,
+      `    onClick: () => toast.close(),`,
+      `  },`
+    )
+  }
+  lines.push(`})`)
+  return lines.join("\n")
+}
+
+function ToastPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Button
+      variant="outline"
+      onClick={() =>
+        toast.add({
+          type: v.type as string,
+          title: v.title as string,
+          description: v.description
+            ? "Sunday, December 03, 2023 at 9:00 AM"
+            : undefined,
+          actionProps: v.action
+            ? { children: "Undo", onClick: () => toast.close() }
+            : undefined,
+        })
+      }
+    >
+      Show toast
+    </Button>
+  )
+}
 
 export default function ToastDocsPage() {
   return (
@@ -21,6 +68,23 @@ export default function ToastDocsPage() {
         title="Toast"
         description="Stacked, swipeable notifications built on Base UI's toast manager. Mount the Toaster once, then fire toasts imperatively from anywhere."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "Changes saved" },
+            type: {
+              type: "options",
+              options: ["success", "info", "warning", "error", "loading"],
+              defaultValue: "success",
+            },
+            description: { type: "boolean", defaultValue: true },
+            action: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ToastPlaygroundPreview}
+          renderCode={toastPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

@@ -22,13 +22,85 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const tabs = [
-  { id: "home", label: "Home", icon: <House /> },
-  { id: "search", label: "Search", icon: <Search /> },
-  { id: "alerts", label: "Alerts", icon: <Bell /> },
-  { id: "profile", label: "Profile", icon: <User /> },
+  { id: "home", label: "Home", icon: <House />, iconName: "House" },
+  { id: "search", label: "Search", icon: <Search />, iconName: "Search" },
+  { id: "alerts", label: "Alerts", icon: <Bell />, iconName: "Bell" },
+  { id: "profile", label: "Profile", icon: <User />, iconName: "User" },
 ]
+
+function mobileShellPlaygroundCode(v: PlaygroundValues) {
+  const lines = [
+    `<MobileShell>`,
+    `  <MobileShellHeader>${v.title}</MobileShellHeader>`,
+    ``,
+    `  <MobileShellContent>Scrollable page content</MobileShellContent>`,
+    ``,
+    `  <MobileNav>`,
+  ]
+  for (const tab of tabs) {
+    const active = v.tab === tab.id ? " active" : ""
+    lines.push(
+      `    <MobileNavItem label="${tab.label}" icon={<${tab.iconName} />}${active} />`
+    )
+  }
+  lines.push(`  </MobileNav>`, `</MobileShell>`)
+  return lines.join("\n")
+}
+
+function MobileShellPlaygroundPreview(v: PlaygroundValues) {
+  const active = v.tab as string
+  const label = tabs.find((t) => t.id === active)?.label
+
+  return (
+    <div className="h-[320px] w-[210px] overflow-hidden rounded-3xl border-4 border-foreground/90 bg-background shadow-elevation-md">
+      <MobileShell className="h-full">
+        <MobileShellHeader>
+          <span className="truncate text-sm font-medium text-foreground">
+            {v.title}
+          </span>
+        </MobileShellHeader>
+
+        <MobileShellContent className="flex flex-col gap-2 p-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-2 rounded-lg border border-border-soft bg-card p-2"
+            >
+              <Avatar className="size-7">
+                <AvatarFallback>{String.fromCharCode(65 + i)}</AvatarFallback>
+              </Avatar>
+              <div className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-xs font-medium text-foreground">
+                  {label} item {i + 1}
+                </span>
+                <span className="truncate text-[10px] text-muted-foreground">
+                  Header and nav stay pinned.
+                </span>
+              </div>
+            </div>
+          ))}
+        </MobileShellContent>
+
+        <MobileNav>
+          {tabs.map((tab) => (
+            <MobileNavItem
+              key={tab.id}
+              label={tab.label}
+              icon={tab.icon}
+              active={active === tab.id}
+            />
+          ))}
+        </MobileNav>
+      </MobileShell>
+    </div>
+  )
+}
 
 function MobileShellDemo() {
   const [active, setActive] = React.useState("home")
@@ -86,6 +158,21 @@ export default function MobileShellDocsPage() {
         title="Mobile Shell"
         description="A fixed mobile app frame with a pinned header, scrolling content area, and bottom tab bar. Render it below the md breakpoint via useIsMobile."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "Inbox" },
+            tab: {
+              type: "options",
+              options: ["home", "search", "alerts", "profile"],
+              defaultValue: "home",
+            },
+          }}
+          renderPreview={MobileShellPlaygroundPreview}
+          renderCode={mobileShellPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

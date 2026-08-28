@@ -14,6 +14,41 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function ratingPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.readOnly ? ` value={${v.value}} readOnly` : ` defaultValue={${v.value}}`,
+    v.disabled ? " disabled" : "",
+  ].join("")
+  return `<Rating${attrs}>
+  {Array.from({ length: 5 }).map((_, i) => (
+    <RatingButton key={i} icon={Star} />
+  ))}
+</Rating>`
+}
+
+function RatingPlaygroundPreview(v: PlaygroundValues) {
+  const value = Number(v.value)
+  const stars = Array.from({ length: 5 }).map((_, i) => (
+    <RatingButton key={i} icon={Star} />
+  ))
+  if (v.readOnly) {
+    return (
+      <Rating value={value} readOnly disabled={Boolean(v.disabled)}>
+        {stars}
+      </Rating>
+    )
+  }
+  return (
+    <Rating key={value} defaultValue={value} disabled={Boolean(v.disabled)}>
+      {stars}
+    </Rating>
+  )
+}
 
 function ControlledDemo() {
   const [value, setValue] = React.useState(3)
@@ -40,6 +75,22 @@ export default function RatingDocsPage() {
         title="Rating"
         description="An interactive star-rating control with hover preview and any Lucide icon as the shape. Supports read-only, disabled, and form modes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            value: {
+              type: "options",
+              options: ["2", "3", "4", "5"],
+              defaultValue: "3",
+            },
+            readOnly: { type: "boolean", defaultValue: false },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={RatingPlaygroundPreview}
+          renderCode={ratingPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

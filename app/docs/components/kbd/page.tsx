@@ -20,6 +20,33 @@ import {
   DocSection,
   PartsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function kbdPlaygroundKeys(v: PlaygroundValues) {
+  return (v.keys as string).trim().split(/\s+/).filter(Boolean)
+}
+
+function kbdPlaygroundCode(v: PlaygroundValues) {
+  const kbds = kbdPlaygroundKeys(v).map((key) => `<Kbd>${key}</Kbd>`)
+  if (!v.group) return kbds.join("\n")
+  return [`<KbdGroup>`, ...kbds.map((line) => `  ${line}`), `</KbdGroup>`].join(
+    "\n"
+  )
+}
+
+function KbdPlaygroundPreview(v: PlaygroundValues) {
+  const kbds = kbdPlaygroundKeys(v).map((key, index) => (
+    <Kbd key={index}>{key}</Kbd>
+  ))
+  return v.group ? (
+    <KbdGroup>{kbds}</KbdGroup>
+  ) : (
+    <div className="flex flex-wrap items-center gap-3">{kbds}</div>
+  )
+}
 
 export default function KbdDocsPage() {
   return (
@@ -28,6 +55,17 @@ export default function KbdDocsPage() {
         title="Kbd"
         description="Displays keyboard keys and shortcuts as muted chips. KbdGroup lines up multiple keys into a combination."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            keys: { type: "text", defaultValue: "⌘ ⇧ K" },
+            group: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={KbdPlaygroundPreview}
+          renderCode={kbdPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

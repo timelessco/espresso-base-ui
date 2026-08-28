@@ -19,6 +19,59 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function buttonGroupPlaygroundCode(v: PlaygroundValues) {
+  const isVertical = v.orientation === "vertical"
+  const attrs = [
+    isVertical ? ` orientation="vertical"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.detached ? ` detached` : "",
+  ].join("")
+  const button = (label: string) =>
+    v.variant !== "default"
+      ? `  <Button variant="${v.variant}">${label}</Button>`
+      : `  <Button>${label}</Button>`
+  const separator = isVertical
+    ? `  <ButtonGroupSeparator orientation="horizontal" />`
+    : `  <ButtonGroupSeparator />`
+  const showSeparator = Boolean(v.separator) && !v.detached
+
+  const lines = [`<ButtonGroup${attrs}>`, button("Left")]
+  if (showSeparator) lines.push(separator)
+  lines.push(button("Center"))
+  if (showSeparator) lines.push(separator)
+  lines.push(button("Right"), `</ButtonGroup>`)
+  return lines.join("\n")
+}
+
+function ButtonGroupPlaygroundPreview(v: PlaygroundValues) {
+  const isVertical = v.orientation === "vertical"
+  const variant = v.variant as "default" | "outline" | "secondary"
+  const showSeparator = Boolean(v.separator) && !v.detached
+  const separator = (
+    <ButtonGroupSeparator
+      orientation={isVertical ? "horizontal" : "vertical"}
+    />
+  )
+
+  return (
+    <ButtonGroup
+      orientation={isVertical ? "vertical" : "horizontal"}
+      size={v.size as "sm" | "default" | "lg"}
+      detached={Boolean(v.detached)}
+    >
+      <Button variant={variant}>Left</Button>
+      {showSeparator && separator}
+      <Button variant={variant}>Center</Button>
+      {showSeparator && separator}
+      <Button variant={variant}>Right</Button>
+    </ButtonGroup>
+  )
+}
 
 export default function ButtonGroupDocsPage() {
   return (
@@ -27,6 +80,32 @@ export default function ButtonGroupDocsPage() {
         title="Button Group"
         description="Joins related buttons into one segmented control. Horizontal or vertical, in three sizes, with an optional detached spacing mode."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            variant: {
+              type: "options",
+              options: ["outline", "secondary", "default"],
+              defaultValue: "outline",
+            },
+            orientation: {
+              type: "options",
+              options: ["horizontal", "vertical"],
+              defaultValue: "horizontal",
+            },
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg"],
+              defaultValue: "default",
+            },
+            detached: { type: "boolean", defaultValue: false },
+            separator: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ButtonGroupPlaygroundPreview}
+          renderCode={buttonGroupPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

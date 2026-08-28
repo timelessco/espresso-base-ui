@@ -16,11 +16,91 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 function AppIcon() {
   return (
     <div className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
       <Sparkles className="size-4" />
+    </div>
+  )
+}
+
+function headerPlaygroundCode(v: PlaygroundValues) {
+  const lines = ["<Header"]
+  if (v.leftControls) {
+    lines.push(
+      "  leftControls={",
+      "    <>",
+      "      <AppIcon />",
+      '      <span className="text-sm font-medium">Builder</span>',
+      "    </>",
+      "  }"
+    )
+  }
+  if (v.centerControls) {
+    lines.push(
+      "  centerControls={",
+      '    <Button variant="ghost" size="sm" className="gap-1.5">',
+      '      <span className="font-medium">My page</span>',
+      "      <ChevronDown />",
+      "    </Button>",
+      "  }"
+    )
+  }
+  if (v.rightControls) {
+    lines.push(
+      "  rightControls={",
+      "    <>",
+      '      <Button variant="secondary" size="sm">',
+      "        <Share2 />",
+      "        Share",
+      "      </Button>",
+      '      <Button size="sm">Publish</Button>',
+      "    </>",
+      "  }"
+    )
+  }
+  if (lines.length === 1) return "<Header />"
+  lines.push("/>")
+  return lines.join("\n")
+}
+
+function HeaderPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-xl overflow-hidden rounded-lg">
+      <Header
+        leftControls={
+          v.leftControls ? (
+            <>
+              <AppIcon />
+              <span className="text-sm font-medium">Builder</span>
+            </>
+          ) : undefined
+        }
+        centerControls={
+          v.centerControls ? (
+            <Button variant="ghost" size="sm" className="gap-1.5">
+              <span className="font-medium">My page</span>
+              <ChevronDown />
+            </Button>
+          ) : undefined
+        }
+        rightControls={
+          v.rightControls ? (
+            <>
+              <Button variant="secondary" size="sm">
+                <Share2 />
+                Share
+              </Button>
+              <Button size="sm">Publish</Button>
+            </>
+          ) : undefined
+        }
+      />
     </div>
   )
 }
@@ -32,6 +112,18 @@ export default function HeaderDocsPage() {
         title="Header"
         description="A slim application top bar with left, center and right control slots. Fits breadcrumbs, selects, button groups and avatars."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            leftControls: { type: "boolean", defaultValue: true },
+            centerControls: { type: "boolean", defaultValue: false },
+            rightControls: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={HeaderPlaygroundPreview}
+          renderCode={headerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

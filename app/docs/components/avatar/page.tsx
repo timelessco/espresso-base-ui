@@ -21,8 +21,41 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const avatarSrc = "https://github.com/shadcn.png"
+
+function avatarPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "circle" ? ` variant="${v.variant}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  const lines = [`<Avatar${attrs}>`]
+  if (v.image) {
+    lines.push(`  <AvatarImage src="${avatarSrc}" alt="User" />`)
+  }
+  lines.push(`  <AvatarFallback>${v.fallback}</AvatarFallback>`)
+  if (v.badge) lines.push(`  <AvatarBadge />`)
+  lines.push(`</Avatar>`)
+  return lines.join("\n")
+}
+
+function AvatarPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Avatar
+      variant={v.variant as "circle" | "square"}
+      size={v.size as "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"}
+    >
+      {Boolean(v.image) && <AvatarImage src={avatarSrc} alt="User" />}
+      <AvatarFallback>{v.fallback}</AvatarFallback>
+      {Boolean(v.badge) && <AvatarBadge />}
+    </Avatar>
+  )
+}
 
 export default function AvatarDocsPage() {
   return (
@@ -31,6 +64,28 @@ export default function AvatarDocsPage() {
         title="Avatar"
         description="An image element with a fallback for representing a user. Seven sizes, circle or square, with status badges and overlapping groups."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            fallback: { type: "text", defaultValue: "CN" },
+            variant: {
+              type: "options",
+              options: ["circle", "square"],
+              defaultValue: "circle",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"],
+              defaultValue: "default",
+            },
+            image: { type: "boolean", defaultValue: true },
+            badge: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={AvatarPlaygroundPreview}
+          renderCode={avatarPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

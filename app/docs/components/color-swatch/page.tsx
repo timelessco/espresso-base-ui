@@ -11,6 +11,31 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function colorSwatchPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    ` color="${v.color}"`,
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.selected ? " selected" : "",
+    v.disabled ? " disabled" : "",
+  ].join("")
+  return `<ColorSwatch${attrs} />`
+}
+
+function ColorSwatchPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <ColorSwatch
+      color={v.color as string}
+      size={v.size as "sm" | "default" | "lg"}
+      selected={Boolean(v.selected)}
+      disabled={Boolean(v.disabled)}
+    />
+  )
+}
 
 export default function ColorSwatchDocsPage() {
   return (
@@ -19,6 +44,23 @@ export default function ColorSwatchDocsPage() {
         title="Color Swatch"
         description="A circular chip that previews a CSS color. Shows a checkerboard behind transparent values and a check mark when selected."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            color: { type: "text", defaultValue: "#3b82f6" },
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg"],
+              defaultValue: "default",
+            },
+            selected: { type: "boolean", defaultValue: true },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ColorSwatchPlaygroundPreview}
+          renderCode={colorSwatchPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

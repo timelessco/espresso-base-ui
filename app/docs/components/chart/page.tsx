@@ -4,6 +4,8 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
@@ -19,6 +21,10 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const chartData = [
   { month: "Jan", sales: 186 },
@@ -33,6 +39,68 @@ const chartConfig = {
   sales: { label: "Sales", color: "var(--chart-7)" },
 } satisfies ChartConfig
 
+function chartPlaygroundCode(v: PlaygroundValues) {
+  const lines = [
+    `<ChartContainer config={chartConfig} className="aspect-auto h-[200px] w-full">`,
+    `  <BarChart accessibilityLayer data={chartData}>`,
+  ]
+  if (v.grid) {
+    lines.push(`    <CartesianGrid vertical={false} strokeDasharray="4 4" />`)
+  }
+  lines.push(
+    `    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />`
+  )
+  if (v.tooltip) {
+    lines.push(
+      `    <ChartTooltip content={<ChartTooltipContent hideLabel />} />`
+    )
+  }
+  if (v.legend) {
+    lines.push(`    <ChartLegend content={<ChartLegendContent />} />`)
+  }
+  lines.push(
+    `    <Bar dataKey="sales" fill="var(--color-sales)" barSize={${v.barSize}} radius={[2, 2, 0, 0]} />`,
+    `  </BarChart>`,
+    `</ChartContainer>`
+  )
+  return lines.join("\n")
+}
+
+function ChartPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-md">
+      <ChartContainer
+        config={chartConfig}
+        className="aspect-auto h-[200px] w-full"
+      >
+        <BarChart accessibilityLayer data={chartData}>
+          {Boolean(v.grid) && (
+            <CartesianGrid vertical={false} strokeDasharray="4 4" />
+          )}
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+          />
+          {Boolean(v.tooltip) && (
+            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+          )}
+          {Boolean(v.legend) && (
+            <ChartLegend content={<ChartLegendContent />} />
+          )}
+          <Bar
+            dataKey="sales"
+            fill="var(--color-sales)"
+            barSize={Number(v.barSize)}
+            radius={[2, 2, 0, 0]}
+          />
+        </BarChart>
+      </ChartContainer>
+    </div>
+  )
+}
+
 export default function ChartDocsPage() {
   return (
     <DocPage>
@@ -40,6 +108,23 @@ export default function ChartDocsPage() {
         title="Chart"
         description="Recharts wrappers with themed grid, tooltip and legend. A config maps each series to a label, icon and color exposed as CSS variables."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            barSize: {
+              type: "options",
+              options: ["12", "24", "36"],
+              defaultValue: "24",
+            },
+            grid: { type: "boolean", defaultValue: true },
+            tooltip: { type: "boolean", defaultValue: true },
+            legend: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ChartPlaygroundPreview}
+          renderCode={chartPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

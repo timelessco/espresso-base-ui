@@ -16,6 +16,41 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function progressPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    ` value={${v.value}}`,
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.type !== "default" ? ` type="segmented"` : "",
+  ].join("")
+  if (!v.label) return `<Progress${attrs} className="w-80" />`
+  return `<Progress${attrs} className="w-80">
+  <ProgressLabel>Downloading</ProgressLabel>
+  <ProgressValue />
+</Progress>`
+}
+
+function ProgressPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Progress
+      value={Number(v.value)}
+      size={v.size as "sm" | "default" | "lg" | "xl"}
+      type={v.type as "default" | "segmented"}
+      className="w-64"
+    >
+      {Boolean(v.label) && (
+        <>
+          <ProgressLabel>Downloading</ProgressLabel>
+          <ProgressValue />
+        </>
+      )}
+    </Progress>
+  )
+}
 
 export default function ProgressDocsPage() {
   return (
@@ -24,6 +59,31 @@ export default function ProgressDocsPage() {
         title="Progress"
         description="Displays completion progress as a bar, built on Base UI. Four sizes, a segmented type, and optional label and value parts."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            value: {
+              type: "options",
+              options: ["25", "50", "75", "100"],
+              defaultValue: "50",
+            },
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg", "xl"],
+              defaultValue: "default",
+            },
+            type: {
+              type: "options",
+              options: ["default", "segmented"],
+              defaultValue: "default",
+            },
+            label: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={ProgressPlaygroundPreview}
+          renderCode={progressPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

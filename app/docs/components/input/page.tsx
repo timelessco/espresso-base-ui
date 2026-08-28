@@ -12,6 +12,35 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function inputPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+    v.placeholder ? ` placeholder="${v.placeholder}"` : "",
+    v.disabled ? " disabled" : "",
+    v.invalid ? ` data-invalid="true"` : "",
+  ].join("")
+  return `<Input${attrs} />`
+}
+
+function InputPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-xs">
+      <Input
+        variant={v.variant as "outline" | "subtle" | "ghost"}
+        size={v.size as "xs" | "sm" | "md" | "lg"}
+        placeholder={v.placeholder as string}
+        disabled={Boolean(v.disabled)}
+        data-invalid={v.invalid ? "true" : undefined}
+      />
+    </div>
+  )
+}
 
 export default function InputDocsPage() {
   return (
@@ -20,6 +49,28 @@ export default function InputDocsPage() {
         title="Input"
         description="A single-line text input built on Base UI. Outline, subtle and ghost variants across four sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            placeholder: { type: "text", defaultValue: "Email address" },
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            disabled: { type: "boolean", defaultValue: false },
+            invalid: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={InputPlaygroundPreview}
+          renderCode={inputPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

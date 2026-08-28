@@ -11,6 +11,27 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function spinnerPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.track ? " track" : "",
+  ].join("")
+  return `<Spinner${attrs} />`
+}
+
+function SpinnerPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Spinner
+      size={v.size as "sm" | "default" | "lg" | "xl"}
+      track={Boolean(v.track)}
+    />
+  )
+}
 
 export default function SpinnerDocsPage() {
   return (
@@ -19,6 +40,21 @@ export default function SpinnerDocsPage() {
         title="Spinner"
         description="An animated loading indicator with a conic-gradient arc. Inherits the current text color and comes in four sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg", "xl"],
+              defaultValue: "default",
+            },
+            track: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={SpinnerPlaygroundPreview}
+          renderCode={spinnerPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

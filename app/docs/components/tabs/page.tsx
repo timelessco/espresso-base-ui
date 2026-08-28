@@ -20,6 +20,73 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+const playgroundTriggers = [
+  { value: "account", label: "Account", icon: User, iconName: "User" },
+  { value: "password", label: "Password", icon: Lock, iconName: "Lock" },
+  {
+    value: "settings",
+    label: "Settings",
+    icon: Settings,
+    iconName: "Settings",
+  },
+] as const
+
+function tabsPlaygroundCode(v: PlaygroundValues) {
+  const rootAttrs =
+    v.orientation === "vertical" ? ` orientation="vertical"` : ""
+  const listAttrs = [
+    v.variant !== "default" ? ` variant="${v.variant}"` : "",
+    v.size !== "sm" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  const lines = [
+    `<Tabs defaultValue="account"${rootAttrs}>`,
+    `  <TabsList${listAttrs}>`,
+  ]
+  for (const trigger of playgroundTriggers) {
+    if (v.icons) {
+      lines.push(
+        `    <TabsTrigger value="${trigger.value}">`,
+        `      <${trigger.iconName} /> ${trigger.label}`,
+        `    </TabsTrigger>`
+      )
+    } else {
+      lines.push(
+        `    <TabsTrigger value="${trigger.value}">${trigger.label}</TabsTrigger>`
+      )
+    }
+  }
+  lines.push(`    <TabsIndicator />`, `  </TabsList>`, `</Tabs>`)
+  return lines.join("\n")
+}
+
+function TabsPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Tabs
+      key={`${v.variant}-${v.size}-${v.orientation}-${v.icons}`}
+      defaultValue="account"
+      orientation={v.orientation as "horizontal" | "vertical"}
+    >
+      <TabsList
+        variant={v.variant as "default" | "line" | "ghost" | "browser"}
+        size={v.size as "sm" | "default"}
+      >
+        {playgroundTriggers.map((trigger) => (
+          <TabsTrigger key={trigger.value} value={trigger.value}>
+            {Boolean(v.icons) && <trigger.icon />}
+            {trigger.label}
+          </TabsTrigger>
+        ))}
+        <TabsIndicator />
+      </TabsList>
+    </Tabs>
+  )
+}
 
 export default function TabsDocsPage() {
   return (
@@ -28,6 +95,31 @@ export default function TabsDocsPage() {
         title="Tabs"
         description="A set of layered panels with one visible at a time, built on Base UI. Four list variants and a sliding indicator that animates between triggers."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            variant: {
+              type: "options",
+              options: ["default", "line", "ghost", "browser"],
+              defaultValue: "default",
+            },
+            size: {
+              type: "options",
+              options: ["sm", "default"],
+              defaultValue: "sm",
+            },
+            orientation: {
+              type: "options",
+              options: ["horizontal", "vertical"],
+              defaultValue: "horizontal",
+            },
+            icons: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={TabsPlaygroundPreview}
+          renderCode={tabsPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

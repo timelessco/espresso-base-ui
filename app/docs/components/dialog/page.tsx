@@ -22,6 +22,56 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function dialogPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    !v.showCloseButton ? ` showCloseButton={false}` : "",
+  ].join("")
+
+  return `<Dialog>
+  <DialogTrigger render={<Button variant="outline">Open dialog</Button>} />
+  <DialogContent${attrs}>
+    <DialogHeader>
+      <DialogTitle>Dialog title</DialogTitle>
+      <DialogDescription>
+        A short description of the dialog contents.
+      </DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose render={<Button variant="outline">Cancel</Button>} />
+      <Button>Save changes</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`
+}
+
+function DialogPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Dialog>
+      <DialogTrigger render={<Button variant="outline">Open dialog</Button>} />
+      <DialogContent
+        size={v.size as "sm" | "default" | "lg"}
+        showCloseButton={Boolean(v.showCloseButton)}
+      >
+        <DialogHeader>
+          <DialogTitle>Dialog title</DialogTitle>
+          <DialogDescription>
+            A short description of the dialog contents.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose render={<Button variant="outline">Cancel</Button>} />
+          <Button>Save changes</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
 
 export default function DialogDocsPage() {
   return (
@@ -30,6 +80,21 @@ export default function DialogDocsPage() {
         title="Dialog"
         description="A modal window layered over the page, built on Base UI. A centered card with header, content and footer in three width presets."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg"],
+              defaultValue: "default",
+            },
+            showCloseButton: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={DialogPlaygroundPreview}
+          renderCode={dialogPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

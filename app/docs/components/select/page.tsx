@@ -23,6 +23,10 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 const fruits = [
   { label: "Select a fruit", value: null },
@@ -48,6 +52,48 @@ const fruitsWithIcons = [
   { label: "Grape", value: "grape", icon: Grape },
 ]
 
+function selectPlaygroundCode(v: PlaygroundValues) {
+  const itemsName = v.icons ? "fruitsWithIcons" : "fruits"
+  const attrs = [
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+  ].join("")
+  return `<Select items={${itemsName}}>
+  <SelectTrigger${attrs} className="w-48">
+    <SelectValue placeholder="${v.placeholder}" />
+  </SelectTrigger>
+  <SelectContent>
+    {${itemsName}.map((item) => (
+      <SelectItem key={item.value} value={item.value}>
+        {item.label}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>`
+}
+
+function SelectPlaygroundPreview(v: PlaygroundValues) {
+  const items = v.icons ? fruitsWithIcons : fruits
+  return (
+    <Select key={String(v.icons)} items={items}>
+      <SelectTrigger
+        variant={v.variant as "outline" | "subtle" | "ghost"}
+        size={v.size as "xs" | "sm" | "md" | "lg"}
+        className="w-48"
+      >
+        <SelectValue placeholder={v.placeholder as string} />
+      </SelectTrigger>
+      <SelectContent>
+        {items.map((item) => (
+          <SelectItem key={item.value} value={item.value}>
+            {item.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
 export default function SelectDocsPage() {
   return (
     <DocPage>
@@ -55,6 +101,27 @@ export default function SelectDocsPage() {
         title="Select"
         description="A dropdown for picking one value from a list, built on Base UI. Driven by an items array, with three trigger variants and four sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            placeholder: { type: "text", defaultValue: "Select a fruit" },
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            icons: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={SelectPlaygroundPreview}
+          renderCode={selectPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

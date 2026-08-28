@@ -13,6 +13,47 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function badgePlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "default" ? ` variant="${v.variant}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  if (v.icon) {
+    return [
+      `<Badge${attrs}>`,
+      `  <Diamond data-icon="inline-start" />`,
+      `  ${v.label}`,
+      `</Badge>`,
+    ].join("\n")
+  }
+  return `<Badge${attrs}>${v.label}</Badge>`
+}
+
+function BadgePlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Badge
+      variant={
+        v.variant as
+          | "default"
+          | "secondary"
+          | "destructive"
+          | "outline"
+          | "ghost"
+          | "link"
+      }
+      size={v.size as "default" | "md" | "lg"}
+    >
+      {Boolean(v.icon) && <Diamond data-icon="inline-start" />}
+      {v.label}
+    </Badge>
+  )
+}
 
 export default function BadgeDocsPage() {
   return (
@@ -21,6 +62,34 @@ export default function BadgeDocsPage() {
         title="Badge"
         description="A small pill for statuses, counts and labels. Six variants across three sizes, with leading and trailing icon slots."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            label: { type: "text", defaultValue: "Badge" },
+            variant: {
+              type: "options",
+              options: [
+                "default",
+                "secondary",
+                "destructive",
+                "outline",
+                "ghost",
+                "link",
+              ],
+              defaultValue: "default",
+            },
+            size: {
+              type: "options",
+              options: ["default", "md", "lg"],
+              defaultValue: "default",
+            },
+            icon: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={BadgePlaygroundPreview}
+          renderCode={badgePlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

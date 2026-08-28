@@ -24,6 +24,80 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function cardPlaygroundCode(v: PlaygroundValues) {
+  const size = v.size as string
+  const lines = [
+    `<Card${size !== "md" ? ` size="${size}"` : ""}>`,
+    `  <CardHeader>`,
+    `    <CardTitle>${v.title}</CardTitle>`,
+  ]
+  if (v.description) {
+    lines.push(`    <CardDescription>${v.description}</CardDescription>`)
+  }
+  if (v.action) {
+    lines.push(
+      `    <CardAction>`,
+      `      <Button variant="ghost" size="icon-sm">`,
+      `        <MoreHorizontalIcon />`,
+      `      </Button>`,
+      `    </CardAction>`
+    )
+  }
+  lines.push(
+    `  </CardHeader>`,
+    `  <CardContent>`,
+    `    <p className="text-sm text-muted-foreground">`,
+    `      Cards group related content and actions into a single surface.`,
+    `    </p>`,
+    `  </CardContent>`
+  )
+  if (v.footer) {
+    lines.push(
+      `  <CardFooter>`,
+      `    <Button className="w-full">View project</Button>`,
+      `  </CardFooter>`
+    )
+  }
+  lines.push(`</Card>`)
+  return lines.join("\n")
+}
+
+function CardPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-sm">
+      <Card size={v.size as "sm" | "md" | "lg" | "xl"}>
+        <CardHeader>
+          <CardTitle>{v.title}</CardTitle>
+          {Boolean(v.description) && (
+            <CardDescription>{v.description}</CardDescription>
+          )}
+          {Boolean(v.action) && (
+            <CardAction>
+              <Button variant="ghost" size="icon-sm">
+                <MoreHorizontalIcon />
+              </Button>
+            </CardAction>
+          )}
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">
+            Cards group related content and actions into a single surface.
+          </p>
+        </CardContent>
+        {Boolean(v.footer) && (
+          <CardFooter>
+            <Button className="w-full">View project</Button>
+          </CardFooter>
+        )}
+      </Card>
+    </div>
+  )
+}
 
 export default function CardDocsPage() {
   return (
@@ -32,6 +106,27 @@ export default function CardDocsPage() {
         title="Card"
         description="Displays a card with header, content and footer. Four sizes, plus mail, message and call variants."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "Welcome back, Sally" },
+            description: {
+              type: "text",
+              defaultValue: "Three tasks are due today.",
+            },
+            size: {
+              type: "options",
+              options: ["sm", "md", "lg", "xl"],
+              defaultValue: "md",
+            },
+            action: { type: "boolean", defaultValue: true },
+            footer: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={CardPlaygroundPreview}
+          renderCode={cardPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

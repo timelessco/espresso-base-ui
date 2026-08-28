@@ -21,6 +21,67 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function inputGroupPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+  ].join("")
+
+  const lines = [`<InputGroup${attrs}>`]
+  if (v.leadingIcon) {
+    lines.push(
+      `  <InputGroupAddon align="inline-start">`,
+      `    <InputGroupText>`,
+      `      <Search />`,
+      `    </InputGroupText>`,
+      `  </InputGroupAddon>`
+    )
+  }
+  lines.push(`  <InputGroupInput placeholder="Search..." />`)
+  if (v.trailingButton) {
+    lines.push(
+      `  <InputGroupAddon align="inline-end">`,
+      `    <InputGroupButton size="xs">`,
+      `      <Copy /> Copy`,
+      `    </InputGroupButton>`,
+      `  </InputGroupAddon>`
+    )
+  }
+  lines.push(`</InputGroup>`)
+  return lines.join("\n")
+}
+
+function InputGroupPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-xs">
+      <InputGroup
+        variant={v.variant as "outline" | "subtle" | "ghost"}
+        size={v.size as "xs" | "sm" | "md" | "lg"}
+      >
+        {Boolean(v.leadingIcon) && (
+          <InputGroupAddon align="inline-start">
+            <InputGroupText>
+              <Search />
+            </InputGroupText>
+          </InputGroupAddon>
+        )}
+        <InputGroupInput placeholder="Search..." />
+        {Boolean(v.trailingButton) && (
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton size="xs">
+              <Copy /> Copy
+            </InputGroupButton>
+          </InputGroupAddon>
+        )}
+      </InputGroup>
+    </div>
+  )
+}
 
 export default function InputGroupDocsPage() {
   return (
@@ -29,6 +90,27 @@ export default function InputGroupDocsPage() {
         title="Input Group"
         description="An input with attached addons – icons, text, buttons or keyboard hints – inline or as block rows. The whole group focuses as one control."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            leadingIcon: { type: "boolean", defaultValue: true },
+            trailingButton: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={InputGroupPlaygroundPreview}
+          renderCode={inputGroupPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

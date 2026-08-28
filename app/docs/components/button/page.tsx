@@ -13,6 +13,44 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function buttonPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "default" ? ` variant="${v.variant}"` : "",
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.disabled ? ` disabled` : "",
+  ].join("")
+
+  if (v.icon) {
+    return [`<Button${attrs}>`, `  <Mail /> ${v.label}`, `</Button>`].join("\n")
+  }
+  return `<Button${attrs}>${v.label}</Button>`
+}
+
+function ButtonPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Button
+      variant={
+        v.variant as
+          | "default"
+          | "secondary"
+          | "outline"
+          | "ghost"
+          | "destructive"
+          | "link"
+      }
+      size={v.size as "xs" | "sm" | "default" | "lg" | "xl" | "2xl"}
+      disabled={Boolean(v.disabled)}
+    >
+      {Boolean(v.icon) && <Mail />}
+      {v.label}
+    </Button>
+  )
+}
 
 export default function ButtonDocsPage() {
   return (
@@ -21,6 +59,35 @@ export default function ButtonDocsPage() {
         title="Button"
         description="Displays a button, built on Base UI. Eight variants and six sizes, each with a matching square icon-only size."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            label: { type: "text", defaultValue: "Button" },
+            variant: {
+              type: "options",
+              options: [
+                "default",
+                "secondary",
+                "outline",
+                "ghost",
+                "destructive",
+                "link",
+              ],
+              defaultValue: "default",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default", "lg", "xl", "2xl"],
+              defaultValue: "default",
+            },
+            icon: { type: "boolean", defaultValue: false },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={ButtonPlaygroundPreview}
+          renderCode={buttonPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

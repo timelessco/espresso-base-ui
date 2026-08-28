@@ -11,6 +11,30 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function switchPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.checked ? " defaultChecked" : "",
+    v.disabled ? " disabled" : "",
+  ].join("")
+  return `<Switch${attrs} />`
+}
+
+function SwitchPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Switch
+      key={switchPlaygroundCode(v)}
+      size={v.size as "xs" | "sm" | "default"}
+      defaultChecked={Boolean(v.checked)}
+      disabled={Boolean(v.disabled)}
+    />
+  )
+}
 
 export default function SwitchDocsPage() {
   return (
@@ -19,6 +43,22 @@ export default function SwitchDocsPage() {
         title="Switch"
         description="A toggle for switching a setting on or off, built on Base UI. Three sizes, with a thumb that stretches while pressed."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default"],
+              defaultValue: "default",
+            },
+            checked: { type: "boolean", defaultValue: true },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={SwitchPlaygroundPreview}
+          renderCode={switchPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

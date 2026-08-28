@@ -20,6 +20,42 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function tooltipPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "default" ? ` variant="${v.variant}"` : "",
+    v.side !== "top" ? ` side="${v.side}"` : "",
+  ].join("")
+
+  return [
+    `<Tooltip>`,
+    `  <TooltipTrigger render={<Button variant="outline" />}>`,
+    `    Hover me`,
+    `  </TooltipTrigger>`,
+    `  <TooltipContent${attrs}>${v.content}</TooltipContent>`,
+    `</Tooltip>`,
+  ].join("\n")
+}
+
+function TooltipPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <Tooltip>
+      <TooltipTrigger render={<Button variant="outline" />}>
+        Hover me
+      </TooltipTrigger>
+      <TooltipContent
+        variant={v.variant as "default" | "plain" | "subtle"}
+        side={v.side as "top" | "bottom" | "left" | "right"}
+      >
+        {v.content}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
 
 export default function TooltipDocsPage() {
   return (
@@ -29,6 +65,29 @@ export default function TooltipDocsPage() {
           title="Tooltip"
           description="A popup that labels its trigger on hover or focus, built on Base UI. Positioned on any side, with an arrow by default."
         />
+
+        <DocSection title="Playground">
+          <DocPlayground
+            controls={{
+              content: {
+                type: "text",
+                defaultValue: "Open source by default",
+              },
+              variant: {
+                type: "options",
+                options: ["default", "plain", "subtle"],
+                defaultValue: "default",
+              },
+              side: {
+                type: "options",
+                options: ["top", "bottom", "left", "right"],
+                defaultValue: "top",
+              },
+            }}
+            renderPreview={TooltipPlaygroundPreview}
+            renderCode={tooltipPlaygroundCode}
+          />
+        </DocSection>
 
         <DocSection title="Preview">
           <DocProse>

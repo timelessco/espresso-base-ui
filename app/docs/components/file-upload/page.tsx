@@ -28,6 +28,10 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
 
 /** Renders the current files from the FileUpload store as list items. */
 function FilesList({
@@ -83,6 +87,51 @@ function fakeUpload(
   })
 }
 
+function fileUploadPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.accept ? ` accept="${v.accept}"` : "",
+    v.multiple ? " multiple" : "",
+    v.disabled ? " disabled" : "",
+  ].join("")
+
+  return [
+    `<FileUpload${attrs}>`,
+    `  <FileUploadDropzone>`,
+    `    <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />`,
+    `    <p className="pt-2 text-base font-medium text-foreground">`,
+    `      Drop files here or click to upload`,
+    `    </p>`,
+    `    <FileUploadList>`,
+    `      <FilesList />`,
+    `    </FileUploadList>`,
+    `  </FileUploadDropzone>`,
+    `</FileUpload>`,
+  ].join("\n")
+}
+
+function FileUploadPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-sm">
+      <FileUpload
+        key={[v.accept, v.multiple, v.disabled].join("|")}
+        accept={(v.accept as string) || undefined}
+        multiple={Boolean(v.multiple)}
+        disabled={Boolean(v.disabled)}
+      >
+        <FileUploadDropzone>
+          <ArrowUpToLineIcon className="size-6 stroke-1 text-muted-foreground" />
+          <p className="pt-2 text-base font-medium text-foreground">
+            Drop files here or click to upload
+          </p>
+          <FileUploadList>
+            <FilesList />
+          </FileUploadList>
+        </FileUploadDropzone>
+      </FileUpload>
+    </div>
+  )
+}
+
 export default function FileUploadDocsPage() {
   return (
     <DocPage>
@@ -90,6 +139,18 @@ export default function FileUploadDocsPage() {
         title="File Upload"
         description="A headless file picker with drag-and-drop, paste, validation and upload progress. Composes a dropzone or trigger button with a file list."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            accept: { type: "text", defaultValue: "image/*" },
+            multiple: { type: "boolean", defaultValue: true },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={FileUploadPlaygroundPreview}
+          renderCode={fileUploadPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

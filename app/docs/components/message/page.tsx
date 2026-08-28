@@ -24,6 +24,42 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function messagePlaygroundCode(v: PlaygroundValues) {
+  const isEnd = v.align === "end"
+  const lines = [
+    `<Message${isEnd ? ` align="end"` : ""}>`,
+    `  <MessageContent>`,
+    `    <Bubble${isEnd ? "" : ` variant="secondary"`}>`,
+    `      <BubbleContent>${v.message}</BubbleContent>`,
+    `    </Bubble>`,
+  ]
+  if (v.footer) {
+    lines.push(`    <MessageFooter>Delivered</MessageFooter>`)
+  }
+  lines.push(`  </MessageContent>`, `</Message>`)
+  return lines.join("\n")
+}
+
+function MessagePlaygroundPreview(v: PlaygroundValues) {
+  const isEnd = v.align === "end"
+  return (
+    <div className="w-full max-w-sm">
+      <Message align={isEnd ? "end" : "start"}>
+        <MessageContent>
+          <Bubble variant={isEnd ? "default" : "secondary"}>
+            <BubbleContent>{v.message}</BubbleContent>
+          </Bubble>
+          {Boolean(v.footer) && <MessageFooter>Delivered</MessageFooter>}
+        </MessageContent>
+      </Message>
+    </div>
+  )
+}
 
 export default function MessageDocsPage() {
   return (
@@ -32,6 +68,25 @@ export default function MessageDocsPage() {
         title="Message"
         description="The layout shell for a chat message row – an avatar beside a content column. The align prop flips between received and sent."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            message: {
+              type: "text",
+              defaultValue: "It's a one-line change – shipping now.",
+            },
+            align: {
+              type: "options",
+              options: ["start", "end"],
+              defaultValue: "end",
+            },
+            footer: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={MessagePlaygroundPreview}
+          renderCode={messagePlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

@@ -11,6 +11,36 @@ import {
   DocSection,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function textareaPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    v.variant !== "outline" ? ` variant="${v.variant}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
+    ` placeholder="${v.placeholder}"`,
+    v.disabled ? ` disabled` : "",
+    v.invalid ? ` data-invalid="true"` : "",
+  ].join("")
+
+  return `<Textarea${attrs} />`
+}
+
+function TextareaPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-sm">
+      <Textarea
+        variant={v.variant as "outline" | "subtle" | "ghost"}
+        size={v.size as "xs" | "sm" | "md" | "lg"}
+        placeholder={v.placeholder as string}
+        disabled={Boolean(v.disabled)}
+        data-invalid={v.invalid ? "true" : undefined}
+      />
+    </div>
+  )
+}
 
 export default function TextareaDocsPage() {
   return (
@@ -19,6 +49,31 @@ export default function TextareaDocsPage() {
         title="Textarea"
         description="A multi-line text input that grows with its content. Three surface variants – outline, subtle, and ghost – in four sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            placeholder: {
+              type: "text",
+              defaultValue: "Write a short bio...",
+            },
+            variant: {
+              type: "options",
+              options: ["outline", "subtle", "ghost"],
+              defaultValue: "outline",
+            },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "md", "lg"],
+              defaultValue: "md",
+            },
+            disabled: { type: "boolean", defaultValue: false },
+            invalid: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={TextareaPlaygroundPreview}
+          renderCode={textareaPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

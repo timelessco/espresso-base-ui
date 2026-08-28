@@ -12,6 +12,37 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function sliderPlaygroundValue(v: PlaygroundValues) {
+  const start = Number(v.defaultValue)
+  return v.range ? [start, Math.min(start + 25, 100)] : [start]
+}
+
+function sliderPlaygroundCode(v: PlaygroundValues) {
+  const attrs = [
+    ` defaultValue={[${sliderPlaygroundValue(v).join(", ")}]}`,
+    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.disabled ? " disabled" : "",
+  ].join("")
+  return `<Slider${attrs} />`
+}
+
+function SliderPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-sm">
+      <Slider
+        key={sliderPlaygroundCode(v)}
+        defaultValue={sliderPlaygroundValue(v)}
+        size={v.size as "sm" | "default" | "lg" | "xl"}
+        disabled={Boolean(v.disabled)}
+      />
+    </div>
+  )
+}
 
 export default function SliderDocsPage() {
   return (
@@ -20,6 +51,27 @@ export default function SliderDocsPage() {
         title="Slider"
         description="An input for selecting a value or range by dragging thumbs along a track. Built on Base UI with four sizes and a vertical orientation."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            size: {
+              type: "options",
+              options: ["sm", "default", "lg", "xl"],
+              defaultValue: "default",
+            },
+            defaultValue: {
+              type: "options",
+              options: ["25", "50", "75"],
+              defaultValue: "50",
+            },
+            range: { type: "boolean", defaultValue: false },
+            disabled: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={SliderPlaygroundPreview}
+          renderCode={sliderPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

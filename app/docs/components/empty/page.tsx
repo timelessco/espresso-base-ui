@@ -27,6 +27,80 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function emptyPlaygroundCode(v: PlaygroundValues) {
+  const lines = [`<Empty>`, `  <EmptyHeader>`]
+  if (v.media === "icon") {
+    lines.push(
+      `    <EmptyMedia variant="icon">`,
+      `      <FileText />`,
+      `    </EmptyMedia>`
+    )
+  } else {
+    lines.push(
+      `    <EmptyMedia>`,
+      `      <div className="flex size-16 items-center justify-center rounded-full bg-muted">`,
+      `        <FileText className="size-8 text-muted-foreground" />`,
+      `      </div>`,
+      `    </EmptyMedia>`
+    )
+  }
+  lines.push(
+    `    <EmptyTitle>${v.title}</EmptyTitle>`,
+    `    <EmptyDescription>`,
+    `      ${v.description}`,
+    `    </EmptyDescription>`,
+    `  </EmptyHeader>`
+  )
+  if (v.actions) {
+    lines.push(
+      `  <EmptyContent>`,
+      `    <Button size="sm">`,
+      `      <Plus />`,
+      `      New document`,
+      `    </Button>`,
+      `  </EmptyContent>`
+    )
+  }
+  lines.push(`</Empty>`)
+  return lines.join("\n")
+}
+
+function EmptyPlaygroundPreview(v: PlaygroundValues) {
+  return (
+    <div className="w-full max-w-md">
+      <Empty>
+        <EmptyHeader>
+          {v.media === "icon" ? (
+            <EmptyMedia variant="icon">
+              <FileText />
+            </EmptyMedia>
+          ) : (
+            <EmptyMedia>
+              <div className="flex size-16 items-center justify-center rounded-full bg-muted">
+                <FileText className="size-8 text-muted-foreground" />
+              </div>
+            </EmptyMedia>
+          )}
+          <EmptyTitle>{v.title}</EmptyTitle>
+          <EmptyDescription>{v.description}</EmptyDescription>
+        </EmptyHeader>
+        {Boolean(v.actions) && (
+          <EmptyContent>
+            <Button size="sm">
+              <Plus />
+              New document
+            </Button>
+          </EmptyContent>
+        )}
+      </Empty>
+    </div>
+  )
+}
 
 export default function EmptyDocsPage() {
   return (
@@ -35,6 +109,26 @@ export default function EmptyDocsPage() {
         title="Empty"
         description="A centered placeholder for states with nothing to show. Composes a media slot, title, description and an area for actions."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            title: { type: "text", defaultValue: "No documents" },
+            description: {
+              type: "text",
+              defaultValue: "Upload a document or create one from a template.",
+            },
+            media: {
+              type: "options",
+              options: ["icon", "default"],
+              defaultValue: "icon",
+            },
+            actions: { type: "boolean", defaultValue: true },
+          }}
+          renderPreview={EmptyPlaygroundPreview}
+          renderCode={emptyPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>

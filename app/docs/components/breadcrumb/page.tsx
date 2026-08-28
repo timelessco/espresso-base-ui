@@ -23,6 +23,70 @@ import {
   PartsTable,
   PropsTable,
 } from "../../_components/doc"
+import {
+  DocPlayground,
+  type PlaygroundValues,
+} from "../../_components/playground"
+
+function breadcrumbPlaygroundCode(v: PlaygroundValues) {
+  const attrs = v.size !== "sm" ? ` size="${v.size}"` : ""
+  const separator =
+    v.separator === "slash"
+      ? `<BreadcrumbSeparator>/</BreadcrumbSeparator>`
+      : `<BreadcrumbSeparator />`
+
+  const lines = [
+    `<Breadcrumb${attrs}>`,
+    `  <BreadcrumbList>`,
+    `    <BreadcrumbItem>`,
+    `      <BreadcrumbLink href="#">Home</BreadcrumbLink>`,
+    `    </BreadcrumbItem>`,
+    `    ${separator}`,
+    `    <BreadcrumbItem>`,
+    v.ellipsis
+      ? `      <BreadcrumbEllipsis />`
+      : `      <BreadcrumbLink href="#">Components</BreadcrumbLink>`,
+    `    </BreadcrumbItem>`,
+    `    ${separator}`,
+    `    <BreadcrumbItem>`,
+    `      <BreadcrumbPage>${v.page}</BreadcrumbPage>`,
+    `    </BreadcrumbItem>`,
+    `  </BreadcrumbList>`,
+    `</Breadcrumb>`,
+  ]
+  return lines.join("\n")
+}
+
+function BreadcrumbPlaygroundPreview(v: PlaygroundValues) {
+  const separator =
+    v.separator === "slash" ? (
+      <BreadcrumbSeparator>/</BreadcrumbSeparator>
+    ) : (
+      <BreadcrumbSeparator />
+    )
+
+  return (
+    <Breadcrumb size={v.size as "sm" | "md"}>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        {separator}
+        <BreadcrumbItem>
+          {v.ellipsis ? (
+            <BreadcrumbEllipsis />
+          ) : (
+            <BreadcrumbLink href="#">Components</BreadcrumbLink>
+          )}
+        </BreadcrumbItem>
+        {separator}
+        <BreadcrumbItem>
+          <BreadcrumbPage>{v.page}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  )
+}
 
 export default function BreadcrumbDocsPage() {
   return (
@@ -31,6 +95,27 @@ export default function BreadcrumbDocsPage() {
         title="Breadcrumb"
         description="Displays the path to the current page as a trail of links. Swappable separators and an ellipsis for collapsed segments, in two sizes."
       />
+
+      <DocSection title="Playground">
+        <DocPlayground
+          controls={{
+            page: { type: "text", defaultValue: "Breadcrumb" },
+            size: {
+              type: "options",
+              options: ["sm", "md"],
+              defaultValue: "sm",
+            },
+            separator: {
+              type: "options",
+              options: ["chevron", "slash"],
+              defaultValue: "chevron",
+            },
+            ellipsis: { type: "boolean", defaultValue: false },
+          }}
+          renderPreview={BreadcrumbPlaygroundPreview}
+          renderCode={breadcrumbPlaygroundCode}
+        />
+      </DocSection>
 
       <DocSection title="Preview">
         <DocProse>
