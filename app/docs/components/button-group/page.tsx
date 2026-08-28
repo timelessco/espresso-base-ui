@@ -35,28 +35,19 @@ function buttonGroupPlaygroundCode(v: PlaygroundValues) {
     v.variant !== "default"
       ? `  <Button variant="${v.variant}">${label}</Button>`
       : `  <Button>${label}</Button>`
-  const separator = isVertical
-    ? `  <ButtonGroupSeparator orientation="horizontal" />`
-    : `  <ButtonGroupSeparator />`
-  const showSeparator = Boolean(v.separator) && !v.detached
-
-  const lines = [`<ButtonGroup${attrs}>`, button("Left")]
-  if (showSeparator) lines.push(separator)
-  lines.push(button("Center"))
-  if (showSeparator) lines.push(separator)
-  lines.push(button("Right"), `</ButtonGroup>`)
+  const lines = [
+    `<ButtonGroup${attrs}>`,
+    button("Left"),
+    button("Center"),
+    button("Right"),
+    `</ButtonGroup>`,
+  ]
   return lines.join("\n")
 }
 
 function ButtonGroupPlaygroundPreview(v: PlaygroundValues) {
   const isVertical = v.orientation === "vertical"
   const variant = v.variant as "default" | "outline" | "secondary"
-  const showSeparator = Boolean(v.separator) && !v.detached
-  const separator = (
-    <ButtonGroupSeparator
-      orientation={isVertical ? "horizontal" : "vertical"}
-    />
-  )
 
   return (
     <ButtonGroup
@@ -65,9 +56,7 @@ function ButtonGroupPlaygroundPreview(v: PlaygroundValues) {
       detached={Boolean(v.detached)}
     >
       <Button variant={variant}>Left</Button>
-      {showSeparator && separator}
       <Button variant={variant}>Center</Button>
-      {showSeparator && separator}
       <Button variant={variant}>Right</Button>
     </ButtonGroup>
   )
@@ -100,7 +89,6 @@ export default function ButtonGroupDocsPage() {
               defaultValue: "default",
             },
             detached: { type: "boolean", defaultValue: false },
-            separator: { type: "boolean", defaultValue: false },
           }}
           renderPreview={ButtonGroupPlaygroundPreview}
           renderCode={buttonGroupPlaygroundCode}
