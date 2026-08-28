@@ -64,6 +64,11 @@ export default function ButtonDocsPage() {
         <DocPlayground
           controls={{
             label: { type: "text", defaultValue: "Button" },
+            size: {
+              type: "options",
+              options: ["xs", "sm", "default", "lg", "xl", "2xl"],
+              defaultValue: "default",
+            },
             variant: {
               type: "options",
               options: [
@@ -74,11 +79,6 @@ export default function ButtonDocsPage() {
                 "destructive",
                 "link",
               ],
-              defaultValue: "default",
-            },
-            size: {
-              type: "options",
-              options: ["xs", "sm", "default", "lg", "xl", "2xl"],
               defaultValue: "default",
             },
             icon: { type: "boolean", defaultValue: false },
