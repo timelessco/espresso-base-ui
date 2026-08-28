@@ -10,6 +10,9 @@ const alertVariants = cva(
   [
     "group/alert relative w-full border text-left leading-base tracking-normal",
     "[&>svg]:shrink-0 [&>svg:not([class*='size-'])]:size-4",
+    // Without a leading icon the grid's auto column collapses — span the text
+    // parts across both columns so title and description stack full-width.
+    "not-has-[>svg]:[&>[data-slot=alert-title]]:col-span-2 not-has-[>svg]:[&>[data-slot=alert-description]]:col-span-2",
   ],
   {
     variants: {

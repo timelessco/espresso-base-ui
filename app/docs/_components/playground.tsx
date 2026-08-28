@@ -56,42 +56,44 @@ export function DocPlayground({
       </div>
 
       {/* Controls */}
-      <div className="grid gap-x-12 gap-y-4 border-b border-border-soft p-5 md:grid-cols-[1fr_auto]">
+      <div className="grid gap-x-6 gap-y-4 border-b border-border-soft p-5 md:grid-cols-[1fr_auto]">
         <div className="flex min-w-0 flex-col gap-3">
           {fieldControls.map(([key, control]) => (
             <div
               key={key}
-              className="grid grid-cols-[6.5rem_1fr] items-center gap-3"
+              className="grid grid-cols-[5.5rem_minmax(0,1fr)] items-center gap-3"
             >
               <span className="truncate font-mono text-sm text-muted-foreground">
                 {key}
               </span>
-              {control.type === "text" ? (
-                <Input
-                  size="sm"
-                  value={values[key] as string}
-                  onChange={(event) => setValue(key, event.target.value)}
-                />
-              ) : control.type === "options" ? (
-                <Tabs
-                  value={values[key] as string}
-                  onValueChange={(value) => setValue(key, value as string)}
-                >
-                  <TabsList size="sm">
-                    {control.options.map((option) => (
-                      <TabsTrigger key={option} value={option}>
-                        {option}
-                      </TabsTrigger>
-                    ))}
-                    <TabsIndicator />
-                  </TabsList>
-                </Tabs>
-              ) : null}
+              <div className="min-w-0">
+                {control.type === "text" ? (
+                  <Input
+                    size="sm"
+                    value={values[key] as string}
+                    onChange={(event) => setValue(key, event.target.value)}
+                  />
+                ) : control.type === "options" ? (
+                  <Tabs
+                    value={values[key] as string}
+                    onValueChange={(value) => setValue(key, value as string)}
+                  >
+                    <TabsList size="sm">
+                      {control.options.map((option) => (
+                        <TabsTrigger key={option} value={option}>
+                          {option}
+                        </TabsTrigger>
+                      ))}
+                      <TabsIndicator />
+                    </TabsList>
+                  </Tabs>
+                ) : null}
+              </div>
             </div>
           ))}
         </div>
         {booleanControls.length > 0 && (
-          <div className="flex flex-col gap-4 md:min-w-52">
+          <div className="flex flex-col gap-4 md:min-w-36">
             {booleanControls.map(([key]) => (
               <div
                 key={key}
