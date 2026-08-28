@@ -30,6 +30,7 @@ import {
   DocPlayground,
   type PlaygroundValues,
 } from "../../_components/playground"
+import { ScrollScoped } from "../../_components/scroll-scoped"
 
 function commandPlaygroundCode(v: PlaygroundValues) {
   const lines = [
@@ -72,35 +73,37 @@ function commandPlaygroundCode(v: PlaygroundValues) {
 
 function CommandPlaygroundPreview(v: PlaygroundValues) {
   return (
-    <Command className="w-full max-w-md rounded-xl shadow-5xs">
-      <CommandInput placeholder={v.placeholder as string} />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem>
-            <Calendar />
-            Calendar
-          </CommandItem>
-          <CommandItem>
-            <Smile />
-            Search Emoji
-          </CommandItem>
-        </CommandGroup>
-        <CommandSeparator />
-        <CommandGroup heading="Settings">
-          <CommandItem>
-            <User />
-            Profile
-            {Boolean(v.shortcuts) && <CommandShortcut>⌘P</CommandShortcut>}
-          </CommandItem>
-          <CommandItem>
-            <Settings />
-            Settings
-            {Boolean(v.shortcuts) && <CommandShortcut>⌘S</CommandShortcut>}
-          </CommandItem>
-        </CommandGroup>
-      </CommandList>
-    </Command>
+    <ScrollScoped>
+      <Command className="w-full max-w-md rounded-xl shadow-5xs">
+        <CommandInput placeholder={v.placeholder as string} />
+        <CommandList>
+          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup heading="Suggestions">
+            <CommandItem>
+              <Calendar />
+              Calendar
+            </CommandItem>
+            <CommandItem>
+              <Smile />
+              Search Emoji
+            </CommandItem>
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading="Settings">
+            <CommandItem>
+              <User />
+              Profile
+              {Boolean(v.shortcuts) && <CommandShortcut>⌘P</CommandShortcut>}
+            </CommandItem>
+            <CommandItem>
+              <Settings />
+              Settings
+              {Boolean(v.shortcuts) && <CommandShortcut>⌘S</CommandShortcut>}
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </ScrollScoped>
   )
 }
 
@@ -202,26 +205,28 @@ export default function CommandDocsPage() {
   </CommandList>
 </Command>`}
         >
-          <Command className="max-w-md rounded-xl shadow-5xs">
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                <CommandItem>
-                  <Calendar />
-                  Calendar
-                </CommandItem>
-                <CommandItem>
-                  <Smile />
-                  Search Emoji
-                </CommandItem>
-                <CommandItem>
-                  <Calculator />
-                  Calculator
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          <ScrollScoped>
+            <Command className="max-w-md rounded-xl shadow-5xs">
+              <CommandInput placeholder="Type a command or search..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Suggestions">
+                  <CommandItem>
+                    <Calendar />
+                    Calendar
+                  </CommandItem>
+                  <CommandItem>
+                    <Smile />
+                    Search Emoji
+                  </CommandItem>
+                  <CommandItem>
+                    <Calculator />
+                    Calculator
+                  </CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </ScrollScoped>
         </DocExample>
       </DocSection>
 
@@ -293,31 +298,33 @@ import {
   </CommandList>
 </Command>`}
         >
-          <Command className="max-w-md rounded-xl shadow-5xs">
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Suggestions">
-                <CommandItem>
-                  <Calendar />
-                  Calendar
-                </CommandItem>
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Settings">
-                <CommandItem>
-                  <User />
-                  Profile
-                  <CommandShortcut>⌘P</CommandShortcut>
-                </CommandItem>
-                <CommandItem>
-                  <Settings />
-                  Settings
-                  <CommandShortcut>⌘S</CommandShortcut>
-                </CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          <ScrollScoped>
+            <Command className="max-w-md rounded-xl shadow-5xs">
+              <CommandInput placeholder="Type a command or search..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Suggestions">
+                  <CommandItem>
+                    <Calendar />
+                    Calendar
+                  </CommandItem>
+                </CommandGroup>
+                <CommandSeparator />
+                <CommandGroup heading="Settings">
+                  <CommandItem>
+                    <User />
+                    Profile
+                    <CommandShortcut>⌘P</CommandShortcut>
+                  </CommandItem>
+                  <CommandItem>
+                    <Settings />
+                    Settings
+                    <CommandShortcut>⌘S</CommandShortcut>
+                  </CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </ScrollScoped>
         </DocExample>
       </DocSection>
 
@@ -333,20 +340,22 @@ import {
   <CommandItem disabled>Invite Members (Pro plan)</CommandItem>
 </CommandGroup>`}
         >
-          <Command className="max-w-md rounded-xl shadow-5xs">
-            <CommandInput placeholder="Search..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Available">
-                <CommandItem>Send Email</CommandItem>
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Unavailable">
-                <CommandItem disabled>New Team (Pro plan)</CommandItem>
-                <CommandItem disabled>Invite Members (Pro plan)</CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          <ScrollScoped>
+            <Command className="max-w-md rounded-xl shadow-5xs">
+              <CommandInput placeholder="Search..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Available">
+                  <CommandItem>Send Email</CommandItem>
+                </CommandGroup>
+                <CommandSeparator />
+                <CommandGroup heading="Unavailable">
+                  <CommandItem disabled>New Team (Pro plan)</CommandItem>
+                  <CommandItem disabled>Invite Members (Pro plan)</CommandItem>
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </ScrollScoped>
         </DocExample>
       </DocSection>
 
