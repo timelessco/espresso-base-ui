@@ -202,7 +202,12 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 pr-8 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        // sizes mirror dropdownMenuItemVariants, driven by the content's data-size
+        "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
+        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
+        "in-data-[size=md]:min-h-8",
+        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
         className
       )}
       checked={checked}
@@ -243,7 +248,12 @@ function DropdownMenuRadioItem({
       data-slot="dropdown-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-muted data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "relative flex cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 pr-8 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        // sizes mirror dropdownMenuItemVariants, driven by the content's data-size
+        "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
+        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
+        "in-data-[size=md]:min-h-8",
+        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
         className
       )}
       {...props}
