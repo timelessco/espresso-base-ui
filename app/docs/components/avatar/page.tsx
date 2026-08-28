@@ -47,6 +47,10 @@ function avatarPlaygroundCode(v: PlaygroundValues) {
 function AvatarPlaygroundPreview(v: PlaygroundValues) {
   return (
     <Avatar
+      // Remount when the image toggles — Base UI caches the image "loaded"
+      // state on the root, which would keep the fallback hidden after
+      // unmounting the AvatarImage.
+      key={String(v.image)}
       variant={v.variant as "circle" | "square"}
       size={v.size as "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"}
     >
