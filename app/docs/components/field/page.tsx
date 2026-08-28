@@ -33,10 +33,7 @@ import {
 } from "../../_components/playground"
 
 function fieldPlaygroundCode(v: PlaygroundValues) {
-  const attrs = [
-    v.orientation !== "vertical" ? ` orientation="${v.orientation}"` : "",
-    v.invalid ? ` data-invalid="true"` : "",
-  ].join("")
+  const attrs = [v.invalid ? ` data-invalid="true"` : ""].join("")
 
   const lines = [
     `<Field${attrs}>`,
@@ -56,10 +53,7 @@ function fieldPlaygroundCode(v: PlaygroundValues) {
 function FieldPlaygroundPreview(v: PlaygroundValues) {
   return (
     <div className="w-full max-w-sm">
-      <Field
-        orientation={v.orientation as "vertical" | "horizontal" | "responsive"}
-        data-invalid={v.invalid ? "true" : undefined}
-      >
+      <Field data-invalid={v.invalid ? "true" : undefined}>
         <FieldLabel>{v.label}</FieldLabel>
         <Input placeholder="you@example.com" />
         {Boolean(v.description) && (
@@ -86,11 +80,6 @@ export default function FieldDocsPage() {
             description: {
               type: "text",
               defaultValue: "We'll never share your email.",
-            },
-            orientation: {
-              type: "options",
-              options: ["vertical", "horizontal", "responsive"],
-              defaultValue: "vertical",
             },
             invalid: { type: "boolean", defaultValue: false },
           }}
