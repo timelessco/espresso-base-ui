@@ -26,7 +26,7 @@ import {
 
 import { DocsSearch } from "./_components/docs-search"
 import { DocsToc } from "./_components/docs-toc"
-import { docsComponents } from "./_components/nav"
+import { docsComponents, docsGettingStarted } from "./_components/nav"
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -72,6 +72,24 @@ function DocsSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel>Getting Started</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-0.5">
+              {docsGettingStarted.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    isActive={pathname === item.href}
+                    render={<Link href={item.href} />}
+                    onClick={closeMobileSidebar}
+                  >
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
           <SidebarGroupLabel>Components</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
@@ -102,7 +120,9 @@ export default function DocsLayout({
 }) {
   const pathname = usePathname()
   const activeComponent =
-    docsComponents.find((item) => item.href === pathname)?.label ?? "Docs"
+    [...docsGettingStarted, ...docsComponents].find(
+      (item) => item.href === pathname
+    )?.label ?? "Docs"
 
   return (
     <SidebarProvider>
