@@ -1,5 +1,7 @@
 "use client"
 
+import * as React from "react"
+
 import { ColorSwatch } from "@/components/ui/color-swatch"
 import {
   CodeBlock,
@@ -15,6 +17,27 @@ import {
   DocPlayground,
   type PlaygroundValues,
 } from "../../_components/playground"
+
+function SelectedSwatchDemo() {
+  const [selected, setSelected] = React.useState("#3b82f6")
+  const colors = ["#3b82f6", "#ef4444", "#10b981"]
+
+  return (
+    <div className="flex items-center gap-3">
+      {colors.map((color) => (
+        <button
+          key={color}
+          type="button"
+          onClick={() => setSelected(color)}
+          className="rounded-full"
+          aria-label={`Select ${color}`}
+        >
+          <ColorSwatch color={color} selected={selected === color} />
+        </button>
+      ))}
+    </div>
+  )
+}
 
 function colorSwatchPlaygroundCode(v: PlaygroundValues) {
   const attrs = [
@@ -150,19 +173,21 @@ import { ColorSwatch } from "@/components/ui/color-swatch"`}
         </DocProse>
         <DocExample
           code={`
-<ColorSwatch color="#3b82f6" selected />
-<ColorSwatch color="#ef4444" />
-<ColorSwatch color="#10b981" />
+const [selected, setSelected] = React.useState("#3b82f6")
+const colors = ["#3b82f6", "#ef4444", "#10b981"]
 
-<button type="button" onClick={() => setSelected(color)} className="rounded-full">
-  <ColorSwatch color={color} selected={selected === color} />
-</button>`}
+{colors.map((color) => (
+  <button
+    key={color}
+    type="button"
+    onClick={() => setSelected(color)}
+    className="rounded-full"
+  >
+    <ColorSwatch color={color} selected={selected === color} />
+  </button>
+))}`}
         >
-          <div className="flex items-center gap-3">
-            <ColorSwatch color="#3b82f6" selected />
-            <ColorSwatch color="#ef4444" />
-            <ColorSwatch color="#10b981" />
-          </div>
+          <SelectedSwatchDemo />
         </DocExample>
       </DocSection>
 
