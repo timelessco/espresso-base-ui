@@ -42,12 +42,6 @@ function SiteHeader({ scrolled }: { scrolled: boolean }) {
         </span>
         <div className="flex items-center gap-1">
           <Button
-            variant="secondary"
-            size="sm"
-            nativeButton={false}
-            render={<Link href="/docs/components/avatar">Docs</Link>}
-          />
-          <Button
             variant="ghost"
             size="icon-sm"
             aria-label="Toggle theme"
@@ -75,6 +69,12 @@ function Hero() {
       </p>
       <div className="flex items-center gap-3 pt-2">
         <Button
+          size="lg"
+          nativeButton={false}
+          render={<Link href="/docs/installation">Get started</Link>}
+        />
+        <Button
+          variant="secondary"
           size="lg"
           nativeButton={false}
           render={<Link href="/ui/alert">Components</Link>}
