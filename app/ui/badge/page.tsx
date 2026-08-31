@@ -25,7 +25,7 @@ export default function BadgePage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Sizes</SectionTitle>
         <div className="flex flex-wrap items-center gap-4">
-          <Badge size="default">default</Badge>
+          <Badge size="sm">small</Badge>
           <Badge size="md">medium</Badge>
           <Badge size="lg">large</Badge>
         </div>
@@ -36,14 +36,14 @@ export default function BadgePage() {
         <SectionTitle>Sizes x Variants</SectionTitle>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-muted-foreground">default</span>
+            <span className="text-xs text-muted-foreground">sm</span>
             <div className="flex flex-wrap items-center gap-4">
-              <Badge variant="default" size="default">default</Badge>
-              <Badge variant="secondary" size="default">secondary</Badge>
-              <Badge variant="destructive" size="default">destructive</Badge>
-              <Badge variant="outline" size="default">outline</Badge>
-              <Badge variant="ghost" size="default">ghost</Badge>
-              <Badge variant="link" size="default">link</Badge>
+              <Badge variant="default" size="sm">default</Badge>
+              <Badge variant="secondary" size="sm">secondary</Badge>
+              <Badge variant="destructive" size="sm">destructive</Badge>
+              <Badge variant="outline" size="sm">outline</Badge>
+              <Badge variant="ghost" size="sm">ghost</Badge>
+              <Badge variant="link" size="sm">link</Badge>
             </div>
           </div>
           <div className="flex flex-col gap-2">
@@ -76,14 +76,14 @@ export default function BadgePage() {
         <SectionTitle>With Icon Start</SectionTitle>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-muted-foreground">default</span>
+            <span className="text-xs text-muted-foreground">sm</span>
             <div className="flex flex-wrap items-center gap-4">
-              <Badge variant="default" size="default"><Diamond data-icon="inline-start" />default</Badge>
-              <Badge variant="secondary" size="default"><Diamond data-icon="inline-start" />secondary</Badge>
-              <Badge variant="destructive" size="default"><Diamond data-icon="inline-start" />destructive</Badge>
-              <Badge variant="outline" size="default"><Diamond data-icon="inline-start" />outline</Badge>
-              <Badge variant="ghost" size="default"><Diamond data-icon="inline-start" />ghost</Badge>
-              <Badge variant="link" size="default"><Diamond data-icon="inline-start" />link</Badge>
+              <Badge variant="default" size="sm"><Diamond data-icon="inline-start" />default</Badge>
+              <Badge variant="secondary" size="sm"><Diamond data-icon="inline-start" />secondary</Badge>
+              <Badge variant="destructive" size="sm"><Diamond data-icon="inline-start" />destructive</Badge>
+              <Badge variant="outline" size="sm"><Diamond data-icon="inline-start" />outline</Badge>
+              <Badge variant="ghost" size="sm"><Diamond data-icon="inline-start" />ghost</Badge>
+              <Badge variant="link" size="sm"><Diamond data-icon="inline-start" />link</Badge>
             </div>
           </div>
           <div className="flex flex-col gap-2">
@@ -116,14 +116,14 @@ export default function BadgePage() {
         <SectionTitle>With Icon End</SectionTitle>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-muted-foreground">default</span>
+            <span className="text-xs text-muted-foreground">sm</span>
             <div className="flex flex-wrap items-center gap-4">
-              <Badge variant="default" size="default">default<Diamond data-icon="inline-end" /></Badge>
-              <Badge variant="secondary" size="default">secondary<Diamond data-icon="inline-end" /></Badge>
-              <Badge variant="destructive" size="default">destructive<Diamond data-icon="inline-end" /></Badge>
-              <Badge variant="outline" size="default">outline<Diamond data-icon="inline-end" /></Badge>
-              <Badge variant="ghost" size="default">ghost<Diamond data-icon="inline-end" /></Badge>
-              <Badge variant="link" size="default">link<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="default" size="sm">default<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="secondary" size="sm">secondary<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="destructive" size="sm">destructive<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="outline" size="sm">outline<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="ghost" size="sm">ghost<Diamond data-icon="inline-end" /></Badge>
+              <Badge variant="link" size="sm">link<Diamond data-icon="inline-end" /></Badge>
             </div>
           </div>
           <div className="flex flex-col gap-2">
@@ -168,32 +168,32 @@ export default function BadgePage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Color Badges</SectionTitle>
         <div className="flex gap-12">
-          {/* default size */}
+          {/* sm size */}
           <div className="flex flex-col gap-3">
-            <span className="text-xs text-muted-foreground">default</span>
+            <span className="text-xs text-muted-foreground">sm</span>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge size="default" className="bg-blue-600 text-blue-100"><Diamond data-icon="inline-start" />Blue<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-blue-600 text-blue-100"><Diamond data-icon="inline-start" />Blue</Badge>
-              <Badge size="default" className="bg-blue-600 text-blue-100">Blue<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-blue-600 text-blue-100">Blue</Badge>
+              <Badge size="sm" className="bg-blue-600 text-blue-100"><Diamond data-icon="inline-start" />Blue<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-blue-600 text-blue-100"><Diamond data-icon="inline-start" />Blue</Badge>
+              <Badge size="sm" className="bg-blue-600 text-blue-100">Blue<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-blue-600 text-blue-100">Blue</Badge>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge size="default" className="bg-green-600 text-green-100"><Diamond data-icon="inline-start" />Green<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-green-600 text-green-100"><Diamond data-icon="inline-start" />Green</Badge>
-              <Badge size="default" className="bg-green-600 text-green-100">Green<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-green-600 text-green-100">Green</Badge>
+              <Badge size="sm" className="bg-green-600 text-green-100"><Diamond data-icon="inline-start" />Green<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-green-600 text-green-100"><Diamond data-icon="inline-start" />Green</Badge>
+              <Badge size="sm" className="bg-green-600 text-green-100">Green<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-green-600 text-green-100">Green</Badge>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge size="default" className="bg-amber-600 text-amber-100"><Diamond data-icon="inline-start" />Amber<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-amber-600 text-amber-100"><Diamond data-icon="inline-start" />Amber</Badge>
-              <Badge size="default" className="bg-amber-600 text-amber-100">Amber<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-amber-600 text-amber-100">Amber</Badge>
+              <Badge size="sm" className="bg-amber-600 text-amber-100"><Diamond data-icon="inline-start" />Amber<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-amber-600 text-amber-100"><Diamond data-icon="inline-start" />Amber</Badge>
+              <Badge size="sm" className="bg-amber-600 text-amber-100">Amber<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-amber-600 text-amber-100">Amber</Badge>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge size="default" className="bg-violet-600 text-violet-100"><Diamond data-icon="inline-start" />Violet<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-violet-600 text-violet-100"><Diamond data-icon="inline-start" />Violet</Badge>
-              <Badge size="default" className="bg-violet-600 text-violet-100">Violet<Diamond data-icon="inline-end" /></Badge>
-              <Badge size="default" className="bg-violet-600 text-violet-100">Violet</Badge>
+              <Badge size="sm" className="bg-violet-600 text-violet-100"><Diamond data-icon="inline-start" />Violet<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-violet-600 text-violet-100"><Diamond data-icon="inline-start" />Violet</Badge>
+              <Badge size="sm" className="bg-violet-600 text-violet-100">Violet<Diamond data-icon="inline-end" /></Badge>
+              <Badge size="sm" className="bg-violet-600 text-violet-100">Violet</Badge>
             </div>
           </div>
 
@@ -274,15 +274,15 @@ export default function BadgePage() {
               </tr>
             </thead>
             <tbody>
-              {/* default size */}
+              {/* sm size */}
               <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">default</td>
-                <td className="px-4 py-3"><Badge variant="default" size="default">Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="secondary" size="default">Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="destructive" size="default">Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="outline" size="default">Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="ghost" size="default">Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="link" size="default">Badge</Badge></td>
+                <td className="px-4 py-3 text-xs text-muted-foreground">sm</td>
+                <td className="px-4 py-3"><Badge variant="default" size="sm">Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="secondary" size="sm">Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="destructive" size="sm">Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="outline" size="sm">Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="ghost" size="sm">Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="link" size="sm">Badge</Badge></td>
               </tr>
               {/* md size */}
               <tr className="border-t border-border">
@@ -304,15 +304,15 @@ export default function BadgePage() {
                 <td className="px-4 py-3"><Badge variant="ghost" size="lg">Badge</Badge></td>
                 <td className="px-4 py-3"><Badge variant="link" size="lg">Badge</Badge></td>
               </tr>
-              {/* default + icon start */}
+              {/* sm + icon start */}
               <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">default + Icon Start</td>
-                <td className="px-4 py-3"><Badge variant="default" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="secondary" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="destructive" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="outline" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="ghost" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
-                <td className="px-4 py-3"><Badge variant="link" size="default"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3 text-xs text-muted-foreground">sm + Icon Start</td>
+                <td className="px-4 py-3"><Badge variant="default" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="secondary" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="destructive" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="outline" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="ghost" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
+                <td className="px-4 py-3"><Badge variant="link" size="sm"><Diamond data-icon="inline-start" />Badge</Badge></td>
               </tr>
               {/* md + icon start */}
               <tr className="border-t border-border">
@@ -334,15 +334,15 @@ export default function BadgePage() {
                 <td className="px-4 py-3"><Badge variant="ghost" size="lg"><Diamond data-icon="inline-start" />Badge</Badge></td>
                 <td className="px-4 py-3"><Badge variant="link" size="lg"><Diamond data-icon="inline-start" />Badge</Badge></td>
               </tr>
-              {/* default + icon end */}
+              {/* sm + icon end */}
               <tr className="border-t border-border">
-                <td className="px-4 py-3 text-xs text-muted-foreground">default + Icon End</td>
-                <td className="px-4 py-3"><Badge variant="default" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
-                <td className="px-4 py-3"><Badge variant="secondary" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
-                <td className="px-4 py-3"><Badge variant="destructive" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
-                <td className="px-4 py-3"><Badge variant="outline" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
-                <td className="px-4 py-3"><Badge variant="ghost" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
-                <td className="px-4 py-3"><Badge variant="link" size="default">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3 text-xs text-muted-foreground">sm + Icon End</td>
+                <td className="px-4 py-3"><Badge variant="default" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3"><Badge variant="secondary" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3"><Badge variant="destructive" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3"><Badge variant="outline" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3"><Badge variant="ghost" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
+                <td className="px-4 py-3"><Badge variant="link" size="sm">Badge<Diamond data-icon="inline-end" /></Badge></td>
               </tr>
               {/* md + icon end */}
               <tr className="border-t border-border">

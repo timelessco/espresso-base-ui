@@ -66,7 +66,9 @@ function ComboboxTrigger({
       {...props}
     >
       {children}
-      <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+      {/* chevron follows the input text: placeholder color while empty,
+          value color once the input has content (placeholder no longer shown) */}
+      <ChevronDownIcon className="pointer-events-none size-4 text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_52%)] group-has-[input:not(:placeholder-shown)]/input-group:text-secondary-foreground dark:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_37%)] dark:group-has-[input:not(:placeholder-shown)]/input-group:text-secondary-foreground" />
     </ComboboxPrimitive.Trigger>
   )
 }
@@ -126,13 +128,26 @@ function ComboboxInput({
             className={cn(
               "group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent",
               size === "xs"
-                ? "size-3.5 rounded-2xs [&_svg]:size-3"
-                : "size-4 rounded-2xs [&_svg]:size-3.5"
+                ? "size-4 rounded-2xs [&_svg]:size-3.5!"
+                : size === "lg"
+                  ? "size-5 rounded-2xs [&_svg]:size-4.5!"
+                  : "size-4.5 rounded-2xs [&_svg]:size-4!"
             )}
             disabled={disabled}
           />
         )}
-        {showClear && <ComboboxClear disabled={disabled} />}
+        {showClear && (
+          <ComboboxClear
+            disabled={disabled}
+            className={
+              size === "xs"
+                ? "[&_svg]:size-3.5!"
+                : size === "lg"
+                  ? "[&_svg]:size-4.5!"
+                  : "[&_svg]:size-4!"
+            }
+          />
+        )}
       </InputGroupAddon>
       {children}
     </InputGroup>
@@ -287,7 +302,10 @@ function ComboboxSeparator({
   return (
     <ComboboxPrimitive.Separator
       data-slot="combobox-separator"
-      className={cn("pointer-events-none mx-1 my-1 h-px bg-border", className)}
+      className={cn(
+        "pointer-events-none mx-1 my-1 h-px bg-border-soft",
+        className
+      )}
       {...props}
     />
   )
@@ -349,7 +367,7 @@ const comboboxChipSizeClasses: Record<ComboboxSize, string> = {
   xs: "h-5 pl-1.5 text-xs",
   sm: "h-5 pl-1.5 text-xs",
   md: "h-6 pl-1.5 text-sm",
-  lg: "h-7 pl-2 text-base",
+  lg: "h-7 pl-2 text-base has-data-[slot=combobox-chip-remove]:pr-1.5",
 }
 
 function ComboboxChip({
@@ -368,7 +386,7 @@ function ComboboxChip({
       data-variant={variant}
       data-size={size}
       className={cn(
-        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0.5 data-[variant=ghost]:bg-secondary data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised",
+        "flex h-[calc(--spacing(6))] w-fit items-center justify-center gap-1 rounded-sm px-1.5 text-sm leading-base font-normal tracking-normal whitespace-nowrap text-secondary-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-1 data-[variant=ghost]:bg-secondary data-[variant=outline]:bg-secondary data-[variant=subtle]:bg-card data-[variant=subtle]:shadow-default data-[variant=subtle]:hover:shadow-raised",
         comboboxChipSizeClasses[size],
         className
       )}
@@ -378,10 +396,10 @@ function ComboboxChip({
       {showRemove && (
         <ComboboxPrimitive.ChipRemove
           render={<Button variant="ghost" size="icon-xs" />}
-          className="size-4 rounded-sm"
+          className="size-3 rounded-sm"
           data-slot="combobox-chip-remove"
         >
-          <XIcon className="pointer-events-none" />
+          <XIcon className="pointer-events-none size-3" />
         </ComboboxPrimitive.ChipRemove>
       )}
     </ComboboxPrimitive.Chip>

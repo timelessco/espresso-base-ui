@@ -19,7 +19,7 @@ export default function BadgePreview() {
       </PreviewCard>
 
       <PreviewCard label="Sizes">
-        <Badge size="default">default</Badge>
+        <Badge size="sm">default</Badge>
         <Badge size="md">medium</Badge>
         <Badge size="lg">large</Badge>
       </PreviewCard>
@@ -29,12 +29,12 @@ export default function BadgePreview() {
           <div className="flex flex-col gap-2">
             <span className="text-xs text-muted-foreground">default</span>
             <div className="flex flex-wrap items-center gap-4">
-              <Badge variant="default" size="default">default</Badge>
-              <Badge variant="secondary" size="default">secondary</Badge>
-              <Badge variant="destructive" size="default">destructive</Badge>
-              <Badge variant="outline" size="default">outline</Badge>
-              <Badge variant="ghost" size="default">ghost</Badge>
-              <Badge variant="link" size="default">link</Badge>
+              <Badge variant="default" size="sm">default</Badge>
+              <Badge variant="secondary" size="sm">secondary</Badge>
+              <Badge variant="destructive" size="sm">destructive</Badge>
+              <Badge variant="outline" size="sm">outline</Badge>
+              <Badge variant="ghost" size="sm">ghost</Badge>
+              <Badge variant="link" size="sm">link</Badge>
             </div>
           </div>
           <div className="flex flex-col gap-2">

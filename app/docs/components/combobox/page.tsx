@@ -35,7 +35,9 @@ import {
   type PlaygroundValues,
 } from "../../_components/playground"
 
-const fruits = [
+type Produce = { label: string; value: string }
+
+const fruits: Produce[] = [
   { label: "Apple", value: "apple" },
   { label: "Banana", value: "banana" },
   { label: "Cherry", value: "cherry" },
@@ -43,16 +45,19 @@ const fruits = [
   { label: "Orange", value: "orange" },
 ]
 
-const vegetables = [
+const vegetables: Produce[] = [
   { label: "Carrot", value: "carrot" },
   { label: "Spinach", value: "spinach" },
 ]
 
+// Items pass the whole { value, label } object as the ComboboxItem value –
+// Base UI then displays `label` in the input and submits `value` in forms
+// automatically (no itemToStringLabel/itemToStringValue needed).
 function FruitItems() {
   return (
     <ComboboxCollection>
-      {(item: { label: string; value: string }) => (
-        <ComboboxItem key={item.value} value={item.value}>
+      {(item: Produce) => (
+        <ComboboxItem key={item.value} value={item}>
           {item.label}
         </ComboboxItem>
       )}
@@ -61,24 +66,23 @@ function FruitItems() {
 }
 
 function ChipsDemo() {
-  const [value, setValue] = React.useState<string[]>(["apple", "cherry"])
+  const [value, setValue] = React.useState<Produce[]>(() =>
+    fruits.filter((f) => ["apple", "cherry"].includes(f.value))
+  )
   const anchorRef = useComboboxAnchor()
   return (
     <Combobox
       multiple
       items={fruits}
       value={value}
-      onValueChange={(v: unknown) => setValue(v as string[])}
+      onValueChange={(v: unknown) => setValue(v as Produce[])}
     >
       <ComboboxChips ref={anchorRef}>
-        {value.map((v) => {
-          const item = fruits.find((f) => f.value === v)
-          return (
-            <ComboboxChip key={v}>
-              <ComboboxValue>{item?.label ?? v}</ComboboxValue>
-            </ComboboxChip>
-          )
-        })}
+        {value.map((item) => (
+          <ComboboxChip key={item.value}>
+            <ComboboxValue>{item.label}</ComboboxValue>
+          </ComboboxChip>
+        ))}
         <ComboboxChipsInput placeholder="Add fruits..." />
       </ComboboxChips>
       <ComboboxContent anchor={anchorRef}>
@@ -101,9 +105,9 @@ function comboboxPlaygroundCode(v: PlaygroundValues) {
   if (v.multiple) {
     return `<Combobox${attrs} items={fruits} value={value} onValueChange={setValue}>
   <ComboboxChips ref={anchorRef}>
-    {value.map((v) => (
-      <ComboboxChip key={v}>
-        <ComboboxValue>{v}</ComboboxValue>
+    {value.map((item) => (
+      <ComboboxChip key={item.value}>
+        <ComboboxValue>{item.label}</ComboboxValue>
       </ComboboxChip>
     ))}
     <ComboboxChipsInput placeholder="${v.placeholder}" />
@@ -121,7 +125,7 @@ function comboboxPlaygroundCode(v: PlaygroundValues) {
     <ComboboxList>
       <ComboboxCollection>
         {(item) => (
-          <ComboboxItem key={item.value} value={item.value}>
+          <ComboboxItem key={item.value} value={item}>
             {item.label}
           </ComboboxItem>
         )}
@@ -141,7 +145,9 @@ function ComboboxPlaygroundChips({
   size: "xs" | "sm" | "md" | "lg"
   placeholder: string
 }) {
-  const [value, setValue] = React.useState<string[]>(["apple"])
+  const [value, setValue] = React.useState<Produce[]>(() =>
+    fruits.filter((f) => f.value === "apple")
+  )
   const anchorRef = useComboboxAnchor()
   return (
     <Combobox
@@ -150,17 +156,14 @@ function ComboboxPlaygroundChips({
       size={size}
       items={fruits}
       value={value}
-      onValueChange={(v: unknown) => setValue(v as string[])}
+      onValueChange={(v: unknown) => setValue(v as Produce[])}
     >
       <ComboboxChips ref={anchorRef}>
-        {value.map((v) => {
-          const item = fruits.find((f) => f.value === v)
-          return (
-            <ComboboxChip key={v}>
-              <ComboboxValue>{item?.label ?? v}</ComboboxValue>
-            </ComboboxChip>
-          )
-        })}
+        {value.map((item) => (
+          <ComboboxChip key={item.value}>
+            <ComboboxValue>{item.label}</ComboboxValue>
+          </ComboboxChip>
+        ))}
         <ComboboxChipsInput placeholder={placeholder} />
       </ComboboxChips>
       <ComboboxContent anchor={anchorRef}>
@@ -248,13 +251,15 @@ const fruits = [
   { label: "Cherry", value: "cherry" },
 ]
 
+// Passing the whole { value, label } object as the item value makes the
+// input display the label and forms submit the value – automatically.
 <Combobox items={fruits}>
   <ComboboxInput placeholder="Pick a fruit..." />
   <ComboboxContent>
     <ComboboxList>
       <ComboboxCollection>
         {(item) => (
-          <ComboboxItem key={item.value} value={item.value}>
+          <ComboboxItem key={item.value} value={item}>
             {item.label}
           </ComboboxItem>
         )}
@@ -312,7 +317,7 @@ import {
     <ComboboxList>
       <ComboboxCollection>
         {(item) => (
-          <ComboboxItem key={item.value} value={item.value}>
+          <ComboboxItem key={item.value} value={item}>
             {item.label}
           </ComboboxItem>
         )}
@@ -396,14 +401,20 @@ import {
     <ComboboxList>
       <ComboboxGroup>
         <ComboboxLabel>Fruits</ComboboxLabel>
-        <ComboboxItem value="apple">Apple</ComboboxItem>
-        <ComboboxItem value="banana">Banana</ComboboxItem>
+        {fruits.map((item) => (
+          <ComboboxItem key={item.value} value={item}>
+            {item.label}
+          </ComboboxItem>
+        ))}
       </ComboboxGroup>
       <ComboboxSeparator />
       <ComboboxGroup>
         <ComboboxLabel>Vegetables</ComboboxLabel>
-        <ComboboxItem value="carrot">Carrot</ComboboxItem>
-        <ComboboxItem value="spinach">Spinach</ComboboxItem>
+        {vegetables.map((item) => (
+          <ComboboxItem key={item.value} value={item}>
+            {item.label}
+          </ComboboxItem>
+        ))}
       </ComboboxGroup>
     </ComboboxList>
     <ComboboxEmpty>No items found.</ComboboxEmpty>
@@ -418,7 +429,7 @@ import {
                   <ComboboxGroup>
                     <ComboboxLabel>Fruits</ComboboxLabel>
                     {fruits.slice(0, 3).map((item) => (
-                      <ComboboxItem key={item.value} value={item.value}>
+                      <ComboboxItem key={item.value} value={item}>
                         {item.label}
                       </ComboboxItem>
                     ))}
@@ -427,7 +438,7 @@ import {
                   <ComboboxGroup>
                     <ComboboxLabel>Vegetables</ComboboxLabel>
                     {vegetables.map((item) => (
-                      <ComboboxItem key={item.value} value={item.value}>
+                      <ComboboxItem key={item.value} value={item}>
                         {item.label}
                       </ComboboxItem>
                     ))}
@@ -450,14 +461,14 @@ import {
         </DocProse>
         <DocExample
           code={`
-const [value, setValue] = React.useState(["apple", "cherry"])
+const [value, setValue] = React.useState([fruits[0], fruits[2]])
 const anchorRef = useComboboxAnchor()
 
 <Combobox multiple items={fruits} value={value} onValueChange={setValue}>
   <ComboboxChips ref={anchorRef}>
-    {value.map((v) => (
-      <ComboboxChip key={v}>
-        <ComboboxValue>{v}</ComboboxValue>
+    {value.map((item) => (
+      <ComboboxChip key={item.value}>
+        <ComboboxValue>{item.label}</ComboboxValue>
       </ComboboxChip>
     ))}
     <ComboboxChipsInput placeholder="Add fruits..." />
@@ -480,8 +491,12 @@ const anchorRef = useComboboxAnchor()
           <code>variant</code> and <code>size</code> with every part via
           context. The root also accepts all Base UI root props –{" "}
           <code>items</code>, <code>value</code>, <code>defaultValue</code>,{" "}
-          <code>onValueChange</code>, <code>multiple</code>,{" "}
-          <code>disabled</code>, <code>itemToStringLabel</code> and friends.
+          <code>onValueChange</code>, <code>multiple</code> and{" "}
+          <code>disabled</code>. When item values are objects shaped{" "}
+          <code>{"{ value, label }"}</code>, the input displays the label and
+          forms submit the value automatically; other object shapes can map
+          themselves with <code>itemToStringLabel</code> (display) and{" "}
+          <code>itemToStringValue</code> (form submission).
         </DocProse>
         <PropsTable
           title="Combobox"

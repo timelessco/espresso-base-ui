@@ -755,19 +755,22 @@ const triggerSizeToButton = {
 
 // trigger sizing (height / text / radius) per size — px, gap and icon sizing
 // come from the mapped Button size above
-const colorPickerTriggerVariants = cva("min-w-[220px] justify-start", {
-  variants: {
-    size: {
-      xs: "h-6 rounded-sm px-2 text-sm",
-      sm: "h-7 rounded-md px-2 text-base",
-      md: "h-8 rounded-lg px-2.5 text-base",
-      lg: "h-10 rounded-lg px-3 text-lg",
+const colorPickerTriggerVariants = cva(
+  "min-w-[220px] justify-start font-normal",
+  {
+    variants: {
+      size: {
+        xs: "h-6 rounded-sm px-2 text-sm",
+        sm: "h-7 rounded-md px-2 text-base",
+        md: "h-8 rounded-lg px-2.5 text-base",
+        lg: "h-10 rounded-lg px-3 text-lg",
+      },
     },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
+    defaultVariants: {
+      size: "md",
+    },
+  }
+)
 
 function ColorPickerTrigger(
   props: Omit<React.ComponentProps<typeof PopoverTrigger>, "size"> & {
@@ -1026,7 +1029,7 @@ function ColorPickerHueSlider(
       <SliderPrimitive.Track className="relative h-4 w-full grow overflow-hidden rounded-full bg-[linear-gradient(to_right,#ff0000_0%,#ffff00_16.66%,#00ff00_33.33%,#00ffff_50%,#0000ff_66.66%,#ff00ff_83.33%,#ff0000_100%)]">
         <SliderPrimitive.Range className="absolute h-full" />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 active:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
+      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none active:scale-110 disabled:pointer-events-none disabled:opacity-50" />
     </SliderPrimitive.Root>
   )
 }
@@ -1086,7 +1089,7 @@ function ColorPickerAlphaSlider(
         />
         <SliderPrimitive.Range className="absolute h-full" />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 active:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50" />
+      <SliderPrimitive.Thumb className="block size-3 rounded-full border-2 border-white bg-transparent shadow transition-transform duration-200 ease-out hover:scale-110 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none active:scale-110 disabled:pointer-events-none disabled:opacity-50" />
     </SliderPrimitive.Root>
   )
 }
@@ -1357,15 +1360,40 @@ interface InputGroupItemProps
 function InputGroupItem({
   className,
   position,
+  value,
+  onChange,
+  onBlur,
   ...props
 }: InputGroupItemProps) {
+  // The format inputs are controlled by the store and only commit valid
+  // values, so partial input ("", "8", "#3b8") would snap back on re-render
+  // mid-edit. Show a local draft while typing; revert to the canonical value
+  // on blur.
+  const [draft, setDraft] = React.useState<string | null>(null)
+
   return (
     <Input
       data-slot="color-picker-input"
       className={cn(
-        "h-6.5! shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] [&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] [&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4]! dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] dark:[&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242] dark:[&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]!",
+        "h-6.5! shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] [&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4]! dark:[&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]! [&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] dark:[&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]",
         inputGroupItemVariants({ position, className })
       )}
+      value={draft ?? value}
+      onChange={(event) => {
+        // numeric fields (alpha, channels) accept digits only
+        if (
+          props.inputMode === "numeric" &&
+          !/^\d*$/.test(event.target.value)
+        ) {
+          return
+        }
+        setDraft(event.target.value)
+        onChange?.(event)
+      }}
+      onBlur={(event) => {
+        setDraft(null)
+        onBlur?.(event)
+      }}
       {...props}
     />
   )

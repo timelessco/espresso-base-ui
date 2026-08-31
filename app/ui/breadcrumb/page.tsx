@@ -16,7 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -72,14 +71,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -98,14 +97,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -129,16 +128,8 @@ export default function BreadcrumbPage_() {
             <BreadcrumbItem>
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  render={
-                    <Button
-                      size="icon-sm"
-                      variant="ghost"
-                      className="hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)]"
-                    >
-                      <BreadcrumbEllipsis />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  }
+                  nativeButton={false}
+                  render={<BreadcrumbEllipsis />}
                 />
                 <DropdownMenuContent align="start">
                   <DropdownMenuGroup>
@@ -192,14 +183,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>/</BreadcrumbSeparator>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
