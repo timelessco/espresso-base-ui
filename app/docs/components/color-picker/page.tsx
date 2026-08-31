@@ -43,6 +43,7 @@ function colorPickerPlaygroundCode(v: PlaygroundValues) {
     `  <ColorPickerContent>`,
     `    <ColorPickerArea />`,
     `    <ColorPickerHueSlider />`,
+    ...(v.withoutAlpha ? [] : [`    <ColorPickerAlphaSlider />`]),
     `    <ColorPickerFormatSelect className="w-full" />`,
     `    <ColorPickerInput className="flex-1"${v.withoutAlpha ? " withoutAlpha" : ""} />`,
     `  </ColorPickerContent>`,
@@ -64,6 +65,7 @@ function ColorPickerPlaygroundPreview(v: PlaygroundValues) {
       <ColorPickerContent>
         <ColorPickerArea />
         <ColorPickerHueSlider />
+        {!v.withoutAlpha && <ColorPickerAlphaSlider />}
         <ColorPickerFormatSelect className="w-full" />
         <ColorPickerInput
           className="flex-1"
