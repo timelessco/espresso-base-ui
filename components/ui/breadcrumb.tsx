@@ -136,7 +136,7 @@ function BreadcrumbEllipsis({
       role="presentation"
       aria-hidden="true"
       className={cn(
-        "flex size-7 items-center justify-center rounded-md text-accent-foreground transition-colors outline-none group-data-[size=md]/breadcrumb:size-5 hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)] group-data-[size=md]/breadcrumb:[&>svg]:size-4",
+        "flex size-6 items-center justify-center rounded-md text-accent-foreground transition-colors outline-none group-data-[size=md]/breadcrumb:size-7 hover:bg-[color-mix(in_oklch,var(--accent),white_35%)] focus-visible:bg-[color-mix(in_oklch,var(--accent),white_60%)] focus-visible:ring-2 focus-visible:ring-ring active:bg-muted active:text-foreground dark:hover:bg-[color-mix(in_oklch,var(--accent),white_5%)] dark:focus-visible:bg-[color-mix(in_oklch,var(--accent),white_5%)] [&>svg]:size-4 group-data-[size=md]/breadcrumb:[&>svg]:size-5",
         className
       )}
       {...props}
@@ -189,7 +189,7 @@ export {
  *
  * BreadcrumbEllipsis:
  *   Before: flex size-5, [&>svg]:size-4. Used MoreHorizontalIcon.
- *   After:  size-7 (sm), size-5 (md). Uses EllipsisIcon.
+ *   After:  size-6 with [&>svg]:size-4 (sm), size-7 with [&>svg]:size-5 (md).
+ *           Uses EllipsisIcon.
  *           Added hover/focus/active styles matching BreadcrumbLink.
- *           Icon size: [&>svg]:size-4 for md.
  */

@@ -13,6 +13,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
   CodeBlock,
   DocExample,
   DocHeader,
@@ -43,9 +49,21 @@ function breadcrumbPlaygroundCode(v: PlaygroundValues) {
     `    </BreadcrumbItem>`,
     `    ${separator}`,
     `    <BreadcrumbItem>`,
-    v.ellipsis
-      ? `      <BreadcrumbEllipsis />`
-      : `      <BreadcrumbLink href="#">Components</BreadcrumbLink>`,
+    ...(v.ellipsis
+      ? [
+          `      <DropdownMenu>`,
+          `        <DropdownMenuTrigger`,
+          `          nativeButton={false}`,
+          `          render={<BreadcrumbEllipsis />}`,
+          `        />`,
+          `        <DropdownMenuContent align="start">`,
+          `          <DropdownMenuItem>Documentation</DropdownMenuItem>`,
+          `          <DropdownMenuItem>Themes</DropdownMenuItem>`,
+          `          <DropdownMenuItem>GitHub</DropdownMenuItem>`,
+          `        </DropdownMenuContent>`,
+          `      </DropdownMenu>`,
+        ]
+      : [`      <BreadcrumbLink href="#">Components</BreadcrumbLink>`]),
     `    </BreadcrumbItem>`,
     `    ${separator}`,
     `    <BreadcrumbItem>`,
@@ -74,7 +92,17 @@ function BreadcrumbPlaygroundPreview(v: PlaygroundValues) {
         {separator}
         <BreadcrumbItem>
           {v.ellipsis ? (
-            <BreadcrumbEllipsis />
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                nativeButton={false}
+                render={<BreadcrumbEllipsis />}
+              />
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem>Documentation</DropdownMenuItem>
+                <DropdownMenuItem>Themes</DropdownMenuItem>
+                <DropdownMenuItem>GitHub</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <BreadcrumbLink href="#">Components</BreadcrumbLink>
           )}
@@ -196,7 +224,8 @@ import {
       <DocSection title="Sizes">
         <DocProse>
           <code>size="md"</code> bumps the trail to larger, medium-weight text
-          with bigger separators; the default <code>sm</code> is compact.
+          with bigger separators and a larger ellipsis (28px with a 20px icon,
+          vs 24px with a 16px icon); the default <code>sm</code> is compact.
         </DocProse>
         <DocExample
           code={`
@@ -378,7 +407,7 @@ import {
               type: '"sm" | "md"',
               defaultValue: '"sm"',
               description:
-                "Trail scale – sm is compact text with 12px separators; md uses larger medium-weight text and 16px separators.",
+                "Trail scale – sm is compact text with 12px separators and a 24px ellipsis; md uses larger medium-weight text, 16px separators and a 28px ellipsis.",
             },
           ]}
         />
@@ -412,7 +441,7 @@ import {
             {
               part: "BreadcrumbEllipsis",
               description:
-                'Three-dot placeholder for collapsed segments with an sr-only "More" label (data-slot="breadcrumb-ellipsis"). aria-hidden presentation.',
+                'Three-dot placeholder for collapsed segments with an sr-only "More" label (data-slot="breadcrumb-ellipsis"). 24px with a 16px icon in sm, 28px with a 20px icon in md. aria-hidden presentation.',
             },
           ]}
         />
