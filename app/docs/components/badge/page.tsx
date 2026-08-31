@@ -21,7 +21,7 @@ import {
 function badgePlaygroundCode(v: PlaygroundValues) {
   const attrs = [
     v.variant !== "default" ? ` variant="${v.variant}"` : "",
-    v.size !== "default" ? ` size="${v.size}"` : "",
+    v.size !== "md" ? ` size="${v.size}"` : "",
   ].join("")
 
   if (v.icon) {
@@ -47,7 +47,7 @@ function BadgePlaygroundPreview(v: PlaygroundValues) {
           | "ghost"
           | "link"
       }
-      size={v.size as "default" | "md" | "lg"}
+      size={v.size as "sm" | "md" | "lg"}
     >
       {Boolean(v.icon) && <Diamond data-icon="inline-start" />}
       {v.label}
@@ -81,8 +81,8 @@ export default function BadgeDocsPage() {
             },
             size: {
               type: "options",
-              options: ["default", "md", "lg"],
-              defaultValue: "default",
+              options: ["sm", "md", "lg"],
+              defaultValue: "md",
             },
             icon: { type: "boolean", defaultValue: false },
           }}
@@ -132,17 +132,18 @@ export default function BadgeDocsPage() {
 
       <DocSection title="Sizes">
         <DocProse>
-          Three sizes: <code>default</code> (16px), <code>md</code> (20px) and{" "}
-          <code>lg</code> (24px, with slightly larger text). The outline variant
-          trims 2px off each height to make room for its shadow ring.
+          Three sizes: <code>sm</code> (16px), <code>md</code> (20px, the
+          default) and <code>lg</code> (24px, with slightly larger text). The
+          outline variant trims 2px off each height to make room for its shadow
+          ring.
         </DocProse>
         <DocExample
           code={`
-<Badge size="default">default</Badge>
+<Badge size="sm">small</Badge>
 <Badge size="md">medium</Badge>
 <Badge size="lg">large</Badge>`}
         >
-          <Badge size="default">default</Badge>
+          <Badge size="sm">small</Badge>
           <Badge size="md">medium</Badge>
           <Badge size="lg">large</Badge>
         </DocExample>
@@ -226,8 +227,8 @@ export default function BadgeDocsPage() {
             },
             {
               prop: "size",
-              type: '"default" | "md" | "lg"',
-              defaultValue: '"default"',
+              type: '"sm" | "md" | "lg"',
+              defaultValue: '"md"',
               description:
                 "Pill height and typography: 16px / 20px / 24px, with matching icon sizes (10–12px).",
             },

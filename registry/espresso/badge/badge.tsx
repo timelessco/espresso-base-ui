@@ -17,21 +17,20 @@ const badgeVariants = cva(
         link: "overflow-visible text-muted-foreground underline-offset-4 hover:underline",
       },
       size: {
-        default:
-          "h-4 px-1.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-2.5!",
+        sm: "h-4 px-1.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-2.5!",
         md: "h-5 px-1.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&>svg]:size-3!",
         lg: "h-6 px-2 text-sm has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&>svg]:size-3!",
       },
     },
     compoundVariants: [
       // outline variant: reduce height by 2px for each size to account for outer shadow ring
-      { variant: "outline", size: "default", className: "h-3.5!" },
+      { variant: "outline", size: "sm", className: "h-3.5!" },
       { variant: "outline", size: "md", className: "h-4.5!" },
       { variant: "outline", size: "lg", className: "h-5.5!" },
     ],
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "md",
     },
   }
 )
@@ -39,7 +38,7 @@ const badgeVariants = cva(
 function Badge({
   className,
   variant = "default",
-  size = "default",
+  size = "md",
   render,
   ...props
 }: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
@@ -67,10 +66,10 @@ export { Badge, badgeVariants }
  *
  * Size variant:
  *   Before: No size variant. Single fixed size: h-5, px-2, text-xs, [&>svg]:size-3.
- *   After:  Added size variant with 3 options:
- *             default (sm) → h-4 (16px), text-xs (12px), [&>svg]:size-2.5 (10px)
- *             md           → h-5 (20px), text-xs (12px), [&>svg]:size-3 (12px)
- *             lg           → h-6 (24px), text-sm (13px), [&>svg]:size-3 (12px)
+ *   After:  Added size variant with 3 options (md is the default):
+ *             sm → h-4 (16px), text-xs (12px), [&>svg]:size-2.5 (10px)
+ *             md → h-5 (20px), text-xs (12px), [&>svg]:size-3 (12px)
+ *             lg → h-6 (24px), text-sm (13px), [&>svg]:size-3 (12px)
  *           Each size has proportional px padding and icon padding adjustments.
  *
  * Base classes:
