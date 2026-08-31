@@ -38,7 +38,7 @@ const buttonVariants = cva(
           "h-13 gap-2 rounded-2xl px-4 text-2xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
 
         "icon-xs":
-          "size-6 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
+          "size-6 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3.5 [&_svg:not([class*='size-'])]:max-h-3.5 [&_svg:not([class*='size-'])]:max-w-3.5",
         "icon-sm":
           "size-7 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-h-4 [&_svg:not([class*='size-'])]:max-w-4",
         icon: "size-8 rounded-[var(--radius-btn-icon,var(--radius-md))] [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5",
