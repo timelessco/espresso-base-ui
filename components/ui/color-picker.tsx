@@ -1360,8 +1360,17 @@ interface InputGroupItemProps
 function InputGroupItem({
   className,
   position,
+  value,
+  onChange,
+  onBlur,
   ...props
 }: InputGroupItemProps) {
+  // The format inputs are controlled by the store and only commit valid
+  // values, so partial input ("", "8", "#3b8") would snap back on re-render
+  // mid-edit. Show a local draft while typing; revert to the canonical value
+  // on blur.
+  const [draft, setDraft] = React.useState<string | null>(null)
+
   return (
     <Input
       data-slot="color-picker-input"
@@ -1369,6 +1378,22 @@ function InputGroupItem({
         "h-6.5! shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_#e5e5e5] dark:shadow-[0px_1px_1px_rgba(0,0,0,0.08),0px_0px_0px_1px_#343434] [&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4]! dark:[&[data-slot=color-picker-input]:focus]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]! [&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_#0000001f,0px_0px_0px_1px_#d4d4d4] dark:[&[data-slot=color-picker-input]:not(:disabled):hover]:shadow-[0px_1px_1px_rgba(0,0,0,0.1),0px_0px_0px_1px_#424242]",
         inputGroupItemVariants({ position, className })
       )}
+      value={draft ?? value}
+      onChange={(event) => {
+        // numeric fields (alpha, channels) accept digits only
+        if (
+          props.inputMode === "numeric" &&
+          !/^\d*$/.test(event.target.value)
+        ) {
+          return
+        }
+        setDraft(event.target.value)
+        onChange?.(event)
+      }}
+      onBlur={(event) => {
+        setDraft(null)
+        onBlur?.(event)
+      }}
       {...props}
     />
   )
