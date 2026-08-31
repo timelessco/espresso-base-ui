@@ -16,7 +16,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 import { Kbd } from "@/components/ui/kbd"
-import { docsComponents } from "./nav"
+import { docsComponents, docsGettingStarted } from "./nav"
 
 // Global docs search: a search pill that opens a ⌘K command palette listing
 // every documented component, like the frappe-ui docs search. When two
@@ -69,6 +69,20 @@ export function DocsSearch({
           <CommandInput placeholder="Search documentation" />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Getting Started">
+              {docsGettingStarted.map((item) => (
+                <CommandItem
+                  key={item.href}
+                  value={item.label}
+                  onSelect={() => {
+                    setOpen(false)
+                    router.push(item.href)
+                  }}
+                >
+                  {item.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
             <CommandGroup heading="Components">
               {docsComponents.map((item) => (
                 <CommandItem

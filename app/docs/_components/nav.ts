@@ -1,3 +1,9 @@
+// Top-level guide pages, shown above the component list in the sidebar and
+// the global docs search.
+export const docsGettingStarted = [
+  { label: "Installation", href: "/docs/installation" },
+]
+
 // Published component docs. Extend as pages are written under
 // app/docs/components/<slug>/page.tsx. Shared by the sidebar and the
 // global docs search.
