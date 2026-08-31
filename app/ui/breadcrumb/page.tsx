@@ -71,14 +71,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -97,14 +97,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -183,14 +183,14 @@ export default function BreadcrumbPage_() {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>/</BreadcrumbSeparator>
             <BreadcrumbItem>
               <BreadcrumbLink href="#" className="gap-2">
-                <Diamond className="size-4" />
+                <Diamond />
                 Components
               </BreadcrumbLink>
             </BreadcrumbItem>
