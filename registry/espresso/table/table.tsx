@@ -13,7 +13,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
       <table
         data-slot="table"
         className={cn(
-          "w-full caption-bottom text-sm [&:has(tbody>tr:last-child:hover)_tfoot]:border-t-transparent",
+          "w-full caption-bottom text-sm [&:has(tbody>tr:last-child:hover)_tfoot]:border-t-transparent [&:has(tbody>tr:last-child[data-state=selected])_tfoot]:border-t-transparent",
           className
         )}
         {...props}
@@ -27,7 +27,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
     <thead
       data-slot="table-header"
       className={cn(
-        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent [&_tr:hover]:border-border-soft [&_tr:hover]:bg-transparent [&_tr>*:first-child]:rounded-l-none [&_tr>*:last-child]:rounded-r-none",
+        "text-sm leading-base font-normal tracking-normal [&_tr]:border-b [&_tr]:border-border-soft has-[+tbody>tr:first-child:hover]:[&_tr]:border-transparent has-[+tbody>tr:first-child[data-state=selected]]:[&_tr]:border-transparent [&_tr:hover]:border-border-soft [&_tr:hover]:bg-transparent [&_tr>*:first-child]:rounded-l-none [&_tr>*:last-child]:rounded-r-none",
         className
       )}
       {...props}
@@ -63,7 +63,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b border-border-soft transition-colors [@media(hover:hover)]:hover:border-transparent [@media(hover:hover)]:hover:bg-secondary has-aria-expanded:bg-muted/50 [@media(hover:hover)]:has-[+tr:hover]:border-transparent data-[state=selected]:bg-muted [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md",
+        "border-b border-border-soft transition-colors [@media(hover:hover)]:hover:border-transparent [@media(hover:hover)]:hover:bg-secondary has-aria-expanded:bg-muted/50 [@media(hover:hover)]:has-[+tr:hover]:border-transparent data-[state=selected]:border-transparent data-[state=selected]:bg-muted has-[+tr[data-state=selected]]:border-transparent [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md",
         className
       )}
       {...props}
@@ -89,7 +89,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "h-11 overflow-hidden text-ellipsis p-2 align-middle text-base leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "h-11 overflow-hidden text-ellipsis p-2 align-middle text-base leading-base font-normal tracking-normal whitespace-nowrap text-muted-foreground first:text-foreground [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}

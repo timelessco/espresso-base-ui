@@ -325,9 +325,10 @@ const fruitsWithIcons = [
 
       <DocSection title="Sizes">
         <DocProse>
-          <code>size</code> sets the trigger height: <code>xs</code> (24px),{" "}
-          <code>sm</code> (28px), <code>md</code> (32px, the default) and{" "}
-          <code>lg</code> (40px with larger text and radius).
+          <code>size</code> sets the trigger height and radius: <code>xs</code>{" "}
+          (24px, rounded-sm), <code>sm</code> (28px, rounded-md),{" "}
+          <code>md</code> (32px, rounded-md, the default) and <code>lg</code>{" "}
+          (40px, rounded-lg with larger text).
         </DocProse>
         <DocExample
           code={`
@@ -480,7 +481,8 @@ const fruitsWithIcons = [
               prop: "size",
               type: '"xs" | "sm" | "md" | "lg"',
               defaultValue: '"md"',
-              description: "Trigger height: 24, 28, 32 or 40px.",
+              description:
+                "Trigger height (24 / 28 / 32 / 40px) and radius (sm / md / md / lg).",
             },
             {
               prop: "suffix",
