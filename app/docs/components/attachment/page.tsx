@@ -56,7 +56,6 @@ function attachmentPlaygroundCode(v: PlaygroundValues) {
   const state = v.state as keyof typeof stateMediaIconNames
   const attrs = [
     state !== "done" ? ` state="${state}"` : "",
-    v.size !== "default" ? ` size="${v.size}"` : "",
     v.orientation !== "horizontal" ? ` orientation="${v.orientation}"` : "",
   ].join("")
 
@@ -90,7 +89,6 @@ function AttachmentPlaygroundPreview(v: PlaygroundValues) {
   return (
     <Attachment
       state={state}
-      size={v.size as "xs" | "sm" | "default"}
       orientation={v.orientation as "horizontal" | "vertical"}
     >
       <AttachmentMedia>
@@ -128,11 +126,6 @@ export default function AttachmentDocsPage() {
               type: "options",
               options: ["done", "idle", "uploading", "processing", "error"],
               defaultValue: "done",
-            },
-            size: {
-              type: "options",
-              options: ["xs", "sm", "default"],
-              defaultValue: "default",
             },
             orientation: {
               type: "options",

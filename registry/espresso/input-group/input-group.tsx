@@ -31,7 +31,7 @@ const inputGroupVariants = cva(
           "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success!",
       },
       size: {
-        xs: "h-6 rounded-md [&_svg:not([class*='size-'])]:size-4",
+        xs: "h-6 rounded-sm [&_svg:not([class*='size-'])]:size-4",
         sm: "h-7 rounded-md [&_svg:not([class*='size-'])]:size-4",
         md: "h-8 rounded-md [&_svg:not([class*='size-'])]:size-4",
         lg: "h-10 rounded-lg [&_svg:not([class*='size-'])]:size-4",

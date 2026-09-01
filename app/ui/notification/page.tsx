@@ -14,15 +14,15 @@ const noop = () => {}
 export default function NotificationPage() {
   return (
     <div className="flex flex-col gap-12 p-8">
-      {/* Inline */}
+      {/* Default */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Inline</SectionTitle>
+        <SectionTitle>Default</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
               })
             }
@@ -33,9 +33,9 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -45,7 +45,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
               })
@@ -57,10 +57,10 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -69,15 +69,15 @@ export default function NotificationPage() {
         </div>
       </div>
 
-      {/* Inline with action */}
+      {/* Default with action */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Inline — With Action</SectionTitle>
+        <SectionTitle>Default — With Action</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 actionType: "single",
                 actions: [{ label: "Update", onClick: noop }],
@@ -90,11 +90,11 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 actionType: "single",
                 actions: [{ label: "Update", onClick: noop }],
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -104,7 +104,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
                 actionType: "single",
@@ -118,12 +118,12 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
                 actionType: "single",
                 actions: [{ label: "Update", onClick: noop }],
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -132,15 +132,15 @@ export default function NotificationPage() {
         </div>
       </div>
 
-      {/* Long text */}
+      {/* Banner */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Long Text</SectionTitle>
+        <SectionTitle>Banner</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
@@ -153,11 +153,11 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -167,7 +167,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
@@ -181,12 +181,12 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -195,15 +195,30 @@ export default function NotificationPage() {
         </div>
       </div>
 
-      {/* Long text with actions */}
+      {/* Banner with actions */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Long Text — With Actions</SectionTitle>
+        <SectionTitle>Banner — With Actions</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
+                title: "System Update Available",
+                description:
+                  "A new update is available for the app. Update now to enjoy new features and improvements.",
+                actionType: "single",
+                actions: [{ label: "Update now", onClick: noop }],
+              })
+            }
+          >
+            Single action
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              notify({
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
@@ -221,11 +236,11 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
-                suffix: true,
+                showClose: true,
                 actionType: "dual",
                 actions: [
                   { label: "Update now", onClick: noop },
@@ -240,7 +255,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
@@ -259,12 +274,12 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
                 actionType: "dual",
                 actions: [
                   { label: "Update now", onClick: noop },
@@ -278,59 +293,15 @@ export default function NotificationPage() {
         </div>
       </div>
 
-      {/* Long text — Split */}
+      {/* Avatar */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Long Text — Split Action</SectionTitle>
+        <SectionTitle>Avatar</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
-                title: "Your trial ends soon!",
-                description:
-                  "Upgrade now to continue enjoying all features without interruption.",
-                actionType: "split",
-                actions: [
-                  { label: "Update", onClick: noop },
-                  { label: "View", onClick: noop },
-                ],
-              })
-            }
-          >
-            Split
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() =>
-              notify({
-                variant: "long-text",
-                title: "Your trial ends soon!",
-                description:
-                  "Upgrade now to continue enjoying all features without interruption.",
-                prefix: <Info />,
-                actionType: "split",
-                actions: [
-                  { label: "Update", onClick: noop },
-                  { label: "View", onClick: noop },
-                ],
-              })
-            }
-          >
-            Split + icon
-          </Button>
-        </div>
-      </div>
-
-      {/* Notification (avatar) */}
-      <div className="flex flex-col gap-4">
-        <SectionTitle>Notification</SectionTitle>
-        <div className="flex flex-wrap items-center gap-3">
-          <Button
-            variant="outline"
-            onClick={() =>
-              notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -350,7 +321,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -374,7 +345,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -384,7 +355,7 @@ export default function NotificationPage() {
                     <AvatarFallback>JJ</AvatarFallback>
                   </Avatar>
                 ),
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -394,7 +365,7 @@ export default function NotificationPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -404,7 +375,7 @@ export default function NotificationPage() {
                     <AvatarFallback>JJ</AvatarFallback>
                   </Avatar>
                 ),
-                suffix: true,
+                showClose: true,
                 actionType: "dual",
                 actions: [
                   { label: "Join", onClick: noop },
@@ -418,33 +389,30 @@ export default function NotificationPage() {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Compact */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Modal</SectionTitle>
+        <SectionTitle>Compact</SectionTitle>
         <div className="flex flex-wrap items-center gap-3">
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "modal",
+                variant: "compact",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
                 actionType: "single",
-                actions: [
-                  { label: "Update now", onClick: noop },
-                  { label: "Update now", onClick: noop },
-                ],
+                actions: [{ label: "Update now", onClick: noop }],
               })
             }
           >
-            Stacked
+            Single
           </Button>
           <Button
             variant="outline"
             onClick={() =>
               notify({
-                variant: "modal",
+                variant: "compact",
                 title: "System Update Available",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",

@@ -38,7 +38,7 @@ function avatarPlaygroundCode(v: PlaygroundValues) {
   if (v.image) {
     lines.push(`  <AvatarImage src="${avatarSrc}" alt="User" />`)
   }
-  lines.push(`  <AvatarFallback>${v.fallback}</AvatarFallback>`)
+  lines.push(`  <AvatarFallback>${String(v.fallback).slice(0, 1)}</AvatarFallback>`)
   if (v.badge) lines.push(`  <AvatarBadge />`)
   lines.push(`</Avatar>`)
   return lines.join("\n")
@@ -55,7 +55,7 @@ function AvatarPlaygroundPreview(v: PlaygroundValues) {
       size={v.size as "xs" | "sm" | "default" | "lg" | "xl" | "2xl" | "3xl"}
     >
       {Boolean(v.image) && <AvatarImage src={avatarSrc} alt="User" />}
-      <AvatarFallback>{v.fallback}</AvatarFallback>
+      <AvatarFallback>{String(v.fallback).slice(0, 1)}</AvatarFallback>
       {Boolean(v.badge) && <AvatarBadge />}
     </Avatar>
   )
@@ -72,7 +72,7 @@ export default function AvatarDocsPage() {
       <DocSection title="Playground">
         <DocPlayground
           controls={{
-            fallback: { type: "text", defaultValue: "CN" },
+            fallback: { type: "text", defaultValue: "C" },
             variant: {
               type: "options",
               options: ["circle", "square"],

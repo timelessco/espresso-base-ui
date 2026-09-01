@@ -48,7 +48,6 @@ export const docsComponents = [
   { label: "Separator", href: "/docs/components/separator" },
   { label: "Sidebar", href: "/docs/components/sidebar" },
   { label: "Slider", href: "/docs/components/slider" },
-  { label: "Sonner", href: "/docs/components/sonner" },
   { label: "Spinner", href: "/docs/components/spinner" },
   { label: "Switch", href: "/docs/components/switch" },
   { label: "Table", href: "/docs/components/table" },

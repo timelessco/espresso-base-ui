@@ -34,9 +34,21 @@ function playgroundActions(actionType: string) {
 function notificationPlaygroundCode(v: PlaygroundValues) {
   const actionType = v.actionType as string
   const lines = [`notify({`]
-  if (v.variant !== "inline") lines.push(`  variant: "${v.variant}",`)
+  if (v.variant !== "default") lines.push(`  variant: "${v.variant}",`)
   lines.push(`  title: "${v.title}",`)
   if (v.description) lines.push(`  description: "${v.description}",`)
+  if (v.variant === "avatar") {
+    lines.push(
+      `  timestamp: "28 min ago",`,
+      `  prefix: (`,
+      `    <Avatar size="xl">`,
+      `      <AvatarImage src="https://i.pravatar.cc/40?img=47" />`,
+      `      <AvatarFallback>JJ</AvatarFallback>`,
+      `    </Avatar>`,
+      `  ),`
+    )
+  }
+  if (v.showClose) lines.push(`  showClose: true,`)
   if (actionType !== "none") {
     lines.push(`  actionType: "${actionType}",`)
     if (actionType === "single") {
@@ -55,19 +67,25 @@ function notificationPlaygroundCode(v: PlaygroundValues) {
 }
 
 function NotificationPlaygroundPreview(v: PlaygroundValues) {
-  const actionType = v.actionType as "none" | "single" | "dual" | "split"
+  const actionType = v.actionType as "none" | "single" | "dual"
   return (
     <Button
       variant="outline"
       onClick={() =>
         notify({
-          variant: v.variant as
-            | "inline"
-            | "long-text"
-            | "notification"
-            | "modal",
+          variant: v.variant as "default" | "banner" | "avatar" | "compact",
           title: v.title as string,
           description: (v.description as string) || undefined,
+          ...(v.variant === "avatar" && {
+            timestamp: "28 min ago",
+            prefix: (
+              <Avatar size="xl">
+                <AvatarImage src="https://i.pravatar.cc/40?img=47" />
+                <AvatarFallback>JJ</AvatarFallback>
+              </Avatar>
+            ),
+          }),
+          showClose: Boolean(v.showClose),
           actionType,
           actions: actionType === "none" ? [] : playgroundActions(actionType),
         })
@@ -83,7 +101,7 @@ export default function NotificationDocsPage() {
     <DocPage>
       <DocHeader
         title="Notification"
-        description="Imperative toast-style notifications fired with notify(). Four card layouts, from a one-line strip to a centered modal card."
+        description="Imperative toast-style notifications fired with notify(). Four card layouts, from a one-line strip to a centered compact card."
       />
 
       <DocSection title="Playground">
@@ -99,14 +117,15 @@ export default function NotificationDocsPage() {
             },
             variant: {
               type: "options",
-              options: ["inline", "long-text", "notification", "modal"],
-              defaultValue: "inline",
+              options: ["default", "banner", "avatar", "compact"],
+              defaultValue: "default",
             },
             actionType: {
               type: "options",
-              options: ["none", "single", "dual", "split"],
+              options: ["none", "single", "dual"],
               defaultValue: "single",
             },
+            showClose: { type: "boolean", defaultValue: false },
           }}
           renderPreview={NotificationPlaygroundPreview}
           renderCode={notificationPlaygroundCode}
@@ -115,10 +134,10 @@ export default function NotificationDocsPage() {
 
       <DocSection title="Preview">
         <DocProse>
-          Call <code>notify()</code> from any event handler. The default{" "}
-          <code>inline</code> variant is a single-row card; add a{" "}
+          Call <code>notify()</code> from any event handler. The{" "}
+          <code>default</code> variant is a single-row card; add a{" "}
           <code>prefix</code> icon, a close button with{" "}
-          <code>suffix: true</code>, or a trailing action. A{" "}
+          <code>showClose: true</code>, or a trailing action. A{" "}
           <code>NotificationToaster</code> must be mounted once in your app.
         </DocProse>
         <DocExample
@@ -127,10 +146,9 @@ export default function NotificationDocsPage() {
   variant="outline"
   onClick={() =>
     notify({
-      variant: "inline",
       title: "Update available. Get new features!",
       prefix: <Info />,
-      suffix: true,
+      showClose: true,
       actionType: "single",
       actions: [{ label: "Update", onClick: () => {} }],
     })
@@ -145,10 +163,9 @@ export default function NotificationDocsPage() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
                 actionType: "single",
                 actions: [{ label: "Update", onClick: noop }],
               })
@@ -187,23 +204,23 @@ notify({
         />
       </DocSection>
 
-      <DocSection title="Long text with actions">
+      <DocSection title="Banner with actions">
         <DocProse>
-          <code>variant: "long-text"</code> stacks the title above a
-          description. <code>actionType: "dual"</code> renders two side-by-side
-          buttons in the content column; <code>actionType: "single"</code>{" "}
-          renders one full-width button. Buttons close the notification after
-          running their <code>onClick</code>.
+          <code>variant: "banner"</code> stacks the title above a description.{" "}
+          <code>actionType: "dual"</code> renders two side-by-side buttons below
+          the copy; <code>actionType: "single"</code> renders just the first
+          one. Buttons close the notification after running their{" "}
+          <code>onClick</code>.
         </DocProse>
         <DocExample
           code={`
 notify({
-  variant: "long-text",
-  title: "System Update Available",
+  variant: "banner",
+  title: "Update available. Get new features!",
   description:
     "A new update is available for the app. Update now to enjoy new features and improvements.",
   prefix: <Info />,
-  suffix: true,
+  showClose: true,
   actionType: "dual",
   actions: [
     { label: "Update now", onClick: () => {} },
@@ -215,12 +232,12 @@ notify({
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
-                title: "System Update Available",
+                variant: "banner",
+                title: "Update available. Get new features!",
                 description:
                   "A new update is available for the app. Update now to enjoy new features and improvements.",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
                 actionType: "dual",
                 actions: [
                   { label: "Update now", onClick: noop },
@@ -234,17 +251,17 @@ notify({
         </DocExample>
       </DocSection>
 
-      <DocSection title="Notification with avatar">
+      <DocSection title="Avatar">
         <DocProse>
-          <code>variant: "notification"</code> is built for activity feeds: pass
-          an avatar as <code>prefix</code>, a relative <code>timestamp</code>,
-          and <code>unread: true</code> for a blue unread dot at the trailing
-          edge.
+          <code>variant: "avatar"</code> is built for activity feeds: pass an
+          avatar as <code>prefix</code>, a relative <code>timestamp</code>, and{" "}
+          <code>unread: true</code> for a blue unread dot at the top-right
+          corner (the close button takes that spot when both are enabled).
         </DocProse>
         <DocExample
           code={`
 notify({
-  variant: "notification",
+  variant: "avatar",
   title: "Jane Johnson",
   description: "Your task is due tomorrow",
   timestamp: "28 min ago",
@@ -261,7 +278,7 @@ notify({
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -280,35 +297,23 @@ notify({
         </DocExample>
       </DocSection>
 
-      <DocSection title="Modal and split layouts">
+      <DocSection title="Compact">
         <DocProse>
-          <code>variant: "modal"</code> centers the copy and lays the actions
-          out full-width – stacked for <code>single</code>, side by side for{" "}
-          <code>dual</code>. <code>actionType: "split"</code> (with any variant)
-          moves the actions into a bordered column on the right, one button per
-          row.
+          <code>variant: "compact"</code> centers the copy and lays the actions
+          out full-width – one full-width button for <code>single</code>, side
+          by side for <code>dual</code>.
         </DocProse>
         <DocExample
           code={`
 notify({
-  variant: "modal",
+  variant: "compact",
   title: "System Update Available",
-  description: "Update now to enjoy new features and improvements.",
+  description:
+    "A new update is available for the app. Update now to enjoy new features and improvements.",
   actionType: "dual",
   actions: [
     { label: "Update now", onClick: () => {} },
     { label: "Later", onClick: () => {} },
-  ],
-})
-
-notify({
-  variant: "long-text",
-  title: "Your trial ends soon!",
-  description: "Upgrade now to continue enjoying all features.",
-  actionType: "split",
-  actions: [
-    { label: "Update", onClick: () => {} },
-    { label: "View", onClick: () => {} },
   ],
 })`}
         >
@@ -316,10 +321,10 @@ notify({
             variant="outline"
             onClick={() =>
               notify({
-                variant: "modal",
+                variant: "compact",
                 title: "System Update Available",
                 description:
-                  "Update now to enjoy new features and improvements.",
+                  "A new update is available for the app. Update now to enjoy new features and improvements.",
                 actionType: "dual",
                 actions: [
                   { label: "Update now", onClick: noop },
@@ -328,24 +333,7 @@ notify({
               })
             }
           >
-            Modal
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() =>
-              notify({
-                variant: "long-text",
-                title: "Your trial ends soon!",
-                description: "Upgrade now to continue enjoying all features.",
-                actionType: "split",
-                actions: [
-                  { label: "Update", onClick: noop },
-                  { label: "View", onClick: noop },
-                ],
-              })
-            }
-          >
-            Split
+            Compact
           </Button>
         </DocExample>
       </DocSection>
@@ -363,10 +351,10 @@ notify({
           rows={[
             {
               prop: "variant",
-              type: '"inline" | "long-text" | "notification" | "modal"',
-              defaultValue: '"inline"',
+              type: '"default" | "banner" | "avatar" | "compact"',
+              defaultValue: '"default"',
               description:
-                "Card layout – single row, stacked long text, avatar feed item, or centered modal card.",
+                "Card layout – single row, stacked banner, avatar feed item, or centered compact card.",
             },
             {
               prop: "title",
@@ -386,18 +374,18 @@ notify({
                 "Leading visual – an icon (auto-sized to size-4) or an Avatar.",
             },
             {
-              prop: "suffix",
+              prop: "showClose",
               type: "boolean",
               defaultValue: "false",
               description:
-                "Shows a close button – centered on the row for inline, top-right for other layouts. Ignored for split.",
+                "Shows a close (✕) button – inline at the row's end for default, top-right for the other layouts.",
             },
             {
               prop: "actionType",
-              type: '"none" | "single" | "dual" | "split"',
+              type: '"none" | "single" | "dual"',
               defaultValue: '"none"',
               description:
-                "Action layout: one button, two buttons, or a bordered split column at the trailing edge.",
+                "How many action buttons render: none, the first one, or the first two.",
             },
             {
               prop: "actions",
@@ -410,12 +398,13 @@ notify({
               prop: "timestamp",
               type: "string",
               description:
-                'Small muted timestamp line (e.g. "28 min ago") – pairs with the notification variant.',
+                'Small muted timestamp line (e.g. "28 min ago") – pairs with the avatar variant.',
             },
             {
               prop: "unread",
               type: "boolean",
-              description: "Shows a blue unread dot at the trailing edge.",
+              description:
+                "Shows a blue unread dot at the top-right corner (avatar variant, hidden when showClose is set).",
             },
             {
               prop: "duration",
@@ -449,7 +438,7 @@ notify({
               prop: "variant",
               type: 'Button["variant"]',
               description:
-                "Optional Button variant override. Defaults per layout: secondary/outline pairs for dual and modal, ghost for inline and split.",
+                "Optional Button variant override. Defaults per layout: secondary/outline pairs for dual actions, ghost for the default row.",
             },
           ]}
         />

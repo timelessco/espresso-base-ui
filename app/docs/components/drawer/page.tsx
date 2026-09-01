@@ -43,7 +43,7 @@ function drawerPlaygroundCode(v: PlaygroundValues) {
         A short description of the drawer contents.
       </DrawerDescription>
     </DrawerHeader>
-    <DrawerFooter>
+    <DrawerFooter className="pt-4">
       <DrawerClose render={<Button variant="outline">Close</Button>} />
     </DrawerFooter>
   </DrawerContent>
@@ -65,7 +65,7 @@ function DrawerPlaygroundPreview(v: PlaygroundValues) {
             A short description of the drawer contents.
           </DrawerDescription>
         </DrawerHeader>
-        <DrawerFooter>
+        <DrawerFooter className="pt-4">
           <DrawerClose render={<Button variant="outline">Close</Button>} />
         </DrawerFooter>
       </DrawerContent>

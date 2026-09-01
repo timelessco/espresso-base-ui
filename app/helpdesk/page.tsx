@@ -770,12 +770,12 @@ const columns: ColumnDef<Ticket>[] = [
     minSize: 120,
     enableResizing: false,
     cell: ({ row }) => (
-      <Rating defaultValue={row.original.rating} readOnly>
-        <RatingButton size={18} />
-        <RatingButton size={18} />
-        <RatingButton size={18} />
-        <RatingButton size={18} />
-        <RatingButton size={18} />
+      <Rating size="sm" defaultValue={row.original.rating} readOnly>
+        <RatingButton />
+        <RatingButton />
+        <RatingButton />
+        <RatingButton />
+        <RatingButton />
       </Rating>
     ),
   },

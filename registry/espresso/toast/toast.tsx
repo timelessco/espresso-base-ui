@@ -29,7 +29,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     <ToastPrimitive.Viewport
       data-slot="toast-viewport"
       className={cn(
-        "pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-sm outline-none sm:right-4 sm:left-auto sm:mx-0 sm:w-full",
+        "pointer-events-none fixed inset-x-4 bottom-4 z-50 mx-auto w-auto max-w-md outline-none sm:right-4 sm:left-auto sm:mx-0 sm:w-full",
         className
       )}
       {...props}
@@ -69,7 +69,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
     <ToastPrimitive.Content
       data-slot="toast-content"
       className={cn(
-        "flex h-full items-center gap-2 overflow-hidden px-4 py-2.5 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
+        "flex h-full items-center gap-2 overflow-hidden py-1.5 pr-2 pl-3 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] has-[[data-slot=toast-description]]:py-3 data-behind:opacity-0 data-expanded:opacity-100",
         className
       )}
       {...props}
@@ -82,7 +82,7 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
     <ToastPrimitive.Title
       data-slot="toast-title"
       className={cn(
-        "text-base leading-base font-medium tracking-wider",
+        "text-base leading-base font-normal tracking-wider",
         className
       )}
       {...props}
@@ -98,7 +98,7 @@ function ToastDescription({
     <ToastPrimitive.Description
       data-slot="toast-description"
       className={cn(
-        "text-base leading-base font-medium tracking-wider text-primary-foreground",
+        "text-sm leading-base font-normal tracking-wider text-popover-foreground",
         className
       )}
       {...props}
@@ -193,7 +193,9 @@ function ToastIcon({ type }: { type: string | undefined }) {
   return (
     <span
       data-slot="toast-icon"
-      className="shrink-0 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
+      // with a description the icon top-aligns to the title line instead of
+      // centering against the taller two-line content
+      className="shrink-0 group-has-[[data-slot=toast-description]]/toast:mt-0.5 group-has-[[data-slot=toast-description]]/toast:self-start [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
     >
       {icon}
     </span>

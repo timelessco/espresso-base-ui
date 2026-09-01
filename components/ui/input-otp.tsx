@@ -29,7 +29,7 @@ const inputOTPVariants = cva(
         ],
       },
       size: {
-        xs: "[&_[data-slot=input-otp-slot]]:size-6 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-sm",
+        xs: "[&_[data-slot=input-otp-slot]]:size-6 [&_[data-slot=input-otp-slot]]:rounded-sm [&_[data-slot=input-otp-slot]]:text-sm",
         sm: "[&_[data-slot=input-otp-slot]]:size-7 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-base",
         md: "[&_[data-slot=input-otp-slot]]:size-8 [&_[data-slot=input-otp-slot]]:rounded-md [&_[data-slot=input-otp-slot]]:text-base",
         lg: "[&_[data-slot=input-otp-slot]]:size-10 [&_[data-slot=input-otp-slot]]:rounded-lg [&_[data-slot=input-otp-slot]]:text-lg",

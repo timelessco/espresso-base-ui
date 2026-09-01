@@ -3,10 +3,8 @@
 import { useState } from "react"
 import { toast } from "sonner"
 import {
-  Star,
   Heart,
   ThumbsUp,
-  Smile,
   Flame,
   Zap,
   Sparkles,
@@ -26,10 +24,10 @@ export default function RatingPage() {
     <div className="flex flex-col gap-12 p-8">
       {/* Default — Star */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Default (Star)</SectionTitle>
+        <SectionTitle>Default</SectionTitle>
         <Rating defaultValue={3}>
           {Array.from({ length: 5 }).map((_, i) => (
-            <RatingButton key={i} icon={Star} />
+            <RatingButton key={i} />
           ))}
         </Rating>
       </div>
@@ -67,40 +65,17 @@ export default function RatingPage() {
         </div>
       </div>
 
-      {/* Sizes — Smile */}
+      {/* Sizes */}
       <div className="flex flex-col gap-4">
-        <SectionTitle>Sizes (Smile)</SectionTitle>
+        <SectionTitle>Sizes</SectionTitle>
         <div className="flex flex-col gap-3">
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={16}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={24}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={32}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
+          {(["xs", "sm", "md", "lg"] as const).map((size) => (
+            <Rating key={size} size={size} defaultValue={4}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <RatingButton key={i} />
+              ))}
+            </Rating>
+          ))}
         </div>
       </div>
 
