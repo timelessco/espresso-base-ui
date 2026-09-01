@@ -108,7 +108,7 @@ function TabsList({
 }
 
 const tabsTriggerVariants = cva([
-  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-normal text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:flex-none group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:z-[2] focus-visible:[outline:2px_solid_#c9c9c9e5] disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:focus-visible:[outline:2px_solid_#575757e5] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "relative inline-flex flex-1 items-center justify-center gap-2 rounded-normal text-base leading-base tracking-normal whitespace-nowrap text-accent-foreground transition-all group-data-vertical/tabs:w-full group-data-vertical/tabs:flex-none group-data-vertical/tabs:justify-start hover:text-foreground focus-visible:z-[2] focus-visible:[outline:2px_solid_#c9c9c9e5] group-data-[variant=default]/tabs-list:focus-visible:[outline-offset:-1px] disabled:pointer-events-none disabled:opacity-50 has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 aria-disabled:pointer-events-none aria-disabled:opacity-50 dark:focus-visible:[outline:2px_solid_#575757e5] [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   // active text color (background handled by TabsIndicator)
   "z-[1] data-active:text-foreground",
   // line variant is flat — square corners so the focus outline has no radius
