@@ -27,7 +27,7 @@ const buttonVariants = cva(
           "bg-[var(--btn-inverted-ghost-bg,transparent)] text-secondary-foreground hover:bg-muted in-[[data-slot=button-group]:not([data-detached])]:active:bg-accent dark:hover:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_15%,transparent)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)] [@media(hover:none)]:active:bg-accent dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-inverted-ghost-fg,#383838)_25%,transparent)]",
       },
       size: {
-        xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
+        xs: "h-6 gap-2 rounded-md px-1.5 text-sm leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3.5 [&_svg:not([class*='size-'])]:max-h-3.5 [&_svg:not([class*='size-'])]:max-w-3.5",
 
         sm: "h-7 gap-2 rounded-md px-2 text-base leading-base font-normal tracking-normal in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-h-4 [&_svg:not([class*='size-'])]:max-w-4",
         default:
@@ -38,7 +38,7 @@ const buttonVariants = cva(
           "h-13 gap-2 rounded-2xl px-4 text-2xl leading-base font-medium tracking-normal [&_svg:not([class*='size-'])]:size-6 [&_svg:not([class*='size-'])]:max-h-6 [&_svg:not([class*='size-'])]:max-w-6",
 
         "icon-xs":
-          "size-6 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3 [&_svg:not([class*='size-'])]:max-h-3 [&_svg:not([class*='size-'])]:max-w-3",
+          "size-6 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3.5 [&_svg:not([class*='size-'])]:max-h-3.5 [&_svg:not([class*='size-'])]:max-w-3.5",
         "icon-sm":
           "size-7 rounded-[var(--radius-btn-icon,var(--radius-md))] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:max-h-4 [&_svg:not([class*='size-'])]:max-w-4",
         icon: "size-8 rounded-[var(--radius-btn-icon,var(--radius-md))] [&_svg:not([class*='size-'])]:size-4.5 [&_svg:not([class*='size-'])]:max-h-4.5 [&_svg:not([class*='size-'])]:max-w-4.5",

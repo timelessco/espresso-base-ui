@@ -14,7 +14,9 @@
         "provider": "google",
         "import": "Inter",
         "variable": "--font-sans",
-        "subsets": ["latin"],
+        "subsets": [
+          "latin"
+        ],
         "dependency": "@fontsource-variable/inter"
       }
     },
@@ -28,7 +30,8 @@
         "shadcn"
       ],
       "registryDependencies": [
-        "https://espresso-base-ui.vercel.app/r/espresso-font.json"
+        "https://espresso-base-ui.vercel.app/r/espresso-font.json",
+        "https://espresso-base-ui.vercel.app/r/button.json"
       ],
       "files": [
         {
@@ -36,6 +39,10 @@
           "type": "registry:file",
           "target": "~/app/globals.css"
         }
+      ],
+      "dependencies": [
+        "tw-animate-css",
+        "shadcn"
       ]
     },
     {

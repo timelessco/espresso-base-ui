@@ -33,9 +33,11 @@ export default function InstallationDocsPage() {
         </DocProse>
         <CodeBlock code="npx shadcn@latest init https://espresso-base-ui.vercel.app/r/espresso-theme.json" />
         <DocProse>
-          That is the whole setup. Components are one command away:
+          That is the whole setup – the Inter font and the Button component are
+          installed along with the theme. Every other component is one command
+          away:
         </DocProse>
-        <CodeBlock code="npx shadcn@latest add https://espresso-base-ui.vercel.app/r/button.json" />
+        <CodeBlock code="npx shadcn@latest add https://espresso-base-ui.vercel.app/r/dialog.json" />
       </DocSection>
 
       <DocSection title="Existing project">
