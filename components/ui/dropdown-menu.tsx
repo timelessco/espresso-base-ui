@@ -18,10 +18,10 @@ const dropdownMenuItemVariants = cva(
   {
     variants: {
       size: {
-        xs: "min-h-6 text-sm [&_svg:not([class*='size-'])]:size-3.5",
-        sm: "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
-        md: "min-h-8 text-base [&_svg:not([class*='size-'])]:size-4",
-        lg: "min-h-10 text-lg [&_svg:not([class*='size-'])]:size-4.5",
+        xs: "min-h-6 rounded-sm py-1 text-sm [&_svg:not([class*='size-'])]:size-3.5",
+        sm: "min-h-7 rounded-md text-base [&_svg:not([class*='size-'])]:size-4",
+        md: "min-h-8 rounded-lg text-base [&_svg:not([class*='size-'])]:size-4",
+        lg: "min-h-10 rounded-lg px-2.5 text-lg [&_svg:not([class*='size-'])]:size-4.5",
       },
     },
     defaultVariants: {
@@ -74,6 +74,8 @@ function DropdownMenuContent({
             data-size={resolvedSize}
             className={cn(
               "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-popover p-1 text-popover-foreground shadow-elevation-xl duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+              // radius per size (rounded-xl base covers md and lg)
+              "data-[size=xs]:rounded-md data-[size=sm]:rounded-lg",
               className
             )}
             {...props}
@@ -205,9 +207,9 @@ function DropdownMenuCheckboxItem({
         "relative flex cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 pr-8 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         // sizes mirror dropdownMenuItemVariants, driven by the content's data-size
         "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
-        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
-        "in-data-[size=md]:min-h-8",
-        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
+        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:rounded-sm in-data-[size=xs]:py-1 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
+        "in-data-[size=md]:min-h-8 in-data-[size=md]:rounded-lg",
+        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:rounded-lg in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
         className
       )}
       checked={checked}
@@ -251,9 +253,9 @@ function DropdownMenuRadioItem({
         "relative flex cursor-default items-center gap-1.5 rounded-md px-2 py-1.5 pr-8 leading-base font-normal tracking-normal text-secondary-foreground outline-hidden select-none data-highlighted:bg-secondary data-highlighted:text-secondary-foreground data-highlighted:active:bg-[color-mix(in_oklch,var(--secondary),black_1%)] data-highlighted:active:text-secondary-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         // sizes mirror dropdownMenuItemVariants, driven by the content's data-size
         "min-h-7 text-base [&_svg:not([class*='size-'])]:size-4",
-        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
-        "in-data-[size=md]:min-h-8",
-        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
+        "in-data-[size=xs]:min-h-6 in-data-[size=xs]:rounded-sm in-data-[size=xs]:py-1 in-data-[size=xs]:text-sm in-data-[size=xs]:[&_svg:not([class*='size-'])]:size-3.5",
+        "in-data-[size=md]:min-h-8 in-data-[size=md]:rounded-lg",
+        "in-data-[size=lg]:min-h-10 in-data-[size=lg]:rounded-lg in-data-[size=lg]:text-lg in-data-[size=lg]:[&_svg:not([class*='size-'])]:size-4.5",
         className
       )}
       {...props}
