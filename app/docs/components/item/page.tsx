@@ -421,7 +421,7 @@ import {
   </Item>
 </ItemGroup>`}
         >
-          <div className="w-full max-w-md rounded-lg border border-border p-1.5">
+          <div className="w-full max-w-md rounded-lg shadow-default">
             <ItemGroup>
               <Item size="sm">
                 <ItemMedia variant="icon">

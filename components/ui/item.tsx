@@ -11,10 +11,7 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       role="list"
       data-slot="item-group"
-      className={cn(
-        "group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
-        className
-      )}
+      className={cn("group/item-group flex w-full flex-col", className)}
       {...props}
     />
   )
@@ -28,7 +25,7 @@ function ItemSeparator({
     <Separator
       data-slot="item-separator"
       orientation="horizontal"
-      className={cn("my-2", className)}
+      className={cn("my-px", className)}
       {...props}
     />
   )
