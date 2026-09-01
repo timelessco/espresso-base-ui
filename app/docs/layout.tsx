@@ -67,7 +67,7 @@ function DocsSidebar() {
           </Link>
         </div>
         <div className="px-1 pt-1 md:hidden">
-          <DocsSearch enableHotkey={false} />
+          <DocsSearch />
         </div>
       </SidebarHeader>
       <SidebarContent>
