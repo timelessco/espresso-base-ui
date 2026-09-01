@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { DocsSearchDialog } from "@/app/docs/_components/search-dialog"
 import { cn } from "@/lib/utils"
 
 const inter = Inter({
@@ -34,7 +35,10 @@ export default function RootLayout({
     >
       <body className="overflow-hidden leading-base tracking-normal">
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            {children}
+            <DocsSearchDialog />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
