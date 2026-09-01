@@ -344,7 +344,8 @@ import {
         <DocProse>
           <code>orientation="vertical"</code> stacks the triggers in a column
           beside the panel; the <code>line</code> variant moves its border and
-          indicator to the right edge of the list.
+          indicator to the right edge of the list, and <code>browser</code>{" "}
+          wraps the active tab so it opens into the panel.
         </DocProse>
         <DocExample
           code={`
@@ -358,35 +359,76 @@ import {
   <TabsContent value="account">Account settings content.</TabsContent>
   <TabsContent value="password">Password settings content.</TabsContent>
   <TabsContent value="settings">General settings content.</TabsContent>
+</Tabs>
+
+<Tabs defaultValue="account" orientation="vertical" className="w-full max-w-md">
+  <TabsList variant="browser">
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+    <TabsIndicator />
+  </TabsList>
+  <TabsContent value="account">Account settings content.</TabsContent>
+  <TabsContent value="password">Password settings content.</TabsContent>
+  <TabsContent value="settings">General settings content.</TabsContent>
 </Tabs>`}
         >
-          <Tabs
-            defaultValue="account"
-            orientation="vertical"
-            className="w-full max-w-md"
-          >
-            <TabsList variant="line">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="password">Password</TabsTrigger>
-              <TabsTrigger value="settings">Settings</TabsTrigger>
-              <TabsIndicator />
-            </TabsList>
-            <TabsContent value="account">
-              <p className="text-sm text-muted-foreground">
-                Account settings content.
-              </p>
-            </TabsContent>
-            <TabsContent value="password">
-              <p className="text-sm text-muted-foreground">
-                Password settings content.
-              </p>
-            </TabsContent>
-            <TabsContent value="settings">
-              <p className="text-sm text-muted-foreground">
-                General settings content.
-              </p>
-            </TabsContent>
-          </Tabs>
+          <div className="flex w-full flex-col gap-8">
+            <Tabs
+              defaultValue="account"
+              orientation="vertical"
+              className="w-full max-w-md"
+            >
+              <TabsList variant="line">
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="password">Password</TabsTrigger>
+                <TabsTrigger value="settings">Settings</TabsTrigger>
+                <TabsIndicator />
+              </TabsList>
+              <TabsContent value="account">
+                <p className="text-sm text-muted-foreground">
+                  Account settings content.
+                </p>
+              </TabsContent>
+              <TabsContent value="password">
+                <p className="text-sm text-muted-foreground">
+                  Password settings content.
+                </p>
+              </TabsContent>
+              <TabsContent value="settings">
+                <p className="text-sm text-muted-foreground">
+                  General settings content.
+                </p>
+              </TabsContent>
+            </Tabs>
+            <Tabs
+              defaultValue="account"
+              orientation="vertical"
+              className="w-full max-w-md"
+            >
+              <TabsList variant="browser">
+                <TabsTrigger value="account">Account</TabsTrigger>
+                <TabsTrigger value="password">Password</TabsTrigger>
+                <TabsTrigger value="settings">Settings</TabsTrigger>
+                <TabsIndicator />
+              </TabsList>
+              <TabsContent value="account">
+                <p className="text-sm text-muted-foreground">
+                  Account settings content.
+                </p>
+              </TabsContent>
+              <TabsContent value="password">
+                <p className="text-sm text-muted-foreground">
+                  Password settings content.
+                </p>
+              </TabsContent>
+              <TabsContent value="settings">
+                <p className="text-sm text-muted-foreground">
+                  General settings content.
+                </p>
+              </TabsContent>
+            </Tabs>
+          </div>
         </DocExample>
       </DocSection>
 
