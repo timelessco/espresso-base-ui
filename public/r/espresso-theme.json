@@ -3,11 +3,16 @@
   "name": "espresso-theme",
   "title": "Espresso Theme",
   "description": "Espresso UI design tokens and color system.",
+  "dependencies": [
+    "tw-animate-css",
+    "shadcn"
+  ],
   "devDependencies": [
     "shadcn"
   ],
   "registryDependencies": [
-    "https://espresso-base-ui.vercel.app/r/espresso-font.json"
+    "https://espresso-base-ui.vercel.app/r/espresso-font.json",
+    "https://espresso-base-ui.vercel.app/r/button.json"
   ],
   "files": [
     {

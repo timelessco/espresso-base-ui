@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
 const dialogContentVariants = cva(
-  "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-4xl bg-popover p-4 text-sm text-muted-foreground shadow-5xl duration-100 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+  "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-3xl bg-popover px-5 pt-4.5 pb-5 text-sm text-muted-foreground shadow-elevation-xl duration-100 outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
   {
     variants: {
       size: {
@@ -89,12 +89,12 @@ function DialogContent({
             render={
               <Button
                 variant="ghost"
-                className="absolute top-3 right-3 size-6"
-                size="icon-sm"
+                className="absolute top-2 right-2"
+                size="icon-xs"
               />
             }
           >
-            <XIcon className="size-4.5" />
+            <XIcon />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
         )}
@@ -107,7 +107,7 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-2", className)}
+      className={cn("flex flex-col gap-3", className)}
       {...props}
     />
   )
@@ -125,7 +125,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse gap-2 rounded-b-xl pt-2 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 rounded-b-xl sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -145,7 +145,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        "text-2xl leading-base font-semibold tracking-normal text-foreground",
+        "text-xl leading-base font-semibold tracking-normal text-foreground",
         className
       )}
       {...props}
