@@ -19,10 +19,10 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 prefix: <Info />,
-                suffix: true,
+                showClose: true,
               })
             }
           >
@@ -32,7 +32,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "inline",
+                variant: "default",
                 title: "Update available. Get new features!",
                 actionType: "single",
                 actions: [{ label: "Update", onClick: noop }],
@@ -48,7 +48,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "long-text",
+                variant: "banner",
                 title: "System Update Available",
                 description:
                   "A new update is available. Update now to enjoy new features and improvements.",
@@ -63,24 +63,6 @@ export default function NotificationPreview() {
           >
             Dual action
           </Button>
-          <Button
-            variant="outline"
-            onClick={() =>
-              notify({
-                variant: "long-text",
-                title: "Your trial ends soon!",
-                description:
-                  "Upgrade now to continue enjoying all features without interruption.",
-                actionType: "split",
-                actions: [
-                  { label: "Update", onClick: noop },
-                  { label: "View", onClick: noop },
-                ],
-              })
-            }
-          >
-            Split action
-          </Button>
         </PreviewCard>
 
         <PreviewCard label="Notification">
@@ -88,7 +70,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -108,7 +90,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "notification",
+                variant: "avatar",
                 title: "Jane Johnson",
                 description: "Your task is due tomorrow",
                 timestamp: "28 min ago",
@@ -135,7 +117,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "modal",
+                variant: "compact",
                 title: "System Update Available",
                 description:
                   "A new update is available. Update now to enjoy new features and improvements.",
@@ -153,7 +135,7 @@ export default function NotificationPreview() {
             variant="outline"
             onClick={() =>
               notify({
-                variant: "modal",
+                variant: "compact",
                 title: "System Update Available",
                 description:
                   "A new update is available. Update now to enjoy new features and improvements.",
