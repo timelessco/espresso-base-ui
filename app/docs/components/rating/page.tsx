@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Heart, Sparkles, Star, ThumbsUp, Zap } from "lucide-react"
+import { Heart, Sparkles, ThumbsUp, Zap } from "lucide-react"
 
 import { Rating, RatingButton } from "@/components/ui/rating"
 import {
@@ -26,7 +26,7 @@ function ratingPlaygroundCode(v: PlaygroundValues) {
   ].join("")
   return `<Rating${attrs}>
   {Array.from({ length: 5 }).map((_, i) => (
-    <RatingButton key={i} icon={Star} />
+    <RatingButton key={i} />
   ))}
 </Rating>`
 }
@@ -34,7 +34,7 @@ function ratingPlaygroundCode(v: PlaygroundValues) {
 function RatingPlaygroundPreview(v: PlaygroundValues) {
   const value = Number(v.value)
   const stars = Array.from({ length: 5 }).map((_, i) => (
-    <RatingButton key={i} icon={Star} />
+    <RatingButton key={i} />
   ))
   if (v.readOnly) {
     return (
@@ -102,13 +102,13 @@ export default function RatingDocsPage() {
           code={`
 <Rating defaultValue={3}>
   {Array.from({ length: 5 }).map((_, i) => (
-    <RatingButton key={i} icon={Star} />
+    <RatingButton key={i} />
   ))}
 </Rating>`}
         >
           <Rating defaultValue={3}>
             {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton key={i} icon={Star} />
+              <RatingButton key={i} />
             ))}
           </Rating>
         </DocExample>
@@ -258,6 +258,13 @@ const [value, setValue] = React.useState(3)
                 "Upper bound used for the accessible label – render one RatingButton per step.",
             },
             {
+              prop: "size",
+              type: '"xs" | "sm" | "md" | "lg"',
+              defaultValue: '"md"',
+              description:
+                "Star size for every button: 16px / 20px / 24px / 28px.",
+            },
+            {
               prop: "readOnly",
               type: "boolean",
               defaultValue: "false",
@@ -294,16 +301,10 @@ const [value, setValue] = React.useState(3)
                 "1-based position. Auto-detected from sibling order when omitted.",
             },
             {
-              prop: "size",
-              type: "number",
-              defaultValue: "24",
-              description: "Icon size in pixels.",
-            },
-            {
               prop: "icon",
               type: "LucideIcon",
-              defaultValue: "Star",
-              description: "Icon used for both filled and empty states.",
+              description:
+                "Icon used for both filled and empty states. Defaults to the built-in solid star.",
             },
             {
               prop: "filledIcon",
@@ -327,8 +328,9 @@ const [value, setValue] = React.useState(3)
           Enter and Space and preview on focus. In <code>readOnly</code> mode
           the root becomes <code>role="img"</code> with a summary label. For
           styling, the root exposes <code>data-slot="rating"</code>,{" "}
-          <code>data-value</code>, <code>data-readonly</code> and{" "}
-          <code>data-disabled</code>; each button exposes{" "}
+          <code>data-value</code>, <code>data-size</code>,{" "}
+          <code>data-readonly</code> and <code>data-disabled</code>; each button
+          exposes{" "}
           <code>data-slot="rating-button"</code>, <code>data-index</code> and{" "}
           <code>data-filled</code>.
         </DocProse>

@@ -3,7 +3,6 @@
 import * as React from "react"
 import { toast } from "sonner"
 import {
-  Star,
   Heart,
   ThumbsUp,
   Smile,
@@ -21,10 +20,10 @@ export default function RatingPreview() {
 
   return (
     <PreviewGrid>
-      <PreviewCard label="Default (Star)">
+      <PreviewCard label="Default">
         <Rating defaultValue={3}>
           {Array.from({ length: 5 }).map((_, i) => (
-            <RatingButton key={i} icon={Star} />
+            <RatingButton key={i} />
           ))}
         </Rating>
       </PreviewCard>
@@ -60,36 +59,17 @@ export default function RatingPreview() {
 
       <PreviewCard label="Sizes (Smile)">
         <div className="flex flex-col items-center gap-3">
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={16}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={24}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
-          <Rating defaultValue={4}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <RatingButton
-                key={i}
-                icon={Smile}
-                size={32}
-                className="data-filled:text-yellow-500"
-              />
-            ))}
-          </Rating>
+          {(["sm", "md", "lg"] as const).map((size) => (
+            <Rating key={size} size={size} defaultValue={4}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <RatingButton
+                  key={i}
+                  icon={Smile}
+                  className="data-filled:text-yellow-500"
+                />
+              ))}
+            </Rating>
+          ))}
         </div>
       </PreviewCard>
 
