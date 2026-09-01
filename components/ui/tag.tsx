@@ -62,7 +62,7 @@ const tagVariants = cva(
 )
 
 const tagCloseVariants = cva(
-  "-mr-0.5 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-xs transition-opacity hover:opacity-70 [&>svg]:size-3"
+  "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-xs transition-opacity hover:opacity-70 [&>svg]:size-3"
 )
 
 type TagProps = React.ComponentProps<"span"> &
