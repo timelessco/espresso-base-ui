@@ -68,7 +68,9 @@ export default function ItemPage() {
             </ItemMedia>
             <ItemContent>
               <ItemTitle>Default</ItemTitle>
-              <ItemDescription>Transparent border, no background.</ItemDescription>
+              <ItemDescription>
+                Transparent border, no background.
+              </ItemDescription>
             </ItemContent>
           </Item>
           <Item variant="outline">
@@ -102,9 +104,7 @@ export default function ItemPage() {
             </ItemMedia>
             <ItemContent>
               <ItemTitle>Default size</ItemTitle>
-              <ItemDescription>
-                Roomy padding for list rows.
-              </ItemDescription>
+              <ItemDescription>Roomy padding for list rows.</ItemDescription>
             </ItemContent>
           </Item>
           <Item variant="outline" size="sm">
@@ -137,7 +137,9 @@ export default function ItemPage() {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>Billing</ItemTitle>
-            <ItemDescription>Manage your subscription and invoices.</ItemDescription>
+            <ItemDescription>
+              Manage your subscription and invoices.
+            </ItemDescription>
           </ItemContent>
           <ItemActions>
             <ChevronRight className="size-4 text-muted-foreground" />
@@ -223,7 +225,7 @@ export default function ItemPage() {
       {/* Item Group — With Separators */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Item Group — With Separators</SectionTitle>
-        <div className="rounded-lg border border-border p-1.5">
+        <div className="rounded-lg p-1.5 shadow-default">
           <ItemGroup>
             <Item size="sm">
               <ItemMedia variant="icon">
@@ -283,7 +285,7 @@ export default function ItemPage() {
       {/* Item Group — Muted Stack */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Item Group — Muted Stack</SectionTitle>
-        <ItemGroup>
+        <ItemGroup className="gap-2">
           <Item variant="muted">
             <ItemMedia variant="icon">
               <Cloud />
