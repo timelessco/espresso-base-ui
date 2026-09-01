@@ -18,10 +18,10 @@ const textareaVariants = cva(
           "bg-transparent not-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] not-disabled:focus:bg-background not-disabled:focus:shadow-raised! not-disabled:active:bg-primary-foreground disabled:bg-transparent disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_74%)] dark:disabled:text-[color-mix(in_oklch,var(--secondary-foreground),var(--background)_54%)] data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success",
       },
       size: {
-        xs: "min-h-12 rounded-md px-2 py-1 text-sm",
+        xs: "min-h-12 rounded-sm px-2 py-1 text-sm",
         sm: "min-h-15 rounded-md px-2 py-1.5 text-base",
-        md: "min-h-25.5 rounded-lg px-3 py-2.5 text-lg",
-        lg: "min-h-31.5 rounded-lg px-3.5 py-3 text-xl",
+        md: "min-h-25.5 rounded-md px-3 py-2.5 text-base",
+        lg: "min-h-31.5 rounded-lg px-3.5 py-3 text-lg",
       },
     },
     compoundVariants: [

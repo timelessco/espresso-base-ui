@@ -19,7 +19,7 @@ const inputVariants = cva(
           "bg-transparent group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] not-data-disabled:focus:bg-background not-data-disabled:focus:shadow-raised! data-filled:bg-secondary data-invalid:bg-error data-valid:bg-success data-disabled:bg-transparent [&:-webkit-autofill]:bg-filled",
       },
       size: {
-        xs: "h-6 rounded-md px-2 py-1 text-sm",
+        xs: "h-6 rounded-sm px-2 py-1 text-sm",
         sm: "h-7 rounded-md px-2 py-1.5 text-base",
         md: "h-8 rounded-md px-2.5 py-2 text-base",
         lg: "h-10 rounded-lg px-3 py-2.75 text-lg",
