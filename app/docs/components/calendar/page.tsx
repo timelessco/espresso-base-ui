@@ -31,7 +31,6 @@ import {
 function calendarPlaygroundCode(v: PlaygroundValues) {
   const attrs = [
     v.numberOfMonths === "2" ? "\n  numberOfMonths={2}" : "",
-    v.captionLayout === "dropdown" ? `\n  captionLayout="dropdown"` : "",
     v.showOutsideDays ? "" : "\n  showOutsideDays={false}",
     v.showWeekNumber ? "\n  showWeekNumber" : "",
     v.disableWeekends ? "\n  disabled={{ dayOfWeek: [0, 6] }}" : "",
@@ -53,7 +52,6 @@ function CalendarPlaygroundDemo({ values: v }: { values: PlaygroundValues }) {
       selected={date}
       onSelect={setDate}
       numberOfMonths={Number(v.numberOfMonths)}
-      captionLayout={v.captionLayout as "label" | "dropdown"}
       showOutsideDays={Boolean(v.showOutsideDays)}
       showWeekNumber={Boolean(v.showWeekNumber)}
       disabled={v.disableWeekends ? { dayOfWeek: [0, 6] } : undefined}
@@ -88,11 +86,6 @@ export default function CalendarDocsPage() {
               type: "options",
               options: ["1", "2"],
               defaultValue: "1",
-            },
-            captionLayout: {
-              type: "options",
-              options: ["label", "dropdown"],
-              defaultValue: "label",
             },
             showOutsideDays: { type: "boolean", defaultValue: true },
             showWeekNumber: { type: "boolean", defaultValue: false },

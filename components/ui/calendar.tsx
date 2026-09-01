@@ -63,7 +63,10 @@ function Calendar({
           defaultClassNames.month
         ),
         nav: cn(
-          "absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1",
+          "absolute inset-x-0 top-0 flex w-full items-center gap-1",
+          // multi-month: prev sits at the far left corner, next at the far
+          // right; single month keeps both grouped at the right
+          (props.numberOfMonths ?? 1) > 1 ? "justify-between" : "justify-end",
           defaultClassNames.nav
         ),
         button_previous: cn(
