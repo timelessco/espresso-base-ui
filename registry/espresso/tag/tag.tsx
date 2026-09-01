@@ -42,9 +42,10 @@ const tagVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 active:bg-destructive-active data-disabled:bg-destructive-disabled data-disabled:text-destructive-disabled-foreground",
       },
       size: {
-        sm: "h-5 rounded-xs px-1.5 text-xs leading-base tracking-normal",
-        default: "h-6 rounded-sm px-1.5 text-sm leading-base tracking-normal",
-        lg: "h-7 rounded-lg px-2 text-base leading-base tracking-normal",
+        sm: "h-5 rounded-xs pl-1.5 pr-1 text-xs leading-base tracking-normal",
+        default:
+          "h-6 rounded-sm pl-1.5 pr-1 text-sm leading-base tracking-normal",
+        lg: "h-7 rounded-md pl-2 pr-1.5 text-base leading-base tracking-normal",
       },
     },
     compoundVariants: [
