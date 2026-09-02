@@ -3,7 +3,6 @@
 import {
   ArrowUpDown,
   Bold,
-  ChevronDown,
   Ellipsis,
   EyeOff,
   Italic,
@@ -14,6 +13,21 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"
 import {
   CodeBlock,
@@ -31,18 +45,108 @@ import {
   type PlaygroundValues,
 } from "../../_components/playground"
 
+const leadOwnerItems = [
+  { label: "Alicia Kim", value: "alicia" },
+  { label: "Marcus Reid", value: "marcus" },
+  { label: "Priya Patel", value: "priya" },
+]
+
+const statusItems = [
+  { label: "Open", value: "open" },
+  { label: "In progress", value: "in-progress" },
+  { label: "Won", value: "won" },
+]
+
+const organizationItems = [
+  { label: "Acme Inc", value: "acme" },
+  { label: "Globex", value: "globex" },
+  { label: "Initech", value: "initech" },
+]
+
+const fontItems = [
+  { label: "Inter", value: "inter" },
+  { label: "Geist", value: "geist" },
+  { label: "SF Pro", value: "sf-pro" },
+]
+
+type ToolbarSelectProps = {
+  items: { label: string; value: string }[]
+  defaultValue: string
+  variant?: React.ComponentProps<typeof SelectTrigger>["variant"]
+}
+
+function ToolbarSelect({
+  items,
+  defaultValue,
+  variant = "subtle",
+}: ToolbarSelectProps) {
+  return (
+    <Select items={items} defaultValue={defaultValue}>
+      <SelectTrigger variant={variant} size="sm">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {items.map((item) => (
+            <SelectItem key={item.value} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
+
+function MoreMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="secondary" size="icon-sm" aria-label="More" />}
+      >
+        <Ellipsis />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-44">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Import</DropdownMenuItem>
+          <DropdownMenuItem>Export</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+const selectSnippet = (
+  itemsName: string,
+  defaultValue: string,
+  indent: string
+) =>
+  [
+    `${indent}<Select items={${itemsName}} defaultValue="${defaultValue}">`,
+    `${indent}  <SelectTrigger variant="subtle" size="sm">`,
+    `${indent}    <SelectValue />`,
+    `${indent}  </SelectTrigger>`,
+    `${indent}  <SelectContent>`,
+    `${indent}    <SelectGroup>`,
+    `${indent}      {${itemsName}.map((item) => (`,
+    `${indent}        <SelectItem key={item.value} value={item.value}>`,
+    `${indent}          {item.label}`,
+    `${indent}        </SelectItem>`,
+    `${indent}      ))}`,
+    `${indent}    </SelectGroup>`,
+    `${indent}  </SelectContent>`,
+    `${indent}</Select>`,
+  ].join("\n")
+
 function subHeaderPlaygroundCode(v: PlaygroundValues) {
   const lines = ["<SubHeader"]
   if (v.leftControls) {
     lines.push(
       "  leftControls={",
       "    <>",
-      '      <Button variant="secondary" size="sm">',
-      '        Lead owner <ChevronDown data-icon="inline-end" />',
-      "      </Button>",
-      '      <Button variant="secondary" size="sm">',
-      '        Status <ChevronDown data-icon="inline-end" />',
-      "      </Button>",
+      selectSnippet("leadOwnerItems", "alicia", "      "),
+      selectSnippet("statusItems", "open", "      "),
       "    </>",
       "  }"
     )
@@ -57,9 +161,20 @@ function subHeaderPlaygroundCode(v: PlaygroundValues) {
       '      <Button variant="secondary" size="sm">',
       '        <ArrowUpDown data-icon="inline-start" /> Sort',
       "      </Button>",
-      '      <Button variant="secondary" size="icon-sm" aria-label="More">',
-      "        <Ellipsis />",
-      "      </Button>",
+      "      <DropdownMenu>",
+      "        <DropdownMenuTrigger",
+      "          render={",
+      '            <Button variant="secondary" size="icon-sm" aria-label="More" />',
+      "          }",
+      "        >",
+      "          <Ellipsis />",
+      "        </DropdownMenuTrigger>",
+      '        <DropdownMenuContent align="end">',
+      "          <DropdownMenuItem>Import</DropdownMenuItem>",
+      "          <DropdownMenuItem>Export</DropdownMenuItem>",
+      "          <DropdownMenuItem>Settings</DropdownMenuItem>",
+      "        </DropdownMenuContent>",
+      "      </DropdownMenu>",
       "    </>",
       "  }"
     )
@@ -76,12 +191,8 @@ function SubHeaderPlaygroundPreview(v: PlaygroundValues) {
         leftControls={
           v.leftControls ? (
             <>
-              <Button variant="secondary" size="sm">
-                Lead owner <ChevronDown data-icon="inline-end" />
-              </Button>
-              <Button variant="secondary" size="sm">
-                Status <ChevronDown data-icon="inline-end" />
-              </Button>
+              <ToolbarSelect items={leadOwnerItems} defaultValue="alicia" />
+              <ToolbarSelect items={statusItems} defaultValue="open" />
             </>
           ) : undefined
         }
@@ -94,9 +205,7 @@ function SubHeaderPlaygroundPreview(v: PlaygroundValues) {
               <Button variant="secondary" size="sm">
                 <ArrowUpDown data-icon="inline-start" /> Sort
               </Button>
-              <Button variant="secondary" size="icon-sm" aria-label="More">
-                <Ellipsis />
-              </Button>
+              <MoreMenu />
             </>
           ) : undefined
         }
@@ -136,12 +245,8 @@ export default function SubHeaderDocsPage() {
 <SubHeader
   leftControls={
     <>
-      <Button variant="secondary" size="sm">
-        Lead owner <ChevronDown data-icon="inline-end" />
-      </Button>
-      <Button variant="secondary" size="sm">
-        Status <ChevronDown data-icon="inline-end" />
-      </Button>
+${selectSnippet("leadOwnerItems", "alicia", "      ")}
+${selectSnippet("statusItems", "open", "      ")}
     </>
   }
   rightControls={
@@ -149,9 +254,20 @@ export default function SubHeaderDocsPage() {
       <Button variant="secondary" size="sm">
         <ListFilter data-icon="inline-start" /> Filter
       </Button>
-      <Button variant="secondary" size="icon-sm" aria-label="More">
-        <Ellipsis />
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button variant="secondary" size="icon-sm" aria-label="More" />
+          }
+        >
+          <Ellipsis />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem>Import</DropdownMenuItem>
+          <DropdownMenuItem>Export</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   }
 />`}
@@ -161,12 +277,8 @@ export default function SubHeaderDocsPage() {
             className="w-full"
             leftControls={
               <>
-                <Button variant="secondary" size="sm">
-                  Lead owner <ChevronDown data-icon="inline-end" />
-                </Button>
-                <Button variant="secondary" size="sm">
-                  Status <ChevronDown data-icon="inline-end" />
-                </Button>
+                <ToolbarSelect items={leadOwnerItems} defaultValue="alicia" />
+                <ToolbarSelect items={statusItems} defaultValue="open" />
               </>
             }
             rightControls={
@@ -174,9 +286,7 @@ export default function SubHeaderDocsPage() {
                 <Button variant="secondary" size="sm">
                   <ListFilter data-icon="inline-start" /> Filter
                 </Button>
-                <Button variant="secondary" size="icon-sm" aria-label="More">
-                  <Ellipsis />
-                </Button>
+                <MoreMenu />
               </>
             }
           />
@@ -212,9 +322,12 @@ import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"`}
 <SubHeader
   leftControls={
     <>
-      <Button variant="ghost" size="sm">
-        Inter <ChevronDown data-icon="inline-end" />
-      </Button>
+      <Select items={fontItems} defaultValue="inter">
+        <SelectTrigger variant="ghost" size="sm">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>{/* font items */}</SelectContent>
+      </Select>
       <Button variant="ghost" size="icon-sm" aria-label="Decrease size">
         <Minus />
       </Button>
@@ -241,9 +354,11 @@ import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"`}
             className="w-full"
             leftControls={
               <>
-                <Button variant="ghost" size="sm">
-                  Inter <ChevronDown data-icon="inline-end" />
-                </Button>
+                <ToolbarSelect
+                  items={fontItems}
+                  defaultValue="inter"
+                  variant="ghost"
+                />
                 <Button
                   variant="ghost"
                   size="icon-sm"
@@ -285,9 +400,12 @@ import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"`}
           code={`
 <SubHeader
   leftControls={
-    <Button variant="secondary" size="sm">
-      Organization <ChevronDown data-icon="inline-end" />
-    </Button>
+    <Select items={organizationItems} defaultValue="acme">
+      <SelectTrigger variant="subtle" size="sm">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>{/* organization items */}</SelectContent>
+    </Select>
   }
   rightControls={
     <>
@@ -308,9 +426,7 @@ import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"`}
           <SubHeader
             className="w-full"
             leftControls={
-              <Button variant="secondary" size="sm">
-                Organization <ChevronDown data-icon="inline-end" />
-              </Button>
+              <ToolbarSelect items={organizationItems} defaultValue="acme" />
             }
             rightControls={
               <>
@@ -366,13 +482,14 @@ import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"`}
 
       <DocSection title="Accessibility & styling hooks">
         <DocProse>
-          The root exposes <code>data-slot="sub-header"</code> and the slots{" "}
-          <code>data-slot="sub-header-left"</code> /{" "}
-          <code>data-slot="sub-header-right"</code> for CSS targeting – the
-          dashboards use these to make crowded toolbars horizontally scrollable.
-          The separator renders <code>role="separator"</code> with{" "}
-          <code>aria-orientation="vertical"</code>; give icon-only buttons an{" "}
-          <code>aria-label</code>.
+          The root exposes <code>data-slot=&quot;sub-header&quot;</code> and the
+          slots <code>data-slot=&quot;sub-header-left&quot;</code> /{" "}
+          <code>data-slot=&quot;sub-header-right&quot;</code> for CSS targeting
+          – the dashboards use these to make crowded toolbars horizontally
+          scrollable. The separator renders{" "}
+          <code>role=&quot;separator&quot;</code> with{" "}
+          <code>aria-orientation=&quot;vertical&quot;</code>; give icon-only
+          buttons an <code>aria-label</code>.
         </DocProse>
       </DocSection>
     </DocPage>
