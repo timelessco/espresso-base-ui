@@ -153,6 +153,7 @@ const components = [
   { label: "Field", href: "/ui/field", icon: FormInput },
   { label: "File Upload", href: "/ui/file-upload", icon: CloudUpload },
   { label: "Header", href: "/ui/header", icon: PanelTop },
+  { label: "Sub Header", href: "/ui/sub-header", icon: PanelTop },
   { label: "Input", href: "/ui/input", icon: TextCursorInput },
   { label: "Input Group", href: "/ui/input-group", icon: AlignLeft },
   { label: "Input OTP", href: "/ui/input-otp", icon: Keyboard },

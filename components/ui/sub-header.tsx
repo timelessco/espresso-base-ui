@@ -7,6 +7,8 @@ type SubHeaderProps = React.ComponentProps<"div"> & {
   rightControls?: React.ReactNode
 }
 
+// A secondary toolbar row that sits below a Header: a left slot for filters,
+// titles or toolbars and a right slot for view controls and actions.
 function SubHeader({
   className,
   leftControls,
@@ -18,7 +20,7 @@ function SubHeader({
     <div
       data-slot="sub-header"
       className={cn(
-        "flex shrink-0 items-center justify-between gap-3 bg-background px-5 py-3",
+        "flex shrink-0 items-center gap-3 bg-background px-3 py-2",
         className
       )}
       {...props}
@@ -32,7 +34,10 @@ function SubHeader({
         </div>
       )}
       {rightControls !== undefined && (
-        <div data-slot="sub-header-right" className="flex items-center gap-2">
+        <div
+          data-slot="sub-header-right"
+          className="ml-auto flex shrink-0 items-center gap-2"
+        >
           {rightControls}
         </div>
       )}
@@ -41,4 +46,19 @@ function SubHeader({
   )
 }
 
-export { SubHeader, type SubHeaderProps }
+function SubHeaderSeparator({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      data-slot="sub-header-separator"
+      className={cn("h-5 w-px shrink-0 bg-border-soft", className)}
+      {...props}
+    />
+  )
+}
+
+export { SubHeader, SubHeaderSeparator, type SubHeaderProps }
