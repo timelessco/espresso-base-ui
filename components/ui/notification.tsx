@@ -40,7 +40,7 @@ function CloseIcon({ className }: { className?: string }) {
 }
 
 const notificationVariants = cva(
-  "relative flex min-w-[390px] overflow-hidden rounded-lg bg-card tracking-wider shadow-elevation-md",
+  "relative flex min-w-[390px] overflow-hidden rounded-lg bg-card shadow-elevation-md",
   {
     variants: {
       variant: {
@@ -185,7 +185,7 @@ function ActionButtons({
           key={index}
           variant={action.variant ?? (index === 0 ? "secondary" : "outline")}
           size="sm"
-          className={cn("tracking-wider", buttonClassName)}
+          className={cn("", buttonClassName)}
           onClick={() => {
             action.onClick()
             notificationManager.close(id)
@@ -217,7 +217,7 @@ function DefaultLayout({ id, title, prefix, showClose, actions }: LayoutProps) {
           key={index}
           variant={action.variant ?? "ghost"}
           size="sm"
-          className="shrink-0 tracking-wider"
+          className="shrink-0"
           onClick={() => {
             action.onClick()
             notificationManager.close(id)
@@ -290,7 +290,7 @@ function AvatarLayout({
           </span>
         )}
         {timestamp && (
-          <span className="mt-0.5 text-xs leading-base font-normal tracking-normal text-muted-foreground">
+          <span className="mt-0.5 text-xs leading-base font-normal text-muted-foreground">
             {timestamp}
           </span>
         )}
