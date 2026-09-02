@@ -144,6 +144,7 @@ function DateTimePresetContent() {
         <Button
           variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 1)
             setDate(d)
@@ -155,6 +156,7 @@ function DateTimePresetContent() {
         <Button
           variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 7)
             setDate(d)
@@ -320,14 +322,14 @@ function DateRangeContent({
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="sm"
+            size="xs"
             onClick={() => {
               onRangeChange(undefined)
             }}
           >
             Cancel
           </Button>
-          <Button size="sm" onClick={onConfirm}>
+          <Button size="xs" onClick={onConfirm}>
             Set date
           </Button>
         </div>
@@ -345,6 +347,7 @@ function PresetsContent() {
         <Button
           variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 1)
             setDate(d)
@@ -356,6 +359,7 @@ function PresetsContent() {
         <Button
           variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 7)
             setDate(d)
