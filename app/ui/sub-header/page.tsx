@@ -32,6 +32,21 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { SubHeader, SubHeaderSeparator } from "@/components/ui/sub-header"
 import {
   Tabs,
@@ -39,6 +54,104 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+
+const leadOwnerItems = [
+  { label: "Alicia Kim", value: "alicia" },
+  { label: "Marcus Reid", value: "marcus" },
+  { label: "Priya Patel", value: "priya" },
+]
+
+const statusItems = [
+  { label: "Open", value: "open" },
+  { label: "In progress", value: "in-progress" },
+  { label: "Won", value: "won" },
+  { label: "Lost", value: "lost" },
+]
+
+const organizationItems = [
+  { label: "Acme Inc", value: "acme" },
+  { label: "Globex", value: "globex" },
+  { label: "Initech", value: "initech" },
+]
+
+const monthItems = [
+  { label: "August 2025", value: "aug-2025" },
+  { label: "September 2025", value: "sep-2025" },
+  { label: "October 2025", value: "oct-2025" },
+]
+
+const viewItems = [
+  { label: "Day", value: "day" },
+  { label: "Week", value: "week" },
+  { label: "Month", value: "month" },
+]
+
+const textStyleItems = [
+  { label: "Text", value: "text" },
+  { label: "Heading 1", value: "h1" },
+  { label: "Heading 2", value: "h2" },
+  { label: "Quote", value: "quote" },
+]
+
+const fontItems = [
+  { label: "Inter", value: "inter" },
+  { label: "Geist", value: "geist" },
+  { label: "SF Pro", value: "sf-pro" },
+]
+
+type ToolbarSelectProps = {
+  items: { label: string; value: string | null }[]
+  defaultValue?: string | null
+  variant?: React.ComponentProps<typeof SelectTrigger>["variant"]
+  className?: string
+}
+
+function ToolbarSelect({
+  items,
+  defaultValue = null,
+  variant = "subtle",
+  className,
+}: ToolbarSelectProps) {
+  return (
+    <Select items={items} defaultValue={defaultValue}>
+      <SelectTrigger variant={variant} size="sm" className={className}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {items.map((item) => (
+            <SelectItem key={item.value} value={item.value}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
+
+function MoreMenu({
+  variant = "secondary",
+}: {
+  variant?: "secondary" | "ghost"
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant={variant} size="icon-sm" aria-label="More" />}
+      >
+        <Ellipsis />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-44">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Import</DropdownMenuItem>
+          <DropdownMenuItem>Export</DropdownMenuItem>
+          <DropdownMenuItem>Settings</DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -53,15 +166,9 @@ export default function SubHeaderPage() {
         <SubHeader
           leftControls={
             <>
-              <Button variant="secondary" size="sm">
-                Lead owner <ChevronDown data-icon="inline-end" />
-              </Button>
-              <Button variant="secondary" size="sm">
-                Status <ChevronDown data-icon="inline-end" />
-              </Button>
-              <Button variant="secondary" size="sm">
-                Organization <ChevronDown data-icon="inline-end" />
-              </Button>
+              <ToolbarSelect items={leadOwnerItems} defaultValue="alicia" />
+              <ToolbarSelect items={statusItems} defaultValue="open" />
+              <ToolbarSelect items={organizationItems} defaultValue="acme" />
             </>
           }
           rightControls={
@@ -78,9 +185,7 @@ export default function SubHeaderPage() {
               <Button variant="secondary" size="sm">
                 <ArrowUpDown data-icon="inline-start" /> Sort
               </Button>
-              <Button variant="secondary" size="icon-sm" aria-label="More">
-                <Ellipsis />
-              </Button>
+              <MoreMenu />
             </>
           }
         />
@@ -91,9 +196,12 @@ export default function SubHeaderPage() {
         <SectionTitle>Calendar</SectionTitle>
         <SubHeader
           leftControls={
-            <Button variant="ghost" size="sm" className="text-lg font-semibold">
-              August 2025 <ChevronDown data-icon="inline-end" />
-            </Button>
+            <ToolbarSelect
+              items={monthItems}
+              defaultValue="aug-2025"
+              variant="ghost"
+              className="text-lg! font-medium"
+            />
           }
           rightControls={
             <>
@@ -106,9 +214,7 @@ export default function SubHeaderPage() {
               <Button variant="ghost" size="icon-sm" aria-label="Next">
                 <ChevronRight />
               </Button>
-              <Button variant="secondary" size="sm">
-                Week <ChevronDown data-icon="inline-end" />
-              </Button>
+              <ToolbarSelect items={viewItems} defaultValue="week" />
               <Tabs defaultValue="all">
                 <TabsList size="sm">
                   <TabsTrigger value="all">All</TabsTrigger>
@@ -121,9 +227,7 @@ export default function SubHeaderPage() {
                 <Users data-icon="inline-start" /> Lead{" "}
                 <ChevronDown data-icon="inline-end" />
               </Button>
-              <Button variant="ghost" size="icon-sm" aria-label="More">
-                <Ellipsis />
-              </Button>
+              <MoreMenu variant="ghost" />
             </>
           }
         />
@@ -135,12 +239,16 @@ export default function SubHeaderPage() {
         <SubHeader
           leftControls={
             <>
-              <Button variant="ghost" size="sm">
-                Text <ChevronDown data-icon="inline-end" />
-              </Button>
-              <Button variant="ghost" size="sm">
-                Inter <ChevronDown data-icon="inline-end" />
-              </Button>
+              <ToolbarSelect
+                items={textStyleItems}
+                defaultValue="text"
+                variant="ghost"
+              />
+              <ToolbarSelect
+                items={fontItems}
+                defaultValue="inter"
+                variant="ghost"
+              />
               <Button variant="ghost" size="icon-sm" aria-label="Decrease size">
                 <Minus />
               </Button>

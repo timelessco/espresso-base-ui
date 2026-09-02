@@ -20,7 +20,7 @@ function SubHeader({
     <div
       data-slot="sub-header"
       className={cn(
-        "flex shrink-0 items-center gap-3 bg-background px-3 py-2",
+        "flex shrink-0 items-center gap-3 bg-background p-0.5",
         className
       )}
       {...props}
