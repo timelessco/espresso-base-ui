@@ -313,7 +313,7 @@ function DateRangeContent({
         className="border-0 shadow-none [--cell-size:1.5rem]"
         classNames={{
           months:
-            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
+            "relative flex flex-row items-stretch [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
           nav: "absolute inset-x-2 top-2 flex w-auto items-center justify-between gap-1",
           root: "w-fit p-0!",
         }}
@@ -477,7 +477,7 @@ export default function CalendarPage() {
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
-        <Popover defaultOpen>
+        <Popover>
           <PopoverTrigger
             render={
               <Button

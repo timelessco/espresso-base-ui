@@ -28,12 +28,78 @@ import {
   type PlaygroundValues,
 } from "../../_components/playground"
 
+function PresetsDemo() {
+  const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const [month, setMonth] = React.useState(new Date())
+
+  const addDays = (days: number) => {
+    const d = new Date()
+    d.setDate(d.getDate() + days)
+    setDate(d)
+    setMonth(d)
+  }
+
+  return (
+    <Popover>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            className="w-56 justify-start gap-2 font-normal"
+          >
+            <CalendarIcon />
+            {date ? format(date, "PPP") : "Pick a date"}
+          </Button>
+        }
+      />
+      <PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
+        <div className="flex">
+          <div className="flex flex-col items-start gap-px border-r border-border p-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-sm"
+              onClick={() => addDays(1)}
+            >
+              Tomorrow
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-sm"
+              onClick={() => addDays(7)}
+            >
+              Next week
+            </Button>
+          </div>
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            month={month}
+            onMonthChange={setMonth}
+            className="border-0 shadow-none"
+          />
+        </div>
+      </PopoverContent>
+    </Popover>
+  )
+}
+
 function calendarPlaygroundCode(v: PlaygroundValues) {
   const attrs = [
     v.numberOfMonths === "2" ? "\n  numberOfMonths={2}" : "",
     v.showOutsideDays ? "" : "\n  showOutsideDays={false}",
     v.showWeekNumber ? "\n  showWeekNumber" : "",
     v.disableWeekends ? "\n  disabled={{ dayOfWeek: [0, 6] }}" : "",
+    v.numberOfMonths === "2"
+      ? `\n  classNames={{
+    months:
+      "relative flex flex-row items-stretch [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
+    nav: "absolute inset-x-2 top-2 flex w-auto items-center justify-between gap-1",
+    root: "w-fit p-0!",
+  }}`
+      : "",
   ].join("")
 
   return [
@@ -41,6 +107,15 @@ function calendarPlaygroundCode(v: PlaygroundValues) {
     "",
     `<Calendar\n  mode="single"\n  selected={date}\n  onSelect={setDate}${attrs}\n/>`,
   ].join("\n")
+}
+
+// Showcase-style two-month layout: a divider between the months, with the
+// outer padding moved onto each month so the divider spans full height.
+const twoMonthClassNames = {
+  months:
+    "relative flex flex-row items-stretch [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
+  nav: "absolute inset-x-2 top-2 flex w-auto items-center justify-between gap-1",
+  root: "w-fit p-0!",
 }
 
 function CalendarPlaygroundDemo({ values: v }: { values: PlaygroundValues }) {
@@ -55,6 +130,7 @@ function CalendarPlaygroundDemo({ values: v }: { values: PlaygroundValues }) {
       showOutsideDays={Boolean(v.showOutsideDays)}
       showWeekNumber={Boolean(v.showWeekNumber)}
       disabled={v.disableWeekends ? { dayOfWeek: [0, 6] } : undefined}
+      classNames={v.numberOfMonths === "2" ? twoMonthClassNames : undefined}
     />
   )
 }
@@ -150,6 +226,12 @@ const [range, setRange] = React.useState<DateRange | undefined>({
   onSelect={setRange}
   numberOfMonths={2}
   defaultMonth={range?.from}
+  classNames={{
+    months:
+      "relative flex flex-row items-stretch [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
+    nav: "absolute inset-x-2 top-2 flex w-auto items-center justify-between gap-1",
+    root: "w-fit p-0!",
+  }}
 />`}
         >
           <Calendar
@@ -158,6 +240,7 @@ const [range, setRange] = React.useState<DateRange | undefined>({
             onSelect={setRange}
             numberOfMonths={2}
             defaultMonth={range?.from}
+            classNames={twoMonthClassNames}
           />
         </DocExample>
       </DocSection>
@@ -212,6 +295,42 @@ const [range, setRange] = React.useState<DateRange | undefined>({
               />
             </PopoverContent>
           </Popover>
+        </DocExample>
+      </DocSection>
+
+      <DocSection title="Presets">
+        <DocProse>
+          Pair the calendar with quick-pick shortcuts in a bordered side column
+          – ghost buttons that set the date and jump the visible month via a
+          controlled <code>month</code> / <code>onMonthChange</code>.
+        </DocProse>
+        <DocExample
+          code={`
+const [date, setDate] = React.useState<Date | undefined>(new Date())
+const [month, setMonth] = React.useState(new Date())
+
+<PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
+  <div className="flex">
+    <div className="flex flex-col items-start gap-px border-r border-border p-1">
+      <Button variant="ghost" size="sm" className="text-sm" onClick={() => pick(addDays(new Date(), 1))}>
+        Tomorrow
+      </Button>
+      <Button variant="ghost" size="sm" className="text-sm" onClick={() => pick(addDays(new Date(), 7))}>
+        Next week
+      </Button>
+    </div>
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      month={month}
+      onMonthChange={setMonth}
+      className="border-0 shadow-none"
+    />
+  </div>
+</PopoverContent>`}
+        >
+          <PresetsDemo />
         </DocExample>
       </DocSection>
 
