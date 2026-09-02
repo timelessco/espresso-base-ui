@@ -12,7 +12,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
 import {
@@ -48,7 +47,6 @@ function commandPlaygroundCode(v: PlaygroundValues) {
     `        Search Emoji`,
     `      </CommandItem>`,
     `    </CommandGroup>`,
-    `    <CommandSeparator />`,
     `    <CommandGroup heading="Settings">`,
     `      <CommandItem>`,
     `        <User />`,
@@ -88,7 +86,6 @@ function CommandPlaygroundPreview(v: PlaygroundValues) {
               Search Emoji
             </CommandItem>
           </CommandGroup>
-          <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem>
               <User />
@@ -133,7 +130,6 @@ function CommandDialogDemo() {
                 Calculator
               </CommandItem>
             </CommandGroup>
-            <CommandSeparator />
             <CommandGroup heading="Settings">
               <CommandItem onSelect={() => setOpen(false)}>
                 <User />
@@ -245,7 +241,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"`}
         />
@@ -266,9 +261,8 @@ import {
 
       <DocSection title="Groups and shortcuts">
         <DocProse>
-          Give each <code>CommandGroup</code> a <code>heading</code>, divide
-          groups with <code>CommandSeparator</code>, and right-align key hints
-          with <code>CommandShortcut</code>.
+          Give each <code>CommandGroup</code> a <code>heading</code> and
+          right-align key hints with <code>CommandShortcut</code>.
         </DocProse>
         <DocExample
           code={`
@@ -282,7 +276,6 @@ import {
         Calendar
       </CommandItem>
     </CommandGroup>
-    <CommandSeparator />
     <CommandGroup heading="Settings">
       <CommandItem>
         <User />
@@ -309,7 +302,6 @@ import {
                     Calendar
                   </CommandItem>
                 </CommandGroup>
-                <CommandSeparator />
                 <CommandGroup heading="Settings">
                   <CommandItem>
                     <User />
@@ -348,7 +340,6 @@ import {
                 <CommandGroup heading="Available">
                   <CommandItem>Send Email</CommandItem>
                 </CommandGroup>
-                <CommandSeparator />
                 <CommandGroup heading="Unavailable">
                   <CommandItem disabled>New Team (Pro plan)</CommandItem>
                   <CommandItem disabled>Invite Members (Pro plan)</CommandItem>
@@ -490,11 +481,6 @@ const [open, setOpen] = React.useState(false)
               part: "CommandShortcut",
               description:
                 'Right-aligned keyboard hint span (data-slot="command-shortcut").',
-            },
-            {
-              part: "CommandSeparator",
-              description:
-                'Full-width divider between groups (data-slot="command-separator").',
             },
             {
               part: "CommandDialog",
