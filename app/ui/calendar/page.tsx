@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,7 +20,6 @@ import {
 import { cn } from "@/lib/utils"
 import type { DateRange } from "react-day-picker"
 import { addDays, format } from "date-fns"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -74,20 +73,6 @@ function CalendarPopover({
       </PopoverContent>
     </Popover>
   )
-}
-
-function formatDateShort(date: Date | undefined) {
-  return date
-    ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-    : ""
-}
-
-function formatRange(range: DateRange | undefined, fallback: string) {
-  if (range?.from && range?.to) {
-    return `${formatDateShort(range.from)} to ${formatDateShort(range.to)}`
-  }
-  if (range?.from) return formatDateShort(range.from)
-  return fallback
 }
 
 function FormattedDate({ date }: { date: Date }) {
@@ -153,25 +138,13 @@ function DateTimePresetContent() {
   const [minute, setMinute] = useState("34")
   const [period, setPeriod] = useState("AM")
 
-  const setToNow = useCallback(() => {
-    const now = new Date()
-    setDate(now)
-    setMonth(now)
-    let h = now.getHours()
-    const m = now.getMinutes()
-    const p = h >= 12 ? "PM" : "AM"
-    h = h % 12 || 12
-    setHour(String(h).padStart(2, "0"))
-    setMinute(String(m).padStart(2, "0"))
-    setPeriod(p)
-  }, [])
-
   return (
     <div className="flex w-max">
-      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
+      <div className="flex flex-col items-start gap-px border-r border-border p-1">
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 1)
             setDate(d)
@@ -181,8 +154,9 @@ function DateTimePresetContent() {
           Tomorrow
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 7)
             setDate(d)
@@ -199,7 +173,7 @@ function DateTimePresetContent() {
           onSelect={setDate}
           month={month}
           onMonthChange={setMonth}
-          className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+          className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
           classNames={{
             nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
           }}
@@ -225,7 +199,7 @@ function DateTimePresetContent() {
                       setMonth(next)
                     }}
                   >
-                    <SelectTrigger variant="ghost" size="sm">
+                    <SelectTrigger variant="ghost" size="xs">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -248,7 +222,7 @@ function DateTimePresetContent() {
                       setMonth(next)
                     }}
                   >
-                    <SelectTrigger variant="ghost" size="sm">
+                    <SelectTrigger variant="ghost" size="xs">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -264,58 +238,12 @@ function DateTimePresetContent() {
                 </div>
               )
             },
-            Nav: ({
-              className: navClassName,
-              onPreviousClick,
-              onNextClick,
-              previousMonth,
-              nextMonth,
-            }) => (
-              <nav className={navClassName}>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  onClick={(e) => onPreviousClick?.(e)}
-                  disabled={!previousMonth}
-                  aria-label="Previous month"
-                >
-                  <ChevronLeftIcon />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="xs"
-                  onClick={() => {
-                    const today = new Date()
-                    setDate(today)
-                    setMonth(today)
-                  }}
-                >
-                  Today
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon-xs"
-                  onClick={(e) => onNextClick?.(e)}
-                  disabled={!nextMonth}
-                  aria-label="Next month"
-                >
-                  <ChevronRightIcon />
-                </Button>
-              </nav>
-            ),
+            Nav: () => <></>,
           }}
         />
-        <div className="flex items-center justify-between border-t px-4 py-3">
-          <span className="text-base leading-base font-medium tracking-normal text-foreground">
-            Time
-          </span>
-          <Button variant="ghost" size="sm" onClick={setToNow}>
-            Now
-          </Button>
-        </div>
-        <div className="flex items-center gap-2 px-4 pb-3">
+        <div className="flex items-center gap-1 border-t p-2">
           <Select value={hour} onValueChange={(v) => v && setHour(v)}>
-            <SelectTrigger variant="subtle" size="sm" className="w-full">
+            <SelectTrigger variant="subtle" size="xs" className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -332,7 +260,7 @@ function DateTimePresetContent() {
             </SelectContent>
           </Select>
           <Select value={minute} onValueChange={(v) => v && setMinute(v)}>
-            <SelectTrigger variant="subtle" size="sm" className="w-full">
+            <SelectTrigger variant="subtle" size="xs" className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent alignItemWithTrigger={false} className="max-h-60">
@@ -349,7 +277,7 @@ function DateTimePresetContent() {
             </SelectContent>
           </Select>
           <Select value={period} onValueChange={(v) => v && setPeriod(v)}>
-            <SelectTrigger variant="subtle" size="sm" className="w-16">
+            <SelectTrigger variant="subtle" size="xs" className="w-16">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -385,38 +313,23 @@ function DateRangeContent({
         className="border-0 shadow-none [--cell-size:1.5rem]"
         classNames={{
           months:
-            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-3 [&>div]:px-3.5",
-          nav: "absolute inset-x-3.5 top-3 flex w-auto items-center justify-between gap-1",
+            "relative flex flex-row items-start [&>div+div]:border-l [&>div+div]:border-border [&>div]:py-2 [&>div]:px-2",
+          nav: "absolute inset-x-2 top-2 flex w-auto items-center justify-between gap-1",
           root: "w-fit p-0!",
         }}
       />
-      <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDateShort(range?.from) || (
-              <span className="text-card-foreground">Start date</span>
-            )}
-          </span>
-          <span className="text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            to
-          </span>
-          <span className="h-7 rounded-md bg-secondary px-2 py-1.5 text-base leading-base font-normal tracking-normal text-secondary-foreground">
-            {formatDateShort(range?.to) || (
-              <span className="text-card-foreground">End date</span>
-            )}
-          </span>
-        </div>
+      <div className="flex items-center justify-end border-t border-border p-2">
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="sm"
+            size="xs"
             onClick={() => {
               onRangeChange(undefined)
             }}
           >
             Cancel
           </Button>
-          <Button size="sm" onClick={onConfirm}>
+          <Button size="xs" onClick={onConfirm}>
             Set date
           </Button>
         </div>
@@ -430,10 +343,11 @@ function PresetsContent() {
   const [month, setMonth] = useState(new Date())
   return (
     <div className="flex w-max">
-      <div className="flex flex-col items-start gap-2 border-r border-border px-3 py-3">
+      <div className="flex flex-col items-start gap-px border-r border-border p-1">
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 1)
             setDate(d)
@@ -443,8 +357,9 @@ function PresetsContent() {
           Tomorrow
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
+          className="text-sm"
           onClick={() => {
             const d = addDays(new Date(), 7)
             setDate(d)
@@ -460,7 +375,7 @@ function PresetsContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full min-w-[280px] border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+        className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
         classNames={{
           nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
         }}
@@ -483,7 +398,7 @@ function PresetsContent() {
                     setMonth(next)
                   }}
                 >
-                  <SelectTrigger variant="ghost" size="sm">
+                  <SelectTrigger variant="ghost" size="xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -506,7 +421,7 @@ function PresetsContent() {
                     setMonth(next)
                   }}
                 >
-                  <SelectTrigger variant="ghost" size="sm">
+                  <SelectTrigger variant="ghost" size="xs">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -522,45 +437,7 @@ function PresetsContent() {
               </div>
             )
           },
-          Nav: ({
-            className: navClassName,
-            onPreviousClick,
-            onNextClick,
-            previousMonth,
-            nextMonth,
-          }) => (
-            <nav className={navClassName}>
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={(e) => onPreviousClick?.(e)}
-                disabled={!previousMonth}
-                aria-label="Previous month"
-              >
-                <ChevronLeftIcon />
-              </Button>
-              <Button
-                variant="ghost"
-                size="xs"
-                onClick={() => {
-                  const today = new Date()
-                  setDate(today)
-                  setMonth(today)
-                }}
-              >
-                Today
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon-xs"
-                onClick={(e) => onNextClick?.(e)}
-                disabled={!nextMonth}
-                aria-label="Next month"
-              >
-                <ChevronRightIcon />
-              </Button>
-            </nav>
-          ),
+          Nav: () => <></>,
         }}
       />
     </div>
