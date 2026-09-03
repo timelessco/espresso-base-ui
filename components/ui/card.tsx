@@ -14,7 +14,7 @@ const cardVariants = cva(
     variants: {
       variant: {
         default:
-          "rounded-xl bg-card py-4 data-[size=lg]:pt-5 data-[size=sm]:pt-3 data-[size=xl]:pt-6",
+          "rounded-xl bg-card py-4 data-[size=lg]:py-5 data-[size=sm]:py-3 data-[size=xl]:py-6",
         mail: "rounded-lg bg-card px-3 py-2.5",
         message: "rounded-lg bg-input px-3 py-2",
         call: "rounded-lg bg-card px-3 py-2.5",
@@ -64,7 +64,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-title"
       className={cn(
-        "text-base leading-snug font-medium text-foreground group-data-[size=lg]/card:text-lg group-data-[size=sm]/card:text-sm group-data-[size=xl]/card:text-xl",
+        "text-lg leading-snug font-medium text-foreground group-data-[size=lg]/card:text-xl group-data-[size=sm]/card:text-base group-data-[size=xl]/card:text-2xl",
         className
       )}
       {...props}
