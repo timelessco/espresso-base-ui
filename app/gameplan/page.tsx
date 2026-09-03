@@ -696,9 +696,9 @@ export default function GameplanPage() {
     <>
       <div className="mx-auto max-w-4xl">
         <SubHeader
-          className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+          className="scrollbar-hide mt-4 overflow-x-auto pl-5 [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
           leftControls={
-            <span className="text-base font-medium text-foreground">Tasks</span>
+            <span className="text-xl font-semibold text-foreground">Tasks</span>
           }
           rightControls={
             <Select
@@ -863,9 +863,7 @@ export default function GameplanPage() {
             </Drawer>
           </div>
         </MobileShellHeader>
-        <MobileShellContent>
-          {content}
-        </MobileShellContent>
+        <MobileShellContent>{content}</MobileShellContent>
         <MobileNav>
           <MobileNavItem
             label="Home"
