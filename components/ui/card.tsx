@@ -4,7 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
-  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground shadow-default has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=lg]:gap-5 data-[size=sm]:gap-3 data-[size=xl]:gap-5 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+  // elevation ladder, computed from the card token: white 3% matches
+  // --popover and white 13.5% matches --surface (light mode card is white,
+  // so both mixes are no-ops there). One layer up on a modal or popover
+  // surface; two layers up in a popover inside a modal (its portal nests
+  // under dialog-portal) — the ! breaks the specificity tie
+  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground shadow-default has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=lg]:gap-5 data-[size=sm]:gap-3 data-[size=xl]:gap-5 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl in-data-[slot=dialog-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=dialog-portal]:in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]!",
   {
     variants: {
       variant: {
