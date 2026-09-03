@@ -791,9 +791,9 @@ export default function DrivePage() {
   const content = (
     <>
       <SubHeader
-        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        className="scrollbar-hide overflow-x-auto pt-3.5 pr-3 pb-4 pl-4 [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
         leftControls={
-          <span className="text-sm font-medium text-foreground">All</span>
+          <span className="text-lg font-semibold text-foreground">All</span>
         }
         rightControls={
           <>
@@ -853,7 +853,7 @@ export default function DrivePage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"

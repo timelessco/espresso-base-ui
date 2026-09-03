@@ -1204,7 +1204,7 @@ export default function MailPage() {
 
   const header = (
     <Header
-      className="scrollbar-hide relative overflow-x-auto border-b-0 py-0 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border-soft after:content-[''] [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
+      className="scrollbar-hide relative overflow-x-auto border-b-0 py-0 pr-5 pl-3 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border-soft after:content-[''] [&_[data-slot=header-center]]:shrink-0 [&_[data-slot=header-center]>*]:shrink-0 [&_[data-slot=header-left]]:shrink-0 [&_[data-slot=header-left]>*]:shrink-0 [&_[data-slot=header-right]]:shrink-0 [&_[data-slot=header-right]>*]:shrink-0"
       leftControls={
         <>
           <SidebarTrigger className="md:hidden" />
@@ -1278,7 +1278,7 @@ export default function MailPage() {
   const content = (
     <>
       <SubHeader
-        className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        className="scrollbar-hide overflow-x-auto pr-6 pl-5 [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
         leftControls={
           <>
             <Checkbox />
