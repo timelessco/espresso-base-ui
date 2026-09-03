@@ -40,7 +40,7 @@ const switchThumbVariants = cva(
         xs: "top-px size-2.5 group-active/switch:w-[13px] data-checked:left-[11px] group-active/switch:data-checked:left-[8px] data-unchecked:left-px",
         sm: "top-px size-3 group-active/switch:w-[15px] data-checked:left-[11px] group-active/switch:data-checked:left-[8px] data-unchecked:left-px",
         default:
-          "top-0.5 size-3.5 group-active/switch:w-[18px] data-checked:left-[14px] group-active/switch:data-checked:left-[10px] data-unchecked:left-0.5",
+          "top-[1.5px] size-[15px] group-active/switch:w-[19px] data-checked:left-[13.5px] group-active/switch:data-checked:left-[9.5px] data-unchecked:left-[1.5px]",
       },
     },
     defaultVariants: {
