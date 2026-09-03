@@ -37,7 +37,7 @@ const alertVariants = cva(
       {
         type: "default",
         variant: "default",
-        className: "border-transparent bg-transparent shadow-default",
+        className: "border-transparent bg-background shadow-default",
       },
       {
         type: "default",

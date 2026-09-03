@@ -73,9 +73,9 @@ function DropdownMenuContent({
             data-slot="dropdown-menu-content"
             data-size={resolvedSize}
             className={cn(
-              "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-popover p-1 text-popover-foreground shadow-elevation-xl duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
+              "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-card p-1 text-popover-foreground shadow-elevation-xl duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
               // radius per size (rounded-xl base covers md and lg)
-              "data-[size=xs]:rounded-md data-[size=sm]:rounded-lg",
+              "data-[size=sm]:rounded-lg data-[size=xs]:rounded-md",
               className
             )}
             {...props}
