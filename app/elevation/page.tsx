@@ -56,19 +56,32 @@ function LayerNote({ children }: { children: React.ReactNode }) {
 function ExampleTile({
   title,
   layers,
+  asCard,
   children,
 }: {
   title: string
   layers: string
+  asCard?: boolean
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-border-soft p-5">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-0.5">
         <h2 className="text-sm font-medium text-foreground">{title}</h2>
         <p className="text-xs text-muted-foreground">{layers}</p>
       </div>
-      {children}
+      {asCard ? (
+        // card-based examples: the demo itself is the Card, the heading
+        // stays outside it
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Card</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">{children}</CardContent>
+        </Card>
+      ) : (
+        children
+      )}
     </div>
   )
 }
@@ -156,12 +169,11 @@ export default function ElevationPage() {
           </ExampleTile>
 
           <ExampleTile
+            asCard
             title="Card → Select"
             layers="card bg-card · popup bg-popover"
           >
-            <DemoCard note="card bg-card">
-              <OptionsSelect />
-            </DemoCard>
+            <OptionsSelect />
           </ExampleTile>
 
           <ExampleTile
@@ -179,13 +191,11 @@ export default function ElevationPage() {
           </ExampleTile>
 
           <ExampleTile
+            asCard
             title="Card → Popover → Select"
             layers="popover bg-popover · popup bg-surface"
           >
-            <CardPopover
-              cardNote="card bg-card"
-              popoverNote="popover bg-popover · select popup bg-surface"
-            />
+            <PopoverSelect note="popover bg-popover · select popup bg-surface" />
           </ExampleTile>
 
           <ExampleTile
