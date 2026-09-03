@@ -5,10 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   Popover,
   PopoverContent,
@@ -49,8 +57,53 @@ function OptionsSelect() {
   )
 }
 
-function LayerNote({ children }: { children: React.ReactNode }) {
-  return <p className="text-xs text-muted-foreground">{children}</p>
+function OptionsDropdown() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={<Button variant="outline" className="w-fit" />}
+      >
+        Open dropdown
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-44">
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Option one</DropdownMenuItem>
+          <DropdownMenuItem>Option two</DropdownMenuItem>
+          <DropdownMenuItem>Option three</DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+// select + dropdown side by side — both popups follow the same ladder
+function PopupDemos() {
+  return (
+    <div className="flex flex-col gap-2">
+      <OptionsSelect />
+      <OptionsDropdown />
+    </div>
+  )
+}
+
+function ModalSection({
+  title,
+  layers,
+  children,
+}: {
+  title: string
+  layers: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-0.5">
+        <h3 className="text-sm font-medium text-foreground">{title}</h3>
+        <p className="text-xs text-muted-foreground">{layers}</p>
+      </div>
+      {children}
+    </div>
+  )
 }
 
 function ExampleTile({
@@ -86,66 +139,31 @@ function ExampleTile({
   )
 }
 
-function DemoCard({
-  note,
-  children,
-}: {
-  note: string
-  children?: React.ReactNode
-}) {
+function DemoCard({ children }: { children: React.ReactNode }) {
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Card</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <LayerNote>{note}</LayerNote>
-        {children}
-      </CardContent>
+      <CardContent className="flex flex-col gap-3">{children}</CardContent>
     </Card>
   )
 }
 
-function PopoverSelect({ note }: { note: string }) {
-  return (
-    <Popover>
-      <PopoverTrigger
-        render={<Button variant="outline">Open popover</Button>}
-      />
-      <PopoverContent className="flex w-64 flex-col gap-3">
-        <LayerNote>{note}</LayerNote>
-        <OptionsSelect />
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-function PopoverCard({ cardNote }: { cardNote: string }) {
-  return (
-    <Popover>
-      <PopoverTrigger
-        render={<Button variant="outline">Open popover with card</Button>}
-      />
-      <PopoverContent className="flex w-72 flex-col gap-3">
-        <DemoCard note={cardNote}>
-          <OptionsSelect />
-        </DemoCard>
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-function CardPopover({
-  cardNote,
-  popoverNote,
+function DemoPopover({
+  trigger = "Open popover",
+  children,
 }: {
-  cardNote: string
-  popoverNote: string
+  trigger?: string
+  children: React.ReactNode
 }) {
   return (
-    <DemoCard note={cardNote}>
-      <PopoverSelect note={popoverNote} />
-    </DemoCard>
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline">{trigger}</Button>} />
+      <PopoverContent className="flex w-72 flex-col gap-3">
+        {children}
+      </PopoverContent>
+    </Popover>
   )
 }
 
@@ -158,44 +176,52 @@ export default function ElevationPage() {
           <p className="max-w-prose text-sm leading-lg text-muted-foreground">
             Surfaces step up as they stack: bg-card on the page, one layer up on
             a modal, card or popover, two layers up when those combine, and a
-            third layer inside a modal. Open each example to compare the
-            backgrounds.
+            third layer inside a modal. Select and dropdown popups follow the
+            same ladder — open each example to compare the backgrounds.
           </p>
         </header>
 
-        <section className="grid grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <ExampleTile title="Select" layers="popup bg-card">
-            <OptionsSelect />
+        <section className="grid grid-cols-1 items-start gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          <ExampleTile title="Standalone" layers="popups bg-card">
+            <PopupDemos />
           </ExampleTile>
 
           <ExampleTile
             asCard
-            title="Card → Select"
-            layers="card bg-card · popup bg-popover"
+            title="Card"
+            layers="card bg-card · popups bg-popover"
           >
-            <OptionsSelect />
+            <PopupDemos />
           </ExampleTile>
 
           <ExampleTile
-            title="Popover → Select"
-            layers="popover bg-card · popup bg-popover"
+            title="Popover"
+            layers="popover bg-card · popups bg-popover"
           >
-            <PopoverSelect note="popover bg-card · select popup bg-popover" />
+            <DemoPopover>
+              <PopupDemos />
+            </DemoPopover>
           </ExampleTile>
 
           <ExampleTile
-            title="Popover → Card → Select"
-            layers="card bg-popover · popup bg-surface"
+            title="Popover → Card"
+            layers="card bg-popover · popups bg-surface"
           >
-            <PopoverCard cardNote="card bg-popover · select popup bg-surface" />
+            <DemoPopover trigger="Open popover with card">
+              <DemoCard>
+                <PopupDemos />
+              </DemoCard>
+            </DemoPopover>
           </ExampleTile>
 
           <ExampleTile
             asCard
-            title="Card → Popover → Select"
-            layers="popover bg-popover · popup bg-surface"
+            title="Card → Popover"
+            layers="popover bg-popover · popups bg-surface"
           >
-            <PopoverSelect note="popover bg-popover · select popup bg-surface" />
+            <DemoPopover>
+              <PopupDemos />
+            </DemoPopover>
           </ExampleTile>
 
           <ExampleTile
@@ -206,50 +232,57 @@ export default function ElevationPage() {
               <DialogTrigger
                 render={<Button variant="outline">Open dialog</Button>}
               />
-              <DialogContent className="flex max-h-[85vh] flex-col gap-5 overflow-y-auto">
+              <DialogContent className="flex max-h-[85vh] flex-col gap-6 overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>Elevation in a dialog</DialogTitle>
+                  <DialogDescription>
+                    Everything steps one layer higher inside a modal.
+                  </DialogDescription>
                 </DialogHeader>
 
-                <div className="flex flex-col gap-2">
-                  <LayerNote>Modal → Select — popup bg-popover</LayerNote>
-                  <OptionsSelect />
-                </div>
+                <ModalSection title="Modal" layers="popups bg-popover">
+                  <PopupDemos />
+                </ModalSection>
 
-                <div className="flex flex-col gap-2">
-                  <LayerNote>
-                    Modal → Card → Select — card bg-popover · popup bg-surface
-                  </LayerNote>
-                  <DemoCard note="card bg-popover">
-                    <OptionsSelect />
+                <ModalSection
+                  title="Modal → Card"
+                  layers="card bg-popover · popups bg-surface"
+                >
+                  <DemoCard>
+                    <PopupDemos />
                   </DemoCard>
-                </div>
+                </ModalSection>
 
-                <div className="flex flex-col gap-2">
-                  <LayerNote>
-                    Modal → Popover → Select — popup bg-surface
-                  </LayerNote>
-                  <PopoverSelect note="popover bg-popover · select popup bg-surface" />
-                </div>
+                <ModalSection
+                  title="Modal → Popover"
+                  layers="popover bg-popover · popups bg-surface"
+                >
+                  <DemoPopover>
+                    <PopupDemos />
+                  </DemoPopover>
+                </ModalSection>
 
-                <div className="flex flex-col gap-2">
-                  <LayerNote>
-                    Modal → Popover → Card → Select — card bg-surface · popup
-                    layer 3
-                  </LayerNote>
-                  <PopoverCard cardNote="card bg-surface · select popup layer 3" />
-                </div>
+                <ModalSection
+                  title="Modal → Popover → Card"
+                  layers="card bg-surface · popups layer 3"
+                >
+                  <DemoPopover trigger="Open popover with card">
+                    <DemoCard>
+                      <PopupDemos />
+                    </DemoCard>
+                  </DemoPopover>
+                </ModalSection>
 
-                <div className="flex flex-col gap-2">
-                  <LayerNote>
-                    Modal → Card → Popover → Select — popover bg-surface · popup
-                    layer 3
-                  </LayerNote>
-                  <CardPopover
-                    cardNote="card bg-popover"
-                    popoverNote="popover bg-surface · select popup layer 3"
-                  />
-                </div>
+                <ModalSection
+                  title="Modal → Card → Popover"
+                  layers="popover bg-surface · popups layer 3"
+                >
+                  <DemoCard>
+                    <DemoPopover>
+                      <PopupDemos />
+                    </DemoPopover>
+                  </DemoCard>
+                </ModalSection>
               </DialogContent>
             </Dialog>
           </ExampleTile>

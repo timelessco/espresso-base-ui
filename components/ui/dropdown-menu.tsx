@@ -76,6 +76,17 @@ function DropdownMenuContent({
               "z-50 max-h-(--available-height) w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border-none bg-card p-1 text-popover-foreground shadow-elevation-xl duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
               // radius per size (rounded-xl base covers md and lg)
               "data-[size=sm]:rounded-lg data-[size=xs]:rounded-md",
+              // elevation ladder, computed from the card token (white 3% =
+              // --popover, 13.5% = --surface, 18.5% = layer 3 / gray-500;
+              // all no-ops in light mode). The popup portals out of its
+              // trigger's surface, so body:has() checks where the open
+              // trigger sits; ! makes deeper chains win the cascade.
+              // one layer: card / modal / popover → 3%
+              "[body:has([data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)]",
+              // two layers → 13.5%
+              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]! [body:has([data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]! [body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]!",
+              // three layers (inside a modal) → 18.5%
+              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_18.5%)]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_18.5%)]!",
               className
             )}
             {...props}
