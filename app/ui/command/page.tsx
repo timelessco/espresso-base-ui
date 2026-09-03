@@ -50,7 +50,7 @@ export default function CommandPage() {
       {/* Basic */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Basic</SectionTitle>
-        <Command className="max-w-md">
+        <Command className="max-w-md rounded-3xl shadow-elevation-2xl">
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
@@ -66,7 +66,7 @@ export default function CommandPage() {
       {/* With Icons */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Icons</SectionTitle>
-        <Command className="max-w-md">
+        <Command className="max-w-md rounded-3xl shadow-elevation-2xl">
           <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
@@ -91,7 +91,7 @@ export default function CommandPage() {
       {/* With Shortcuts */}
       <div className="flex flex-col gap-4">
         <SectionTitle>With Shortcuts</SectionTitle>
-        <Command className="max-w-md">
+        <Command className="max-w-md rounded-3xl shadow-elevation-2xl">
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
@@ -119,7 +119,7 @@ export default function CommandPage() {
       {/* With Groups and Separator */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Groups with Separator</SectionTitle>
-        <Command className="max-w-md">
+        <Command className="max-w-md rounded-3xl shadow-elevation-2xl">
           <CommandInput placeholder="Type a command or search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
@@ -162,7 +162,7 @@ export default function CommandPage() {
       {/* Disabled Item */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Disabled Item</SectionTitle>
-        <Command className="max-w-md">
+        <Command className="max-w-md rounded-3xl shadow-elevation-2xl">
           <CommandInput placeholder="Search..." />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
