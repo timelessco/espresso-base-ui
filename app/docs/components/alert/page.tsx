@@ -304,7 +304,7 @@ import {
           <code>type="banner"</code> renders a page-wide notice on a neutral{" "}
           <code>bg-input</code> surface. Without <code>AlertHandlers</code> it
           collapses to a slim single row – the title grows to{" "}
-          <code>text-normal</code> and <code>AlertAction</code> moves inline at
+          <code>text-base-plus</code> and <code>AlertAction</code> moves inline at
           the trailing edge instead of floating top-right.
         </DocProse>
         <DocExample
