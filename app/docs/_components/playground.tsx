@@ -18,7 +18,14 @@ import { CodeBlock } from "./doc"
 
 export type PlaygroundControl =
   | { type: "text"; defaultValue: string }
-  | { type: "options"; options: readonly string[]; defaultValue: string }
+  | {
+      type: "options"
+      options: readonly string[]
+      defaultValue: string
+      // display names for option values, e.g. { default: "md" } — the value
+      // passed to renderPreview/renderCode stays unchanged
+      labels?: Record<string, string>
+    }
   | { type: "boolean"; defaultValue: boolean }
 
 export type PlaygroundValues = Record<string, string | boolean>
@@ -81,7 +88,7 @@ export function DocPlayground({
                     <TabsList size="sm">
                       {control.options.map((option) => (
                         <TabsTrigger key={option} value={option}>
-                          {option}
+                          {control.labels?.[option] ?? option}
                         </TabsTrigger>
                       ))}
                       <TabsIndicator />

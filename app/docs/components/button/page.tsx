@@ -68,6 +68,7 @@ export default function ButtonDocsPage() {
               type: "options",
               options: ["xs", "sm", "default", "lg", "xl", "2xl"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             variant: {
               type: "options",

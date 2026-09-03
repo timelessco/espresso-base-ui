@@ -108,6 +108,7 @@ export default function TabsDocsPage() {
               type: "options",
               options: ["sm", "default"],
               defaultValue: "sm",
+              labels: { default: "md" },
             },
             orientation: {
               type: "options",

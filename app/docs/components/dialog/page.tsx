@@ -88,6 +88,7 @@ export default function DialogDocsPage() {
               type: "options",
               options: ["sm", "default", "lg"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             showCloseButton: { type: "boolean", defaultValue: true },
           }}

@@ -59,6 +59,7 @@ export default function SliderDocsPage() {
               type: "options",
               options: ["sm", "default", "lg", "xl"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             defaultValue: {
               type: "options",

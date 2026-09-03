@@ -48,6 +48,7 @@ export default function SpinnerDocsPage() {
               type: "options",
               options: ["sm", "default", "lg", "xl"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             track: { type: "boolean", defaultValue: false },
           }}

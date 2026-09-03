@@ -54,6 +54,7 @@ export default function CheckboxDocsPage() {
               type: "options",
               options: ["xs", "sm", "default"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             checked: { type: "boolean", defaultValue: true },
             indeterminate: { type: "boolean", defaultValue: false },

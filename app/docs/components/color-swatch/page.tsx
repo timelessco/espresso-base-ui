@@ -76,6 +76,7 @@ export default function ColorSwatchDocsPage() {
               type: "options",
               options: ["sm", "default", "lg"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             selected: { type: "boolean", defaultValue: true },
             disabled: { type: "boolean", defaultValue: false },
