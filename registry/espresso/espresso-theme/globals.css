@@ -903,6 +903,8 @@
   --text-base-plus--line-height: 1.2;
   --text-lg: 1rem; /* 16px */
   --text-lg--line-height: 1.125;
+  --text-lg-plus: 1.0625rem; /* 17px */
+  --text-lg-plus--line-height: 1.1765;
   --text-xl: 1.125rem; /* 18px */
   --text-xl--line-height: 1.1667;
   --text-2xl: 1.25rem; /* 20px */
@@ -1190,6 +1192,8 @@
   --text-base-plus--line-height: var(--text-base-plus--line-height);
   --text-lg: var(--text-lg);
   --text-lg--line-height: var(--text-lg--line-height);
+  --text-lg-plus: var(--text-lg-plus);
+  --text-lg-plus--line-height: var(--text-lg-plus--line-height);
   --text-xl: var(--text-xl);
   --text-xl--line-height: var(--text-xl--line-height);
   --text-2xl: var(--text-2xl);
