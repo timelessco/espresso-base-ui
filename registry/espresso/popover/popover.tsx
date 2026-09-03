@@ -43,7 +43,13 @@ function PopoverContent({
         <PopoverPrimitive.Popup
           data-slot="popover-content"
           className={cn(
-            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl bg-card px-3.5 py-3 text-base leading-base tracking-normal text-secondary-foreground shadow-elevation-md outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-xl bg-card px-3.5 py-3 text-base leading-base tracking-normal text-secondary-foreground shadow-elevation-lg outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            // elevation ladder, computed from the card token (white 3% =
+            // --popover, white 13.5% = --surface; both no-ops in light mode).
+            // The popup portals out of its trigger's surface, so body:has()
+            // checks where the open trigger sits; ! makes the two-layer rule
+            // win the cascade regardless of class order
+            "[body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]!",
             className
           )}
           {...props}
