@@ -87,6 +87,7 @@ export default function ButtonGroupDocsPage() {
               type: "options",
               options: ["sm", "default", "lg"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             detached: { type: "boolean", defaultValue: false },
           }}

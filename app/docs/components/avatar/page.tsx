@@ -82,6 +82,7 @@ export default function AvatarDocsPage() {
               type: "options",
               options: ["xs", "sm", "default", "lg", "xl", "2xl", "3xl"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             image: { type: "boolean", defaultValue: true },
             badge: { type: "boolean", defaultValue: false },

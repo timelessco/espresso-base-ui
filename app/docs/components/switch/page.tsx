@@ -51,6 +51,7 @@ export default function SwitchDocsPage() {
               type: "options",
               options: ["xs", "sm", "default"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             checked: { type: "boolean", defaultValue: true },
             disabled: { type: "boolean", defaultValue: false },

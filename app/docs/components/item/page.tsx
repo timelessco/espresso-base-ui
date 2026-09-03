@@ -123,8 +123,9 @@ export default function ItemDocsPage() {
             },
             size: {
               type: "options",
-              options: ["default", "sm", "xs"],
+              options: ["xs", "sm", "default"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             media: { type: "boolean", defaultValue: true },
             description: { type: "boolean", defaultValue: true },

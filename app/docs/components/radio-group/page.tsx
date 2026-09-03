@@ -69,6 +69,7 @@ export default function RadioGroupDocsPage() {
               type: "options",
               options: ["xs", "sm", "default"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             options: {
               type: "options",

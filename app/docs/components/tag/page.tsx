@@ -78,6 +78,7 @@ export default function TagDocsPage() {
               type: "options",
               options: ["sm", "default", "lg"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             closable: { type: "boolean", defaultValue: false },
             disabled: { type: "boolean", defaultValue: false },

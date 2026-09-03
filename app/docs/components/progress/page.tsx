@@ -72,6 +72,7 @@ export default function ProgressDocsPage() {
               type: "options",
               options: ["sm", "default", "lg", "xl"],
               defaultValue: "default",
+              labels: { default: "md" },
             },
             type: {
               type: "options",
