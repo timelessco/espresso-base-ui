@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 
 const cardVariants = cva(
   // elevation ladder, computed from the card token: white 3% matches
-  // --popover and white 13.5% matches --surface (light mode card is white,
+  // --popover, white 9.5% is the layer-2 step (light mode card is white,
   // so both mixes are no-ops there). One layer up on a modal or popover
   // surface; two layers up in a popover inside a modal (its portal nests
   // under dialog-portal) — the ! breaks the specificity tie
-  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground shadow-default dark:shadow-[0px_1px_1px_#00000014,inset_0px_0px_0px_1px_#ffffff08] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=lg]:gap-5 data-[size=sm]:gap-3 data-[size=xl]:gap-5 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl in-data-[slot=dialog-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=dialog-portal]:in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_13.5%)]!",
+  "group/card flex flex-col gap-4 overflow-hidden text-sm text-card-foreground shadow-default dark:shadow-[0px_1px_1px_#00000014,inset_0px_0px_0px_1px_#ffffff08] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=lg]:gap-5 data-[size=sm]:gap-3 data-[size=xl]:gap-5 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl in-data-[slot=dialog-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_3%)] in-data-[slot=dialog-portal]:in-data-[slot=popover-content]:bg-[color-mix(in_oklch,var(--card),white_9.5%)]!",
   {
     variants: {
       variant: {

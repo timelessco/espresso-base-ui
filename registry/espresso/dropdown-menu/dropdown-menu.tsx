@@ -81,16 +81,16 @@ function DropdownMenuContent({
               // radius per size (rounded-xl base covers md and lg)
               "data-[size=sm]:rounded-lg data-[size=xs]:rounded-md",
               // elevation ladder: body:has() rules set --elevation-mix from
-              // where the open trigger sits (0% base, 3% = --popover, 13.5%
-              // = --surface, 18.5% = layer 3 / gray-500; all no-ops in light
+              // where the open trigger sits (0% base, 3% = --popover, then
+              // 9.5% and 14% for layers 2 and 3; all no-ops in light
               // mode). The background above and the item highlights are
               // computed from it; ! makes deeper chains win the cascade.
               // one layer: card / modal / popover → 3%
               "[body:has([data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=dialog-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:3%]",
-              // two layers → 13.5%
-              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:13.5%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:13.5%]! [body:has([data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:13.5%]! [body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:13.5%]!",
-              // three layers (inside a modal) → 18.5%
-              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:18.5%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:18.5%]!",
+              // two layers → 9.5%
+              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]!",
+              // three layers (inside a modal) → 14%
+              "[body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=card]_[data-slot=dropdown-menu-trigger][data-popup-open])_&]:[--elevation-mix:14%]!",
               className
             )}
             {...props}
