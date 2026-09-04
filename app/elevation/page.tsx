@@ -1,7 +1,18 @@
 "use client"
 
+import * as React from "react"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
 import {
   Dialog,
   DialogContent,
@@ -10,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,12 +88,15 @@ function OptionsDropdown() {
   )
 }
 
-// select + dropdown side by side — both popups follow the same ladder
+// select + dropdown + subtle button — all follow the same ladder
 function PopupDemos() {
   return (
     <div className="flex flex-col gap-2">
       <OptionsSelect />
       <OptionsDropdown />
+      <Button variant="secondary" className="w-fit">
+        Subtle button
+      </Button>
     </div>
   )
 }
@@ -167,7 +182,54 @@ function DemoPopover({
   )
 }
 
+// the same command demo renders inline in its tile and inside the ⌘E dialog
+function CommandDemo() {
+  return (
+    <Command className="rounded-xl shadow-5xs">
+      <CommandInput placeholder="Type a command..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Suggestions">
+          <CommandItem>Calendar</CommandItem>
+          <CommandItem>Search</CommandItem>
+        </CommandGroup>
+      </CommandList>
+      <div className="flex flex-col gap-3 px-2.5 pt-1">
+        <PopupDemos />
+        <DemoCard>
+          <p className="text-xs text-muted-foreground">
+            Command → Card — popups bg-surface · button steps again
+          </p>
+          <PopupDemos />
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-muted-foreground">
+              Command → Card → Popover — popover bg-surface · popups layer 3 ·
+              button steps again
+            </p>
+            <DemoPopover>
+              <PopupDemos />
+            </DemoPopover>
+          </div>
+        </DemoCard>
+      </div>
+    </Command>
+  )
+}
+
 export default function ElevationPage() {
+  const [commandOpen, setCommandOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "e" && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault()
+        setCommandOpen((open) => !open)
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [])
+
   return (
     <div className="min-h-dvh p-8">
       <div className="mx-auto flex max-w-5xl flex-col gap-8">
@@ -177,7 +239,8 @@ export default function ElevationPage() {
             Surfaces step up as they stack: bg-card on the page, one layer up on
             a modal, card or popover, two layers up when those combine, and a
             third layer inside a modal. Select and dropdown popups follow the
-            same ladder — open each example to compare the backgrounds.
+            same ladder, and subtle buttons step up with their surface — open
+            each example to compare the backgrounds.
           </p>
         </header>
 
@@ -222,6 +285,20 @@ export default function ElevationPage() {
             <DemoPopover>
               <PopupDemos />
             </DemoPopover>
+          </ExampleTile>
+
+          <ExampleTile
+            title="Command"
+            layers="command bg-card · popups bg-popover · card bg-popover"
+          >
+            <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              Press
+              <KbdGroup>
+                <Kbd>⌘</Kbd>
+                <Kbd>E</Kbd>
+              </KbdGroup>
+              to open the command palette
+            </p>
           </ExampleTile>
 
           <ExampleTile
@@ -288,6 +365,16 @@ export default function ElevationPage() {
           </ExampleTile>
         </section>
       </div>
+
+      <CommandDialog
+        open={commandOpen}
+        onOpenChange={setCommandOpen}
+        title="Elevation command"
+        description="Command palette with elevation demos"
+        className="top-1/2 -translate-y-1/2"
+      >
+        <CommandDemo />
+      </CommandDialog>
     </div>
   )
 }
