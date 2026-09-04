@@ -49,7 +49,7 @@ function PopoverContent({
             // The popup portals out of its trigger's surface, so body:has()
             // checks where the open trigger sits; ! makes the two-layer rule
             // win the cascade regardless of class order
-            "[body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_9.5%)]!",
+            "[body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_9.5%)]! [body:has([data-slot=command]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_3%)] [body:has([data-slot=command]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open])_&]:bg-[color-mix(in_oklch,var(--card),white_9.5%)]!",
             className
           )}
           {...props}
