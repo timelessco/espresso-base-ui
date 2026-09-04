@@ -76,12 +76,15 @@ function OptionsDropdown() {
   )
 }
 
-// select + dropdown side by side — both popups follow the same ladder
+// select + dropdown + subtle button — all follow the same ladder
 function PopupDemos() {
   return (
     <div className="flex flex-col gap-2">
       <OptionsSelect />
       <OptionsDropdown />
+      <Button variant="secondary" className="w-fit">
+        Subtle button
+      </Button>
     </div>
   )
 }
@@ -177,7 +180,8 @@ export default function ElevationPage() {
             Surfaces step up as they stack: bg-card on the page, one layer up on
             a modal, card or popover, two layers up when those combine, and a
             third layer inside a modal. Select and dropdown popups follow the
-            same ladder — open each example to compare the backgrounds.
+            same ladder, and subtle buttons step up with their surface — open
+            each example to compare the backgrounds.
           </p>
         </header>
 

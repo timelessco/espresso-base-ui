@@ -14,8 +14,17 @@ const buttonVariants = cva(
           "bg-primary text-primary-foreground hover:bg-primary/86 disabled:bg-[color-mix(in_oklch,var(--primary),var(--background)_95%)] disabled:text-[color-mix(in_oklch,var(--primary),var(--background)_60%)] in-[[data-slot=button-group]:not([data-detached])]:active:bg-primary/75 [@media(hover:none)]:active:bg-primary/75",
         outline:
           "bg-transparent text-secondary-foreground shadow-default [transition-duration:0.25s,0.1s,150ms]! hover:shadow-raised focus-visible:shadow-3xs! disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-secondary [@media(hover:none)]:active:bg-secondary",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)]",
+        secondary: [
+          // bg/hover/active derive from --btn-bg so the elevation overrides
+          // below shift every state together
+          "[--btn-bg:var(--secondary)] bg-(--btn-bg) text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--btn-bg),black_2%)] disabled:bg-secondary disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-bg),black_5%)] dark:hover:bg-[color-mix(in_oklch,var(--btn-bg),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--btn-bg),white_13%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-bg),black_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--btn-bg),white_13%)]",
+          // elevation ladder (dark only — light surfaces stay white): dark
+          // --secondary is card + white 5.5%, so on elevated surfaces the
+          // button steps to 5.5% + the surface's contents level (3/9.5/14%)
+          // to stay visible; ! breaks ties for the deeper chains
+          "dark:in-data-[slot=card]:[--btn-bg:color-mix(in_oklch,var(--card),white_8.5%)] dark:in-data-[slot=dialog-content]:[--btn-bg:color-mix(in_oklch,var(--card),white_8.5%)] dark:in-data-[slot=popover-content]:[--btn-bg:color-mix(in_oklch,var(--card),white_8.5%)]",
+          "dark:in-data-[slot=dialog-content]:in-data-[slot=card]:[--btn-bg:color-mix(in_oklch,var(--card),white_15%)]! dark:in-data-[slot=dialog-portal]:in-data-[slot=popover-content]:[--btn-bg:color-mix(in_oklch,var(--card),white_15%)]! dark:in-data-[slot=popover-content]:in-data-[slot=card]:[--btn-bg:color-mix(in_oklch,var(--card),white_15%)]!",
+        ].join(" "),
         ghost:
           "bg-transparent text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] disabled:text-card-foreground in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:in-[[data-slot=button-group]:not([data-detached])]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] [@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] dark:[@media(hover:none)]:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)]",
         destructive:
