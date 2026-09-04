@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Command,
@@ -42,6 +43,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { cn } from "@/lib/utils"
 
 const options = [
   { label: "Pick an option", value: null },
@@ -101,6 +103,14 @@ function PopupDemos() {
   )
 }
 
+// transparent calendar — it sits directly on whatever surface hosts it
+function CalendarDemo() {
+  const [date, setDate] = React.useState<Date | undefined>(
+    new Date(2026, 8, 15)
+  )
+  return <Calendar mode="single" selected={date} onSelect={setDate} />
+}
+
 function ModalSection({
   title,
   layers,
@@ -125,15 +135,17 @@ function ExampleTile({
   title,
   layers,
   asCard,
+  className,
   children,
 }: {
   title: string
   layers: string
   asCard?: boolean
+  className?: string
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className={cn("flex flex-col gap-4", className)}>
       <div className="flex flex-col gap-0.5">
         <h2 className="text-sm font-medium text-foreground">{title}</h2>
         <p className="text-xs text-muted-foreground">{layers}</p>
@@ -231,7 +243,7 @@ export default function ElevationPage() {
   }, [])
 
   return (
-    <div className="min-h-dvh p-8">
+    <div className="h-dvh overflow-y-auto p-8">
       <div className="mx-auto flex max-w-5xl flex-col gap-8">
         <header className="flex flex-col gap-1">
           <h1 className="text-lg font-semibold text-foreground">Elevation</h1>
@@ -299,6 +311,43 @@ export default function ElevationPage() {
               </KbdGroup>
               to open the command palette
             </p>
+          </ExampleTile>
+
+          <ExampleTile
+            title="Calendar"
+            layers="transparent — it takes its surface's background"
+            className="sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex flex-row flex-wrap items-start gap-6">
+              <CalendarDemo />
+              <Popover>
+                <PopoverTrigger
+                  render={
+                    <Button variant="outline">Open calendar popover</Button>
+                  }
+                />
+                <PopoverContent className="w-fit p-0">
+                  <CalendarDemo />
+                </PopoverContent>
+              </Popover>
+              <Card className="w-fit p-0">
+                <CalendarDemo />
+              </Card>
+              <Popover>
+                <PopoverTrigger
+                  render={
+                    <Button variant="outline">
+                      Open popover with card calendar
+                    </Button>
+                  }
+                />
+                <PopoverContent className="w-fit p-2">
+                  <Card className="w-fit p-0">
+                    <CalendarDemo />
+                  </Card>
+                </PopoverContent>
+              </Popover>
+            </div>
           </ExampleTile>
 
           <ExampleTile
