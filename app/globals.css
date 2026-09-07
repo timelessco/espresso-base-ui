@@ -1069,12 +1069,13 @@
     0 0.25px 2px 0 rgba(255, 255, 255, 0.16) inset,
     0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
     0 44px 52px -10px rgba(0, 0, 0, 0.1);
+  /* same structure and alphas as the light tokens, ring flipped to white */
   --shadow-default:
-    0px 1px 1px rgba(0, 0, 0, 0.08),
-    inset 0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+    0px 1px 1px rgba(0, 0, 0, 0.06),
+    0px 0px 0px 1px rgba(255, 255, 255, 0.07);
   --shadow-raised:
-    0px 1px 1px rgba(0, 0, 0, 0.1),
-    inset 0px 0px 0px 1px rgba(255, 255, 255, 0.2);
+    0px 1px 1px rgba(0, 0, 0, 0.12),
+    0px 0px 0px 1px rgba(255, 255, 255, 0.1);
   /* end custom variables */
 
   --border: var(--color-gray-600); /* #343434 */ /*outline/gray-2*/
