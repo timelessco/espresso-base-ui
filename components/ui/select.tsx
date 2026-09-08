@@ -79,7 +79,7 @@ const selectTriggerVariants = cva(
     variants: {
       variant: {
         outline:
-          "border border-transparent bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-[size=lg]:h-9.5! data-[size=md]:h-7.5! data-[size=sm]:h-6.5! data-[size=xs]:h-5.5! data-disabled:bg-transparent data-disabled:shadow-default",
+          "border border-transparent bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! hover:shadow-raised focus-visible:bg-background! data-invalid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-valid:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)] data-disabled:bg-transparent data-disabled:shadow-default",
         subtle:
           "border border-transparent bg-secondary group-data-[invalid=true]/field:bg-error! not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),black_5%)] data-invalid:bg-error data-valid:bg-success dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)] dark:not-data-disabled:active:bg-[color-mix(in_oklch,var(--secondary),white_13%)] data-disabled:bg-secondary",
         ghost:
