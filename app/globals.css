@@ -875,9 +875,14 @@
     0 0.25px 2px 0 rgba(255, 255, 255, 0.16) inset,
     0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
     0 44px 52px -10px rgba(0, 0, 0, 0.1);
-  --shadow-default: 0px 1px 1px #0000000f, 0px 0px 0px 1px #00000012;
+  /* layers: inset bottom edge (gradient look) · dormant drop placeholder ·
+     inset 1px ring — raised differs from default by edge alphas only */
+  --shadow-default:
+    0 -1px 1px 0 rgba(0, 0, 0, 0.07) inset, 0 0 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset;
   --shadow-raised:
-    0px 1px 1px rgba(0, 0, 0, 0.12), 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+    0 -1px 1px 0 rgba(0, 0, 0, 0.09) inset, 0 0 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.07) inset;
 
   /* end custom variables */
   --spacing: 0.25rem; /* 4px */
@@ -1069,13 +1074,14 @@
     0 0.25px 2px 0 rgba(255, 255, 255, 0.16) inset,
     0 0 1.5px 0 rgba(0, 0, 0, 0.25), 0 0 10px 2px rgba(0, 0, 0, 0.03),
     0 44px 52px -10px rgba(0, 0, 0, 0.1);
-  /* same structure and alphas as the light tokens, ring flipped to white */
+  /* same structure as the light tokens: inset bottom edge + dormant drop +
+     inset ring, edge layers flipped to white at 2x the light alphas */
   --shadow-default:
-    0px 1px 1px rgba(0, 0, 0, 0.06),
-    0px 0px 0px 1px rgba(255, 255, 255, 0.07);
+    0 0px 1px 0 rgba(255, 255, 255, 0.14) inset, 0 0 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   --shadow-raised:
-    0px 1px 1px rgba(0, 0, 0, 0.12),
-    0px 0px 0px 1px rgba(255, 255, 255, 0.1);
+    0 0px 1px 0 rgba(255, 255, 255, 0.18) inset, 0 0 0 0 rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.14) inset;
   /* end custom variables */
 
   --border: var(--color-gray-600); /* #343434 */ /*outline/gray-2*/
