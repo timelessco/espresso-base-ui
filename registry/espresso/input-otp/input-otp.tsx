@@ -35,29 +35,6 @@ const inputOTPVariants = cva(
         lg: "[&_[data-slot=input-otp-slot]]:size-10 [&_[data-slot=input-otp-slot]]:rounded-lg [&_[data-slot=input-otp-slot]]:text-lg",
       },
     },
-    compoundVariants: [
-      // outline variant: reduce slot size by 2px to account for the outer shadow ring
-      {
-        variant: "outline",
-        size: "xs",
-        className: "[&_[data-slot=input-otp-slot]]:size-5.5!",
-      },
-      {
-        variant: "outline",
-        size: "sm",
-        className: "[&_[data-slot=input-otp-slot]]:size-6.5!",
-      },
-      {
-        variant: "outline",
-        size: "md",
-        className: "[&_[data-slot=input-otp-slot]]:size-7.5!",
-      },
-      {
-        variant: "outline",
-        size: "lg",
-        className: "[&_[data-slot=input-otp-slot]]:size-9.5!",
-      },
-    ],
     defaultVariants: {
       variant: "outline",
       size: "md",
