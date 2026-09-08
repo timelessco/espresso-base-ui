@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import type { DateRange } from "react-day-picker"
-import { addDays, format } from "date-fns"
+import { addDays, addMonths, format, subMonths } from "date-fns"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -39,6 +40,164 @@ const monthNames = [
   "Nov",
   "Dec",
 ]
+
+// Calendar whose caption is a button: clicking it swaps the month grid for a
+// two-column scrollable year/month picker sized to match the calendar.
+// Picking a year keeps the picker open; picking a month returns to the grid.
+function MonthYearCalendar({
+  className,
+  ...props
+}: React.ComponentProps<typeof Calendar>) {
+  const [internalMonth, setInternalMonth] = useState<Date>(
+    () => (props.defaultMonth as Date | undefined) ?? new Date()
+  )
+  const month = (props.month as Date | undefined) ?? internalMonth
+  const setMonth = (next: Date) => {
+    setInternalMonth(next)
+    props.onMonthChange?.(next)
+  }
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [panelSize, setPanelSize] = useState<{
+    width: number
+    height: number
+  } | null>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const yearRef = useRef<HTMLButtonElement>(null)
+  const monthRef = useRef<HTMLButtonElement>(null)
+
+  const years = Array.from({ length: 14 }, (_, i) => 2017 + i)
+
+  useEffect(() => {
+    if (pickerOpen) {
+      yearRef.current?.scrollIntoView({ block: "center" })
+      monthRef.current?.scrollIntoView({ block: "center" })
+    }
+  }, [pickerOpen])
+
+  const openPicker = () => {
+    const rect = wrapRef.current?.getBoundingClientRect()
+    if (rect) setPanelSize({ width: rect.width, height: rect.height })
+    setPickerOpen(true)
+  }
+
+  const captionButton = (
+    <Button
+      variant="ghost"
+      size="xs"
+      className="text-sm font-medium"
+      onClick={() => (pickerOpen ? setPickerOpen(false) : openPicker())}
+    >
+      {format(month, "MMM yyyy")}
+    </Button>
+  )
+
+  if (pickerOpen) {
+    return (
+      <div
+        className="flex flex-col p-2 [--cell-size:1.5rem]"
+        style={panelSize ?? { width: 196, height: 226 }}
+      >
+        <div className="flex h-(--cell-size) shrink-0 items-center">
+          {captionButton}
+        </div>
+        <div className="mt-1.5 flex min-h-0 flex-1 gap-1">
+          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_16px,black_calc(100%-16px),transparent)]">
+            {years.map((year) => (
+              <Button
+                key={year}
+                ref={year === month.getFullYear() ? yearRef : undefined}
+                variant="ghost"
+                size="sm"
+                onClick={() => setMonth(new Date(year, month.getMonth(), 1))}
+                className={cn(
+                  "shrink-0 justify-start text-sm",
+                  year === month.getFullYear() && "bg-secondary"
+                )}
+              >
+                {year}
+              </Button>
+            ))}
+          </div>
+          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_16px,black_calc(100%-16px),transparent)]">
+            {monthNames.map((name, index) => (
+              <Button
+                key={name}
+                ref={index === month.getMonth() ? monthRef : undefined}
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setMonth(new Date(month.getFullYear(), index, 1))
+                  setPickerOpen(false)
+                }}
+                className={cn(
+                  "shrink-0 justify-start text-sm",
+                  index === month.getMonth() && "bg-secondary"
+                )}
+              >
+                {name}
+              </Button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div ref={wrapRef} className="w-fit">
+      <Calendar
+        {...props}
+        month={month}
+        onMonthChange={setMonth}
+        className={className}
+        components={{
+          MonthCaption: () => (
+            <div className="flex h-(--cell-size) items-center">
+              {captionButton}
+            </div>
+          ),
+          Nav: ({ className: navClassName }) => (
+            // the nav strip spans the whole header; let clicks pass through
+            // to the caption button underneath except on the nav buttons
+            <div
+              className={cn(
+                navClassName,
+                // match the caption row height so the nav buttons stay
+                // vertically centered at any --cell-size
+                "pointer-events-none h-(--cell-size) [&>*]:pointer-events-auto"
+              )}
+            >
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                aria-label="Previous month"
+                onClick={() => setMonth(subMonths(month, 1))}
+              >
+                <ChevronLeft />
+              </Button>
+              <Button
+                variant="ghost"
+                size="xs"
+                className="text-sm"
+                onClick={() => setMonth(new Date())}
+              >
+                Today
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-xs"
+                aria-label="Next month"
+                onClick={() => setMonth(addMonths(month, 1))}
+              >
+                <ChevronRight />
+              </Button>
+            </div>
+          ),
+        }}
+      />
+    </div>
+  )
+}
 
 function CalendarPopover({
   buttonContent,
@@ -167,79 +326,13 @@ function DateTimePresetContent() {
         </Button>
       </div>
       <div className="flex flex-col">
-        <Calendar
+        <MonthYearCalendar
           mode="single"
           selected={date}
           onSelect={setDate}
           month={month}
           onMonthChange={setMonth}
           className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
-          classNames={{
-            nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
-          }}
-          components={{
-            MonthCaption: () => {
-              const monthItems = monthNames.map((m) => ({
-                label: m,
-                value: m,
-              }))
-              const yearItems = Array.from({ length: 14 }, (_, i) => {
-                const y = String(2017 + i)
-                return { label: y, value: y }
-              })
-              return (
-                <div className="flex h-(--cell-size) items-center gap-1.5">
-                  <Select
-                    items={monthItems}
-                    value={monthNames[month.getMonth()]}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(month)
-                      next.setMonth(monthNames.indexOf(v))
-                      setMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="xs">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {monthItems.map((m) => (
-                          <SelectItem key={m.value} value={m.value}>
-                            {m.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <Select
-                    items={yearItems}
-                    value={String(month.getFullYear())}
-                    onValueChange={(v) => {
-                      if (!v) return
-                      const next = new Date(month)
-                      next.setFullYear(Number(v))
-                      setMonth(next)
-                    }}
-                  >
-                    <SelectTrigger variant="ghost" size="xs">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {yearItems.map((y) => (
-                          <SelectItem key={y.value} value={y.value}>
-                            {y.label}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )
-            },
-            Nav: () => <></>,
-          }}
         />
         <div className="flex items-center gap-1 border-t p-2">
           <Select value={hour} onValueChange={(v) => v && setHour(v)}>
@@ -369,76 +462,13 @@ function PresetsContent() {
           Next week
         </Button>
       </div>
-      <Calendar
+      <MonthYearCalendar
         mode="single"
         selected={date}
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
         className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
-        classNames={{
-          nav: "pointer-events-none absolute inset-x-0 top-0 flex w-full items-center justify-end gap-1 [&>*]:pointer-events-auto",
-        }}
-        components={{
-          MonthCaption: () => {
-            const monthItems = monthNames.map((m) => ({ label: m, value: m }))
-            const yearItems = Array.from({ length: 14 }, (_, i) => {
-              const y = String(2017 + i)
-              return { label: y, value: y }
-            })
-            return (
-              <div className="flex h-(--cell-size) items-center gap-1.5">
-                <Select
-                  items={monthItems}
-                  value={monthNames[month.getMonth()]}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setMonth(monthNames.indexOf(v))
-                    setMonth(next)
-                  }}
-                >
-                  <SelectTrigger variant="ghost" size="xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {monthItems.map((m) => (
-                        <SelectItem key={m.value} value={m.value}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                <Select
-                  items={yearItems}
-                  value={String(month.getFullYear())}
-                  onValueChange={(v) => {
-                    if (!v) return
-                    const next = new Date(month)
-                    next.setFullYear(Number(v))
-                    setMonth(next)
-                  }}
-                >
-                  <SelectTrigger variant="ghost" size="xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {yearItems.map((y) => (
-                        <SelectItem key={y.value} value={y.value}>
-                          {y.label}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            )
-          },
-          Nav: () => <></>,
-        }}
       />
     </div>
   )
@@ -500,10 +530,10 @@ export default function CalendarPage() {
             }
           />
           <PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={singleDate}
-              onSelect={(d) => setSingleDate(d)}
+              onSelect={setSingleDate}
               className="border-0 shadow-none [--cell-size:1.5rem]"
             />
           </PopoverContent>
@@ -521,7 +551,7 @@ export default function CalendarPage() {
           }
         >
           {() => (
-            <Calendar
+            <MonthYearCalendar
               mode="multiple"
               selected={multipleDates}
               onSelect={setMultipleDates}
@@ -538,7 +568,7 @@ export default function CalendarPage() {
           buttonContent={singleDate ? format(singleDate, "PPP") : "Pick a date"}
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={singleDate}
               onSelect={(d) => {
@@ -599,7 +629,7 @@ export default function CalendarPage() {
           buttonContent={bookedDate ? format(bookedDate, "PPP") : "Pick a date"}
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={bookedDate}
               onSelect={(d) => {
@@ -622,7 +652,7 @@ export default function CalendarPage() {
           }
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={largeCellDate}
               onSelect={(d) => {
@@ -644,7 +674,7 @@ export default function CalendarPage() {
           }
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={weekNumDate}
               onSelect={(d) => {
@@ -667,7 +697,7 @@ export default function CalendarPage() {
           }
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={noOutsideDate}
               onSelect={(d) => {
@@ -690,7 +720,7 @@ export default function CalendarPage() {
           }
         >
           {({ close }) => (
-            <Calendar
+            <MonthYearCalendar
               mode="single"
               selected={weekdayDate}
               onSelect={(d) => {
