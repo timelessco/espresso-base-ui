@@ -1571,6 +1571,26 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
   transform: none;
 }
 
+/* Base UI accordion: tw-animate-css defines these keyframes against the
+   radix/bits height vars; redefine for --accordion-panel-height (last
+   definition of a @keyframes name wins) */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--accordion-panel-height, auto);
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--accordion-panel-height, auto);
+  }
+  to {
+    height: 0;
+  }
+}
+
 @keyframes scroll-shadow-mask {
   0% {
     mask-image: linear-gradient(
