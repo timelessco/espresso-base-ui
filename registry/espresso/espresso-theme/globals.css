@@ -642,7 +642,7 @@
   --color-gray-alpha-1000: oklch(0 0 0); /* #000000 */
 }
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --slider-thumb-spring: linear(
