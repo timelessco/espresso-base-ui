@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -228,6 +230,23 @@ function CommandDemo() {
   )
 }
 
+function ThemeSwitch() {
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+  const isDark = mounted && resolvedTheme === "dark"
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+    >
+      {isDark ? <Sun /> : <Moon />}
+    </Button>
+  )
+}
+
 export default function ElevationPage() {
   const [commandOpen, setCommandOpen] = React.useState(false)
 
@@ -245,15 +264,18 @@ export default function ElevationPage() {
   return (
     <div className="h-dvh overflow-y-auto p-8">
       <div className="mx-auto flex max-w-5xl flex-col gap-8">
-        <header className="flex flex-col gap-1">
-          <h1 className="text-lg font-semibold text-foreground">Elevation</h1>
-          <p className="max-w-prose text-sm leading-lg text-muted-foreground">
-            Surfaces step up as they stack: bg-card on the page, one layer up on
-            a modal, card or popover, two layers up when those combine, and a
-            third layer inside a modal. Select and dropdown popups follow the
-            same ladder, and subtle buttons step up with their surface — open
-            each example to compare the backgrounds.
-          </p>
+        <header className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <h1 className="text-lg font-semibold text-foreground">Elevation</h1>
+            <p className="max-w-prose text-sm leading-lg text-muted-foreground">
+              Surfaces step up as they stack: bg-card on the page, one layer up
+              on a modal, card or popover, two layers up when those combine,
+              and a third layer inside a modal. Select and dropdown popups
+              follow the same ladder, and subtle buttons step up with their
+              surface — open each example to compare the backgrounds.
+            </p>
+          </div>
+          <ThemeSwitch />
         </header>
 
         <section className="grid grid-cols-1 items-start gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
