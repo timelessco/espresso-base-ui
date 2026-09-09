@@ -39,6 +39,7 @@ import {
   Layout,
   Link2,
   ListChecks,
+  ListCollapse,
   List,
   LoaderCircle,
   LogOut,
@@ -131,6 +132,7 @@ const teams = [
 ]
 
 const components = [
+  { label: "Accordion", href: "/ui/accordion", icon: ListCollapse },
   { label: "Alert", href: "/ui/alert", icon: AlertCircle },
   { label: "Attachment", href: "/ui/attachment", icon: Paperclip },
   { label: "Avatar", href: "/ui/avatar", icon: User },
