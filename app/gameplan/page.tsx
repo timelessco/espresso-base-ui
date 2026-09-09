@@ -374,6 +374,12 @@ function GameplanSidebar() {
                       </div>
                       CRM Data Grid
                     </DropdownMenuItem>
+                    <DropdownMenuItem render={<a href="/crm-data-grid-base" />}>
+                      <div className="flex size-7 items-center justify-center rounded-md text-white">
+                        <img src="/images/svg/logo-crm.svg" alt="CRM" />
+                      </div>
+                      CRM Data Grid Base
+                    </DropdownMenuItem>
                     <DropdownMenuItem render={<a href="/helpdesk" />}>
                       <div className="flex size-7 items-center justify-center rounded-md text-white">
                         <img
