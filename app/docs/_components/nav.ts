@@ -8,6 +8,7 @@ export const docsGettingStarted = [
 // app/docs/components/<slug>/page.tsx. Shared by the sidebar and the
 // global docs search.
 export const docsComponents = [
+  { label: "Accordion", href: "/docs/components/accordion" },
   { label: "Alert", href: "/docs/components/alert" },
   { label: "Attachment", href: "/docs/components/attachment" },
   { label: "Avatar", href: "/docs/components/avatar" },
@@ -42,6 +43,7 @@ export const docsComponents = [
   { label: "Notification", href: "/docs/components/notification" },
   { label: "Popover", href: "/docs/components/popover" },
   { label: "Progress", href: "/docs/components/progress" },
+  { label: "Questionnaire", href: "/docs/components/questionnaire" },
   { label: "Radio Group", href: "/docs/components/radio-group" },
   { label: "Rating", href: "/docs/components/rating" },
   { label: "Select", href: "/docs/components/select" },
