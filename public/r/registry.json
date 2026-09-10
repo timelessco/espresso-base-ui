@@ -1211,6 +1211,27 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "sortable",
+      "type": "registry:ui",
+      "title": "Sortable",
+      "description": "Drag-and-drop reordering for lists, grids and nested groups, built on dnd-kit with Base UI composition.",
+      "dependencies": [
+        "@base-ui/react",
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities"
+      ],
+      "registryDependencies": [
+        "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/espresso/sortable/sortable.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
