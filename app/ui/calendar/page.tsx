@@ -101,7 +101,7 @@ function MonthYearCalendar({
           {captionButton}
         </div>
         <div className="mt-1.5 flex min-h-0 flex-1 gap-1">
-          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_16px,black_calc(100%-16px),transparent)]">
+          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [animation:picker-scroll-fade_linear_both] [animation-timeline:scroll(self)]">
             {years.map((year) => (
               <Button
                 key={year}
@@ -118,7 +118,7 @@ function MonthYearCalendar({
               </Button>
             ))}
           </div>
-          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_16px,black_calc(100%-16px),transparent)]">
+          <div className="scrollbar-hide flex flex-1 flex-col gap-0.5 overflow-y-auto [animation:picker-scroll-fade_linear_both] [animation-timeline:scroll(self)]">
             {monthNames.map((name, index) => (
               <Button
                 key={name}
