@@ -156,13 +156,13 @@ function SelectContent({
             // since --card is white). The background and the item
             // highlight colors are both computed from it; ! makes deeper
             // chains win the cascade.
-            "relative isolate z-50 max-h-fit w-auto min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-xl bg-[color-mix(in_oklch,var(--card),white_var(--elevation-mix,0%))] p-1 text-muted-foreground shadow-elevation-xl transition-none duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=command]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=command]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=command]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=command]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=dialog-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=popover-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%]",
+            "relative isolate z-50 flex max-h-fit w-auto min-w-(--anchor-width) origin-(--transform-origin) flex-col overflow-hidden rounded-xl bg-[color-mix(in_oklch,var(--card),white_var(--elevation-mix,0%))] text-muted-foreground shadow-elevation-xl transition-none duration-100 data-[align-trigger=true]:animate-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 [body:has([data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=command]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=command]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=command]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=command]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=popover-trigger][data-popup-open]):has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=dialog-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=dialog-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%] [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:14%]! [body:has([data-slot=dialog-portal]_[data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=popover-content]_[data-slot=card]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:9.5%]! [body:has([data-slot=popover-content]_[data-slot=select-trigger][data-popup-open])_&]:[--elevation-mix:3%]",
             className
           )}
           {...props}
         >
           <SelectScrollUpButton />
-          <SelectPrimitive.List>{children}</SelectPrimitive.List>
+          <SelectPrimitive.List className="scroll-fade scroll-fade-5 min-h-0 flex-auto overflow-x-hidden overflow-y-auto p-1">{children}</SelectPrimitive.List>
           <SelectScrollDownButton />
         </SelectPrimitive.Popup>
       </SelectPrimitive.Positioner>
@@ -246,7 +246,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpArrow
       data-slot="select-scroll-up-button"
       className={cn(
-        "sticky top-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-b from-popover from-2% to-transparent [&_svg]:hidden",
+        "sticky top-0 z-10 flex h-5 w-full cursor-default items-center justify-center [&_svg]:hidden",
         className
       )}
       {...props}
@@ -264,7 +264,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownArrow
       data-slot="select-scroll-down-button"
       className={cn(
-        "sticky bottom-0 z-10 flex h-5 w-full cursor-default items-center justify-center bg-gradient-to-t from-popover from-2% to-transparent [&_svg]:hidden",
+        "sticky bottom-0 z-10 flex h-5 w-full cursor-default items-center justify-center [&_svg]:hidden",
         className
       )}
       {...props}
