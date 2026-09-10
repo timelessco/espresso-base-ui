@@ -1604,6 +1604,58 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
   }
 }
 
+/* calendar month/year picker: edge-aware 16px scroll fades — no top fade
+   at the very top, no bottom fade at the very bottom */
+@keyframes picker-scroll-fade {
+  0% {
+    mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 16px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0%,
+      black calc(100% - 16px),
+      transparent 100%
+    );
+  }
+
+  1%,
+  99% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 16px,
+      black calc(100% - 16px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 16px,
+      black calc(100% - 16px),
+      transparent 100%
+    );
+  }
+
+  100% {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 16px,
+      black 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 16px,
+      black 100%
+    );
+  }
+}
+
 @keyframes sidebar-scroll-shadow-mask {
   0% {
     mask-image: linear-gradient(
