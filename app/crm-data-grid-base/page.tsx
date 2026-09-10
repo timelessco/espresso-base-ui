@@ -1629,7 +1629,7 @@ export default function CrmDataGridBasePage() {
                 columnsMovable: true,
                 cellSelection: true,
                 cellFillHandle: true,
-                cellFillHandleVariant: "square",
+                cellFillHandleVariant: "dot",
               }}
               tableClassNames={{
                 base: "text-base text-muted-foreground",
@@ -1637,7 +1637,8 @@ export default function CrmDataGridBasePage() {
                 headerRow: "[&>th]:border-border-soft",
                 rowCreate:
                   "hover:bg-transparent [&_button]:w-fit [&_button]:rounded-md",
-                cellFillHandle: "bg-border-normal!",
+                cellFillHandle:
+                  "-end-[5px] -bottom-[5px] bg-border-normal! in-[td:has(+td[data-pinned])]:end-0 in-[td:last-child]:end-0 in-[tr:last-child]:bottom-0",
                 bodyRow: cn(
                   rowHeightItem.className,
                   // the old grid's hover: the whole row turns bg-secondary
