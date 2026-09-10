@@ -876,7 +876,9 @@ function GridSelectCell({
       <SelectContent
         alignItemWithTrigger={false}
         align="start"
-        sideOffset={8}
+        // the trigger is a 24px strip centered in the cell, so its bottom
+        // sits ~10px above the cell edge — 16 clears the cell plus a gap
+        sideOffset={13}
         className="max-h-72"
       >
         <SelectGroup>
@@ -894,27 +896,48 @@ function GridSelectCell({
   )
 }
 
+// editorPad pins the flush editor's line box to the exact text position of
+// the cell (the measured centering differs by the row border + baseline
+// rounding); important classes so they beat the editor's inline paddings
 const rowHeightItems = [
-  { label: "Short", value: "short", icon: Minus, className: "h-11" },
-  { label: "Medium", value: "medium", icon: Equal, className: "h-14" },
+  {
+    label: "Short",
+    value: "short",
+    icon: Minus,
+    className: "h-11",
+    editorPad:
+      "[&_[data-slot=data-grid-cell-editor]]:pt-[13.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[14.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[45px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[14.5px]!",
+  },
+  {
+    label: "Medium",
+    value: "medium",
+    icon: Equal,
+    className: "h-14",
+    editorPad:
+      "[&_[data-slot=data-grid-cell-editor]]:pt-[19.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[20.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[57px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[20.5px]!",
+  },
   {
     label: "Tall",
     value: "tall",
     icon: AlignVerticalSpaceAround,
     className: "h-19",
+    editorPad:
+      "[&_[data-slot=data-grid-cell-editor]]:pt-[29.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[30.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[77px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[30.5px]!",
   },
   {
     label: "Extra tall",
     value: "extra-tall",
     icon: ChevronsDownUp,
     className: "h-24",
+    editorPad:
+      "[&_[data-slot=data-grid-cell-editor]]:pt-[39.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[40.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[97px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[40.5px]!",
   },
 ]
 
 const toolbarButtonClassName = "font-normal"
 
 const gridHeaderClassName =
-  "h-full w-full justify-start rounded-none text-sm text-accent-foreground transition-none! hover:bg-transparent hover:text-accent-foreground active:transform-none! data-[state=open]:bg-transparent data-popup-open:bg-transparent data-popup-open:text-accent-foreground [&_svg]:opacity-0 [&:hover_svg]:opacity-60 [&[aria-expanded=true]_svg]:opacity-60"
+  "h-full w-full justify-start rounded-none text-sm text-accent-foreground transition-none! hover:bg-transparent hover:text-accent-foreground active:transform-none! active:bg-transparent data-[state=open]:bg-transparent data-popup-open:bg-transparent data-popup-open:text-accent-foreground dark:hover:bg-transparent dark:active:bg-transparent dark:data-popup-open:bg-transparent [&_svg]:opacity-0 [&:hover_svg]:opacity-60 [&[aria-expanded=true]_svg]:opacity-60"
 
 export default function CrmDataGridBasePage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
@@ -1406,34 +1429,31 @@ export default function CrmDataGridBasePage() {
                     <Settings2 className="text-muted-foreground" />
                     View
                   </PopoverTrigger>
-                  <PopoverContent align="start" className="w-44 p-0">
-                    <Command>
+                  <PopoverContent
+                    align="start"
+                    className="w-44 overflow-hidden p-0 [&_[data-slot=command-input-wrapper]]:p-0 [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:h-9! [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:rounded-none! [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:border-0 [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:border-b [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:border-muted [&_[data-slot=command-input-wrapper]_[data-slot=input-group]]:bg-transparent!"
+                  >
+                    <Command className="pb-0">
                       <CommandInput placeholder="Search columns..." />
                       <CommandList>
                         <CommandEmpty>No columns found.</CommandEmpty>
-                        <CommandGroup>
+                        <CommandGroup className="p-1">
                           {hideableColumns.map((column) => (
                             <CommandItem
                               key={column.id}
+                              data-checked={column.getIsVisible()}
+                              className="rounded-md py-1.5 text-sm font-normal [&_svg]:text-muted-foreground"
                               onSelect={() =>
                                 column.toggleVisibility(!column.getIsVisible())
                               }
                             >
-                              <span className="truncate">
+                              <span className="flex-1 truncate">
                                 {(
                                   column.columnDef.meta as {
                                     headerTitle?: string
                                   }
                                 )?.headerTitle ?? column.id}
                               </span>
-                              <Check
-                                className={cn(
-                                  "ms-auto size-4 shrink-0",
-                                  column.getIsVisible()
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -1587,7 +1607,10 @@ export default function CrmDataGridBasePage() {
           <div
             ref={gridWrapRef}
             dir={direction}
-            className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-transparent! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden!"
+            className={cn(
+              rowHeightItem.editorPad,
+              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-transparent! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-secondary! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-focused][data-cell-selected]]:bg-[image:linear-gradient(color-mix(in_oklab,var(--primary)_4%,transparent),color-mix(in_oklab,var(--primary)_4%,transparent))] [&_tbody_tr:hover_td[data-cell-focused]]:bg-none [&_tbody_tr:has(>td_[data-slot=select-trigger][data-popup-open])_td[data-cell-focused]]:bg-none [&_[data-cell-editing]_td[data-cell-focused]]:bg-none"
+            )}
           >
             <DataGrid
               table={table}
@@ -1614,6 +1637,7 @@ export default function CrmDataGridBasePage() {
                 headerRow: "[&>th]:border-border-soft",
                 rowCreate:
                   "hover:bg-transparent [&_button]:w-fit [&_button]:rounded-md",
+                cellFillHandle: "bg-border-normal!",
                 bodyRow: cn(
                   rowHeightItem.className,
                   // the old grid's hover: the whole row turns bg-secondary
@@ -1621,7 +1645,14 @@ export default function CrmDataGridBasePage() {
                   "[&>td]:transition-colors [&:hover>td]:bg-secondary! [&:hover>td:first-child]:rounded-s-md [&:hover>td:last-child]:rounded-e-md [&[data-selected]>td]:bg-secondary!",
                   // border-soft rows whose borders vanish around the hovered
                   // row, exactly like the old grid
-                  "[&>td]:border-border-soft [&:hover>td]:border-transparent [&:has(+tr:hover)>td]:border-transparent"
+                  "[&>td]:border-border-soft [&:hover>td]:border-transparent [&:has(+tr:hover)>td]:border-transparent",
+                  // while the flush editor is open the overlay owns the
+                  // pointer and the row would lose :hover mid-edit — pin the
+                  // hovered look on the row being edited instead
+                  "in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:bg-secondary! in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:border-transparent in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:first-child]:rounded-s-md in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:last-child]:rounded-e-md in-data-[cell-editing]:[&:has(+tr>td[data-cell-focused])>td]:border-transparent",
+                  // same pin while a select cell's popup is open — its
+                  // portal steals :hover exactly like the flush editor
+                  "[&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:bg-secondary! [&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:first-child]:rounded-s-md [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:last-child]:rounded-e-md [&:has(+tr>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent"
                 ),
               }}
               className="h-full"
