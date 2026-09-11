@@ -884,7 +884,11 @@ function GridSelectCell({
         // the trigger is a 24px strip centered in the cell, so its bottom
         // sits ~10px above the cell edge — 16 clears the cell plus a gap
         sideOffset={13}
-        className="max-h-72"
+        // span the full cell: the trigger (--anchor-width) is inset by the
+        // cell's 8px side padding, so widen by 16 and shift left by 8 to
+        // reach both cell edges
+        alignOffset={-8}
+        className="max-h-72 w-[calc(var(--anchor-width)+--spacing(4))]"
       >
         <SelectGroup>
           {options.map((option) => (
@@ -1628,7 +1632,7 @@ export default function CrmDataGridBasePage() {
             dir={direction}
             className={cn(
               rowHeightItem.editorPad,
-              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-transparent! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-secondary! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-secondary! [&_td[data-cell-fill-target]]:bg-secondary! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
+              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
             )}
           >
             <DataGrid
@@ -1662,17 +1666,17 @@ export default function CrmDataGridBasePage() {
                   rowHeightItem.className,
                   // the old grid's hover: the whole row turns bg-secondary
                   // with rounded ends; ! outranks the pinned cell's own bg
-                  "[&>td]:transition-colors [&:hover>td]:bg-secondary! [&:hover>td:first-child]:rounded-s-md [&:hover>td:last-child]:rounded-e-md [&[data-selected]>td]:bg-secondary!",
+                  "[&:hover>td]:bg-input! [&:hover>td:first-child]:rounded-s-md [&:hover>td:last-child]:rounded-e-md [&[data-selected]>td]:bg-input!",
                   // border-soft rows whose borders vanish around the hovered
                   // row, exactly like the old grid
                   "[&>td]:border-border-soft [&:hover>td]:border-transparent [&:has(+tr:hover)>td]:border-transparent",
                   // while the flush editor is open the overlay owns the
                   // pointer and the row would lose :hover mid-edit — pin the
                   // hovered look on the row being edited instead
-                  "in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:bg-secondary! in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:border-transparent in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:first-child]:rounded-s-md in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:last-child]:rounded-e-md in-data-[cell-editing]:[&:has(+tr>td[data-cell-focused])>td]:border-transparent",
+                  "in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:bg-input! in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td]:border-transparent in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:first-child]:rounded-s-md in-data-[cell-editing]:[&:has(>td[data-cell-focused])>td:last-child]:rounded-e-md in-data-[cell-editing]:[&:has(+tr>td[data-cell-focused])>td]:border-transparent",
                   // same pin while a select cell's popup is open — its
                   // portal steals :hover exactly like the flush editor
-                  "[&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:bg-secondary! [&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:first-child]:rounded-s-md [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:last-child]:rounded-e-md [&:has(+tr>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent"
+                  "[&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:bg-input! [&:has(>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:first-child]:rounded-s-md [&:has(>td_[data-slot=select-trigger][data-popup-open])>td:last-child]:rounded-e-md [&:has(+tr>td_[data-slot=select-trigger][data-popup-open])>td]:border-transparent"
                 ),
               }}
               className="h-full"
