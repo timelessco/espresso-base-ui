@@ -856,6 +856,11 @@ function GridSelectCell({
       items={options}
       value={value || null}
       onValueChange={(next) => onChange((next as string) ?? "")}
+      // Non-modal: a modal popup's inert backdrop swallows the mouse events
+      // the grid's cell selection depends on, so opening the dropdown left a
+      // half-started drag that made the next cell click extend a range.
+      // Non-modal lets an outside click reach the grid as a normal click.
+      modal={false}
     >
       <SelectTrigger
         variant="ghost"
