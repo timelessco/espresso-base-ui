@@ -1050,6 +1050,18 @@ export default function CrmDataGridBasePage() {
     [data, statusFilter]
   )
 
+  // select columns are spreadsheet-writable like the reui demo: the
+  // clipboard carries labels, parse canonicalizes them against the options
+  // (rejecting unknowns into the batch's rejected list)
+  const optionCellEdit = (options: SelectOption[]) => ({
+    parse: (raw: string) => {
+      const needle = raw.trim().toLowerCase()
+      return options.find((o) => o.label.toLowerCase() === needle)?.value
+    },
+    format: (value: unknown) => String(value ?? ""),
+    clearValue: "",
+  })
+
   const columns = React.useMemo<ColumnDef<DataGridFeatures, Lead>[]>(
     () => [
       {
@@ -1103,7 +1115,7 @@ export default function CrmDataGridBasePage() {
             }
           />
         ),
-        meta: { headerTitle: "Name" },
+        meta: { headerTitle: "Name", cellEdit: optionCellEdit(nameOptions) },
       },
       {
         id: "organisation",
@@ -1128,7 +1140,7 @@ export default function CrmDataGridBasePage() {
             }
           />
         ),
-        meta: { headerTitle: "Organisation" },
+        meta: { headerTitle: "Organisation", cellEdit: optionCellEdit(organisationOptions) },
       },
       {
         id: "status",
@@ -1150,7 +1162,7 @@ export default function CrmDataGridBasePage() {
             }
           />
         ),
-        meta: { headerTitle: "Status" },
+        meta: { headerTitle: "Status", cellEdit: optionCellEdit(statusOptions) },
       },
       {
         id: "email",
@@ -1208,7 +1220,7 @@ export default function CrmDataGridBasePage() {
             }
           />
         ),
-        meta: { headerTitle: "Assigned to" },
+        meta: { headerTitle: "Assigned to", cellEdit: optionCellEdit(assignedOptions) },
       },
       {
         id: "lastModified",
@@ -1609,7 +1621,7 @@ export default function CrmDataGridBasePage() {
             dir={direction}
             className={cn(
               rowHeightItem.editorPad,
-              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-transparent! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-secondary! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-focused][data-cell-selected]]:bg-[image:linear-gradient(color-mix(in_oklab,var(--primary)_4%,transparent),color-mix(in_oklab,var(--primary)_4%,transparent))] [&_tbody_tr:hover_td[data-cell-focused]]:bg-none [&_tbody_tr:has(>td_[data-slot=select-trigger][data-popup-open])_td[data-cell-focused]]:bg-none [&_[data-cell-editing]_td[data-cell-focused]]:bg-none [&_td[data-cell-fill-target]]:bg-secondary! [&_[data-cell-filling]_td[data-cell-selected]]:bg-secondary! [&_[data-cell-filling]_td[data-cell-focused][data-cell-selected]]:bg-none [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
+              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-transparent! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-secondary! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-secondary! [&_td[data-cell-fill-target]]:bg-secondary! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
             )}
           >
             <DataGrid
