@@ -10,7 +10,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { CodeBlock } from "./doc"
+import { CodeBlock, SmoothHeight } from "./doc"
 
 // A frappe-style interactive playground: live preview on a dotted canvas,
 // prop controls below, and the generated code underneath. Pages declare the
@@ -57,10 +57,13 @@ export function DocPlayground({
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-border-soft">
-      {/* Preview on a dotted canvas */}
-      <div className="flex items-center justify-center border-b border-border-soft bg-[radial-gradient(var(--color-border-soft)_1px,transparent_1px)] [background-size:14px_14px] p-8 sm:p-12">
-        {renderPreview(values)}
-      </div>
+      {/* Preview on a dotted canvas — height eases when a control changes the
+          rendered content */}
+      <SmoothHeight className="border-b border-border-soft bg-[radial-gradient(var(--color-border-soft)_1px,transparent_1px)] [background-size:14px_14px]">
+        <div className="flex items-center justify-center p-8 sm:p-12">
+          {renderPreview(values)}
+        </div>
+      </SmoothHeight>
 
       {/* Controls */}
       <div className="grid gap-x-6 gap-y-4 border-b border-border-soft p-5 md:grid-cols-[1fr_auto]">
