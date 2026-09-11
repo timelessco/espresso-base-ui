@@ -79,7 +79,7 @@ export function parseCellKey(cellKey: string): Required<CellPosition> {
 
 export function getRowHeightValue(rowHeight: RowHeightValue): number {
   const rowHeightMap: Record<RowHeightValue, number> = {
-    short: 44,
+    short: 40,
     medium: 56,
     tall: 76,
     "extra-tall": 96,

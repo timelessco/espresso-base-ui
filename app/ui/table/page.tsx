@@ -418,7 +418,7 @@ export default function TablePage() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[40px]">
-                <Checkbox />
+                <Checkbox size="sm" />
               </TableHead>
               <TableHead>Organisation</TableHead>
               <TableHead>Amount</TableHead>
@@ -433,11 +433,11 @@ export default function TablePage() {
             {organisations.map((org) => (
               <TableRow key={org.id}>
                 <TableCell>
-                  <Checkbox />
+                  <Checkbox size="sm" />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Avatar variant="square" size="default">
+                    <Avatar variant="square" size="xs">
                       <AvatarFallback className={org.logoBg}>
                         {org.logo}
                       </AvatarFallback>
@@ -469,7 +469,7 @@ export default function TablePage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Avatar size="sm">
+                    <Avatar size="xs">
                       <AvatarImage src={org.assigneeAvatar} />
                       <AvatarFallback>{org.assigneeFallback}</AvatarFallback>
                     </Avatar>
