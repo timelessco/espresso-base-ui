@@ -951,8 +951,8 @@ const columns: ColumnDef<Lead>[] = [
     minSize: 40,
     maxSize: 40,
     enableResizing: false,
-    header: () => <Checkbox />,
-    cell: () => <Checkbox />,
+    header: () => <Checkbox size="sm" />,
+    cell: () => <Checkbox size="sm" />,
   },
   {
     accessorKey: "name",
@@ -960,7 +960,7 @@ const columns: ColumnDef<Lead>[] = [
     size: 200,
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
-        <Avatar size="sm" className="shrink-0">
+        <Avatar size="xs" className="shrink-0">
           <AvatarImage src={row.original.avatar} />
           <AvatarFallback>{row.original.name.slice(0, 2)}</AvatarFallback>
         </Avatar>
@@ -981,7 +981,7 @@ const columns: ColumnDef<Lead>[] = [
       return (
         <div className="flex min-w-0 items-center gap-2">
           {org && (
-            <Avatar size="sm" variant="square" className="shrink-0">
+            <Avatar size="xs" variant="square" className="shrink-0">
               <AvatarImage src={org.image} />
               <AvatarFallback>
                 {row.original.organisation.slice(0, 1)}
@@ -1029,7 +1029,7 @@ const columns: ColumnDef<Lead>[] = [
     size: 180,
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
-        <Avatar size="sm" className="shrink-0">
+        <Avatar size="xs" className="shrink-0">
           <AvatarImage src={row.original.assigneeAvatar} />
           <AvatarFallback>{row.original.assignee.slice(0, 2)}</AvatarFallback>
         </Avatar>

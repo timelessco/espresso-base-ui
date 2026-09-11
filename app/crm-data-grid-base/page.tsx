@@ -824,7 +824,7 @@ function OptionVisual({
     <Avatar
       size="xs"
       variant={square ? "square" : "circle"}
-      className={cn("size-5", square && "rounded-xs", className)}
+      className={cn("size-4", square && "rounded-xs", className)}
     >
       <AvatarImage src={option.image} />
       <AvatarFallback>{option.label[0]}</AvatarFallback>
@@ -856,6 +856,11 @@ function GridSelectCell({
       items={options}
       value={value || null}
       onValueChange={(next) => onChange((next as string) ?? "")}
+      // Non-modal: a modal popup's inert backdrop swallows the mouse events
+      // the grid's cell selection depends on, so opening the dropdown left a
+      // half-started drag that made the next cell click extend a range.
+      // Non-modal lets an outside click reach the grid as a normal click.
+      modal={false}
     >
       <SelectTrigger
         variant="ghost"
@@ -904,9 +909,9 @@ const rowHeightItems = [
     label: "Short",
     value: "short",
     icon: Minus,
-    className: "h-11",
+    className: "h-10",
     editorPad:
-      "[&_[data-slot=data-grid-cell-editor]]:pt-[13.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[14.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[45px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[14.5px]!",
+      "[&_[data-slot=data-grid-cell-editor]]:pt-[11.5px]! [&_[data-slot=data-grid-cell-editor]]:pb-[12.5px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:mt-[-1px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:min-h-[41px]! [&:has(tbody_tr+tr_td[data-cell-focused])_[data-slot=data-grid-cell-editor]]:pt-[12.5px]!",
   },
   {
     label: "Medium",
@@ -1075,6 +1080,7 @@ export default function CrmDataGridBasePage() {
         header: ({ table }) => (
           <div className="flex w-full items-center">
             <Checkbox
+              size="sm"
               checked={table.getIsAllRowsSelected()}
               indeterminate={table.getIsSomeRowsSelected()}
               onCheckedChange={(checked) =>
@@ -1087,6 +1093,7 @@ export default function CrmDataGridBasePage() {
         cell: ({ row }) => (
           <div className="flex w-full items-center">
             <Checkbox
+              size="sm"
               checked={row.getIsSelected()}
               onCheckedChange={(checked) => row.toggleSelected(!!checked)}
               aria-label="Select row"

@@ -856,6 +856,7 @@ export default function CrmDataGridPage() {
         header: ({ table }) => (
           <div className="flex h-full items-center justify-center">
             <Checkbox
+              className="size-3.5 [&_svg]:size-3"
               checked={
                 table.getIsAllRowsSelected()
                   ? true
@@ -871,6 +872,7 @@ export default function CrmDataGridPage() {
         cell: ({ row }) => (
           <div className="flex h-full items-center justify-center">
             <Checkbox
+              className="size-3.5 [&_svg]:size-3"
               checked={row.getIsSelected()}
               onCheckedChange={(v) => row.toggleSelected(!!v)}
               aria-label="Select row"
@@ -888,7 +890,7 @@ export default function CrmDataGridPage() {
           cell: {
             variant: "select",
             options: nameOptions,
-            imageSize: "size-5",
+            imageSize: "size-4",
           },
         },
       },
@@ -902,7 +904,7 @@ export default function CrmDataGridPage() {
           cell: {
             variant: "select",
             options: organisationOptions,
-            imageSize: "size-5",
+            imageSize: "size-4",
             className: "rounded-xs",
           },
         },
@@ -946,7 +948,7 @@ export default function CrmDataGridPage() {
           cell: {
             variant: "select",
             options: assignedOptions,
-            imageSize: "size-5",
+            imageSize: "size-4",
           },
         },
       },
