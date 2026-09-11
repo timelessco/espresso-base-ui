@@ -270,7 +270,7 @@ function DataGridRowImpl<TData>({
             {typeof cell.column.columnDef.header === "function" ? (
               <div
                 className={cn(
-                  "flex size-full items-center px-3 py-1.5 transition-colors group-hover/row:bg-secondary",
+                  "flex size-full items-center px-3 py-1.5 transition-colors group-hover/row:bg-input",
                   {
                     "bg-secondary": isRowSelected,
                   }
