@@ -1,6 +1,44 @@
+"use client"
+
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+
+// Eases the block's height when its content reflows (a playground control or
+// a responsive change). CSS alone can't transition a content-driven auto
+// height, so the intrinsic height is measured and applied as an explicit,
+// transitionable pixel value. The background lives on this animated wrapper
+// so it always fills; the inner box holds the padding and content measured.
+function SmoothHeight({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  const innerRef = React.useRef<HTMLDivElement>(null)
+  const [height, setHeight] = React.useState<number>()
+  React.useLayoutEffect(() => {
+    const el = innerRef.current
+    if (!el) return
+    const update = () => setHeight(el.offsetHeight)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+  return (
+    <div
+      style={height !== undefined ? { height } : undefined}
+      className={cn(
+        "overflow-hidden transition-[height] duration-300 ease-out",
+        className
+      )}
+    >
+      <div ref={innerRef}>{children}</div>
+    </div>
+  )
+}
 
 // Shared building blocks for component documentation pages, modeled on the
 // frappe-ui docs anatomy: H1 + intro, sectioned live examples with prose and
@@ -80,14 +118,16 @@ function DocExample({
 }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-border-soft">
-      <div
-        className={cn(
-          "flex flex-wrap items-center justify-center gap-3 bg-background p-6 sm:p-10",
-          className
-        )}
-      >
-        {children}
-      </div>
+      <SmoothHeight className="bg-background">
+        <div
+          className={cn(
+            "flex flex-wrap items-center justify-center gap-3 p-6 sm:p-10",
+            className
+          )}
+        >
+          {children}
+        </div>
+      </SmoothHeight>
       {code && (
         <CodeBlock code={code} className="rounded-none border-x-0 border-b-0" />
       )}
@@ -213,4 +253,5 @@ export {
   CodeBlock,
   PropsTable,
   PartsTable,
+  SmoothHeight,
 }
