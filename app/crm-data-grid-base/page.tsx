@@ -884,7 +884,11 @@ function GridSelectCell({
         // the trigger is a 24px strip centered in the cell, so its bottom
         // sits ~10px above the cell edge — 16 clears the cell plus a gap
         sideOffset={13}
-        className="max-h-72"
+        // span the full cell: the trigger (--anchor-width) is inset by the
+        // cell's 8px side padding, so widen by 16 and shift left by 8 to
+        // reach both cell edges
+        alignOffset={-8}
+        className="max-h-72 w-[calc(var(--anchor-width)+--spacing(4))]"
       >
         <SelectGroup>
           {options.map((option) => (
