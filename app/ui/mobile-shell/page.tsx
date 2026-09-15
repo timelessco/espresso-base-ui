@@ -62,7 +62,7 @@ export default function MobileShellPage() {
                     render={
                       <Button
                         variant="ghost"
-                        size="icon-sm"
+                        size="icon-lg"
                         aria-label="New item"
                       >
                         <Plus />

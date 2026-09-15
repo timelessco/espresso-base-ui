@@ -1408,7 +1408,7 @@ export default function HelpdeskPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="sm">
+              <Button size="lg">
                 <Plus />
                 New Ticket
               </Button>
@@ -1417,7 +1417,7 @@ export default function HelpdeskPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-sm"
+                      size="icon-lg"
                       aria-label="Open menu"
                     />
                   }

@@ -1483,7 +1483,7 @@ export default function MailPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="sm">
+              <Button size="lg">
                 <Pencil className="size-4" />
                 Compose
               </Button>
@@ -1492,7 +1492,7 @@ export default function MailPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-sm"
+                      size="icon-lg"
                       aria-label="Open menu"
                     />
                   }

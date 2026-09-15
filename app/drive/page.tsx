@@ -948,7 +948,7 @@ export default function DrivePage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="sm">
+              <Button size="lg">
                 <Upload />
                 Upload
                 <ChevronDown className="size-4" />
@@ -958,7 +958,7 @@ export default function DrivePage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-sm"
+                      size="icon-lg"
                       aria-label="Open menu"
                     />
                   }

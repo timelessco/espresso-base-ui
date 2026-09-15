@@ -838,7 +838,7 @@ export default function GameplanPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="sm">
+              <Button size="lg">
                 <Plus />
                 New task
               </Button>
@@ -847,7 +847,7 @@ export default function GameplanPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-sm"
+                      size="icon-lg"
                       aria-label="Open menu"
                     />
                   }

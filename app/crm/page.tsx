@@ -1526,7 +1526,7 @@ export default function CrmPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="sm">
+              <Button size="lg">
                 <Plus />
                 Create
               </Button>
@@ -1535,7 +1535,7 @@ export default function CrmPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-sm"
+                      size="icon-lg"
                       aria-label="Open menu"
                     />
                   }

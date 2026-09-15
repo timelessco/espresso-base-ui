@@ -305,7 +305,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
               prop: "children",
               type: "ReactNode",
               description:
-                "The title — centered on a single line and truncated; the header height is fixed (--mobile-header-height, 52px) so a long title never reflows the page.",
+                "The title — centered on a single line and truncated; the header height is fixed (--mobile-header-height, 64px) so a long title never reflows the page.",
             },
             {
               prop: "prefix",
@@ -358,7 +358,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileShellHeader",
               description:
-                'Pinned fixed-height header (--mobile-header-height, 52px) with a centered single-line title and prefix/suffix slots; clears the top safe-area inset in an installed PWA (data-slot="mobile-shell-header").',
+                'Pinned fixed-height header (--mobile-header-height, 64px) with a centered single-line title and prefix/suffix slots; clears the top safe-area inset in an installed PWA (data-slot="mobile-shell-header").',
             },
             {
               part: "MobileShellContent",
