@@ -732,11 +732,12 @@ function selectDataGridRegion<TData extends object>(
 // source. While the session runs
 // the viewport carries data-cell-filling and the source cells' own
 // selection chrome rests, so this element is the only painter and nothing
-// can double at the junction. z-[45]: above the sticky pinned cells
+// can double at the junction. z-[55]: above the sticky pinned cells and
+// the page-raised selected cells (z-50)
 // (z 30) so the border survives crossing a pinned column; below the
 // sticky header (z-40).
 const dataGridGestureOutlineClasses =
-  "outline-primary pointer-events-none absolute z-[45] outline-1 outline-dashed -outline-offset-1"
+  "outline-primary pointer-events-none absolute z-[55] outline-1 outline-dashed -outline-offset-1"
 
 function startDataGridFillSession<TData extends object>(options: {
   table: DataGridTableInstance<TData>
