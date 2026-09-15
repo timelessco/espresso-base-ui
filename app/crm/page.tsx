@@ -1518,45 +1518,51 @@ export default function CrmPage() {
   if (isMobile) {
     return (
       <MobileShell>
-        <MobileShellHeader className="justify-between">
-          <span className="text-base font-medium text-foreground">Leads</span>
-          <div className="flex items-center gap-2">
-            <Button size="sm">
-              <Plus />
-              Create
-            </Button>
-            <Drawer showSwipeHandle>
-              <DrawerTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Open menu"
-                  />
-                }
-              >
-                <PanelLeft />
-              </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>CRM</DrawerTitle>
-                </DrawerHeader>
-                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
-                  {mobileSidebarItems.map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
-                    >
-                      <item.icon />
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
-              </DrawerContent>
-            </Drawer>
-          </div>
-        </MobileShellHeader>
+        <MobileShellHeader
+          prefix={
+            <h1 className="truncate text-lg leading-tight font-semibold text-foreground">
+              Leads
+            </h1>
+          }
+          suffix={
+            <div className="flex items-center gap-2">
+              <Button size="sm">
+                <Plus />
+                Create
+              </Button>
+              <Drawer showSwipeHandle>
+                <DrawerTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label="Open menu"
+                    />
+                  }
+                >
+                  <PanelLeft />
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>CRM</DrawerTitle>
+                  </DrawerHeader>
+                  <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    {mobileSidebarItems.map((item) => (
+                      <button
+                        key={item.label}
+                        type="button"
+                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                      >
+                        <item.icon />
+                        {item.label}
+                      </button>
+                    ))}
+                  </nav>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          }
+        />
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}
         </MobileShellContent>

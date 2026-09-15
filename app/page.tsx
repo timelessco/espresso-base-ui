@@ -133,7 +133,7 @@ function DemoViewer({ name, href }: { name: string; href: string }) {
       >
         {isMobile ? (
           <div className="flex h-full items-center justify-center p-4 sm:p-8">
-            <div className="h-full w-[390px] max-w-full overflow-hidden rounded-xl border border-border-soft bg-background shadow-elevation-sm">
+            <div className="h-full w-[390px] max-w-full overflow-hidden rounded-xl bg-background shadow-elevation-sm">
               <iframe
                 src={href}
                 title={`${name} demo`}
