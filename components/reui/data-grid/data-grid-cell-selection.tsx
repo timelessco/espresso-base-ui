@@ -732,11 +732,11 @@ function selectDataGridRegion<TData extends object>(
 // source. While the session runs
 // the viewport carries data-cell-filling and the source cells' own
 // selection chrome rests, so this element is the only painter and nothing
-// can double at the junction. z-[35]: above the sticky pinned cells
+// can double at the junction. z-[45]: above the sticky pinned cells
 // (z 30) so the border survives crossing a pinned column; below the
 // sticky header (z-40).
 const dataGridGestureOutlineClasses =
-  "outline-primary pointer-events-none absolute z-[35] outline-1 outline-dashed -outline-offset-1"
+  "outline-primary pointer-events-none absolute z-[45] outline-1 outline-dashed -outline-offset-1"
 
 function startDataGridFillSession<TData extends object>(options: {
   table: DataGridTableInstance<TData>
@@ -2479,13 +2479,13 @@ function DataGridCellEditorOverlay({
     )
   }
 
-  // z-[35]: above the sticky pinned cells (zIndex 30), or editing a pinned
-  // cell renders invisibly underneath them; below the sticky header (z-40).
+  // z-[45]: above the sticky pinned cells (zIndex 40), or editing a pinned
+  // cell renders invisibly underneath them; below the sticky header (z-50).
   // Primary outline at the same 1px weight as the focused cell's box: with
   // the overlay covering that box, opening the editor reads as the same
   // border becoming editable.
   const sharedClassName =
-    "text-foreground bg-background outline-primary absolute z-[35] box-border resize-none outline-1 outline-solid -outline-offset-1"
+    "text-foreground bg-background outline-primary absolute z-[45] box-border resize-none outline-1 outline-solid -outline-offset-1"
 
   return createPortal(
     session.control === "textarea" ? (
