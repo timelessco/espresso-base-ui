@@ -10,6 +10,7 @@ import {
   Handshake,
   LayoutDashboard,
   Mail,
+  PanelLeft,
   Phone,
   Search,
   StickyNote,
@@ -110,6 +111,19 @@ import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
 import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
 import { useDataGrid } from "@/hooks/use-data-grid"
 import { useIsMobile } from "@/hooks/use-mobile"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 import { Checkbox } from "@/components/ui-radix/checkbox"
 import { Button as RadixButton } from "@/components/ui-radix/button"
 import { TooltipProvider } from "@/components/ui-radix/tooltip"
@@ -838,10 +852,27 @@ function CrmSidebar() {
   )
 }
 
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Dashboard", icon: LayoutDashboard },
+  { label: "Tasks", icon: ClipboardList },
+  { label: "Notes", icon: StickyNote },
+  { label: "Emails", icon: Mail },
+  { label: "Leads", icon: Users },
+  { label: "Deals", icon: Handshake },
+  { label: "Organization", icon: Building2 },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Contacts", icon: Contact },
+  { label: "Call & Event Logs", icon: Phone },
+]
+
 export default function CrmDataGridPage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
   const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
   const isMobile = useIsMobile()
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mobileTab, setMobileTab] = React.useState("leads")
 
   const columns = React.useMemo<ColumnDef<Lead>[]>(
     () => [
@@ -987,12 +1018,8 @@ export default function CrmDataGridPage() {
     },
   })
 
-  return (
-    <SidebarProvider>
-      <CrmSidebar />
-      <SidebarInset className="h-screen min-w-0 overflow-hidden">
-        <SidebarTrigger className="sr-only" />
-        <div className="flex h-full min-w-0 flex-col overflow-hidden">
+  const header = (
+    <>
           <Header
             leftControls={
               <>
@@ -1045,6 +1072,11 @@ export default function CrmDataGridPage() {
               </Button>
             }
           />
+    </>
+  )
+
+  const content = (
+    <>
           <SubHeader
             className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
@@ -1061,7 +1093,7 @@ export default function CrmDataGridPage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1079,7 +1111,7 @@ export default function CrmDataGridPage() {
                 <Select items={organisationItems} defaultValue="gumroad">
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1097,7 +1129,7 @@ export default function CrmDataGridPage() {
                 <Select items={statusFilterItems} defaultValue="open">
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1135,7 +1167,7 @@ export default function CrmDataGridPage() {
             }
           />
 
-          <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5">
+          <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4">
             <TooltipProvider>
               <DirectionProvider dir={direction}>
                 <DataGrid
@@ -1149,21 +1181,124 @@ export default function CrmDataGridPage() {
             </TooltipProvider>
           </div>
 
-          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
             <Tabs defaultValue="20">
-              <TabsList>
+              <TabsList size={isMobile ? "default" : "sm"}>
                 <TabsIndicator />
                 <TabsTrigger value="20">20</TabsTrigger>
                 <TabsTrigger value="50">50</TabsTrigger>
                 <TabsTrigger value="80">80</TabsTrigger>
               </TabsList>
             </Tabs>
-            <span className="text-base text-muted-foreground">
+            <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
               {data.length} of {data.length}
             </span>
           </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader
+          prefix={
+            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+              Leads
+            </h1>
+          }
+          suffix={
+            <div className="flex items-center gap-2">
+              <Button size="lg">
+                <Plus />
+                Create
+              </Button>
+              <Drawer showSwipeHandle>
+                <DrawerTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      aria-label="Open menu"
+                    />
+                  }
+                >
+                  <PanelLeft />
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerTitle className="sr-only">CRM</DrawerTitle>
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      onClick={() =>
+                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                      }
+                    >
+                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                    </Button>
+                    {mobileSidebarItems.map((item) => (
+                      <Button
+                        key={item.label}
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                      >
+                        <item.icon />
+                        {item.label}
+                      </Button>
+                    ))}
+                  </nav>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          }
+        />
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Leads"
+            icon={<Users />}
+            active={mobileTab === "leads"}
+            onClick={() => setMobileTab("leads")}
+          />
+          <MobileNavItem
+            label="Deals"
+            icon={<Handshake />}
+            active={mobileTab === "deals"}
+            onClick={() => setMobileTab("deals")}
+          />
+          <MobileNavItem
+            label="Contacts"
+            icon={<Contact />}
+            active={mobileTab === "contacts"}
+            onClick={() => setMobileTab("contacts")}
+          />
+          <MobileNavItem
+            label="Tasks"
+            icon={<ClipboardList />}
+            active={mobileTab === "tasks"}
+            onClick={() => setMobileTab("tasks")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
+  return (
+    <SidebarProvider>
+      <CrmSidebar />
+      <SidebarInset className="h-screen min-w-0 overflow-hidden">
+        <SidebarTrigger className="sr-only" />
+        <div className="flex h-full min-w-0 flex-col overflow-hidden">
+          {header}
+          {content}
         </div>
       </SidebarInset>
     </SidebarProvider>
   )
 }
+
