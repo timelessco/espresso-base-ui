@@ -67,7 +67,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Toaster } from "@/components/ui/sonner"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import {
   MobileNav,
   MobileNavItem,
@@ -431,12 +431,16 @@ export default function PlaygroundLayout({
 }: {
   children: React.ReactNode
 }) {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobileState()
   const pathname = usePathname()
 
   // Below `md`, use the mobile shell (bottom nav) instead of the sidebar —
   // mobile and desktop are different navigation models, not one responsive
   // component. See DesktopShell vs MobileShell in frappe-ui.
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
+
   if (isMobile) {
     const activeLabel =
       mobileNav.find((item) => item.href === pathname)?.label ?? "Playground"

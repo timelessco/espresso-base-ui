@@ -122,7 +122,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import {
   MobileNav,
   MobileNavItem,
@@ -1132,7 +1132,8 @@ export default function HelpdeskPage() {
 
   // Below `md` the page renders in a MobileShell (bottom nav) instead of the
   // sidebar layout — two navigation models, chosen by viewport.
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobileState()
+  const { resolvedTheme, setTheme } = useTheme()
   const [mobileTab, setMobileTab] = useState("tickets")
 
   const header = (
@@ -1400,6 +1401,10 @@ export default function HelpdeskPage() {
     </>
   )
 
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
+
   if (isMobile) {
     return (
       <MobileShell>
@@ -1429,7 +1434,18 @@ export default function HelpdeskPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">Helpdesk</DrawerTitle>
-                  <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      onClick={() =>
+                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                      }
+                    >
+                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                    </Button>
                     {mobileSidebarItems.map((item) => (
                       <Button
                         key={item.label}

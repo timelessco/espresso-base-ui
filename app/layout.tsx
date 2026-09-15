@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono, Inter } from "next/font/google"
 import { TooltipProvider } from "@/components/ui/tooltip"
 
@@ -5,6 +6,17 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { DocsSearchDialog } from "@/app/docs/_components/search-dialog"
 import { cn } from "@/lib/utils"
+
+export const metadata: Metadata = {
+  // iOS Safari rewrites phone-number text into <a href="tel:..."> before
+  // React hydrates, which breaks hydration on any page showing numbers
+  // (e.g. the CRM grids' mobile columns) — turn the auto-detection off.
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
+}
 
 const inter = Inter({
   subsets: ["latin"],

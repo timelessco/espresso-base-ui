@@ -34,6 +34,7 @@ import {
   LogOut,
   Mail,
   MapPin,
+  PanelLeft,
   Minus,
   Moon,
   PanelRight,
@@ -62,6 +63,7 @@ import {
 } from "@tanstack/react-table-v9"
 
 import { cn } from "@/lib/utils"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -146,6 +148,19 @@ import { DataGridCellSelection } from "@/components/reui/data-grid/data-grid-cel
 import { DataGridColumnHeader } from "@/components/reui/data-grid/data-grid-column-header"
 import { DataGridScrollArea } from "@/components/reui/data-grid/data-grid-scroll-area"
 import { DataGridTable } from "@/components/reui/data-grid/data-grid-table"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import {
+  MobileNav,
+  MobileNavItem,
+  MobileShell,
+  MobileShellContent,
+  MobileShellHeader,
+} from "@/components/ui/mobile-shell"
 
 const views = [
   { label: "List view", value: "list-view", icon: AlignJustify },
@@ -948,6 +963,21 @@ const toolbarButtonClassName = "font-normal"
 const gridHeaderClassName =
   "h-full w-full justify-start rounded-none text-sm text-accent-foreground transition-none! hover:bg-transparent hover:text-accent-foreground active:transform-none! active:bg-transparent data-[state=open]:bg-transparent data-popup-open:bg-transparent data-popup-open:text-accent-foreground dark:hover:bg-transparent dark:active:bg-transparent dark:data-popup-open:bg-transparent [&_svg]:opacity-0 [&:hover_svg]:opacity-60 [&[aria-expanded=true]_svg]:opacity-60"
 
+const mobileSidebarItems = [
+  { label: "Search", icon: Search },
+  { label: "Notifications", icon: Bell },
+  { label: "Dashboard", icon: LayoutDashboard },
+  { label: "Tasks", icon: ClipboardList },
+  { label: "Notes", icon: StickyNote },
+  { label: "Emails", icon: Mail },
+  { label: "Leads", icon: Users },
+  { label: "Deals", icon: Handshake },
+  { label: "Organization", icon: Building2 },
+  { label: "Calendar", icon: CalendarDays },
+  { label: "Contacts", icon: Contact },
+  { label: "Call & Event Logs", icon: Phone },
+]
+
 export default function CrmDataGridBasePage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
   const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
@@ -1295,12 +1325,12 @@ export default function CrmDataGridBasePage() {
 
   const visibleRowCount = table.getRowModel().rows.length
 
-  return (
-    <SidebarProvider>
-      <CrmSidebar />
-      <SidebarInset className="h-screen min-w-0 overflow-hidden">
-        <SidebarTrigger className="sr-only" />
-        <div className="flex h-full min-w-0 flex-col overflow-hidden">
+  const isMobile = useIsMobileState()
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mobileTab, setMobileTab] = React.useState("leads")
+
+  const header = (
+    <>
           <Header
             leftControls={
               <>
@@ -1353,6 +1383,11 @@ export default function CrmDataGridBasePage() {
               </Button>
             }
           />
+    </>
+  )
+
+  const content = (
+    <>
           <SubHeader
             className="scrollbar-hide overflow-x-auto [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
             leftControls={
@@ -1369,7 +1404,7 @@ export default function CrmDataGridBasePage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1387,7 +1422,7 @@ export default function CrmDataGridBasePage() {
                 <Select items={organisationItems} defaultValue="gumroad">
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1405,7 +1440,7 @@ export default function CrmDataGridBasePage() {
                 <Select items={statusFilterItems} defaultValue="open">
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1426,7 +1461,7 @@ export default function CrmDataGridBasePage() {
               <>
                 <Button
                   variant="secondary"
-                  size="sm"
+                  size={isMobile ? "lg" : "sm"}
                   className={toolbarButtonClassName}
                   onClick={() =>
                     setDirection((prev) => (prev === "ltr" ? "rtl" : "ltr"))
@@ -1441,7 +1476,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size="sm"
+                        size={isMobile ? "lg" : "sm"}
                         className={cn(
                           toolbarButtonClassName,
                           "ms-auto hidden lg:flex"
@@ -1490,7 +1525,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size="sm"
+                        size={isMobile ? "lg" : "sm"}
                         className={toolbarButtonClassName}
                       />
                     }
@@ -1543,7 +1578,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size="sm"
+                        size={isMobile ? "lg" : "sm"}
                         className={toolbarButtonClassName}
                       />
                     }
@@ -1607,7 +1642,7 @@ export default function CrmDataGridBasePage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size="sm"
+                    size={isMobile ? "lg" : "sm"}
                     aria-label="Row height"
                     suffix={<span className="hidden" />}
                   >
@@ -1632,7 +1667,7 @@ export default function CrmDataGridBasePage() {
             dir={direction}
             className={cn(
               rowHeightItem.editorPad,
-              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
+              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
             )}
           >
             <DataGrid
@@ -1690,26 +1725,133 @@ export default function CrmDataGridBasePage() {
             </DataGrid>
           </div>
 
-          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
             <Tabs
               value={String(pagination.pageSize)}
               onValueChange={(value) =>
                 setPagination({ pageIndex: 0, pageSize: Number(value) })
               }
             >
-              <TabsList>
+              <TabsList size={isMobile ? "default" : "sm"}>
                 <TabsIndicator />
                 <TabsTrigger value="20">20</TabsTrigger>
                 <TabsTrigger value="50">50</TabsTrigger>
                 <TabsTrigger value="80">80</TabsTrigger>
               </TabsList>
             </Tabs>
-            <span className="text-base text-muted-foreground">
+            <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
               {visibleRowCount} of {filteredData.length}
             </span>
           </div>
+    </>
+  )
+
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
+
+  if (isMobile) {
+    return (
+      <MobileShell>
+        <MobileShellHeader
+          prefix={
+            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+              Leads
+            </h1>
+          }
+          suffix={
+            <div className="flex items-center gap-2">
+              <Button size="lg">
+                <Plus />
+                Create
+              </Button>
+              <Drawer showSwipeHandle>
+                <DrawerTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      aria-label="Open menu"
+                    />
+                  }
+                >
+                  <PanelLeft />
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerTitle className="sr-only">CRM</DrawerTitle>
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      onClick={() =>
+                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                      }
+                    >
+                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                    </Button>
+                    {mobileSidebarItems.map((item) => (
+                      <Button
+                        key={item.label}
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                      >
+                        <item.icon />
+                        {item.label}
+                      </Button>
+                    ))}
+                  </nav>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          }
+        />
+        <MobileShellContent className="flex flex-col overflow-hidden">
+          {content}
+        </MobileShellContent>
+        <MobileNav>
+          <MobileNavItem
+            label="Leads"
+            icon={<Users />}
+            active={mobileTab === "leads"}
+            onClick={() => setMobileTab("leads")}
+          />
+          <MobileNavItem
+            label="Deals"
+            icon={<Handshake />}
+            active={mobileTab === "deals"}
+            onClick={() => setMobileTab("deals")}
+          />
+          <MobileNavItem
+            label="Contacts"
+            icon={<Contact />}
+            active={mobileTab === "contacts"}
+            onClick={() => setMobileTab("contacts")}
+          />
+          <MobileNavItem
+            label="Tasks"
+            icon={<ClipboardList />}
+            active={mobileTab === "tasks"}
+            onClick={() => setMobileTab("tasks")}
+          />
+        </MobileNav>
+      </MobileShell>
+    )
+  }
+
+  return (
+    <SidebarProvider>
+      <CrmSidebar />
+      <SidebarInset className="h-screen min-w-0 overflow-hidden">
+        <SidebarTrigger className="sr-only" />
+        <div className="flex h-full min-w-0 flex-col overflow-hidden">
+          {header}
+          {content}
         </div>
       </SidebarInset>
     </SidebarProvider>
   )
 }
+
