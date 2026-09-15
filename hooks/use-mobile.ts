@@ -2,7 +2,12 @@ import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
 
-export function useIsMobile() {
+// Tri-state: `undefined` until the viewport is measured on the client. Pages
+// that switch whole layouts (MobileShell vs sidebar) should render nothing
+// while undefined, instead of flashing the desktop tree on phones — the
+// server can't know the viewport, so SSR and the first client render agree
+// on "unknown".
+export function useIsMobileState() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
@@ -15,5 +20,9 @@ export function useIsMobile() {
     return () => mql.removeEventListener("change", onChange)
   }, [])
 
-  return !!isMobile
+  return isMobile
+}
+
+export function useIsMobile() {
+  return !!useIsMobileState()
 }

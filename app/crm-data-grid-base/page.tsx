@@ -63,7 +63,7 @@ import {
 } from "@tanstack/react-table-v9"
 
 import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -1325,7 +1325,7 @@ export default function CrmDataGridBasePage() {
 
   const visibleRowCount = table.getRowModel().rows.length
 
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
   const [mobileTab, setMobileTab] = React.useState("leads")
 
@@ -1745,6 +1745,10 @@ export default function CrmDataGridBasePage() {
           </div>
     </>
   )
+
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
 
   if (isMobile) {
     return (

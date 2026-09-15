@@ -114,7 +114,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import {
   MobileNav,
   MobileNavItem,
@@ -767,7 +767,7 @@ export default function DrivePage() {
 
   // Below `md` the page renders in a MobileShell (bottom nav) instead of the
   // sidebar layout — two navigation models, chosen by viewport.
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
   const [mobileTab, setMobileTab] = useState("home")
 
@@ -959,6 +959,10 @@ export default function DrivePage() {
       </div>
     </>
   )
+
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
 
   if (isMobile) {
     return (

@@ -110,7 +110,7 @@ import { DataGridFilterMenu } from "@/components/data-grid/data-grid-filter-menu
 import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu"
 import { DataGridRowHeightMenu } from "@/components/data-grid/data-grid-row-height-menu"
 import { useDataGrid } from "@/hooks/use-data-grid"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { useIsMobileState } from "@/hooks/use-mobile"
 import {
   Drawer,
   DrawerContent,
@@ -870,7 +870,7 @@ const mobileSidebarItems = [
 export default function CrmDataGridPage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
   const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
   const [mobileTab, setMobileTab] = React.useState("leads")
 
@@ -1196,6 +1196,10 @@ export default function CrmDataGridPage() {
           </div>
     </>
   )
+
+  // Viewport unknown until measured on the client — render nothing for that
+  // instant instead of flashing the desktop layout on phones.
+  if (isMobile === undefined) return null
 
   if (isMobile) {
     return (
