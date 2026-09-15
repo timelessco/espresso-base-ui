@@ -1024,7 +1024,20 @@ export default function CrmDataGridBasePage() {
   )
 
   const handleCellsChange = (details: DataGridCellsChangeDetails<Lead>) => {
-    updateRows(details.changes)
+    const selectionChanges = details.changes.filter(
+      (change) => change.columnId === "select"
+    )
+    if (selectionChanges.length) {
+      setRowSelection((previous) => {
+        const next = { ...previous }
+        for (const change of selectionChanges) {
+          if (change.value) next[change.rowId] = true
+          else delete next[change.rowId]
+        }
+        return next
+      })
+    }
+    updateRows(details.changes.filter((change) => change.columnId !== "select"))
   }
 
   const handleRowCreate = () => {
@@ -1111,12 +1124,22 @@ export default function CrmDataGridBasePage() {
     () => [
       {
         id: "select",
+        // the cell's value is the row's checked state, so the fill drag can
+        // copy it down the column (drag a checked cell to check rows)
+        accessorFn: (row) => rowSelection[row.id] === true,
         size: 40,
         minSize: 40,
         maxSize: 40,
         enableResizing: false,
         enableSorting: false,
         enableHiding: false,
+        meta: {
+          cellEdit: {
+            parse: (raw: string) => /^(true|checked|yes|1)$/i.test(raw.trim()),
+            format: (value: unknown) => (value ? "checked" : ""),
+            clearValue: false,
+          },
+        },
         header: ({ table }) => (
           <div className="flex w-full items-center">
             <Checkbox
@@ -1291,7 +1314,7 @@ export default function CrmDataGridBasePage() {
         },
       },
     ],
-    [updateRows, columnWidths]
+    [updateRows, columnWidths, rowSelection]
   )
 
   const table = useTable({

@@ -1048,10 +1048,10 @@ function DataGrid<TFeatures extends TableFeatures, TData extends object>({
       base: "",
       header: "",
       headerRow: "",
-      // z-50 keeps the sticky header above pinned body cells (zIndex 40 in
+      // z-60 keeps the sticky header above pinned body cells (zIndex 40 in
       // getPinningStyles), which would otherwise paint over it while
       // scrolling vertically with columnsPinnable enabled.
-      headerSticky: "sticky top-0 z-50 bg-background/90 backdrop-blur-xs",
+      headerSticky: "sticky top-0 z-60 bg-background/90 backdrop-blur-xs",
       body: "",
       bodyRow: "",
       footer: "",
