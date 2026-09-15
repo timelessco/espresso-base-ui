@@ -1398,7 +1398,12 @@ export default function CrmPage() {
             </Select>
             <DropdownMenu>
               <DropdownMenuTrigger
-                render={<Button variant="secondary" size="icon-sm" />}
+                render={
+                  <Button
+                    variant="secondary"
+                    size={isMobile ? "icon-lg" : "icon-sm"}
+                  />
+                }
               >
                 <Ellipsis />
               </DropdownMenuTrigger>
@@ -1425,7 +1430,7 @@ export default function CrmPage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2.5 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4">
+      <div className="scrollbar-hide mt-2.5 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1522,7 +1527,7 @@ export default function CrmPage() {
       <MobileShell>
         <MobileShellHeader
           prefix={
-            <h1 className="truncate text-lg leading-tight font-semibold text-foreground">
+            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
               Leads
             </h1>
           }

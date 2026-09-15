@@ -99,7 +99,7 @@ function MobileNav({ className, ...props }: React.ComponentProps<"nav">) {
     <nav
       data-slot="mobile-nav"
       className={cn(
-        "grid h-16 shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-red-400 [@media(display-mode:standalone)]:h-[calc(--spacing(16)+--spacing(4))] [@media(display-mode:standalone)]:pb-4",
+        "grid h-16 shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-background [@media(display-mode:standalone)]:h-[calc(--spacing(16)+--spacing(4))] [@media(display-mode:standalone)]:pb-4",
         className
       )}
       {...props}
