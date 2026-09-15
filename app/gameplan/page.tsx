@@ -717,7 +717,7 @@ export default function GameplanPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -855,19 +855,18 @@ export default function GameplanPage() {
                   <PanelLeft />
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Gameplan</DrawerTitle>
-                  </DrawerHeader>
+                  <DrawerTitle className="sr-only">Gameplan</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     {mobileSidebarItems.map((item) => (
-                      <button
+                      <Button
                         key={item.label}
-                        type="button"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
-                      </button>
+                      </Button>
                     ))}
                   </nav>
                 </DrawerContent>

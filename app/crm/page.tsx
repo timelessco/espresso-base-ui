@@ -1149,7 +1149,7 @@ export default function CrmPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1167,7 +1167,7 @@ export default function CrmPage() {
             <Select items={organisationItems} defaultValue="gumroad">
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1185,7 +1185,7 @@ export default function CrmPage() {
             <Select items={statusItems} defaultValue="open">
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1219,7 +1219,7 @@ export default function CrmPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1267,7 +1267,7 @@ export default function CrmPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1312,7 +1312,7 @@ export default function CrmPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1366,7 +1366,7 @@ export default function CrmPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1425,7 +1425,7 @@ export default function CrmPage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2.5 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+      <div className="scrollbar-hide mt-2.5 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1501,16 +1501,18 @@ export default function CrmPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
         <Tabs defaultValue="20">
-          <TabsList>
+          <TabsList size={isMobile ? "default" : "sm"}>
             <TabsIndicator />
             <TabsTrigger value="20">20</TabsTrigger>
             <TabsTrigger value="50">50</TabsTrigger>
             <TabsTrigger value="80">80</TabsTrigger>
           </TabsList>
         </Tabs>
-        <span className="text-base text-muted-foreground">18 of 32</span>
+        <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+          18 of 32
+        </span>
       </div>
     </>
   )
@@ -1543,19 +1545,18 @@ export default function CrmPage() {
                   <PanelLeft />
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>CRM</DrawerTitle>
-                  </DrawerHeader>
+                  <DrawerTitle className="sr-only">CRM</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     {mobileSidebarItems.map((item) => (
-                      <button
+                      <Button
                         key={item.label}
-                        type="button"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
-                      </button>
+                      </Button>
                     ))}
                   </nav>
                 </DrawerContent>

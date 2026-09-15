@@ -1167,13 +1167,14 @@ export default function HelpdeskPage() {
             <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder='Try "first due" or ticket type'
-              className="h-7 w-64 pl-8 text-sm"
+              size={isMobile ? "lg" : "sm"}
+              className={isMobile ? "w-64 pl-8" : "w-64 pl-8 text-sm"}
             />
           </div>
         }
         rightControls={
           <>
-            <Button variant="secondary" size="icon-sm">
+            <Button variant="secondary" size={isMobile ? "icon-lg" : "icon-sm"}>
               <RefreshCw className="size-4" />
             </Button>
 
@@ -1188,7 +1189,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1228,7 +1229,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1259,7 +1260,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1383,16 +1384,18 @@ export default function HelpdeskPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5">
+      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
         <Tabs defaultValue="20">
-          <TabsList>
+          <TabsList size={isMobile ? "default" : "sm"}>
             <TabsIndicator />
             <TabsTrigger value="20">20</TabsTrigger>
             <TabsTrigger value="50">50</TabsTrigger>
             <TabsTrigger value="80">80</TabsTrigger>
           </TabsList>
         </Tabs>
-        <span className="text-base text-muted-foreground">18 of 32</span>
+        <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+          18 of 32
+        </span>
       </div>
     </>
   )
@@ -1425,19 +1428,18 @@ export default function HelpdeskPage() {
                   <PanelLeft />
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Helpdesk</DrawerTitle>
-                  </DrawerHeader>
+                  <DrawerTitle className="sr-only">Helpdesk</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     {mobileSidebarItems.map((item) => (
-                      <button
+                      <Button
                         key={item.label}
-                        type="button"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
-                      </button>
+                      </Button>
                     ))}
                   </nav>
                 </DrawerContent>

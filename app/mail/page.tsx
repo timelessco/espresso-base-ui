@@ -1288,15 +1288,15 @@ export default function MailPage() {
         leftControls={
           <>
             <Checkbox />
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
               <CheckCircle2 className="size-3" />
               Has attachment
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
               <CheckCircle2 className="size-3" />
               Image
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
               PDF
             </Button>
             <Select
@@ -1309,7 +1309,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1334,7 +1334,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1359,7 +1359,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1372,12 +1372,12 @@ export default function MailPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
               Is unread
             </Button>
             <Button
               variant="ghost"
-              size="sm"
+              size={isMobile ? "lg" : "sm"}
               className="text-blue-600 hover:text-blue-700"
             >
               Advanced search
@@ -1385,7 +1385,9 @@ export default function MailPage() {
           </>
         }
         rightControls={
-          <span className="text-xs text-muted-foreground">1-50 of 2,000</span>
+          <span className="text-xs text-muted-foreground in-data-[slot=mobile-shell]:text-base">
+            1-50 of 2,000
+          </span>
         }
       />
 
@@ -1500,19 +1502,18 @@ export default function MailPage() {
                   <PanelLeft />
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Mail</DrawerTitle>
-                  </DrawerHeader>
+                  <DrawerTitle className="sr-only">Mail</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     {mobileSidebarItems.map((item) => (
-                      <button
+                      <Button
                         key={item.label}
-                        type="button"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
-                      </button>
+                      </Button>
                     ))}
                   </nav>
                 </DrawerContent>

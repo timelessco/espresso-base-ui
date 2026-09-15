@@ -813,7 +813,7 @@ export default function DrivePage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -841,16 +841,38 @@ export default function DrivePage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Button variant="secondary" size="icon-sm">
+            <Button variant="secondary" size={isMobile ? "icon-lg" : "icon-sm"}>
               <Search className="size-4" />
             </Button>
             <Tabs defaultValue="list">
-              <TabsList>
-                <TabsIndicator />
-                <TabsTrigger value="grid">
+              {/* no 40px tabs size variant — matched to the lg controls with
+                  css on mobile */}
+              <TabsList className={isMobile ? "group-data-horizontal/tabs:h-10 rounded-lg" : undefined}>
+                <TabsIndicator
+                  className={
+                    isMobile
+                      ? "rounded-[calc(var(--radius-lg)_-_1px)]!"
+                      : undefined
+                  }
+                />
+                <TabsTrigger
+                  value="grid"
+                  className={
+                    isMobile
+                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      : undefined
+                  }
+                >
                   <LayoutGrid className="size-4" />
                 </TabsTrigger>
-                <TabsTrigger value="list">
+                <TabsTrigger
+                  value="list"
+                  className={
+                    isMobile
+                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      : undefined
+                  }
+                >
                   <AlignJustify className="size-4" />
                 </TabsTrigger>
               </TabsList>
@@ -966,19 +988,18 @@ export default function DrivePage() {
                   <PanelLeft />
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerHeader>
-                    <DrawerTitle>Drive</DrawerTitle>
-                  </DrawerHeader>
+                  <DrawerTitle className="sr-only">Drive</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     {mobileSidebarItems.map((item) => (
-                      <button
+                      <Button
                         key={item.label}
-                        type="button"
-                        className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
-                      </button>
+                      </Button>
                     ))}
                   </nav>
                 </DrawerContent>
