@@ -1206,6 +1206,7 @@ export default function MailPage() {
   // Below `md` the page renders in a MobileShell (bottom nav) instead of the
   // sidebar layout — two navigation models, chosen by viewport.
   const isMobile = useIsMobile()
+  const { resolvedTheme, setTheme } = useTheme()
   const [mobileTab, setMobileTab] = useState("inbox")
 
   const header = (
@@ -1504,6 +1505,17 @@ export default function MailPage() {
                 <DrawerContent>
                   <DrawerTitle className="sr-only">Mail</DrawerTitle>
                   <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    <Button
+                      variant="ghost"
+                      size="lg"
+                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      onClick={() =>
+                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                      }
+                    >
+                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+                    </Button>
                     {mobileSidebarItems.map((item) => (
                       <Button
                         key={item.label}
