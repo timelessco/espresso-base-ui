@@ -1552,7 +1552,7 @@ export default function CrmPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">CRM</DrawerTitle>
-                  <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
                       size="lg"
