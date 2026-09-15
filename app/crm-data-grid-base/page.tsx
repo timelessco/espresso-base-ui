@@ -1045,6 +1045,10 @@ export default function CrmDataGridBasePage() {
     ])
   }
 
+  const isMobile = useIsMobileState()
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mobileTab, setMobileTab] = React.useState("leads")
+
   // Proportional stretch, the old grid's stretchColumns: base widths are
   // weights, scaled so visible columns always fill the measured grid width
   // (below the base total the grid falls back to horizontal scroll).
@@ -1058,7 +1062,9 @@ export default function CrmDataGridBasePage() {
     })
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+    // isMobile: the first render is null while the viewport is unknown, so
+    // the wrapper only exists once the layout branch mounts
+  }, [isMobile])
 
   const columnWidths = React.useMemo(() => {
     const base: Record<string, number> = {
@@ -1280,6 +1286,8 @@ export default function CrmDataGridBasePage() {
           headerTitle: "Last modified",
           cellClassName: "text-muted-foreground",
           cellEdit: { control: "text", clearValue: "" },
+          // absorbs the container's free space so the grid reads full-width
+          fillWidth: true,
         },
       },
     ],
@@ -1324,10 +1332,6 @@ export default function CrmDataGridBasePage() {
     rowHeightItems.find((item) => item.value === rowHeight) ?? rowHeightItems[0]
 
   const visibleRowCount = table.getRowModel().rows.length
-
-  const isMobile = useIsMobileState()
-  const { resolvedTheme, setTheme } = useTheme()
-  const [mobileTab, setMobileTab] = React.useState("leads")
 
   const header = (
     <>
@@ -1667,7 +1671,7 @@ export default function CrmDataGridBasePage() {
             dir={direction}
             className={cn(
               rowHeightItem.editorPad,
-              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-10 [&_td[data-cell-selected]]:z-10 [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
+              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-50! [&_td[data-cell-selected]]:z-50! [&_td[data-pinned][data-cell-selected]]:bg-input! [&_td[data-pinned][data-cell-focused]]:bg-input! [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
             )}
           >
             <DataGrid

@@ -77,7 +77,7 @@ function getPinningStyles<TData extends object>(
     transform: isPinned ? "translateZ(0)" : undefined,
     contain: isPinned ? "paint" : undefined,
     width: column.getSize(),
-    zIndex: isPinned ? 30 : undefined,
+    zIndex: isPinned ? 40 : 0,
     backgroundClip: isPinned ? "padding-box" : undefined,
   }
 }
