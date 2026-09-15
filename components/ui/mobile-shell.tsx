@@ -99,7 +99,7 @@ function MobileNav({ className, ...props }: React.ComponentProps<"nav">) {
     <nav
       data-slot="mobile-nav"
       className={cn(
-        "grid shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-card [@media(display-mode:standalone)]:pb-4",
+        "grid h-16 shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-background [@media(display-mode:standalone)]:h-[calc(--spacing(16)+--spacing(4))] [@media(display-mode:standalone)]:pb-4",
         className
       )}
       {...props}
@@ -123,9 +123,9 @@ type MobileNavItemProps = {
   active?: boolean
 } & Omit<React.ComponentProps<"button">, "children">
 
-// Each item is a 56px-tall tab: icon on top, label beneath. Renders a router
-// link when `href` is given and the item isn't current; the active item is a
-// button whose tap scrolls to top. `active` controls the highlight
+// Each item is an icon-only tab; `label` is its accessible name. Renders a
+// router link when `href` is given and the item isn't current; the active
+// item is a button whose tap scrolls to top. `active` controls the highlight
 // independently of the URL (so one tab can stay lit across a section).
 function MobileNavItem({
   label,
@@ -137,16 +137,11 @@ function MobileNavItem({
   ...props
 }: MobileNavItemProps) {
   const cls = cn(
-    "flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-muted-foreground transition outline-none select-none active:scale-95 [&_svg]:size-6 [&_svg]:shrink-0 data-[active=true]:text-foreground",
+    "flex min-h-14 flex-col items-center justify-center text-muted-foreground transition outline-none select-none active:scale-95 data-[active=true]:text-foreground [&_svg]:size-6 [&_svg]:shrink-0",
     className
   )
 
-  const content = (
-    <>
-      {icon}
-      <span className="text-xs leading-none font-medium">{label}</span>
-    </>
-  )
+  const content = icon
 
   // A real link when navigating somewhere new; a plain button when this item
   // is already active (tap = scroll to top). Switching the element keeps the
@@ -157,6 +152,7 @@ function MobileNavItem({
         href={href}
         data-slot="mobile-nav-item"
         data-active={undefined}
+        aria-label={typeof label === "string" ? label : undefined}
         className={cls}
         onClick={onClick as React.MouseEventHandler}
       >
@@ -171,6 +167,7 @@ function MobileNavItem({
       data-slot="mobile-nav-item"
       data-active={active || undefined}
       aria-current={active ? "page" : undefined}
+      aria-label={typeof label === "string" ? label : undefined}
       className={cls}
       onClick={(event) => {
         if (active) scrollShellToTop(event.currentTarget)

@@ -327,7 +327,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               prop: "label",
               type: "ReactNode",
-              description: "Tab caption rendered below the icon.",
+              description: "Accessible name for the icon-only tab (aria-label).",
             },
             {
               prop: "icon",
@@ -368,12 +368,12 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileNav",
               description:
-                'Bottom tab bar nav element – an equal-width grid with a top border on the card surface; clears the home indicator in an installed PWA (data-slot="mobile-nav").',
+                'Bottom tab bar nav element – a 64px equal-width grid with a top border on the card surface; clears the home indicator in an installed PWA (data-slot="mobile-nav").',
             },
             {
               part: "MobileNavItem",
               description:
-                'One 56px tab (data-slot="mobile-nav-item") – size-6 icon over a text-xs label with a press-scale. Renders a Link when href is set and inactive, otherwise a button.',
+                'One icon-only tab filling the 64px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders a Link when href is set and inactive, otherwise a button.',
             },
           ]}
         />
