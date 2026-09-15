@@ -443,11 +443,7 @@ export default function PlaygroundLayout({
 
     return (
       <MobileShell>
-        <MobileShellHeader>
-          <span className="text-base font-medium text-foreground">
-            {activeLabel}
-          </span>
-        </MobileShellHeader>
+        <MobileShellHeader>{activeLabel}</MobileShellHeader>
         <MobileShellContent>{children}</MobileShellContent>
         <MobileNav>
           {mobileNav.map((item) => (

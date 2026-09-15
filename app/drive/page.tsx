@@ -813,7 +813,7 @@ export default function DrivePage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -841,16 +841,38 @@ export default function DrivePage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Button variant="secondary" size="icon-sm">
+            <Button variant="secondary" size={isMobile ? "icon-lg" : "icon-sm"}>
               <Search className="size-4" />
             </Button>
             <Tabs defaultValue="list">
-              <TabsList>
-                <TabsIndicator />
-                <TabsTrigger value="grid">
+              {/* no 40px tabs size variant — matched to the lg controls with
+                  css on mobile */}
+              <TabsList className={isMobile ? "group-data-horizontal/tabs:h-10 rounded-lg" : undefined}>
+                <TabsIndicator
+                  className={
+                    isMobile
+                      ? "rounded-[calc(var(--radius-lg)_-_1px)]!"
+                      : undefined
+                  }
+                />
+                <TabsTrigger
+                  value="grid"
+                  className={
+                    isMobile
+                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      : undefined
+                  }
+                >
                   <LayoutGrid className="size-4" />
                 </TabsTrigger>
-                <TabsTrigger value="list">
+                <TabsTrigger
+                  value="list"
+                  className={
+                    isMobile
+                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      : undefined
+                  }
+                >
                   <AlignJustify className="size-4" />
                 </TabsTrigger>
               </TabsList>
@@ -859,7 +881,7 @@ export default function DrivePage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5">
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -940,48 +962,51 @@ export default function DrivePage() {
   if (isMobile) {
     return (
       <MobileShell>
-        <MobileShellHeader className="justify-between">
-          <span className="text-base font-medium text-foreground">
-            My Drive
-          </span>
-          <div className="flex items-center gap-2">
-            <Button size="sm">
-              <Upload />
-              Upload
-              <ChevronDown className="size-4" />
-            </Button>
-            <Drawer showSwipeHandle>
-              <DrawerTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Open menu"
-                  />
-                }
-              >
-                <PanelLeft />
-              </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>Drive</DrawerTitle>
-                </DrawerHeader>
-                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
-                  {mobileSidebarItems.map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
-                    >
-                      <item.icon />
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
-              </DrawerContent>
-            </Drawer>
-          </div>
-        </MobileShellHeader>
+        <MobileShellHeader
+          prefix={
+            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+              My Drive
+            </h1>
+          }
+          suffix={
+            <div className="flex items-center gap-2">
+              <Button size="lg">
+                <Upload />
+                Upload
+                <ChevronDown className="size-4" />
+              </Button>
+              <Drawer showSwipeHandle>
+                <DrawerTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      aria-label="Open menu"
+                    />
+                  }
+                >
+                  <PanelLeft />
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerTitle className="sr-only">Drive</DrawerTitle>
+                  <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    {mobileSidebarItems.map((item) => (
+                      <Button
+                        key={item.label}
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                      >
+                        <item.icon />
+                        {item.label}
+                      </Button>
+                    ))}
+                  </nav>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          }
+        />
         <MobileShellContent className="flex flex-col overflow-hidden">
           {content}
         </MobileShellContent>

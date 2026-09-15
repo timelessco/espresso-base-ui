@@ -59,11 +59,9 @@ function MobileShellPlaygroundPreview(v: PlaygroundValues) {
 
   return (
     <div className="h-[320px] w-[210px] overflow-hidden rounded-3xl border-4 border-foreground/90 bg-background shadow-elevation-md">
-      <MobileShell className="h-full">
-        <MobileShellHeader>
-          <span className="truncate text-sm font-medium text-foreground">
-            {v.title}
-          </span>
+      <MobileShell className="relative h-full">
+        <MobileShellHeader className="[--mobile-header-height:44px]">
+          <span className="text-sm">{v.title}</span>
         </MobileShellHeader>
 
         <MobileShellContent className="flex flex-col gap-2 p-3">
@@ -107,11 +105,9 @@ function MobileShellDemo() {
 
   return (
     <div className="h-[380px] w-[230px] overflow-hidden rounded-3xl border-4 border-foreground/90 bg-background shadow-elevation-md">
-      <MobileShell className="h-full">
-        <MobileShellHeader>
-          <span className="text-sm font-medium text-foreground capitalize">
-            {active}
-          </span>
+      <MobileShell className="relative h-full">
+        <MobileShellHeader className="[--mobile-header-height:44px]">
+          <span className="text-sm capitalize">{active}</span>
         </MobileShellHeader>
 
         <MobileShellContent className="flex flex-col gap-2 p-3">
@@ -180,7 +176,8 @@ export default function MobileShellDocsPage() {
           <code>MobileShellContent</code> and a <code>MobileNav</code> of{" "}
           <code>MobileNavItem</code> tabs. Scroll the list – the header and nav
           stay pinned. (Shown here inside a small device frame; in an app the
-          shell fills the viewport with its default <code>h-dvh</code>.)
+          shell is fixed to the viewport — <code>relative h-full</code> scopes
+          it to a frame.)
         </DocProse>
         <DocExample
           code={`
@@ -188,7 +185,7 @@ const [active, setActive] = useState("home")
 
 <MobileShell>
   <MobileShellHeader>
-    <span className="text-sm font-medium capitalize">{active}</span>
+    <span className="capitalize">{active}</span>
   </MobileShellHeader>
 
   <MobileShellContent className="flex flex-col gap-2 p-3">
@@ -297,21 +294,45 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
         <DocProse>
           The frame parts render semantic elements – <code>header</code>,{" "}
           <code>main</code> and <code>nav</code> – and accept{" "}
-          <code>className</code> plus their standard element props. Only{" "}
-          <code>MobileNavItem</code> has props of its own.
+          <code>className</code> plus their standard element props.{" "}
+          <code>MobileShellHeader</code> and <code>MobileNavItem</code> add
+          props of their own.
         </DocProse>
+        <PropsTable
+          title="MobileShellHeader"
+          rows={[
+            {
+              prop: "children",
+              type: "ReactNode",
+              description:
+                "The title — centered on a single line and truncated; the header height is fixed (--mobile-header-height, 64px) so a long title never reflows the page.",
+            },
+            {
+              prop: "prefix",
+              type: "ReactNode",
+              description:
+                "A control leading the title — usually a back button. Sits in a side column with a 40px touch-target floor.",
+            },
+            {
+              prop: "suffix",
+              type: "ReactNode",
+              description:
+                "A control trailing the title — usually an action button or menu.",
+            },
+          ]}
+        />
         <PropsTable
           title="MobileNavItem"
           rows={[
             {
               prop: "label",
               type: "ReactNode",
-              description: "Tab caption rendered below the icon.",
+              description: "Accessible name for the icon-only tab (aria-label).",
             },
             {
               prop: "icon",
               type: "ReactNode",
-              description: "Tab icon; svgs are sized to size-5 automatically.",
+              description: "Tab icon; svgs are sized to size-6 automatically.",
             },
             {
               prop: "href",
@@ -323,7 +344,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
               prop: "active",
               type: "boolean",
               description:
-                "Highlights the item in the primary color and sets aria-current, independently of the URL.",
+                "Highlights the item and sets aria-current, independently of the URL. Tapping the active item scrolls the shell content back to the top instead of re-navigating.",
             },
           ]}
         />
@@ -332,27 +353,27 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileShell",
               description:
-                'Full-height flex column (h-dvh, overflow-hidden) on the app background (data-slot="mobile-shell").',
+                'Fixed, full-viewport flex column (fixed inset-0, overflow-hidden) on the app background (data-slot="mobile-shell").',
             },
             {
               part: "MobileShellHeader",
               description:
-                'Pinned h-14 header element with a bottom border; pads for the top safe-area inset (data-slot="mobile-shell-header").',
+                'Pinned fixed-height header (--mobile-header-height, 64px) with a centered single-line title and prefix/suffix slots; clears the top safe-area inset in an installed PWA (data-slot="mobile-shell-header").',
             },
             {
               part: "MobileShellContent",
               description:
-                'The scrolling main element – min-h-0 flex-1 with overscroll containment and hidden scrollbars (data-slot="mobile-shell-content").',
+                'The scrolling main element – min-h-0 flex-1 with native momentum scrolling (data-slot="mobile-shell-content").',
             },
             {
               part: "MobileNav",
               description:
-                'Bottom tab bar nav element – an equal-width grid with a top border; pads for the bottom safe-area inset (data-slot="mobile-nav").',
+                'Bottom tab bar nav element – a 64px equal-width grid with a top border on the card surface; clears the home indicator in an installed PWA (data-slot="mobile-nav").',
             },
             {
               part: "MobileNavItem",
               description:
-                'One tab (data-slot="mobile-nav-item") – icon over a text-xs label. Renders a Link when href is set, otherwise a button.',
+                'One icon-only tab filling the 64px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders a Link when href is set and inactive, otherwise a button.',
             },
           ]}
         />
@@ -367,7 +388,8 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
           as <code>data-active="true"</code> on the item, alongside the{" "}
           <code>data-slot</code> attributes on every part – target these from
           CSS for app-level overrides. Header and nav respect the device
-          safe-area insets via <code>env(safe-area-inset-*)</code> padding.
+          safe-area insets via <code>env(safe-area-inset-*)</code> padding when
+          running as an installed PWA.
         </DocProse>
       </DocSection>
     </DocPage>

@@ -717,7 +717,7 @@ export default function GameplanPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size="sm"
+                size={isMobile ? "lg" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -748,7 +748,7 @@ export default function GameplanPage() {
           }
         />
 
-        <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5">
+        <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
           <div className="md:[&>[data-slot=table-container]]:overflow-visible">
             <Table
               className="table-fixed"
@@ -830,45 +830,50 @@ export default function GameplanPage() {
   if (isMobile) {
     return (
       <MobileShell>
-        <MobileShellHeader className="justify-between">
-          <span className="text-base font-medium text-foreground">Tasks</span>
-          <div className="flex items-center gap-2">
-            <Button size="sm">
-              <Plus />
-              New task
-            </Button>
-            <Drawer showSwipeHandle>
-              <DrawerTrigger
-                render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    aria-label="Open menu"
-                  />
-                }
-              >
-                <PanelLeft />
-              </DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>Gameplan</DrawerTitle>
-                </DrawerHeader>
-                <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
-                  {mobileSidebarItems.map((item) => (
-                    <button
-                      key={item.label}
-                      type="button"
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-base text-foreground hover:bg-muted [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
-                    >
-                      <item.icon />
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
-              </DrawerContent>
-            </Drawer>
-          </div>
-        </MobileShellHeader>
+        <MobileShellHeader
+          prefix={
+            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+              Tasks
+            </h1>
+          }
+          suffix={
+            <div className="flex items-center gap-2">
+              <Button size="lg">
+                <Plus />
+                New task
+              </Button>
+              <Drawer showSwipeHandle>
+                <DrawerTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-lg"
+                      aria-label="Open menu"
+                    />
+                  }
+                >
+                  <PanelLeft />
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerTitle className="sr-only">Gameplan</DrawerTitle>
+                  <nav className="flex flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                    {mobileSidebarItems.map((item) => (
+                      <Button
+                        key={item.label}
+                        variant="ghost"
+                        size="lg"
+                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                      >
+                        <item.icon />
+                        {item.label}
+                      </Button>
+                    ))}
+                  </nav>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          }
+        />
         <MobileShellContent>{content}</MobileShellContent>
         <MobileNav>
           <MobileNavItem

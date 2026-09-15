@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Bell, House, Search, User } from "lucide-react"
+import { Bell, House, Plus, Search, User } from "lucide-react"
 
 import {
   MobileNav,
@@ -11,6 +11,17 @@ import {
   MobileShellHeader,
 } from "@/components/ui/mobile-shell"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -31,21 +42,52 @@ export default function MobileShellPage() {
       <div className="flex flex-col gap-4">
         <SectionTitle>Mobile Shell</SectionTitle>
         <p className="max-w-prose text-sm text-muted-foreground">
-          A full-height mobile frame — a pinned header, a natively-scrolling
-          content area, and a bottom <code>MobileNav</code>. Render it below the{" "}
-          <code>md</code> breakpoint (via <code>useIsMobile()</code>) as the
-          counterpart to the desktop sidebar layout. Shown here inside a device
-          frame.
+          A full-height mobile frame — a pinned header with a centered
+          single-line title, a natively-scrolling content area, and a bottom{" "}
+          <code>MobileNav</code>. Tapping the active tab scrolls back to the
+          top. Modal surfaces use the <code>Drawer</code> component. Render it
+          below the <code>md</code> breakpoint (via <code>useIsMobile()</code>)
+          as the counterpart to the desktop sidebar layout. Shown here inside a
+          device frame.
         </p>
 
-        {/* Device frame (for preview on desktop). In an app, MobileShell fills
-            the viewport with its default h-dvh. */}
+        {/* Device frame (for preview on desktop). In an app, MobileShell is
+            fixed to the viewport — `relative h-full` scopes it to the frame. */}
         <div className="h-[760px] w-[380px] overflow-hidden rounded-[2.25rem] border-8 border-foreground/90 bg-background shadow-elevation-md">
-          <MobileShell className="h-full">
-            <MobileShellHeader>
-              <span className="text-base font-medium text-foreground capitalize">
-                {active}
-              </span>
+          <MobileShell className="relative h-full">
+            <MobileShellHeader
+              suffix={
+                <Drawer>
+                  <DrawerTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="icon-lg"
+                        aria-label="New item"
+                      >
+                        <Plus />
+                      </Button>
+                    }
+                  />
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>New item</DrawerTitle>
+                      <DrawerDescription>
+                        The Drawer is the shell&apos;s modal surface — same
+                        semantics as a dialog, reached by thumb.
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <DrawerFooter>
+                      <DrawerClose
+                        render={<Button variant="outline">Cancel</Button>}
+                      />
+                      <DrawerClose render={<Button>Create</Button>} />
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              }
+            >
+              <span className="capitalize">{active}</span>
             </MobileShellHeader>
 
             <MobileShellContent className="flex flex-col gap-3 p-4">
