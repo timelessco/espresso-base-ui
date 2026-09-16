@@ -1168,14 +1168,14 @@ export default function HelpdeskPage() {
             <Sparkles className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder='Try "first due" or ticket type'
-              size={isMobile ? "lg" : "sm"}
+              size={isMobile ? "md" : "sm"}
               className={isMobile ? "w-64 pl-8" : "w-64 pl-8 text-sm"}
             />
           </div>
         }
         rightControls={
           <>
-            <Button variant="secondary" size={isMobile ? "icon-lg" : "icon-sm"}>
+            <Button variant="secondary" size={isMobile ? "icon" : "icon-sm"}>
               <RefreshCw className="size-4" />
             </Button>
 
@@ -1190,7 +1190,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1230,7 +1230,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1261,7 +1261,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1309,7 +1309,7 @@ export default function HelpdeskPage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1394,7 +1394,7 @@ export default function HelpdeskPage() {
             <TabsTrigger value="80">80</TabsTrigger>
           </TabsList>
         </Tabs>
-        <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+        <span className="text-base text-muted-foreground">
           18 of 32
         </span>
       </div>
@@ -1416,7 +1416,7 @@ export default function HelpdeskPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="lg">
+              <Button size="default">
                 <Plus />
                 New Ticket
               </Button>
@@ -1425,7 +1425,7 @@ export default function HelpdeskPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-lg"
+                      size="icon"
                       aria-label="Open menu"
                     />
                   }
@@ -1434,10 +1434,10 @@ export default function HelpdeskPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">Helpdesk</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1450,7 +1450,7 @@ export default function HelpdeskPage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />

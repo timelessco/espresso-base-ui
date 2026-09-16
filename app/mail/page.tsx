@@ -1289,15 +1289,15 @@ export default function MailPage() {
         leftControls={
           <>
             <Checkbox />
-            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
+            <Button variant="outline" size={isMobile ? "default" : "sm"}>
               <CheckCircle2 className="size-3" />
               Has attachment
             </Button>
-            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
+            <Button variant="outline" size={isMobile ? "default" : "sm"}>
               <CheckCircle2 className="size-3" />
               Image
             </Button>
-            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
+            <Button variant="outline" size={isMobile ? "default" : "sm"}>
               PDF
             </Button>
             <Select
@@ -1310,7 +1310,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1335,7 +1335,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1360,7 +1360,7 @@ export default function MailPage() {
             >
               <SelectTrigger
                 variant="outline"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1373,12 +1373,12 @@ export default function MailPage() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Button variant="outline" size={isMobile ? "lg" : "sm"}>
+            <Button variant="outline" size={isMobile ? "default" : "sm"}>
               Is unread
             </Button>
             <Button
               variant="ghost"
-              size={isMobile ? "lg" : "sm"}
+              size={isMobile ? "default" : "sm"}
               className="text-blue-600 hover:text-blue-700"
             >
               Advanced search
@@ -1393,7 +1393,7 @@ export default function MailPage() {
       />
 
       {/* Email list */}
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto pb-5 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1490,7 +1490,7 @@ export default function MailPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="lg">
+              <Button size="default">
                 <Pencil className="size-4" />
                 Compose
               </Button>
@@ -1499,7 +1499,7 @@ export default function MailPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-lg"
+                      size="icon"
                       aria-label="Open menu"
                     />
                   }
@@ -1508,10 +1508,10 @@ export default function MailPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">Mail</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1524,7 +1524,7 @@ export default function MailPage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
