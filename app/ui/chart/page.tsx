@@ -88,6 +88,24 @@ const donutConfig = {
   d5: { label: "Data (14%)", color: "var(--chart-4)" },
 } satisfies ChartConfig
 
+// The same doughnut on the qualitative --chart-color-* palette.
+const qualitativeDonutData = [
+  { name: "q1", value: 11, fill: "var(--color-q1)" },
+  { name: "q2", value: 17.2, fill: "var(--color-q2)" },
+  { name: "q3", value: 8, fill: "var(--color-q3)" },
+  { name: "q4", value: 14, fill: "var(--color-q4)" },
+  { name: "q5", value: 14, fill: "var(--color-q5)" },
+]
+
+const qualitativeDonutConfig = {
+  value: { label: "Value" },
+  q1: { label: "Data (11%)", color: "var(--chart-color-1)" },
+  q2: { label: "Data (17.2%)", color: "var(--chart-color-4)" },
+  q3: { label: "Data (8%)", color: "var(--chart-color-7)" },
+  q4: { label: "Data (14%)", color: "var(--chart-color-5)" },
+  q5: { label: "Data (14%)", color: "var(--chart-color-2)" },
+} satisfies ChartConfig
+
 // Monthly sales from Jan 2021 through Jan 2023.
 const salesData = [
   { date: "2021-01", sales: 6500 },
@@ -376,6 +394,86 @@ function formatStackAxis(value: string) {
 function formatStackLabel(value: React.ReactNode) {
   return `$${(Number(value) / 1000).toFixed(1)}k`
 }
+
+
+// Qualitative palette examples: categorical series on the --chart-color-*
+// scale (distinct hues) instead of the sequential --chart-* ramp.
+// Every month sums to 24k, so the stack always fills to the top — a 100%
+// stacked read on an absolute axis.
+const percentStackedData = [
+  { date: "2021-01", a: 12400, b: 5900, c: 3300, d: 2400 },
+  { date: "2021-02", a: 10800, b: 7500, c: 3300, d: 2400 },
+  { date: "2021-03", a: 8700, b: 7100, c: 4100, d: 4100 },
+  { date: "2021-04", a: 10500, b: 4100, c: 4700, d: 4700 },
+  { date: "2021-05", a: 10300, b: 2600, c: 5700, d: 5400 },
+  { date: "2021-06", a: 10600, b: 2900, c: 5200, d: 5300 },
+  { date: "2021-07", a: 9300, b: 7100, c: 3800, d: 3800 },
+  { date: "2021-08", a: 7800, b: 8000, c: 4100, d: 4100 },
+  { date: "2021-09", a: 10800, b: 6100, c: 3500, d: 3600 },
+  { date: "2021-10", a: 8200, b: 8600, c: 3600, d: 3600 },
+  { date: "2021-11", a: 6500, b: 5100, c: 6300, d: 6100 },
+  { date: "2021-12", a: 4200, b: 4600, c: 8000, d: 7200 },
+]
+
+const percentStackedConfig = {
+  a: { label: "Data 1", color: "var(--chart-color-7)" },
+  b: { label: "Data 2", color: "var(--chart-color-4)" },
+  c: { label: "Data 3", color: "var(--chart-color-6)" },
+  d: { label: "Data 4", color: "var(--chart-color-1)" },
+} satisfies ChartConfig
+
+// The grouped-bar data reused with qualitative colors.
+const qualitativeGroupConfig = {
+  a: { label: "Series 1", color: "var(--chart-color-1)" },
+  b: { label: "Series 2", color: "var(--chart-color-5)" },
+  c: { label: "Series 3", color: "var(--chart-color-7)" },
+  d: { label: "Series 4", color: "var(--chart-color-9)" },
+} satisfies ChartConfig
+
+
+// Stacked segments (bottom -> top) on the qualitative palette, with the
+// segment value labeled inside each block.
+const qualitativeStackedData = [
+  { date: "2021-01", a: 1100, b: 3400, c: 2200, d: 1500 },
+  { date: "2021-02", a: 3900, b: 4000, c: 2500, d: 2200 },
+  { date: "2021-03", a: 2200, b: 2800, c: 2300, d: 1800 },
+  { date: "2021-04", a: 2500, b: 2000, c: 2300, d: 1800 },
+  { date: "2021-05", a: 2300, b: 2200, c: 2300, d: 2100 },
+  { date: "2021-06", a: 1900, b: 2200, c: 2300, d: 1300 },
+  { date: "2021-07", a: 2300, b: 2300, c: 2300, d: 1400 },
+  { date: "2021-08", a: 2300, b: 2300, c: 2300, d: 1600 },
+  { date: "2021-09", a: 3300, b: 3200, c: 3300, d: 2900 },
+  { date: "2021-10", a: 1900, b: 2200, c: 2300, d: 1300 },
+  { date: "2021-11", a: 2300, b: 1900, c: 800, d: 1100 },
+  { date: "2021-12", a: 1300, b: 2000, c: 2300, d: 1800 },
+]
+
+const qualitativeStackedConfig = {
+  a: { label: "Segment 1", color: "var(--chart-color-4)" },
+  b: { label: "Segment 2", color: "var(--chart-color-3)" },
+  c: { label: "Segment 3", color: "var(--chart-color-8)" },
+  d: { label: "Segment 4", color: "var(--chart-color-7)" },
+} satisfies ChartConfig
+
+
+// Horizontal charts re-colored with the qualitative palette.
+const qualitativeIncomeConfig = {
+  income: { label: "Income per Capita", color: "var(--chart-color-3)" },
+} satisfies ChartConfig
+
+const qualitativeChannelConfig = {
+  organic: { label: "Google organic", color: "var(--chart-color-5)" },
+  paid: { label: "Google paid", color: "var(--chart-color-1)" },
+  facebook: { label: "Facebook ads", color: "var(--chart-color-9)" },
+  referral: { label: "Referral", color: "var(--chart-color-8)" },
+  others: { label: "Others", color: "var(--chart-color-3)" },
+} satisfies ChartConfig
+
+
+// The single-series area chart on the qualitative palette.
+const qualitativeAreaConfig = {
+  sales: { label: "Sales", color: "var(--chart-color-4)" },
+} satisfies ChartConfig
 
 export default function ChartPage() {
   // Index of the hovered bubble; other bubbles fade out.
@@ -1040,22 +1138,437 @@ export default function ChartPage() {
         </Card>
       </div>
 
+
+      {/* 100% Stacked Bar Chart — qualitative palette (in a card) */}
+      <div className="flex max-w-[612px] flex-col gap-4">
+        <SectionTitle>100% Stacked (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>100% Stacked</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={percentStackedConfig}
+              className="aspect-auto h-[400px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                data={percentStackedData}
+                barSize={28}
+                margin={{ top: 12, left: 0, right: 24 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="4 4" />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={12}
+                  interval={0}
+                  tickFormatter={formatStackAxis}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={40}
+                  domain={[0, 24000]}
+                  ticks={salesTicks}
+                  tickFormatter={(value) =>
+                    value === 0 ? "0" : `${value / 1000}k`
+                  }
+                />
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={
+                    <ChartTooltipContent labelFormatter={formatSalesDate} />
+                  }
+                />
+                <Bar dataKey="a" stackId="s" fill="var(--color-a)" />
+                <Bar dataKey="b" stackId="s" fill="var(--color-b)" />
+                <Bar dataKey="c" stackId="s" fill="var(--color-c)" />
+                <Bar dataKey="d" stackId="s" fill="var(--color-d)" />
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Grouped Bar Chart — qualitative palette (in a card) */}
+      <div className="flex max-w-3xl flex-col gap-4">
+        <SectionTitle>Group stack (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Group stack</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={qualitativeGroupConfig}
+              className="aspect-auto h-[360px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                data={groupData}
+                barGap={2}
+                barCategoryGap={40}
+                margin={{ top: 12, left: 0, right: 24 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="4 4" />
+                <XAxis
+                  dataKey="month"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={12}
+                  tickFormatter={formatGroupAxis}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={40}
+                  domain={[0, 24000]}
+                  ticks={salesTicks}
+                  tickFormatter={(value) =>
+                    value === 0 ? "0" : `${value / 1000}k`
+                  }
+                />
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={
+                    <ChartTooltipContent labelFormatter={formatSalesDate} />
+                  }
+                />
+                <Bar dataKey="a" fill="var(--color-a)" barSize={10} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="b" fill="var(--color-b)" barSize={10} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="c" fill="var(--color-c)" barSize={10} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="d" fill="var(--color-d)" barSize={10} radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+
+      {/* Stacked Bar Chart — qualitative palette with segment labels */}
+      <div className="flex max-w-[612px] flex-col gap-4">
+        <SectionTitle>Stacked Bar Chart (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Stacked Bar Chart</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={qualitativeStackedConfig}
+              className="aspect-auto h-[400px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                data={qualitativeStackedData}
+                barSize={28}
+                margin={{ top: 12, left: 0, right: 24 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="4 4" />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={12}
+                  interval={0}
+                  tickFormatter={formatStackAxis}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={40}
+                  domain={[0, 24000]}
+                  ticks={salesTicks}
+                  tickFormatter={(value) =>
+                    value === 0 ? "0" : `${value / 1000}k`
+                  }
+                />
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={
+                    <ChartTooltipContent labelFormatter={formatSalesDate} />
+                  }
+                />
+                <Bar dataKey="a" stackId="s" fill="var(--color-a)">
+                  <LabelList
+                    dataKey="a"
+                    position="center"
+                    fill="#171717"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="b" stackId="s" fill="var(--color-b)">
+                  <LabelList
+                    dataKey="b"
+                    position="center"
+                    fill="#171717"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="c" stackId="s" fill="var(--color-c)">
+                  <LabelList
+                    dataKey="c"
+                    position="center"
+                    fill="#171717"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+                <Bar dataKey="d" stackId="s" fill="var(--color-d)" radius={[2, 2, 0, 0]}>
+                  <LabelList
+                    dataKey="d"
+                    position="center"
+                    fill="#171717"
+                    fontSize={10}
+                    formatter={formatStackLabel}
+                  />
+                </Bar>
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+
+      {/* Horizontal Bar Chart — qualitative palette (in a card) */}
+      <div className="flex max-w-3xl flex-col gap-4">
+        <SectionTitle>Horizontal (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Horizontal</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={qualitativeIncomeConfig}
+              className="aspect-auto h-[283px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                data={incomeData}
+                margin={{ top: 8, right: 16, bottom: 24, left: 0 }}
+              >
+                <CartesianGrid horizontal={false} strokeDasharray="4 4" />
+                <XAxis
+                  type="number"
+                  dataKey="income"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  domain={[0, 70000]}
+                  ticks={incomeTicks}
+                  tickFormatter={(value) => `$${value / 1000}k`}
+                >
+                  <Label
+                    value="Income per Capita (USD)"
+                    position="insideBottom"
+                    offset={-16}
+                  />
+                </XAxis>
+                <YAxis
+                  type="category"
+                  dataKey="country"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={132}
+                  interval={0}
+                >
+                  <Label
+                    value="Top countries"
+                    angle={-90}
+                    position="insideLeft"
+                    style={{ textAnchor: "middle" }}
+                  />
+                </YAxis>
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar
+                  dataKey="income"
+                  fill="var(--color-income)"
+                  barSize={12}
+                  radius={[0, 2, 2, 0]}
+                />
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Horizontal Grouped Bar Chart — qualitative palette (in a card) */}
+      <div className="flex max-w-3xl flex-col gap-4">
+        <SectionTitle>Horizontal group (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Horizontal</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-2 text-center text-sm text-muted-foreground">
+              Channel Revenue per Country (USD $k)
+            </p>
+            <ChartContainer
+              config={qualitativeChannelConfig}
+              className="aspect-auto h-[302px] w-full"
+            >
+              <BarChart
+                accessibilityLayer
+                layout="vertical"
+                data={channelData}
+                barGap={2}
+                margin={{ top: 8, right: 24, bottom: 8, left: 0 }}
+              >
+                <CartesianGrid horizontal={false} strokeDasharray="4 4" />
+                <XAxis
+                  type="number"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  domain={[0, 70000]}
+                  ticks={incomeTicks}
+                  tickFormatter={(value) => `$${value / 1000}k`}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="country"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={110}
+                  interval={0}
+                />
+                <ChartTooltip
+                  cursor={<ChartCursor />}
+                  content={<ChartTooltipContent />}
+                />
+                <ChartLegend content={<ChartLegendContent />} />
+                <Bar
+                  dataKey="organic"
+                  fill="var(--color-organic)"
+                  barSize={6}
+                />
+                <Bar
+                  dataKey="paid"
+                  fill="var(--color-paid)"
+                  barSize={6}
+                />
+                <Bar
+                  dataKey="facebook"
+                  fill="var(--color-facebook)"
+                  barSize={6}
+                />
+                <Bar
+                  dataKey="referral"
+                  fill="var(--color-referral)"
+                  barSize={6}
+                />
+                <Bar
+                  dataKey="others"
+                  fill="var(--color-others)"
+                  barSize={6}
+                />
+              </BarChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+
+      {/* Area Chart — qualitative palette (in a card) */}
+      <div className="flex max-w-3xl flex-col gap-4">
+        <SectionTitle>Area Chart (qualitative colors)</SectionTitle>
+        <Card>
+          <CardHeader>
+            <CardTitle>Area Chart</CardTitle>
+            <CardDescription>Overall Sales</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer
+              config={qualitativeAreaConfig}
+              className="aspect-auto h-[360px] w-full"
+            >
+              <AreaChart
+                accessibilityLayer
+                data={lineData}
+                margin={{ top: 12, left: 0, right: 24 }}
+              >
+                <CartesianGrid vertical={false} strokeDasharray="4 4" />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={12}
+                  interval={0}
+                  tickFormatter={formatSalesAxis}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  width={40}
+                  domain={[0, 24000]}
+                  ticks={salesTicks}
+                  tickFormatter={(value) =>
+                    value === 0 ? "0" : `${value / 1000}k`
+                  }
+                />
+                <ChartTooltip
+                  content={<ChartTooltipContent labelFormatter={formatSalesDate} />}
+                />
+                <Area
+                  dataKey="sales"
+                  type="linear"
+                  stroke="var(--color-sales)"
+                  strokeWidth={2}
+                  fill="var(--color-sales)"
+                  fillOpacity={0.15}
+                />
+              </AreaChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Doughnut Chart (in a card) */}
       <DoughnutChart />
+
+      {/* Doughnut Chart — qualitative palette (in a card) */}
+      <DoughnutChart
+        sectionTitle="Doughnut Chart (qualitative colors)"
+        data={qualitativeDonutData}
+        config={qualitativeDonutConfig}
+      />
     </div>
   )
 }
 
 // Isolated so the requestAnimationFrame-driven radius growth only re-renders
 // the donut, not the whole page (which caused lag).
-function DoughnutChart() {
+function DoughnutChart({
+  sectionTitle = "Doughnut Chart",
+  data = donutData,
+  config = donutConfig,
+}: {
+  sectionTitle?: string
+  data?: typeof donutData
+  config?: ChartConfig
+} = {}) {
+  // `donutActive` is the sector that renders grown — it outlives the hover
+  // so the shrink can animate; `donutHovered` tracks the actual pointer.
   const [donutActive, setDonutActive] = React.useState<number | null>(null)
+  const [donutHovered, setDonutHovered] = React.useState<number | null>(null)
   const [donutGrow, setDonutGrow] = React.useState(0)
   const donutGrowRef = React.useRef(0)
   donutGrowRef.current = donutGrow
 
   React.useEffect(() => {
-    const target = donutActive === null ? 0 : 6
+    const target = donutHovered === null ? 0 : 6
     const from = donutGrowRef.current
     let raf = 0
     let start: number | null = null
@@ -1066,21 +1579,23 @@ function DoughnutChart() {
       const eased = 1 - Math.pow(1 - t, 3) // easeOutCubic
       setDonutGrow(from + (target - from) * eased)
       if (t < 1) raf = requestAnimationFrame(step)
+      // release the grown sector only after it has fully shrunk back
+      else if (donutHovered === null) setDonutActive(null)
     }
     raf = requestAnimationFrame(step)
     return () => cancelAnimationFrame(raf)
-  }, [donutActive])
+  }, [donutHovered])
 
   return (
     <div className="flex max-w-3xl flex-col gap-4">
-      <SectionTitle>Doughnut Chart</SectionTitle>
+      <SectionTitle>{sectionTitle}</SectionTitle>
       <Card>
         <CardHeader>
           <CardTitle>Doughnut Chart</CardTitle>
         </CardHeader>
         <CardContent>
           <ChartContainer
-            config={donutConfig}
+            config={config}
             className="mx-auto aspect-square max-h-[360px] [&_.recharts-sector]:cursor-pointer [&_.recharts-sector]:transition-opacity [&_.recharts-sector]:duration-200 [&_.recharts-sector]:ease-out"
           >
             <PieChart>
@@ -1088,7 +1603,7 @@ function DoughnutChart() {
                 content={<ChartTooltipContent nameKey="name" hideLabel />}
               />
               <Pie
-                data={donutData}
+                data={data}
                 dataKey="value"
                 nameKey="name"
                 innerRadius={80}
@@ -1097,20 +1612,34 @@ function DoughnutChart() {
                 cornerRadius={6}
                 strokeWidth={0}
                 onMouseEnter={(_, index) => {
-                  donutGrowRef.current = 0
-                  setDonutGrow(0)
+                  if (index !== donutActive) {
+                    donutGrowRef.current = 0
+                    setDonutGrow(0)
+                  }
                   setDonutActive(index)
+                  setDonutHovered(index)
                 }}
-                onMouseLeave={() => setDonutActive(null)}
-                activeShape={(props) => (
+                onMouseLeave={() => setDonutHovered(null)}
+                // recharts drops its own "active" state the instant the
+                // pointer leaves, which snaps the sector back — render every
+                // sector ourselves so the grown one can shrink smoothly
+                shape={(props: { outerRadius?: number; index?: number }) => (
                   <Sector
                     {...props}
-                    outerRadius={(props.outerRadius ?? 120) + donutGrow}
+                    outerRadius={
+                      props.index === donutActive
+                        ? (props.outerRadius ?? 120) + donutGrow
+                        : props.outerRadius
+                    }
+                    opacity={
+                      donutActive !== null && props.index !== donutActive
+                        ? 0.6
+                        : 1
+                    }
                   />
                 )}
-                inactiveShape={{ opacity: 0.6 }}
               >
-                {donutData.map((entry) => (
+                {data.map((entry) => (
                   <Cell key={entry.name} fill={entry.fill} />
                 ))}
               </Pie>
