@@ -1694,7 +1694,7 @@ export default function CrmDataGridBasePage() {
             dir={direction}
             className={cn(
               rowHeightItem.editorPad,
-              "mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-50! [&_td[data-cell-selected]]:z-50! [&_td[data-pinned][data-cell-selected]]:bg-input! [&_td[data-pinned][data-cell-focused]]:bg-input! [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
+              "mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 [&_[data-slot=data-grid-table-resize-handle]]:opacity-0 [&_[data-slot=data-grid-table-resize-handle]]:transition-opacity [&_thead:hover_[data-slot=data-grid-table-resize-handle]]:opacity-100 [&_[data-slot=data-grid-table-resize-handle]]:before:top-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:bottom-auto [&_[data-slot=data-grid-table-resize-handle]]:before:h-5 [&_[data-slot=data-grid-table-resize-handle]]:before:w-0.5 [&_[data-slot=data-grid-table-resize-handle]]:before:-translate-y-1/2 [&_[data-slot=data-grid-table-resize-handle]]:before:rounded-full [&_[data-slot=data-grid-table-resize-handle]:not(:active)]:before:bg-border-soft [&_td[data-pinned]]:shadow-none! [&_th[data-pinned]]:bg-background! [&_th[data-pinned]]:shadow-none! [&_thead:has(+tbody>tr:first-child:hover)_th]:border-transparent! [&_td[data-cell-focused]]:z-50! [&_td[data-cell-selected]]:z-50! [&_td[data-pinned][data-cell-selected]]:bg-input! [&_td[data-pinned][data-cell-focused]]:bg-input! [&_[data-slot=data-grid-scrollbar]]:hidden! [&_[data-slot=data-grid-scroll-area]+div[aria-hidden]]:hidden! [&_[data-slot=data-grid-cell-editor]]:text-muted-foreground! [&_[data-slot=data-grid-cell-editor]]:bg-input! [&_tbody_td]:[--data-grid-overlay-top:0px] [&_tbody_tr:not(:last-child)_td]:[--data-grid-overlay-bottom:-1px] [&_tbody_td]:[--data-grid-overlay-start:0px] [&_tbody_td]:[--data-grid-overlay-end:0px] [&_td[data-cell-focused]]:before:border-border-normal [&_td[data-cell-selected]]:before:border-border-normal [&_[data-slot=data-grid-cell-editor]]:outline-border-normal! [&_td[data-cell-selected]:not([data-cell-edge-right])]:before:border-e-transparent [&_thead:has(+tbody>tr:first-child_td[data-cell-edge-top])_th]:border-transparent! [&_tbody_tr+tr_td]:[--data-grid-overlay-top:-1px] [&_td[data-cell-selected]]:bg-input! [&_td[data-cell-fill-target]]:bg-input! [&_[data-slot=data-grid-cell-fill-preview]]:outline-border-normal!"
             )}
           >
             <DataGrid
@@ -1766,7 +1766,7 @@ export default function CrmDataGridBasePage() {
                 <TabsTrigger value="80">80</TabsTrigger>
               </TabsList>
             </Tabs>
-            <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+            <span className="text-base text-muted-foreground">
               {visibleRowCount} of {filteredData.length}
             </span>
           </div>
@@ -1806,10 +1806,10 @@ export default function CrmDataGridBasePage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">CRM</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1822,7 +1822,7 @@ export default function CrmDataGridBasePage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />

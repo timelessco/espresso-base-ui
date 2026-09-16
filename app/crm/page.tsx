@@ -1135,7 +1135,7 @@ export default function CrmPage() {
   const content = (
     <>
       <SubHeader
-        className="scrollbar-hide overflow-x-auto pb-0 [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
+        className="scrollbar-hide overflow-x-auto pb-0 in-data-[slot=mobile-shell]:pb-2.5 [&_[data-slot=sub-header-left]]:shrink-0 [&_[data-slot=sub-header-left]>*]:shrink-0 [&_[data-slot=sub-header-right]]:shrink-0 [&_[data-slot=sub-header-right]>*]:shrink-0"
         leftControls={
           <>
             <Select
@@ -1431,7 +1431,7 @@ export default function CrmPage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2.5 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2.5 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1440,7 +1440,7 @@ export default function CrmPage() {
               minWidth: "100%",
             }}
           >
-            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
+            <TableHeader className="group/thead sticky top-0 z-20 bg-background [&_th]:before:absolute [&_th]:before:inset-x-0 [&_th]:before:-top-2 [&_th]:before:h-2 [&_th]:before:bg-background [&_th]:before:content-[''] [&_th]:after:absolute [&_th]:after:inset-x-0 [&_th]:after:bottom-0 [&_th]:after:h-px [&_th]:after:bg-border-soft [&_th]:after:content-[''] has-[+tbody>tr:first-child:hover]:[&_th]:after:bg-transparent [&_tr]:border-b-0">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
@@ -1516,7 +1516,7 @@ export default function CrmPage() {
             <TabsTrigger value="80">80</TabsTrigger>
           </TabsList>
         </Tabs>
-        <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+        <span className="text-base text-muted-foreground">
           18 of 32
         </span>
       </div>
@@ -1556,10 +1556,10 @@ export default function CrmPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">CRM</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1572,7 +1572,7 @@ export default function CrmPage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />

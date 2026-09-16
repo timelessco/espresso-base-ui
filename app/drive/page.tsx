@@ -848,11 +848,11 @@ export default function DrivePage() {
             <Tabs defaultValue="list">
               {/* no 40px tabs size variant — matched to the lg controls with
                   css on mobile */}
-              <TabsList className={isMobile ? "group-data-horizontal/tabs:h-10 rounded-lg" : undefined}>
+              <TabsList className={isMobile ? "group-data-horizontal/tabs:h-8 rounded-md" : undefined}>
                 <TabsIndicator
                   className={
                     isMobile
-                      ? "rounded-[calc(var(--radius-lg)_-_1px)]!"
+                      ? "rounded-[calc(var(--radius-md)_-_1px)]!"
                       : undefined
                   }
                 />
@@ -860,7 +860,7 @@ export default function DrivePage() {
                   value="grid"
                   className={
                     isMobile
-                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      ? "group-data-[size=sm]/tabs-list:h-7.5 group-data-[size=sm]/tabs-list:px-2.5"
                       : undefined
                   }
                 >
@@ -870,7 +870,7 @@ export default function DrivePage() {
                   value="list"
                   className={
                     isMobile
-                      ? "group-data-[size=sm]/tabs-list:h-9.5 group-data-[size=sm]/tabs-list:px-3"
+                      ? "group-data-[size=sm]/tabs-list:h-7.5 group-data-[size=sm]/tabs-list:px-2.5"
                       : undefined
                   }
                 >
@@ -882,7 +882,7 @@ export default function DrivePage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -994,10 +994,10 @@ export default function DrivePage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">Drive</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1010,7 +1010,7 @@ export default function DrivePage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />

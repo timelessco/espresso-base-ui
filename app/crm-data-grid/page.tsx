@@ -1167,7 +1167,7 @@ export default function CrmDataGridPage() {
             }
           />
 
-          <div className="mt-2 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4">
+          <div className="mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-hidden px-5 pb-5 in-data-[slot=mobile-shell]:px-4 in-data-[slot=mobile-shell]:pb-4">
             <TooltipProvider>
               <DirectionProvider dir={direction}>
                 <DataGrid
@@ -1190,7 +1190,7 @@ export default function CrmDataGridPage() {
                 <TabsTrigger value="80">80</TabsTrigger>
               </TabsList>
             </Tabs>
-            <span className="text-base text-muted-foreground in-data-[slot=mobile-shell]:text-lg">
+            <span className="text-base text-muted-foreground">
               {data.length} of {data.length}
             </span>
           </div>
@@ -1230,10 +1230,10 @@ export default function CrmDataGridPage() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerTitle className="sr-only">CRM</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-0.5 overflow-y-auto p-3 pt-2">
+                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
                     <Button
                       variant="ghost"
-                      size="lg"
+                      size="default"
                       className="w-full justify-start [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
@@ -1246,7 +1246,7 @@ export default function CrmDataGridPage() {
                       <Button
                         key={item.label}
                         variant="ghost"
-                        size="lg"
+                        size="default"
                         className="w-full justify-start [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
