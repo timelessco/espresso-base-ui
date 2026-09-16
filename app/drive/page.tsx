@@ -882,7 +882,7 @@ export default function DrivePage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2 in-data-[slot=mobile-shell]:mt-0 min-h-0 min-w-0 flex-1 overflow-auto px-4 pb-5 in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -998,7 +998,7 @@ export default function DrivePage() {
                     <Button
                       variant="ghost"
                       size="default"
-                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
                       }
@@ -1011,7 +1011,7 @@ export default function DrivePage() {
                         key={item.label}
                         variant="ghost"
                         size="default"
-                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}

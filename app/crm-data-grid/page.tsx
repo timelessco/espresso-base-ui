@@ -1234,7 +1234,7 @@ export default function CrmDataGridPage() {
                     <Button
                       variant="ghost"
                       size="default"
-                      className="w-full justify-start [&_svg]:text-muted-foreground"
+                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
                       onClick={() =>
                         setTheme(resolvedTheme === "dark" ? "light" : "dark")
                       }
@@ -1247,7 +1247,7 @@ export default function CrmDataGridPage() {
                         key={item.label}
                         variant="ghost"
                         size="default"
-                        className="w-full justify-start [&_svg]:text-muted-foreground"
+                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
                       >
                         <item.icon />
                         {item.label}
