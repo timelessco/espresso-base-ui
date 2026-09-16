@@ -787,6 +787,16 @@
   --chart-8: oklch(58.7% 0.13 243.5);
   --chart-9: oklch(45.1% 0.121 249.3);
 
+  --chart-color-1: oklch(81.7% 0.073 182.5);
+  --chart-color-2: oklch(95.6% 0.116 108.4);
+  --chart-color-3: oklch(80.2% 0.045 291.1);
+  --chart-color-4: oklch(76.3% 0.133 27.3);
+  --chart-color-5: oklch(73.8% 0.072 239.3);
+  --chart-color-6: oklch(82.3% 0.129 67.1);
+  --chart-color-7: oklch(84% 0.133 125.9);
+  --chart-color-8: oklch(89.6% 0.061 346.3);
+  --chart-color-9: oklch(88.5% 0 0);
+
   --ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
   --sidebar: var(--color-gray-50); /* #f8f8f8 */ /*surface/menu-bar*/
   --sidebar-foreground: var(--color-gray-700); /* #525252 */ /*ink/gray-6*/
@@ -1097,6 +1107,16 @@
   --chart-8: oklch(50.1% 0.109 243);
   --chart-9: oklch(38.6% 0.101 248.9);
 
+  --chart-color-1: oklch(66.9% 0.101 182.4);
+  --chart-color-2: oklch(78.9% 0.125 103.8);
+  --chart-color-3: oklch(64.7% 0.121 288.7);
+  --chart-color-4: oklch(65.2% 0.149 28.3);
+  --chart-color-5: oklch(65.5% 0.088 239.8);
+  --chart-color-6: oklch(72.8% 0.117 71.1);
+  --chart-color-7: oklch(70.3% 0.141 126.8);
+  --chart-color-8: oklch(66.6% 0.122 342.7);
+  --chart-color-9: oklch(78.9% 0 0);
+
   --ring: oklch(0.8359 0.0001 263.28 / 0.5647); /* #c9c9c990 */
   --sidebar: var(--color-gray-950); /* #171717 */
   --sidebar-foreground: var(--color-gray-200); /* #AFAFAF */ /*ink/gray-6*/
@@ -1144,6 +1164,15 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-chart-color-9: var(--chart-color-9);
+  --color-chart-color-8: var(--chart-color-8);
+  --color-chart-color-7: var(--chart-color-7);
+  --color-chart-color-6: var(--chart-color-6);
+  --color-chart-color-5: var(--chart-color-5);
+  --color-chart-color-4: var(--chart-color-4);
+  --color-chart-color-3: var(--chart-color-3);
+  --color-chart-color-2: var(--chart-color-2);
+  --color-chart-color-1: var(--chart-color-1);
   --color-surface: var(--surface);
   --color-ring: var(--ring);
   --color-input: var(--input);
@@ -1776,12 +1805,18 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
       --scroll-fade-t: 0px;
     }
     to {
-      --scroll-fade-t: var(--_scroll-fade-size-t, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+      --scroll-fade-t: var(
+        --_scroll-fade-size-t,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
     }
   }
   @keyframes scroll-fade-reveal-b {
     from {
-      --scroll-fade-b: var(--_scroll-fade-size-b, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+      --scroll-fade-b: var(
+        --_scroll-fade-size-b,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
     }
     to {
       --scroll-fade-b: 0px;
@@ -1792,12 +1827,18 @@ button:not([data-slot="tabs-trigger"])[data-pressed="true"] {
       --scroll-fade-s: 0px;
     }
     to {
-      --scroll-fade-s: var(--_scroll-fade-size-s, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+      --scroll-fade-s: var(
+        --_scroll-fade-size-s,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
     }
   }
   @keyframes scroll-fade-reveal-e {
     from {
-      --scroll-fade-e: var(--_scroll-fade-size-e, var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10))));
+      --scroll-fade-e: var(
+        --_scroll-fade-size-e,
+        var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))
+      );
     }
     to {
       --scroll-fade-e: 0px;
