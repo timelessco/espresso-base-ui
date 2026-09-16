@@ -25,7 +25,7 @@ function MobileShell({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-// A fixed-height header (--mobile-header-height, 64px) so a long title can
+// A fixed-height header (--mobile-header-height, 56px) so a long title can
 // never wrap and shift the page as the user navigates. The title stays
 // centered on a single line: the side columns share free space equally, and
 // their min-content floor means a wide control claims what it needs (the
@@ -45,7 +45,7 @@ function MobileShellHeader({
     <header
       data-slot="mobile-shell-header"
       className={cn(
-        "z-10 grid h-[var(--mobile-header-height,64px)] shrink-0 grid-cols-[1fr_minmax(0,auto)_1fr] items-center gap-2 border-b border-border-soft bg-background px-3 [@media(display-mode:standalone)]:h-[calc(var(--mobile-header-height,64px)+env(safe-area-inset-top,0px))] [@media(display-mode:standalone)]:pt-[env(safe-area-inset-top)]",
+        "z-10 grid h-[var(--mobile-header-height,56px)] shrink-0 grid-cols-[1fr_minmax(0,auto)_1fr] items-center gap-2 border-b border-border-soft bg-background px-4 [@media(display-mode:standalone)]:h-[calc(var(--mobile-header-height,56px)+env(safe-area-inset-top,0px))] [@media(display-mode:standalone)]:pt-[env(safe-area-inset-top)]",
         className
       )}
       {...props}
@@ -99,7 +99,7 @@ function MobileNav({ className, ...props }: React.ComponentProps<"nav">) {
     <nav
       data-slot="mobile-nav"
       className={cn(
-        "grid h-16 shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-background [@media(display-mode:standalone)]:h-[calc(--spacing(16)+--spacing(4))] [@media(display-mode:standalone)]:pb-4",
+        "grid h-14 shrink-0 auto-cols-fr grid-flow-col border-t border-border-soft bg-background [@media(display-mode:standalone)]:h-[calc(--spacing(14)+--spacing(4))] [@media(display-mode:standalone)]:pb-4",
         className
       )}
       {...props}
@@ -137,7 +137,7 @@ function MobileNavItem({
   ...props
 }: MobileNavItemProps) {
   const cls = cn(
-    "flex min-h-14 flex-col items-center justify-center text-muted-foreground transition outline-none select-none active:scale-95 data-[active=true]:text-foreground [&_svg]:size-6 [&_svg]:shrink-0",
+    "flex h-14 flex-col items-center justify-center self-center text-muted-foreground transition outline-none select-none active:scale-95 data-[active=true]:text-foreground [&_svg]:size-6 [&_svg]:shrink-0",
     className
   )
 

@@ -1093,7 +1093,7 @@ export default function CrmDataGridPage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1111,7 +1111,7 @@ export default function CrmDataGridPage() {
                 <Select items={organisationItems} defaultValue="gumroad">
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1129,7 +1129,7 @@ export default function CrmDataGridPage() {
                 <Select items={statusFilterItems} defaultValue="open">
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1212,7 +1212,7 @@ export default function CrmDataGridPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="lg">
+              <Button size="default">
                 <Plus />
                 Create
               </Button>
@@ -1221,7 +1221,7 @@ export default function CrmDataGridPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-lg"
+                      size="icon"
                       aria-label="Open menu"
                     />
                   }

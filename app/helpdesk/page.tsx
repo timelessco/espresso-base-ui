@@ -1175,7 +1175,7 @@ export default function HelpdeskPage() {
         }
         rightControls={
           <>
-            <Button variant="secondary" size={isMobile ? "icon-lg" : "icon-sm"}>
+            <Button variant="secondary" size={isMobile ? "icon" : "icon-sm"}>
               <RefreshCw className="size-4" />
             </Button>
 
@@ -1190,7 +1190,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1230,7 +1230,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue />
@@ -1261,7 +1261,7 @@ export default function HelpdeskPage() {
             >
               <SelectTrigger
                 variant="subtle"
-                size={isMobile ? "lg" : "sm"}
+                size={isMobile ? "md" : "sm"}
                 suffix={<ChevronDown />}
               >
                 <SelectValue>
@@ -1309,7 +1309,7 @@ export default function HelpdeskPage() {
         }
       />
 
-      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:[&_td]:text-lg in-data-[slot=mobile-shell]:[&_td]:h-12 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
+      <div className="scrollbar-hide mt-2 min-h-0 min-w-0 flex-1 overflow-auto px-5 pb-5 in-data-[slot=mobile-shell]:[&_th]:text-base in-data-[slot=mobile-shell]:[&_th]:h-10 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox]]:size-4 in-data-[slot=mobile-shell]:[&_[data-slot=checkbox-indicator]>svg]:size-3 in-data-[slot=mobile-shell]:[&_[data-slot=avatar]]:size-5">
         <div className="[&>[data-slot=table-container]]:overflow-visible">
           <Table
             className="table-fixed"
@@ -1416,7 +1416,7 @@ export default function HelpdeskPage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="lg">
+              <Button size="default">
                 <Plus />
                 New Ticket
               </Button>
@@ -1425,7 +1425,7 @@ export default function HelpdeskPage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-lg"
+                      size="icon"
                       aria-label="Open menu"
                     />
                   }

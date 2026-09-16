@@ -305,7 +305,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
               prop: "children",
               type: "ReactNode",
               description:
-                "The title — centered on a single line and truncated; the header height is fixed (--mobile-header-height, 64px) so a long title never reflows the page.",
+                "The title — centered on a single line and truncated; the header height is fixed (--mobile-header-height, 56px) so a long title never reflows the page.",
             },
             {
               prop: "prefix",
@@ -358,7 +358,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileShellHeader",
               description:
-                'Pinned fixed-height header (--mobile-header-height, 64px) with a centered single-line title and prefix/suffix slots; clears the top safe-area inset in an installed PWA (data-slot="mobile-shell-header").',
+                'Pinned fixed-height header (--mobile-header-height, 56px) with a centered single-line title and prefix/suffix slots; clears the top safe-area inset in an installed PWA (data-slot="mobile-shell-header").',
             },
             {
               part: "MobileShellContent",
@@ -368,12 +368,12 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileNav",
               description:
-                'Bottom tab bar nav element – a 64px equal-width grid with a top border on the card surface; clears the home indicator in an installed PWA (data-slot="mobile-nav").',
+                'Bottom tab bar nav element – a 56px equal-width grid with a top border on the card surface; clears the home indicator in an installed PWA (data-slot="mobile-nav").',
             },
             {
               part: "MobileNavItem",
               description:
-                'One icon-only tab filling the 64px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders a Link when href is set and inactive, otherwise a button.',
+                'One icon-only tab filling the 56px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders a Link when href is set and inactive, otherwise a button.',
             },
           ]}
         />

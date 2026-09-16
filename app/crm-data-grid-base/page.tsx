@@ -1431,7 +1431,7 @@ export default function CrmDataGridBasePage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1449,7 +1449,7 @@ export default function CrmDataGridBasePage() {
                 <Select items={organisationItems} defaultValue="gumroad">
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1467,7 +1467,7 @@ export default function CrmDataGridBasePage() {
                 <Select items={statusFilterItems} defaultValue="open">
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     suffix={<ChevronDown />}
                   >
                     <SelectValue />
@@ -1488,7 +1488,7 @@ export default function CrmDataGridBasePage() {
               <>
                 <Button
                   variant="secondary"
-                  size={isMobile ? "lg" : "sm"}
+                  size={isMobile ? "default" : "sm"}
                   className={toolbarButtonClassName}
                   onClick={() =>
                     setDirection((prev) => (prev === "ltr" ? "rtl" : "ltr"))
@@ -1503,7 +1503,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size={isMobile ? "lg" : "sm"}
+                        size={isMobile ? "default" : "sm"}
                         className={cn(
                           toolbarButtonClassName,
                           "ms-auto hidden lg:flex"
@@ -1552,7 +1552,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size={isMobile ? "lg" : "sm"}
+                        size={isMobile ? "default" : "sm"}
                         className={toolbarButtonClassName}
                       />
                     }
@@ -1605,7 +1605,7 @@ export default function CrmDataGridBasePage() {
                     render={
                       <Button
                         variant="secondary"
-                        size={isMobile ? "lg" : "sm"}
+                        size={isMobile ? "default" : "sm"}
                         className={toolbarButtonClassName}
                       />
                     }
@@ -1669,7 +1669,7 @@ export default function CrmDataGridBasePage() {
                 >
                   <SelectTrigger
                     variant="subtle"
-                    size={isMobile ? "lg" : "sm"}
+                    size={isMobile ? "md" : "sm"}
                     aria-label="Row height"
                     suffix={<span className="hidden" />}
                   >
@@ -1788,7 +1788,7 @@ export default function CrmDataGridBasePage() {
           }
           suffix={
             <div className="flex items-center gap-2">
-              <Button size="lg">
+              <Button size="default">
                 <Plus />
                 Create
               </Button>
@@ -1797,7 +1797,7 @@ export default function CrmDataGridBasePage() {
                   render={
                     <Button
                       variant="ghost"
-                      size="icon-lg"
+                      size="icon"
                       aria-label="Open menu"
                     />
                   }
