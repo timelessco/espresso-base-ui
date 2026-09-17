@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  Menu,
   Bell,
   ChevronDown,
   ChevronRight,
@@ -13,7 +14,6 @@ import {
   Boxes,
   Workflow,
   CircleHelp,
-  PanelLeft,
   PanelRight,
   ArrowRight,
   ArrowRightFromLine,
@@ -127,7 +127,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 import {
   Breadcrumb,
@@ -752,6 +751,11 @@ const mobileSidebarItems = [
   { label: "Documents", icon: FileText },
 ]
 
+// The bottom nav surfaces the sidebar's first three destinations; the
+// drawer (opened from the nav's Menu tab) holds the rest.
+const mobileNavItems = mobileSidebarItems.slice(2, 5)
+const mobileDrawerItems = mobileSidebarItems.slice(5)
+
 export default function DrivePage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -769,7 +773,8 @@ export default function DrivePage() {
   // sidebar layout — two navigation models, chosen by viewport.
   const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
-  const [mobileTab, setMobileTab] = useState("home")
+  const [mobileTab, setMobileTab] = useState(mobileNavItems[0].label)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const header = (
     <Header
@@ -969,9 +974,16 @@ export default function DrivePage() {
       <MobileShell>
         <MobileShellHeader
           prefix={
-            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
-              My Drive
-            </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <img
+                src="/images/svg/logo-drive.svg"
+                alt=""
+                className="size-7 shrink-0"
+              />
+              <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+                My Drive
+              </h1>
+            </div>
           }
           suffix={
             <div className="flex items-center gap-2">
@@ -980,46 +992,6 @@ export default function DrivePage() {
                 Upload
                 <ChevronDown className="size-4" />
               </Button>
-              <Drawer showSwipeHandle>
-                <DrawerTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Open menu"
-                    />
-                  }
-                >
-                  <PanelLeft />
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerTitle className="sr-only">Drive</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
-                    <Button
-                      variant="ghost"
-                      size="default"
-                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      onClick={() =>
-                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-                      }
-                    >
-                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
-                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
-                    </Button>
-                    {mobileSidebarItems.map((item) => (
-                      <Button
-                        key={item.label}
-                        variant="ghost"
-                        size="default"
-                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      >
-                        <item.icon />
-                        {item.label}
-                      </Button>
-                    ))}
-                  </nav>
-                </DrawerContent>
-              </Drawer>
             </div>
           }
         />
@@ -1027,31 +999,54 @@ export default function DrivePage() {
           {content}
         </MobileShellContent>
         <MobileNav>
+          {mobileNavItems.map((item) => (
+            <MobileNavItem
+              key={item.label}
+              label={item.label}
+              icon={<item.icon />}
+              active={mobileTab === item.label}
+              onClick={() => setMobileTab(item.label)}
+            />
+          ))}
           <MobileNavItem
-            label="Home"
-            icon={<Home />}
-            active={mobileTab === "home"}
-            onClick={() => setMobileTab("home")}
-          />
-          <MobileNavItem
-            label="Recents"
-            icon={<Clock />}
-            active={mobileTab === "recents"}
-            onClick={() => setMobileTab("recents")}
-          />
-          <MobileNavItem
-            label="Shared"
-            icon={<Share2 />}
-            active={mobileTab === "shared"}
-            onClick={() => setMobileTab("shared")}
-          />
-          <MobileNavItem
-            label="Trash"
-            icon={<Trash2 />}
-            active={mobileTab === "trash"}
-            onClick={() => setMobileTab("trash")}
+            label="Menu"
+            icon={<Menu />}
+            onClick={() => setDrawerOpen(true)}
           />
         </MobileNav>
+        <Drawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          showSwipeHandle
+        >
+          <DrawerContent>
+            <DrawerTitle className="sr-only">Drive</DrawerTitle>
+            <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
+              <Button
+                variant="ghost"
+                size="default"
+                className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+              >
+                {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+              </Button>
+              {mobileDrawerItems.map((item) => (
+                <Button
+                  key={item.label}
+                  variant="ghost"
+                  size="default"
+                  className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                >
+                  <item.icon />
+                  {item.label}
+                </Button>
+              ))}
+            </nav>
+          </DrawerContent>
+        </Drawer>
       </MobileShell>
     )
   }

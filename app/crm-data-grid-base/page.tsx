@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  Menu,
   AlignJustify,
   AlignLeft,
   AlignRight,
@@ -34,7 +35,6 @@ import {
   LogOut,
   Mail,
   MapPin,
-  PanelLeft,
   Minus,
   Moon,
   PanelRight,
@@ -152,7 +152,6 @@ import {
   Drawer,
   DrawerContent,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 import {
   MobileNav,
@@ -978,6 +977,11 @@ const mobileSidebarItems = [
   { label: "Call & Event Logs", icon: Phone },
 ]
 
+// The bottom nav surfaces the sidebar's first three destinations; the
+// drawer (opened from the nav's Menu tab) holds the rest.
+const mobileNavItems = mobileSidebarItems.slice(2, 5)
+const mobileDrawerItems = mobileSidebarItems.slice(5)
+
 export default function CrmDataGridBasePage() {
   const [data, setData] = React.useState<Lead[]>(initialLeads)
   const [direction, setDirection] = React.useState<"ltr" | "rtl">("ltr")
@@ -1060,7 +1064,8 @@ export default function CrmDataGridBasePage() {
 
   const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
-  const [mobileTab, setMobileTab] = React.useState("leads")
+  const [mobileTab, setMobileTab] = React.useState(mobileNavItems[0].label)
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
 
   // Proportional stretch, the old grid's stretchColumns: base widths are
   // weights, scaled so visible columns always fill the measured grid width
@@ -1752,7 +1757,7 @@ export default function CrmDataGridBasePage() {
             </DataGrid>
           </div>
 
-          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
+          <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:hidden">
             <Tabs
               value={String(pagination.pageSize)}
               onValueChange={(value) =>
@@ -1782,9 +1787,16 @@ export default function CrmDataGridBasePage() {
       <MobileShell>
         <MobileShellHeader
           prefix={
-            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
-              Leads
-            </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <img
+                src="/images/svg/logo-crm.svg"
+                alt=""
+                className="size-7 shrink-0"
+              />
+              <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+                Leads
+              </h1>
+            </div>
           }
           suffix={
             <div className="flex items-center gap-2">
@@ -1792,46 +1804,6 @@ export default function CrmDataGridBasePage() {
                 <Plus />
                 Create
               </Button>
-              <Drawer showSwipeHandle>
-                <DrawerTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Open menu"
-                    />
-                  }
-                >
-                  <PanelLeft />
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerTitle className="sr-only">CRM</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
-                    <Button
-                      variant="ghost"
-                      size="default"
-                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      onClick={() =>
-                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-                      }
-                    >
-                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
-                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
-                    </Button>
-                    {mobileSidebarItems.map((item) => (
-                      <Button
-                        key={item.label}
-                        variant="ghost"
-                        size="default"
-                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      >
-                        <item.icon />
-                        {item.label}
-                      </Button>
-                    ))}
-                  </nav>
-                </DrawerContent>
-              </Drawer>
             </div>
           }
         />
@@ -1839,31 +1811,54 @@ export default function CrmDataGridBasePage() {
           {content}
         </MobileShellContent>
         <MobileNav>
+          {mobileNavItems.map((item) => (
+            <MobileNavItem
+              key={item.label}
+              label={item.label}
+              icon={<item.icon />}
+              active={mobileTab === item.label}
+              onClick={() => setMobileTab(item.label)}
+            />
+          ))}
           <MobileNavItem
-            label="Leads"
-            icon={<Users />}
-            active={mobileTab === "leads"}
-            onClick={() => setMobileTab("leads")}
-          />
-          <MobileNavItem
-            label="Deals"
-            icon={<Handshake />}
-            active={mobileTab === "deals"}
-            onClick={() => setMobileTab("deals")}
-          />
-          <MobileNavItem
-            label="Contacts"
-            icon={<Contact />}
-            active={mobileTab === "contacts"}
-            onClick={() => setMobileTab("contacts")}
-          />
-          <MobileNavItem
-            label="Tasks"
-            icon={<ClipboardList />}
-            active={mobileTab === "tasks"}
-            onClick={() => setMobileTab("tasks")}
+            label="Menu"
+            icon={<Menu />}
+            onClick={() => setDrawerOpen(true)}
           />
         </MobileNav>
+        <Drawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          showSwipeHandle
+        >
+          <DrawerContent>
+            <DrawerTitle className="sr-only">CRM</DrawerTitle>
+            <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
+              <Button
+                variant="ghost"
+                size="default"
+                className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+              >
+                {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+              </Button>
+              {mobileDrawerItems.map((item) => (
+                <Button
+                  key={item.label}
+                  variant="ghost"
+                  size="default"
+                  className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                >
+                  <item.icon />
+                  {item.label}
+                </Button>
+              ))}
+            </nav>
+          </DrawerContent>
+        </Drawer>
       </MobileShell>
     )
   }

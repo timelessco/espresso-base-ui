@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  Menu,
   Bell,
   ChevronDown,
   ChevronRight,
@@ -15,7 +16,6 @@ import {
   Boxes,
   Workflow,
   CircleHelp,
-  PanelLeft,
   PanelRight,
   ArrowRight,
   ArrowRightFromLine,
@@ -135,7 +135,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 
 const statusColors: Record<string, string> = {
@@ -1117,6 +1116,11 @@ const mobileSidebarItems = [
   { label: "Contacts", icon: Contact },
 ]
 
+// The bottom nav surfaces the sidebar's first three destinations; the
+// drawer (opened from the nav's Menu tab) holds the rest.
+const mobileNavItems = mobileSidebarItems.slice(2, 5)
+const mobileDrawerItems = mobileSidebarItems.slice(5)
+
 export default function HelpdeskPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -1134,7 +1138,8 @@ export default function HelpdeskPage() {
   // sidebar layout — two navigation models, chosen by viewport.
   const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
-  const [mobileTab, setMobileTab] = useState("tickets")
+  const [mobileTab, setMobileTab] = useState(mobileNavItems[0].label)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const header = (
     <Header
@@ -1385,7 +1390,7 @@ export default function HelpdeskPage() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:py-3">
+      <div className="flex items-center justify-between border-t border-border-soft px-3 py-1.5 in-data-[slot=mobile-shell]:hidden">
         <Tabs defaultValue="20">
           <TabsList size={isMobile ? "default" : "sm"}>
             <TabsIndicator />
@@ -1410,9 +1415,16 @@ export default function HelpdeskPage() {
       <MobileShell>
         <MobileShellHeader
           prefix={
-            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
-              Tickets
-            </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <img
+                src="/images/svg/logo-helpDesk.svg"
+                alt=""
+                className="size-7 shrink-0"
+              />
+              <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+                Tickets
+              </h1>
+            </div>
           }
           suffix={
             <div className="flex items-center gap-2">
@@ -1420,46 +1432,6 @@ export default function HelpdeskPage() {
                 <Plus />
                 New Ticket
               </Button>
-              <Drawer showSwipeHandle>
-                <DrawerTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Open menu"
-                    />
-                  }
-                >
-                  <PanelLeft />
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerTitle className="sr-only">Helpdesk</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
-                    <Button
-                      variant="ghost"
-                      size="default"
-                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      onClick={() =>
-                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-                      }
-                    >
-                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
-                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
-                    </Button>
-                    {mobileSidebarItems.map((item) => (
-                      <Button
-                        key={item.label}
-                        variant="ghost"
-                        size="default"
-                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      >
-                        <item.icon />
-                        {item.label}
-                      </Button>
-                    ))}
-                  </nav>
-                </DrawerContent>
-              </Drawer>
             </div>
           }
         />
@@ -1467,31 +1439,54 @@ export default function HelpdeskPage() {
           {content}
         </MobileShellContent>
         <MobileNav>
+          {mobileNavItems.map((item) => (
+            <MobileNavItem
+              key={item.label}
+              label={item.label}
+              icon={<item.icon />}
+              active={mobileTab === item.label}
+              onClick={() => setMobileTab(item.label)}
+            />
+          ))}
           <MobileNavItem
-            label="Tickets"
-            icon={<Ticket />}
-            active={mobileTab === "tickets"}
-            onClick={() => setMobileTab("tickets")}
-          />
-          <MobileNavItem
-            label="Knowledge"
-            icon={<BookOpen />}
-            active={mobileTab === "knowledge-base"}
-            onClick={() => setMobileTab("knowledge-base")}
-          />
-          <MobileNavItem
-            label="Customers"
-            icon={<Users />}
-            active={mobileTab === "customers"}
-            onClick={() => setMobileTab("customers")}
-          />
-          <MobileNavItem
-            label="Contacts"
-            icon={<Contact />}
-            active={mobileTab === "contacts"}
-            onClick={() => setMobileTab("contacts")}
+            label="Menu"
+            icon={<Menu />}
+            onClick={() => setDrawerOpen(true)}
           />
         </MobileNav>
+        <Drawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          showSwipeHandle
+        >
+          <DrawerContent>
+            <DrawerTitle className="sr-only">Helpdesk</DrawerTitle>
+            <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
+              <Button
+                variant="ghost"
+                size="default"
+                className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+              >
+                {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+              </Button>
+              {mobileDrawerItems.map((item) => (
+                <Button
+                  key={item.label}
+                  variant="ghost"
+                  size="default"
+                  className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                >
+                  <item.icon />
+                  {item.label}
+                </Button>
+              ))}
+            </nav>
+          </DrawerContent>
+        </Drawer>
       </MobileShell>
     )
   }
