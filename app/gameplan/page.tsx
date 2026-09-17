@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  Menu,
   Bell,
   ChevronDown,
   ChevronRight,
@@ -12,7 +13,6 @@ import {
   CircleAlert,
   Boxes,
   CircleHelp,
-  PanelLeft,
   PanelRight,
   ArrowRightFromLine,
   Zap,
@@ -138,7 +138,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
 
 const tasks = [
@@ -610,6 +609,11 @@ const mobileSidebarItems = [
   { label: "Pages", icon: BookOpen },
 ]
 
+// The bottom nav surfaces the sidebar's first three destinations; the
+// drawer (opened from the nav's Menu tab) holds the rest.
+const mobileNavItems = mobileSidebarItems.slice(2, 5)
+const mobileDrawerItems = mobileSidebarItems.slice(5)
+
 export default function GameplanPage() {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -627,7 +631,8 @@ export default function GameplanPage() {
   // sidebar layout — two navigation models, chosen by viewport.
   const isMobile = useIsMobileState()
   const { resolvedTheme, setTheme } = useTheme()
-  const [mobileTab, setMobileTab] = useState("tasks")
+  const [mobileTab, setMobileTab] = useState(mobileNavItems[0].label)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const header = (
     <Header
@@ -837,9 +842,16 @@ export default function GameplanPage() {
       <MobileShell>
         <MobileShellHeader
           prefix={
-            <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
-              Tasks
-            </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <img
+                src="/images/svg/logo-gameplan.svg"
+                alt=""
+                className="size-7 shrink-0"
+              />
+              <h1 className="truncate text-xl leading-tight font-semibold text-foreground">
+                Tasks
+              </h1>
+            </div>
           }
           suffix={
             <div className="flex items-center gap-2">
@@ -847,76 +859,59 @@ export default function GameplanPage() {
                 <Plus />
                 New task
               </Button>
-              <Drawer showSwipeHandle>
-                <DrawerTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Open menu"
-                    />
-                  }
-                >
-                  <PanelLeft />
-                </DrawerTrigger>
-                <DrawerContent>
-                  <DrawerTitle className="sr-only">Gameplan</DrawerTitle>
-                  <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
-                    <Button
-                      variant="ghost"
-                      size="default"
-                      className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      onClick={() =>
-                        setTheme(resolvedTheme === "dark" ? "light" : "dark")
-                      }
-                    >
-                      {resolvedTheme === "dark" ? <Sun /> : <Moon />}
-                      {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
-                    </Button>
-                    {mobileSidebarItems.map((item) => (
-                      <Button
-                        key={item.label}
-                        variant="ghost"
-                        size="default"
-                        className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
-                      >
-                        <item.icon />
-                        {item.label}
-                      </Button>
-                    ))}
-                  </nav>
-                </DrawerContent>
-              </Drawer>
             </div>
           }
         />
         <MobileShellContent>{content}</MobileShellContent>
         <MobileNav>
+          {mobileNavItems.map((item) => (
+            <MobileNavItem
+              key={item.label}
+              label={item.label}
+              icon={<item.icon />}
+              active={mobileTab === item.label}
+              onClick={() => setMobileTab(item.label)}
+            />
+          ))}
           <MobileNavItem
-            label="Home"
-            icon={<Home />}
-            active={mobileTab === "home"}
-            onClick={() => setMobileTab("home")}
-          />
-          <MobileNavItem
-            label="Tasks"
-            icon={<ListTodo />}
-            active={mobileTab === "tasks"}
-            onClick={() => setMobileTab("tasks")}
-          />
-          <MobileNavItem
-            label="Drafts"
-            icon={<FileText />}
-            active={mobileTab === "drafts"}
-            onClick={() => setMobileTab("drafts")}
-          />
-          <MobileNavItem
-            label="Pages"
-            icon={<BookOpen />}
-            active={mobileTab === "pages"}
-            onClick={() => setMobileTab("pages")}
+            label="Menu"
+            icon={<Menu />}
+            onClick={() => setDrawerOpen(true)}
           />
         </MobileNav>
+        <Drawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          showSwipeHandle
+        >
+          <DrawerContent>
+            <DrawerTitle className="sr-only">Gameplan</DrawerTitle>
+            <nav className="scroll-fade scroll-fade-5 flex min-h-0 flex-col gap-1 overflow-y-auto p-3 pt-2">
+              <Button
+                variant="ghost"
+                size="default"
+                className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+              >
+                {resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+              </Button>
+              {mobileDrawerItems.map((item) => (
+                <Button
+                  key={item.label}
+                  variant="ghost"
+                  size="default"
+                  className="w-full justify-start font-normal [&_svg]:text-muted-foreground"
+                >
+                  <item.icon />
+                  {item.label}
+                </Button>
+              ))}
+            </nav>
+          </DrawerContent>
+        </Drawer>
       </MobileShell>
     )
   }
