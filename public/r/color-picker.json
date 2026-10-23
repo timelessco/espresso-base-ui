@@ -5,12 +5,15 @@
   "description": "Popover color picker with saturation area, hue and alpha sliders, and an eye dropper.",
   "dependencies": [
     "class-variance-authority",
-    "lucide-react"
+    "lucide-react",
+    "radix-ui"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
     "https://espresso-base-ui.vercel.app/r/button.json",
-    "https://espresso-base-ui.vercel.app/r/input.json"
+    "https://espresso-base-ui.vercel.app/r/input.json",
+    "https://espresso-base-ui.vercel.app/r/popover.json",
+    "https://espresso-base-ui.vercel.app/r/tabs.json"
   ],
   "files": [
     {

@@ -26,7 +26,8 @@
         "@tiptap/extension-mention",
         "@tiptap/suggestion",
         "@tiptap/extension-details",
-        "class-variance-authority"
+        "class-variance-authority",
+        "lucide-react"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -35,7 +36,10 @@
         "https://espresso-base-ui.vercel.app/r/popover.json",
         "https://espresso-base-ui.vercel.app/r/dropdown-menu.json",
         "https://espresso-base-ui.vercel.app/r/tooltip.json",
-        "https://espresso-base-ui.vercel.app/r/emoji-picker.json"
+        "https://espresso-base-ui.vercel.app/r/emoji-picker.json",
+        "https://espresso-base-ui.vercel.app/r/dialog.json",
+        "https://espresso-base-ui.vercel.app/r/slider.json",
+        "https://espresso-base-ui.vercel.app/r/tabs.json"
       ],
       "files": [
         {
@@ -198,7 +202,9 @@
       "type": "registry:ui",
       "title": "Event",
       "description": "A full calendar: Month, Week, Day and Agenda views with drag to move, resize, overlap layout and an editable event model \u2014 frappe-ui's Calendar, ported to React on espresso primitives.",
-      "dependencies": [],
+      "dependencies": [
+        "lucide-react"
+      ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
         "https://espresso-base-ui.vercel.app/r/button.json",
@@ -579,7 +585,8 @@
       "description": "Dropdown menu with items, checkboxes, radios, and submenus.",
       "dependencies": [
         "@base-ui/react",
-        "lucide-react"
+        "lucide-react",
+        "class-variance-authority"
       ],
       "files": [
         {
@@ -1100,7 +1107,8 @@
       "title": "Tooltip",
       "description": "Tooltip with arrow and positioning.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "class-variance-authority"
       ],
       "files": [
         {
@@ -1212,6 +1220,11 @@
         {
           "path": "registry/espresso/sidebar/sidebar.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "registry/espresso/hooks/use-mobile.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-mobile.ts"
         }
       ]
     },
@@ -1245,6 +1258,9 @@
           "path": "registry/espresso/empty/empty.tsx",
           "type": "registry:ui"
         }
+      ],
+      "dependencies": [
+        "class-variance-authority"
       ]
     },
     {
@@ -1254,7 +1270,8 @@
       "title": "Combobox",
       "description": "Autocomplete input with single/multi-select, chips, and grouping.",
       "dependencies": [
-        "@base-ui/react"
+        "@base-ui/react",
+        "lucide-react"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -1275,7 +1292,8 @@
       "title": "Command",
       "description": "Command palette with inline and dialog modes powered by cmdk.",
       "dependencies": [
-        "cmdk"
+        "cmdk",
+        "lucide-react"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -1296,7 +1314,9 @@
       "title": "Input OTP",
       "description": "One-time-password input with slots and separators.",
       "dependencies": [
-        "input-otp"
+        "input-otp",
+        "lucide-react",
+        "class-variance-authority"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
@@ -1368,7 +1388,8 @@
       "description": "File chip for uploads, previews, and link cards with upload states.",
       "dependencies": [
         "@base-ui/react",
-        "class-variance-authority"
+        "class-variance-authority",
+        "media-chrome"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -1446,7 +1467,16 @@
           "path": "registry/espresso/hooks/use-lazy-ref.ts",
           "type": "registry:hook",
           "target": "hooks/use-lazy-ref.ts"
+        },
+        {
+          "path": "registry/espresso/hooks/use-isomorphic-layout-effect.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-isomorphic-layout-effect.ts"
         }
+      ],
+      "dependencies": [
+        "lucide-react",
+        "radix-ui"
       ]
     },
     {
@@ -1457,12 +1487,15 @@
       "description": "Popover color picker with saturation area, hue and alpha sliders, and an eye dropper.",
       "dependencies": [
         "class-variance-authority",
-        "lucide-react"
+        "lucide-react",
+        "radix-ui"
       ],
       "registryDependencies": [
         "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
         "https://espresso-base-ui.vercel.app/r/button.json",
-        "https://espresso-base-ui.vercel.app/r/input.json"
+        "https://espresso-base-ui.vercel.app/r/input.json",
+        "https://espresso-base-ui.vercel.app/r/popover.json",
+        "https://espresso-base-ui.vercel.app/r/tabs.json"
       ],
       "files": [
         {

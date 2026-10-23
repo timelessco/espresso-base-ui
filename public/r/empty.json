@@ -3,6 +3,9 @@
   "name": "empty",
   "title": "Empty",
   "description": "Empty state component for lists, tables, and other content areas.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
   ],

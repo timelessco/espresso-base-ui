@@ -3,6 +3,10 @@
   "name": "file-upload",
   "title": "File Upload",
   "description": "Headless file picker with drag-and-drop, validation, and upload progress.",
+  "dependencies": [
+    "lucide-react",
+    "radix-ui"
+  ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"
   ],
@@ -23,6 +27,12 @@
       "content": "import * as React from \"react\";\n\nfunction useLazyRef<T>(fn: () => T) {\n  const ref = React.useRef<T | null>(null);\n\n  if (ref.current === null) {\n    ref.current = fn();\n  }\n\n  return ref as React.RefObject<T>;\n}\n\nexport { useLazyRef };\n",
       "type": "registry:hook",
       "target": "hooks/use-lazy-ref.ts"
+    },
+    {
+      "path": "registry/espresso/hooks/use-isomorphic-layout-effect.ts",
+      "content": "import * as React from \"react\";\n\nconst useIsomorphicLayoutEffect =\n  typeof window !== \"undefined\" ? React.useLayoutEffect : React.useEffect;\n\nexport { useIsomorphicLayoutEffect };\n",
+      "type": "registry:hook",
+      "target": "hooks/use-isomorphic-layout-effect.ts"
     }
   ],
   "type": "registry:ui"
