@@ -6,15 +6,12 @@ import {
   CircleDashedIcon,
   CodeIcon,
   GitBranchIcon,
-  MessageSquareIcon,
-  PhoneIncomingIcon,
   RocketIcon,
   SparklesIcon,
 } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import {
   Timeline,
   TimelineContent,
@@ -25,6 +22,12 @@ import {
   TimelineSeparator,
   TimelineTitle,
 } from "@/components/reui/timeline"
+
+import {
+  ActivityCallLogPattern,
+  ActivityDefaultPattern,
+  ActivityEventsPattern,
+} from "./activity-patterns"
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
@@ -60,10 +63,21 @@ const releaseSteps = [
 export default function TimelinePage() {
   return (
     <div className="flex flex-col gap-12 p-8">
-      {/* CRM activity log (mixed item types) */}
-      <div className="flex max-w-2xl flex-col gap-8">
-        <SectionTitle>CRM activity log (mixed item types)</SectionTitle>
-        <CrmActivityTimeline />
+      {/* Activity patterns, as the espresso playground draws them: an
+          activity feed is 788px wide, whatever it sits in. */}
+      <div className="flex w-full max-w-[788px] flex-col gap-4">
+        <SectionTitle>Activity — Default</SectionTitle>
+        <ActivityDefaultPattern />
+      </div>
+
+      <div className="flex w-full max-w-[788px] flex-col gap-4">
+        <SectionTitle>Activity — Call log</SectionTitle>
+        <ActivityCallLogPattern />
+      </div>
+
+      <div className="flex w-full max-w-[788px] flex-col gap-4">
+        <SectionTitle>Activity — Events</SectionTitle>
+        <ActivityEventsPattern />
       </div>
 
       {/* Vertical (default) */}
@@ -120,326 +134,6 @@ export default function TimelinePage() {
         <ActivityFeedTimeline />
       </div>
     </div>
-  )
-}
-
-function CrmActivityTimeline() {
-  return (
-    <Timeline defaultValue={6}>
-      {/* 1) Email card with attachments */}
-      <TimelineItem
-        step={1}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineSeparator className="bg-muted! group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:h-full group-data-[orientation=vertical]/timeline:translate-y-0" />
-        <TimelineIndicator
-          className="size-7 overflow-hidden rounded-full border-none group-data-[orientation=vertical]/timeline:-left-8"
-          render={
-            <Avatar className="size-7">
-              <AvatarImage
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=96&h=96&dpr=2&q=80"
-                alt="Templeton Peck"
-              />
-              <AvatarFallback className="text-[10px]">TP</AvatarFallback>
-            </Avatar>
-          }
-        />
-        <TimelineContent>
-          <Card variant="mail" className="-mt-2.5 gap-0">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex flex-col gap-1">
-                <p>
-                  <span className="font-medium text-foreground">
-                    Templeton Peck
-                  </span>{" "}
-                  <span className="text-sm text-accent-foreground">
-                    &lt;templeton@frappe.io&gt;
-                  </span>
-                </p>
-                <p className="text-base font-normal text-muted-foreground">
-                  <span className="text-accent-foreground">To:</span> Jonathan
-                  Higgins, sandeep@timeless.co, +4
-                </p>
-                <p className="text-base text-muted-foreground">
-                  <span className="text-accent-foreground">Subject:</span>{" "}
-                  Package update
-                </p>
-              </div>
-              <span className="shrink-0 text-xs text-accent-foreground">
-                3d ago
-              </span>
-            </div>
-            <div className="mt-3.5 border-t border-border-soft pt-3.5 text-base text-secondary-foreground">
-              <p className="pb-0.5">Hi Good morning,</p>
-              <p>We hope this message finds you well.</p>
-              <br></br>
-
-              <p className="leading-lg">
-                We are writing to inform you about recent updates to our
-                inventory package that may affect your current and future
-                orders. We’ve expanded our inventory with new items including
-                Bose. These additions are now available for ordering and can be
-                viewed on our Bose
-              </p>
-              <br></br>
-              <p className="pb-0.5">Thanks &amp; Regards</p>
-              <p>Templeton Peck</p>
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              <AttachmentChip
-                icon="/images/svg/zip.svg"
-                name="Satoshi.zip"
-                meta="Zip · 5.4 MB"
-              />
-              <AttachmentChip
-                icon="/images/svg/pdf.svg"
-                name="Bose.PDF"
-                meta="PDF · 44MB"
-              />
-              <AttachmentChip
-                icon="/images/svg/document.svg"
-                name="Supply_Update.doc"
-                meta="Doc · 9.8 MB"
-              />
-            </div>
-          </Card>
-        </TimelineContent>
-      </TimelineItem>
-
-      <TimelineItem
-        step={2}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineSeparator className="bg-muted! group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:h-full group-data-[orientation=vertical]/timeline:translate-y-0" />
-        <TimelineIndicator
-          className="size-7 overflow-hidden rounded-full border-none group-data-[orientation=vertical]/timeline:-left-8"
-          render={
-            <Avatar className="size-7">
-              <AvatarImage
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=96&h=96&dpr=2&q=80"
-                alt="Templeton Peck"
-              />
-              <AvatarFallback className="text-[10px]">TP</AvatarFallback>
-            </Avatar>
-          }
-        />
-        <TimelineContent>
-          <Card variant="mail" className="-mt-2.5 gap-0">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex flex-col gap-0.5">
-                <p>
-                  <span className="font-medium text-foreground">
-                    Templeton Peck
-                  </span>{" "}
-                  <span className="text-sm text-accent-foreground">
-                    &lt;templeton@frappe.io&gt;
-                  </span>
-                </p>
-              </div>
-              <span className="shrink-0 text-xs text-accent-foreground">
-                3d ago
-              </span>
-            </div>
-            <p className="pt-1 leading-lg text-accent-foreground">
-              Hi, I placed an order last week. I spoke with Marisa at the time.
-              When will it be delivered?
-            </p>
-          </Card>
-        </TimelineContent>
-      </TimelineItem>
-
-      {/* 2) Comment in chat bubble */}
-      <TimelineItem
-        step={3}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineSeparator className="bg-muted! group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:h-full group-data-[orientation=vertical]/timeline:translate-y-0" />
-        <TimelineIndicator className="flex size-8 items-center justify-center rounded-full border-none bg-secondary text-muted-foreground group-data-[orientation=vertical]/timeline:-left-8">
-          <MessageSquareIcon className="size-3.5" />
-        </TimelineIndicator>
-        <TimelineContent className="mt-1.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-sm">
-              <Avatar className="size-5">
-                <AvatarImage
-                  src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=96&h=96&dpr=2&q=80"
-                  alt="Sanny Woven"
-                />
-                <AvatarFallback className="text-[9px]">SW</AvatarFallback>
-              </Avatar>
-              <span className="font-medium text-foreground">Sanny Woven</span>
-              <span className="text-muted-foreground">added a comment</span>
-            </div>
-            <span className="text-xs text-accent-foreground">27 Jun</span>
-          </div>
-          <Card variant="message" className="mt-2 w-full text-base">
-            <p className="max-w-lg leading-lg text-muted-foreground">
-              <span className="font-medium text-secondary-foreground">
-                @Sandra Bass
-              </span>
-              , I&apos;ve noticed that too. I think we need better forecasting.
-              We often end up with either too much stock or not enough. Maybe we
-              should look into some advanced forecasting software?
-            </p>
-          </Card>
-        </TimelineContent>
-      </TimelineItem>
-
-      {/* 3) Compact activity log rows */}
-      <TimelineItem
-        step={4}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineSeparator className="h-full! bg-muted! group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:translate-y-0" />
-        <TimelineIndicator className="size-2 rounded-full border-0 bg-yellow-500 group-data-[orientation=vertical]/timeline:top-1 group-data-[orientation=vertical]/timeline:-left-9 group-data-[orientation=vertical]/timeline:translate-x-0" />
-        <TimelineContent>
-          <p className="text-sm font-medium text-foreground">
-            Show +9 activities from last week
-          </p>
-          <ul className="mt-4 space-y-3 text-sm">
-            <ActivityRow
-              text={
-                <>
-                  <span className="font-medium text-foreground">
-                    Significa Well
-                  </span>{" "}
-                  updated deal status value from{" "}
-                  <span className="font-medium text-foreground">
-                    Prospecting
-                  </span>{" "}
-                  to{" "}
-                  <span className="font-medium text-foreground">Qualified</span>
-                </>
-              }
-              date="12 Jun"
-            />
-            <ActivityRow
-              text={
-                <>
-                  <span className="font-medium text-foreground">
-                    Gleb Kuznetsov
-                  </span>{" "}
-                  created a task
-                </>
-              }
-              date="19 Jun"
-            />
-            <ActivityRow
-              text={
-                <>
-                  <span className="font-medium text-foreground">
-                    Zhenya Rynzhuk
-                  </span>{" "}
-                  added a note
-                </>
-              }
-              date="19 Jun"
-            />
-            <ActivityRow
-              text={
-                <>
-                  <span className="font-medium text-foreground">
-                    Shariq Ansari
-                  </span>{" "}
-                  updated status from{" "}
-                  <span className="font-medium text-foreground">Contacted</span>{" "}
-                  to{" "}
-                  <span className="font-medium text-foreground">Qualified</span>
-                </>
-              }
-              date="20 Jun"
-            />
-          </ul>
-        </TimelineContent>
-      </TimelineItem>
-
-      {/* 4) Single field change */}
-      <TimelineItem
-        step={5}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineSeparator className="h-full! bg-muted! group-data-[orientation=vertical]/timeline:-left-8 group-data-[orientation=vertical]/timeline:translate-y-0" />
-        <TimelineIndicator className="size-2 rounded-full border-0 bg-yellow-500 group-data-[orientation=vertical]/timeline:top-1 group-data-[orientation=vertical]/timeline:-left-9 group-data-[orientation=vertical]/timeline:translate-x-0" />
-        <TimelineContent>
-          <p className="text-sm">
-            <span className="font-medium text-foreground">Shariq Ansari</span>{" "}
-            <span className="text-muted-foreground">added</span>{" "}
-            <span className="font-medium text-foreground">Annual Revenue</span>{" "}
-            <span className="text-muted-foreground">as</span>{" "}
-            <span className="font-medium text-foreground">45,00,000.00</span>
-          </p>
-        </TimelineContent>
-      </TimelineItem>
-
-      {/* 6) Phone call card */}
-      <TimelineItem
-        step={6}
-        className="group-data-[orientation=vertical]/timeline:ms-10"
-      >
-        <TimelineIndicator className="flex size-8 items-center justify-center rounded-full border-none bg-destructive/10 text-destructive group-data-[orientation=vertical]/timeline:-left-8">
-          <PhoneIncomingIcon className="size-3.5" />
-        </TimelineIndicator>
-        <TimelineContent>
-          <div className="mt-1.5 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-sm">
-              <Avatar className="size-5">
-                <AvatarImage
-                  src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=96&h=96&dpr=2&q=80"
-                  alt="Brian Robinson"
-                />
-                <AvatarFallback className="text-[9px]">BR</AvatarFallback>
-              </Avatar>
-              <span className="font-medium text-foreground">
-                Brian Robinson
-              </span>
-              <span className="text-muted-foreground">
-                has reached out to you.
-              </span>
-            </div>
-            <span className="text-xs text-accent-foreground">14 May</span>
-          </div>
-          <Card variant="call" className="mt-2 gap-0">
-            <p className="pb-1 text-sm font-medium text-foreground">
-              Inbound Call
-            </p>
-            <p className="text-sm text-destructive">Missed call</p>
-          </Card>
-        </TimelineContent>
-      </TimelineItem>
-    </Timeline>
-  )
-}
-
-function AttachmentChip({
-  icon,
-  name,
-  meta,
-}: {
-  icon: string
-  name: string
-  meta: string
-}) {
-  return (
-    <div className="flex items-center gap-2 rounded-lg bg-secondary p-2">
-      {/* biome-ignore lint/performance/noImgElement: static SVG from /public, no optimization needed */}
-
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-base font-medium text-foreground">{name}</p>
-        <div className="flex items-center gap-2 pt-1">
-          <img src={icon} alt="" className="size-4 shrink-0" />
-          <p className="truncate text-xs text-muted-foreground">{meta}</p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function ActivityRow({ text, date }: { text: React.ReactNode; date: string }) {
-  return (
-    <li className="flex items-center justify-between gap-3 text-accent-foreground">
-      <span>{text}</span>
-      <span className="shrink-0 text-xs">{date}</span>
-    </li>
   )
 }
 

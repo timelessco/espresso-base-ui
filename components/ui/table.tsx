@@ -63,7 +63,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
     <tr
       data-slot="table-row"
       className={cn(
-        "border-b border-border-soft transition-colors [@media(hover:hover)]:hover:border-transparent [@media(hover:hover)]:hover:bg-input has-aria-expanded:bg-muted/50 [@media(hover:hover)]:has-[+tr:hover]:border-transparent data-[state=selected]:border-transparent data-[state=selected]:bg-muted has-[+tr[data-state=selected]]:border-transparent [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md",
+        "border-b border-border-soft transition-colors [@media(hover:hover)]:hover:border-transparent [@media(hover:hover)]:hover:bg-input has-aria-expanded:bg-muted/50 [@media(hover:hover)]:has-[+tr:hover]:border-transparent data-[state=selected]:border-transparent data-[state=selected]:bg-secondary [@media(hover:hover)]:data-[state=selected]:hover:bg-secondary has-[+tr[data-state=selected]]:border-transparent [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md data-[state=selected]:has-[+tr[data-state=selected]]:border-secondary data-[state=selected]:has-[+tr[data-state=selected]]:[&>*:first-child]:rounded-bl-none data-[state=selected]:has-[+tr[data-state=selected]]:[&>*:last-child]:rounded-br-none data-[state=selected]:[[data-state=selected]+&]:[&>*:first-child]:rounded-tl-none data-[state=selected]:[[data-state=selected]+&]:[&>*:last-child]:rounded-tr-none",
         className
       )}
       {...props}
