@@ -11,14 +11,12 @@ function TagCloseIcon({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
       width="12"
       height="12"
-      viewBox="0 0 12 12"
+      viewBox="0 0 32 32"
       fill="none"
       className={className}
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M9.1654 3.54105C9.36066 3.34579 9.36066 3.02921 9.1654 2.83395C8.97014 2.63868 8.65356 2.63868 8.45829 2.83395L5.99988 5.29236L3.54147 2.83395C3.34621 2.63868 3.02962 2.63868 2.83436 2.83395C2.6391 3.02921 2.6391 3.34579 2.83436 3.54105L5.29278 5.99947L2.83395 8.45829C2.63868 8.65356 2.63868 8.97014 2.83395 9.1654C3.02921 9.36066 3.34579 9.36066 3.54105 9.1654L5.99988 6.70657L8.45871 9.1654C8.65397 9.36066 8.97055 9.36066 9.16582 9.1654C9.36108 8.97014 9.36108 8.65356 9.16582 8.45829L6.70699 5.99947L9.1654 3.54105Z"
+        d="M22.791 7.79297C23.1815 7.40248 23.8145 7.40255 24.2051 7.79297C24.5956 8.18349 24.5956 8.81651 24.2051 9.20703L17.4141 15.998L24.207 22.791C24.5971 23.1814 24.597 23.8146 24.207 24.2051C23.8166 24.5955 23.1835 24.5953 22.793 24.2051L16 17.4121L9.20703 24.2051C8.81651 24.5956 8.18349 24.5956 7.79297 24.2051C7.40255 23.8145 7.40248 23.1815 7.79297 22.791L14.5859 15.998L7.79492 9.20703C7.4044 8.81651 7.4044 8.18349 7.79492 7.79297C8.18548 7.40287 8.8186 7.40259 9.20898 7.79297L16 14.584L22.791 7.79297Z"
         fill="currentColor"
       />
     </svg>
@@ -26,7 +24,7 @@ function TagCloseIcon({ className }: { className?: string }) {
 }
 
 const tagVariants = cva(
-  "inline-flex shrink-0 items-center gap-1 bg-clip-padding font-normal whitespace-nowrap transition-all outline-none select-none focus-visible:shadow-3xs data-disabled:pointer-events-none",
+  "inline-flex shrink-0 items-center gap-1 bg-clip-padding font-normal whitespace-nowrap [&>svg]:size-3 [&>svg]:shrink-0 transition-all outline-none select-none focus-visible:shadow-3xs data-disabled:pointer-events-none",
   {
     variants: {
       variant: {
@@ -42,10 +40,10 @@ const tagVariants = cva(
           "bg-destructive text-destructive-foreground hover:bg-destructive-hover focus-visible:shadow-none focus-visible:ring-2 focus-visible:ring-destructive/50 active:bg-destructive-active data-disabled:bg-destructive-disabled data-disabled:text-destructive-disabled-foreground",
       },
       size: {
-        sm: "h-5 rounded-xs pl-1.5 pr-1 text-xs leading-base tracking-normal",
+        sm: "h-5 rounded-xs pl-1.5 pr-1 text-xs leading-lg tracking-normal not-has-data-[slot=tag-close]:pr-1.5",
         default:
-          "h-6 rounded-sm pl-1.5 pr-1 text-sm leading-base tracking-normal",
-        lg: "h-7 rounded-md pl-2 pr-1.5 text-base leading-base tracking-normal",
+          "h-6 rounded-sm pl-1.5 pr-1 text-sm leading-lg tracking-normal not-has-data-[slot=tag-close]:pr-1.5",
+        lg: "h-7 rounded-md pl-2 pr-1.5 text-base leading-lg tracking-normal not-has-data-[slot=tag-close]:pr-2",
       },
     },
     defaultVariants: {
