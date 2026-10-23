@@ -409,6 +409,14 @@ const products = [
 ]
 
 export default function TablePage() {
+  const [selectedOrgs, setSelectedOrgs] = React.useState<string[]>([])
+  const allOrgs = selectedOrgs.length === organisations.length
+  const someOrgs = selectedOrgs.length > 0 && !allOrgs
+  const toggleOrg = (id: string, on: boolean) =>
+    setSelectedOrgs((ids) =>
+      on ? [...ids, id] : ids.filter((other) => other !== id)
+    )
+
   return (
     <div className="flex flex-col gap-12 p-8">
       {/* CRM Table */}
@@ -418,7 +426,15 @@ export default function TablePage() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[40px]">
-                <Checkbox size="sm" />
+                <Checkbox
+                  size="sm"
+                  aria-label="Select all"
+                  checked={allOrgs}
+                  indeterminate={someOrgs}
+                  onCheckedChange={(on) =>
+                    setSelectedOrgs(on ? organisations.map((o) => o.id) : [])
+                  }
+                />
               </TableHead>
               <TableHead>Organisation</TableHead>
               <TableHead>Amount</TableHead>
@@ -431,13 +447,23 @@ export default function TablePage() {
           </TableHeader>
           <TableBody>
             {organisations.map((org) => (
-              <TableRow key={org.id}>
+              <TableRow
+                key={org.id}
+                data-state={
+                  selectedOrgs.includes(org.id) ? "selected" : undefined
+                }
+              >
                 <TableCell>
-                  <Checkbox size="sm" />
+                  <Checkbox
+                    size="sm"
+                    aria-label={`Select ${org.name}`}
+                    checked={selectedOrgs.includes(org.id)}
+                    onCheckedChange={(on) => toggleOrg(org.id, on)}
+                  />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Avatar variant="square" size="xs">
+                    <Avatar variant="square" size="sm">
                       <AvatarFallback className={org.logoBg}>
                         {org.logo}
                       </AvatarFallback>
@@ -469,7 +495,7 @@ export default function TablePage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Avatar size="xs">
+                    <Avatar size="sm">
                       <AvatarImage src={org.assigneeAvatar} />
                       <AvatarFallback>{org.assigneeFallback}</AvatarFallback>
                     </Avatar>
