@@ -5,7 +5,8 @@
   "description": "File chip for uploads, previews, and link cards with upload states.",
   "dependencies": [
     "@base-ui/react",
-    "class-variance-authority"
+    "class-variance-authority",
+    "media-chrome"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json",

@@ -5,7 +5,8 @@
   "description": "Dropdown menu with items, checkboxes, radios, and submenus.",
   "dependencies": [
     "@base-ui/react",
-    "lucide-react"
+    "lucide-react",
+    "class-variance-authority"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"

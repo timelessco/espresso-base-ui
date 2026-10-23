@@ -4,7 +4,8 @@
   "title": "Tooltip",
   "description": "Tooltip with arrow and positioning.",
   "dependencies": [
-    "@base-ui/react"
+    "@base-ui/react",
+    "class-variance-authority"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"

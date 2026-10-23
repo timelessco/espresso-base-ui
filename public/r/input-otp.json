@@ -4,7 +4,9 @@
   "title": "Input OTP",
   "description": "One-time-password input with slots and separators.",
   "dependencies": [
-    "input-otp"
+    "input-otp",
+    "lucide-react",
+    "class-variance-authority"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json"

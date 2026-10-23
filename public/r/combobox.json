@@ -4,7 +4,8 @@
   "title": "Combobox",
   "description": "Autocomplete input with single/multi-select, chips, and grouping.",
   "dependencies": [
-    "@base-ui/react"
+    "@base-ui/react",
+    "lucide-react"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json",

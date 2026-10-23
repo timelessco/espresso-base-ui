@@ -21,7 +21,8 @@
     "@tiptap/extension-mention",
     "@tiptap/suggestion",
     "@tiptap/extension-details",
-    "class-variance-authority"
+    "class-variance-authority",
+    "lucide-react"
   ],
   "registryDependencies": [
     "https://espresso-base-ui.vercel.app/r/espresso-theme.json",
@@ -30,7 +31,10 @@
     "https://espresso-base-ui.vercel.app/r/popover.json",
     "https://espresso-base-ui.vercel.app/r/dropdown-menu.json",
     "https://espresso-base-ui.vercel.app/r/tooltip.json",
-    "https://espresso-base-ui.vercel.app/r/emoji-picker.json"
+    "https://espresso-base-ui.vercel.app/r/emoji-picker.json",
+    "https://espresso-base-ui.vercel.app/r/dialog.json",
+    "https://espresso-base-ui.vercel.app/r/slider.json",
+    "https://espresso-base-ui.vercel.app/r/tabs.json"
   ],
   "files": [
     {
