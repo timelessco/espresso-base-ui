@@ -61,6 +61,20 @@ npx shadcn@latest add https://espresso-base-ui.vercel.app/r/dialog.json`}
         </DocProse>
       </DocSection>
 
+      <DocSection title="Outside Next.js">
+        <DocProse>
+          In Vite and other non-Next apps the CLI loads Inter from{" "}
+          <code>@fontsource-variable/inter</code>. That file has no optical-size
+          axis, which the theme&apos;s type scale sets (<code>opsz 24</code>), so
+          import the file that has it in your <code>globals.css</code>:
+        </DocProse>
+        <CodeBlock
+          code={`
+- @import "@fontsource-variable/inter";
++ @import "@fontsource-variable/inter/opsz.css";`}
+        />
+      </DocSection>
+
       <DocSection title="Registry namespace">
         <DocProse>
           Instead of pasting full URLs, register the Espresso registry once in

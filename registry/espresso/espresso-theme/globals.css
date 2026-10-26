@@ -1507,11 +1507,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground leading-base tracking-normal;
     font-weight: 420;
   }
   html {
-    @apply font-sans;
+    @apply font-sans antialiased;
   }
   svg {
     stroke-width: 1;
