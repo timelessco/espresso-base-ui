@@ -329,6 +329,11 @@
           "path": "registry/espresso/event/view-week.tsx",
           "type": "registry:ui",
           "target": "components/ui/event/view-week.tsx"
+        },
+        {
+          "path": "registry/espresso/event/view-icons.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/event/view-icons.tsx"
         }
       ]
     },

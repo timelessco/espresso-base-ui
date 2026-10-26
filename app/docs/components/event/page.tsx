@@ -200,7 +200,9 @@ export default function EventDocsPage() {
         <DocProse>
             The <code>header</code> render prop replaces the built-in month
             label, movers and view switcher, handing you everything they were
-            wired to.
+            wired to. To keep the built-in header and add your own buttons
+            after the view switcher, pass them as <code>headerActions</code>{" "}
+            instead.
         </DocProse>
         <CodeBlock code={HEADER_SLOT} />
       </DocSection>
@@ -270,6 +272,12 @@ export default function EventDocsPage() {
               prop: "header",
               type: "(props: EventHeaderSlotProps) => ReactNode",
               description: "Replaces the built-in header.",
+            },
+            {
+              prop: "headerActions",
+              type: "ReactNode",
+              description:
+                "Extra controls at the end of the built-in header, after the view switcher — e.g. Refresh or New event.",
             },
             {
               prop: "eventPopoverContent",
