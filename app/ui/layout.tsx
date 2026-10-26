@@ -346,18 +346,15 @@ function UISidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Search">
                   <Search />
                   <span>Search</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Notification"
-                  className="h-7 text-base"
-                >
+                <SidebarMenuButton tooltip="Notification">
                   <Bell />
                   <span>Notification</span>
                 </SidebarMenuButton>
@@ -371,13 +368,10 @@ function UISidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               {quickLinks.map((item) => (
                 <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton
-                    tooltip={item.label}
-                    className="h-7 text-base font-normal!"
-                  >
+                  <SidebarMenuButton tooltip={item.label}>
                     <item.icon />
                     <span>{item.label}</span>
                   </SidebarMenuButton>
@@ -399,7 +393,7 @@ function UISidebar() {
                 <Plus className="size-3.5" />
               </Button>
             </div>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               {teams.map((team) => (
                 <Collapsible key={team.name} className="group/team">
                   <SidebarMenuItem>
@@ -437,7 +431,7 @@ function UISidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               {components.map((item) => {
                 const isActive = pathname === item.href
                 return (
@@ -447,7 +441,6 @@ function UISidebar() {
                       isActive={isActive}
                       onClick={closeMobileSidebar}
                       className={cn(
-                        "h-7 text-base font-normal!",
                         isActive &&
                           "bg-background shadow-sm shadow-black/5 data-[active=true]:bg-background data-[active=true]:hover:bg-background"
                       )}

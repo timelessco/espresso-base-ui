@@ -117,13 +117,13 @@ function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Search">
                   <Search />
                   <span>Search</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Inbox" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Inbox">
                   <Inbox />
                   <span>Inbox</span>
                 </SidebarMenuButton>
@@ -139,12 +139,9 @@ function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel className="mb-px h-7">Platform</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Dashboard"
-                  className="h-7 text-base font-normal!"
-                >
+                <SidebarMenuButton tooltip="Dashboard">
                   <Home />
                   <span>Dashboard</span>
                 </SidebarMenuButton>
@@ -237,7 +234,7 @@ function AppSidebar() {
         {/* Channels — Collapsible */}
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-0.5">
+            <SidebarMenu>
               <Collapsible
                 defaultOpen={true}
                 className="group/collapsible group-data-[collapsible=icon]:hidden"
