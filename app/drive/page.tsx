@@ -579,16 +579,13 @@ function DriveSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Search">
                   <Search />
                   <span>Search</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Notifications"
-                  className="h-7 text-base"
-                >
+                <SidebarMenuButton tooltip="Notifications">
                   <Bell />
                   <span>Notifications</span>
                 </SidebarMenuButton>

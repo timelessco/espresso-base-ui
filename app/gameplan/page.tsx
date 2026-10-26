@@ -446,23 +446,20 @@ function GameplanSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Search">
                   <Search />
                   <span>Search</span>
                   <Kbd className="ml-auto">⌘ K</Kbd>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Notifications"
-                  className="h-7 text-base"
-                >
+                <SidebarMenuButton tooltip="Notifications">
                   <Bell />
                   <span>Notifications</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Inbox" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Inbox">
                   <Inbox />
                   <span>Inbox</span>
                 </SidebarMenuButton>

@@ -12,7 +12,7 @@ const inputGroupVariants = cva(
   [
     "group/input-group relative flex w-full min-w-0 items-center overflow-hidden outline-none",
     // disabled
-    "has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:text-popover-foreground",
+    "has-[[data-slot=input-group-control]:disabled]:pointer-events-none has-[[data-slot=input-group-control]:disabled]:cursor-not-allowed has-[[data-slot=input-group-control]:disabled]:text-popover-foreground",
     // focus-within
     "has-[[data-slot=input-group-control]:focus-visible]:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-[rgba(201,201,201,0.9)]",
     // invalid
@@ -24,11 +24,11 @@ const inputGroupVariants = cva(
     variants: {
       variant: {
         outline:
-          "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-disabled:hover:shadow-raised has-disabled:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
+          "bg-transparent shadow-default transition-shadow duration-150 group-data-[invalid=true]/field:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)]! not-has-[[data-slot=input-group-control]:disabled]:hover:shadow-raised has-[[data-slot=input-group-control]:disabled]:bg-transparent data-[filled=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--border)] data-[invalid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--error-outline)] data-[valid=true]:shadow-[0px_1px_1px_#0000000f,0px_0px_0px_1px_var(--success-outline)]",
         subtle:
-          "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] has-disabled:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! dark:not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
+          "bg-secondary group-data-[invalid=true]/field:bg-error! not-has-[[data-slot=input-group-control]:disabled]:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] has-[[data-slot=input-group-control]:disabled]:bg-input has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! dark:not-has-[[data-slot=input-group-control]:disabled]:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
         ghost:
-          "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] has-disabled:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! dark:not-has-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
+          "bg-transparent group-data-[invalid=true]/field:bg-error! not-has-[[data-slot=input-group-control]:disabled]:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] has-[[data-slot=input-group-control]:disabled]:bg-transparent has-[[data-slot=input-group-control]:focus-visible]:bg-background data-[filled=true]:bg-secondary data-[invalid=true]:bg-error! data-[valid=true]:bg-success! dark:not-has-[[data-slot=input-group-control]:disabled]:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
       },
       size: {
         xs: "h-6 rounded-sm [&_svg:not([class*='size-'])]:size-4",

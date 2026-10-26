@@ -254,16 +254,13 @@ function PlaygroundSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="gap-0.5">
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Search" className="h-7 text-base">
+                <SidebarMenuButton tooltip="Search">
                   <Search />
                   <span>Search</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton
-                  tooltip="Notification"
-                  className="h-7 text-base"
-                >
+                <SidebarMenuButton tooltip="Notification">
                   <Bell />
                   <span>Notification</span>
                 </SidebarMenuButton>
@@ -455,7 +452,7 @@ export default function PlaygroundLayout({
               key={item.href}
               label={item.label}
               icon={<item.icon />}
-              href={item.href}
+              render={<Link href={item.href} />}
               active={pathname === item.href}
             />
           ))}

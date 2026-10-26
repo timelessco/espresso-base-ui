@@ -6,10 +6,11 @@ import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsIndicator, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { EventContext } from "./context"
 import { EventStyles } from "./styles"
 import { MonthYearCalendar } from "./month-year-calendar"
+import { AgendaIcon, DayIcon, MonthIcon, WeekIcon } from "./view-icons"
 import { NewEventModal } from "./event-modal"
 import { EventMonthly } from "./view-month"
 import { EventWeekly } from "./view-week"
@@ -46,7 +47,7 @@ const DEFAULT_CONFIG: EventConfig = {
   defaultMode: "Month",
   isEditMode: false,
   eventIcons: {},
-  hourHeight: 50,
+  hourHeight: 70,
   enableShortcuts: true,
   showIcon: true,
   timeFormat: "12h",
@@ -112,6 +113,8 @@ export interface EventProps extends EventPublicProps, EventSlots {
   style?: React.CSSProperties
   /** Replaces the default header: the month label and every mover. */
   header?: (props: EventHeaderSlotProps) => React.ReactNode
+  /** Extra controls at the end of the default header (e.g. Refresh, New). */
+  headerActions?: React.ReactNode
   children?: React.ReactNode
 }
 
@@ -132,6 +135,7 @@ export function Event({
   onDelete,
   onRangeChange,
   header,
+  headerActions,
   eventPopoverContent,
   eventDescription,
   eventSuffix,
@@ -709,7 +713,7 @@ export function Event({
         {header ? (
           header(headerProps)
         ) : (
-          <DefaultHeader {...headerProps} />
+          <EventHeader {...headerProps} actions={headerActions} />
         )}
 
         {activeView === "Month" && (
@@ -755,7 +759,29 @@ export function Event({
 const daysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 /** The default header: month picker, movers, Today and the view switcher. */
-function DefaultHeader({
+const VIEW_ICONS: Record<EventView, React.ComponentType<{ className?: string }>> = {
+  Day: DayIcon,
+  Week: WeekIcon,
+  Month: MonthIcon,
+  Agenda: AgendaIcon,
+}
+
+const FULL_MONTH =
+  /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g
+
+/** "Oct 2026": the label without its weekday and day (Day view), months short. */
+function shortMonthYear(label: string, view: EventView) {
+  const s = view === "Day" ? label.replace(/^[^,]+,\s*\d+\s*/, "") : label
+  return s.replace(FULL_MONTH, (m) => m.slice(0, 3))
+}
+
+/**
+ * The built-in header — the event page's sub-header: the month with its
+ * picker, then ‹ Today › and the view switcher (13px labels, 4px between the
+ * tabs), then any `actions`. Exported so a custom `header` can keep this look
+ * while reading the slot props: `header={(props) => <EventHeader {...props} />}`.
+ */
+export function EventHeader({
   currentMonthYear,
   enabledModes,
   activeView,
@@ -765,61 +791,85 @@ function DefaultHeader({
   setCalendarDate,
   onMonthYearChange,
   selectedMonthDate,
-}: EventHeaderSlotProps) {
+  actions,
+}: EventHeaderSlotProps & { actions?: React.ReactNode }) {
   const [open, setOpen] = React.useState(false)
   return (
-    <div className="mb-2 flex justify-between">
-      <div className="flex items-center">
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger
-            render={
-              <Button variant="ghost" className="gap-2 text-lg font-medium">
-                {currentMonthYear}
-                <ChevronDownIcon className="size-4" />
-              </Button>
-            }
+    <div className="mt-3.5 mb-4 flex h-8 shrink-0 items-center gap-8 pr-5 pl-5">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger
+          render={
+            <button
+              type="button"
+              className="group -ml-2 flex h-8 items-center gap-2 rounded-[8px] px-2 text-[16px] font-medium text-[color:var(--ec-ink-gray-7)] outline-none transition-colors hover:text-[color:var(--ec-ink-gray-6)] focus-visible:ring-2 focus-visible:ring-border-normal"
+            >
+              {shortMonthYear(currentMonthYear, activeView)}
+              <ChevronDownIcon
+                className={cn(
+                  "size-4 text-[color:var(--ec-ink-gray-5)] transition-[color,rotate] group-hover:text-[color:var(--ec-ink-gray-4)]",
+                  open && "rotate-180"
+                )}
+              />
+            </button>
+          }
+        />
+        <PopoverContent align="start" className="w-auto p-2">
+          <MonthYearCalendar
+            mode="single"
+            selected={new Date(selectedMonthDate + "T00:00")}
+            defaultMonth={new Date(selectedMonthDate + "T00:00")}
+            onSelect={(date) => {
+              if (date) onMonthYearChange(date)
+              setOpen(false)
+            }}
           />
-          <PopoverContent align="start" className="w-auto p-2">
-            <MonthYearCalendar
-              mode="single"
-              selected={new Date(selectedMonthDate + "T00:00")}
-              defaultMonth={new Date(selectedMonthDate + "T00:00")}
-              onSelect={(date) => {
-                if (date) onMonthYearChange(date)
-                setOpen(false)
-              }}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="flex items-center gap-x-1">
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Previous"
-          onClick={decrement}
-        >
-          <ChevronLeftIcon />
-        </Button>
-        <Button variant="ghost" onClick={() => setCalendarDate()}>
-          Today
-        </Button>
-        <Button variant="ghost" size="icon" aria-label="Next" onClick={increment}>
-          <ChevronRightIcon />
-        </Button>
+        </PopoverContent>
+      </Popover>
+
+      <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-0.5">
+          <Button
+            size="icon-sm"
+            variant="ghost"
+            aria-label="Previous"
+            onClick={decrement}
+          >
+            <ChevronLeftIcon />
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => setCalendarDate()}>
+            Today
+          </Button>
+          <Button
+            size="icon-sm"
+            variant="ghost"
+            aria-label="Next"
+            onClick={increment}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </div>
         <Tabs
           value={activeView}
           onValueChange={(value) => updateActiveView(value as EventView)}
-          className="ml-2"
         >
-          <TabsList>
-            {enabledModes.map((mode) => (
-              <TabsTrigger key={mode.value} value={mode.value}>
-                {mode.label}
-              </TabsTrigger>
-            ))}
+          <TabsList size="sm" className="gap-1">
+            <TabsIndicator />
+            {enabledModes.map((mode) => {
+              const Icon = VIEW_ICONS[mode.value]
+              return (
+                <TabsTrigger
+                  key={mode.value}
+                  value={mode.value}
+                  className="text-[13px] leading-[16.1px]! tracking-[0.02em]"
+                >
+                  <Icon className="size-4 shrink-0" />
+                  {mode.label}
+                </TabsTrigger>
+              )
+            })}
           </TabsList>
         </Tabs>
+        {actions}
       </div>
     </div>
   )

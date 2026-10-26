@@ -232,8 +232,8 @@ import {
   <MobileShellHeader>Title</MobileShellHeader>
   <MobileShellContent>Scrollable page content</MobileShellContent>
   <MobileNav>
-    <MobileNavItem label="Home" icon={<House />} href="/" active />
-    <MobileNavItem label="Search" icon={<Search />} href="/search" />
+    <MobileNavItem label="Home" icon={<House />} render={<Link href="/" />} active />
+    <MobileNavItem label="Search" icon={<Search />} render={<Link href="/search" />} />
   </MobileNav>
 </MobileShell>`}
         />
@@ -241,17 +241,20 @@ import {
 
       <DocSection title="Link or button items">
         <DocProse>
-          <code>MobileNavItem</code> renders a Next.js <code>Link</code> when{" "}
-          <code>href</code> is given, otherwise a <code>button</code> – use
-          links for page navigation and buttons for in-place tab state. The nav
-          is an equal-width grid, so it adapts to any number of items.
+          <code>MobileNavItem</code> renders your router&apos;s link when you
+          pass it as <code>render</code> (<code>&lt;Link href /&gt;</code> in
+          Next.js, <code>&lt;Link to /&gt;</code> in TanStack or React Router),
+          a plain <code>a</code> for <code>href</code>, and otherwise a{" "}
+          <code>button</code> – use links for page navigation and buttons for
+          in-place tab state. The nav is an equal-width grid, so it adapts to
+          any number of items.
         </DocProse>
         <CodeBlock
           code={`
 {/* Router navigation */}
 <MobileNav>
-  <MobileNavItem label="Home" icon={<House />} href="/" active={pathname === "/"} />
-  <MobileNavItem label="Alerts" icon={<Bell />} href="/alerts" active={pathname === "/alerts"} />
+  <MobileNavItem label="Home" icon={<House />} render={<Link href="/" />} active={pathname === "/"} />
+  <MobileNavItem label="Alerts" icon={<Bell />} render={<Link href="/alerts" />} active={pathname === "/alerts"} />
 </MobileNav>
 
 {/* Local tab state */}
@@ -335,10 +338,16 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
               description: "Tab icon; svgs are sized to size-6 automatically.",
             },
             {
+              prop: "render",
+              type: "ReactElement",
+              description:
+                "Your router's link to navigate with, e.g. <Link href=\"/inbox\" /> or <Link to=\"/inbox\" />. The item renders it (with its own classes and the icon) instead of a button.",
+            },
+            {
               prop: "href",
               type: "string",
               description:
-                "When set, the item renders a Next.js Link instead of a button.",
+                "A plain <a> address, when there is no router link to render.",
             },
             {
               prop: "active",
@@ -373,7 +382,7 @@ return <DesktopSidebarLayout>{children}</DesktopSidebarLayout>`}
             {
               part: "MobileNavItem",
               description:
-                'One icon-only tab filling the 56px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders a Link when href is set and inactive, otherwise a button.',
+                'One icon-only tab filling the 56px bar (data-slot="mobile-nav-item") – a size-6 icon with a press-scale; label becomes the aria-label. Renders the render link (or an <a> for href) when inactive, otherwise a button.',
             },
           ]}
         />
