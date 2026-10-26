@@ -68,7 +68,6 @@ import {
   NumberedListIcon,
   ParagraphIcon,
   QuoteIcon,
-  SmallDownIcon,
   SmallRightIcon,
   TableViewIcon,
   TodoIcon,
@@ -1264,18 +1263,6 @@ function lastLine(node: PMNode, pos: number): { node: PMNode; pos: number } | nu
     n = last
     if (n.type.name === "details" && n.attrs.open === false && n.firstChild)
       return { node: n.firstChild, pos: p + 1 }
-  }
-  return { node: n, pos: p }
-}
-
-/** the first line of text inside a block, or none */
-function firstLine(node: PMNode, pos: number): { node: PMNode; pos: number } | null {
-  let n = node
-  let p = pos
-  while (!n.isTextblock) {
-    if (n.isAtom || !n.firstChild) return null
-    p = p + 1
-    n = n.firstChild
   }
   return { node: n, pos: p }
 }
