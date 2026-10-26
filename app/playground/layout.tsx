@@ -452,7 +452,7 @@ export default function PlaygroundLayout({
               key={item.href}
               label={item.label}
               icon={<item.icon />}
-              href={item.href}
+              render={<Link href={item.href} />}
               active={pathname === item.href}
             />
           ))}

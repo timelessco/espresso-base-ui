@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
@@ -119,18 +118,27 @@ function scrollShellToTop(target: HTMLElement) {
 type MobileNavItemProps = {
   label: React.ReactNode
   icon?: React.ReactNode
+  /** A plain link's address. For client-side navigation pass `render`. */
   href?: string
+  /**
+   * The link element to navigate with, from your router — e.g.
+   * `<Link href="/inbox" />` (Next.js) or `<Link to="/inbox" />` (TanStack,
+   * React Router). Takes precedence over `href`.
+   */
+  render?: React.ReactElement<Record<string, unknown>>
   active?: boolean
 } & Omit<React.ComponentProps<"button">, "children">
 
 // Each item is an icon-only tab; `label` is its accessible name. Renders a
-// router link when `href` is given and the item isn't current; the active
-// item is a button whose tap scrolls to top. `active` controls the highlight
-// independently of the URL (so one tab can stay lit across a section).
+// link (your router's `render` element, or an `<a>` for `href`) when the item
+// isn't current; the active item is a button whose tap scrolls to top.
+// `active` controls the highlight independently of the URL (so one tab can
+// stay lit across a section).
 function MobileNavItem({
   label,
   icon,
   href,
+  render,
   active,
   className,
   onClick,
@@ -146,19 +154,15 @@ function MobileNavItem({
   // A real link when navigating somewhere new; a plain button when this item
   // is already active (tap = scroll to top). Switching the element keeps the
   // scroll-vs-navigate decision unambiguous.
-  if (href && !active) {
-    return (
-      <Link
-        href={href}
-        data-slot="mobile-nav-item"
-        data-active={undefined}
-        aria-label={typeof label === "string" ? label : undefined}
-        className={cls}
-        onClick={onClick as React.MouseEventHandler}
-      >
-        {content}
-      </Link>
-    )
+  if ((render || href) && !active) {
+    const link = render ?? <a href={href} />
+    return React.cloneElement(link, {
+      "data-slot": "mobile-nav-item",
+      "aria-label": typeof label === "string" ? label : undefined,
+      className: cn(cls, link.props.className as string | undefined),
+      onClick: onClick as React.MouseEventHandler,
+      children: content,
+    })
   }
 
   return (
