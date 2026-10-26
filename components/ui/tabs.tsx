@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
 import { cva, type VariantProps } from "class-variance-authority"
 
@@ -94,8 +95,18 @@ function TabsList({
   className,
   variant = "default",
   size = "sm",
+  indicator = true,
+  children,
   ...props
-}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+}: TabsPrimitive.List.Props &
+  VariantProps<typeof tabsListVariants> & {
+    /** Draws the active tab's background. A list that renders its own
+     * `<TabsIndicator />` keeps that one; `false` leaves it out. */
+    indicator?: boolean
+  }) {
+  const hasOwnIndicator = React.Children.toArray(children).some(
+    (child) => React.isValidElement(child) && child.type === TabsIndicator
+  )
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
@@ -103,7 +114,10 @@ function TabsList({
       data-size={size}
       className={cn(tabsListVariants({ variant, size }), className)}
       {...props}
-    />
+    >
+      {indicator && !hasOwnIndicator && <TabsIndicator />}
+      {children}
+    </TabsPrimitive.List>
   )
 }
 
@@ -184,7 +198,8 @@ export {
 // ### Added
 // - `TabsIndicator` component wrapping `TabsPrimitive.Indicator`, providing
 //   a sliding active-tab highlight via Base UI's `--active-tab-*` CSS vars.
-//   Consumers render `<TabsIndicator />` inside `<TabsList>`.
+//   `TabsList` renders one unless its children include a `<TabsIndicator />`
+//   (pass `indicator={false}` to leave it out).
 // - `size` variant on `TabsList` (`sm`, `default`) with `sm` as default.
 //   shadcn has no size variants.
 // - Additional `variant`s on `TabsList`: `ghost`, `browser`.
