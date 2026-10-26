@@ -5,7 +5,7 @@
   "description": "Inter variable font used by Espresso UI.",
   "type": "registry:font",
   "font": {
-    "family": "Inter, sans-serif",
+    "family": "'Inter Variable', Inter, sans-serif",
     "provider": "google",
     "import": "Inter",
     "variable": "--font-sans",
