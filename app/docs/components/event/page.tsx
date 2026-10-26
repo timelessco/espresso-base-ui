@@ -202,7 +202,9 @@ export default function EventDocsPage() {
             label, movers and view switcher, handing you everything they were
             wired to. To keep the built-in header and add your own buttons
             after the view switcher, pass them as <code>headerActions</code>{" "}
-            instead.
+            instead; to read the slot props and keep its look, render{" "}
+            <code>&lt;EventHeader {"{...props}"} /&gt;</code> from your{" "}
+            <code>header</code>.
         </DocProse>
         <CodeBlock code={HEADER_SLOT} />
       </DocSection>

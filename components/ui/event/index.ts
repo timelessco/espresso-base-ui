@@ -1,4 +1,4 @@
-export { Event, type EventProps } from "./event"
+export { Event, EventHeader, type EventProps } from "./event"
 export { EventAgenda } from "./view-agenda"
 export { EventDaily } from "./view-day"
 export { EventMonthly } from "./view-month"

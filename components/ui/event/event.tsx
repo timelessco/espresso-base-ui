@@ -713,7 +713,7 @@ export function Event({
         {header ? (
           header(headerProps)
         ) : (
-          <DefaultHeader {...headerProps} actions={headerActions} />
+          <EventHeader {...headerProps} actions={headerActions} />
         )}
 
         {activeView === "Month" && (
@@ -775,10 +775,13 @@ function shortMonthYear(label: string, view: EventView) {
   return s.replace(FULL_MONTH, (m) => m.slice(0, 3))
 }
 
-// The event page's sub-header: the month with its picker, then ‹ Today ›
-// and the view switcher (13px labels, 4px between the tabs), then any
-// `actions` the app adds.
-function DefaultHeader({
+/**
+ * The built-in header — the event page's sub-header: the month with its
+ * picker, then ‹ Today › and the view switcher (13px labels, 4px between the
+ * tabs), then any `actions`. Exported so a custom `header` can keep this look
+ * while reading the slot props: `header={(props) => <EventHeader {...props} />}`.
+ */
+export function EventHeader({
   currentMonthYear,
   enabledModes,
   activeView,
