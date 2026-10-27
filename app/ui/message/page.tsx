@@ -18,6 +18,8 @@ import {
   MessageHeader,
 } from "@/components/ui/message"
 
+import { ReactableBubble } from "./reactable-bubble"
+
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-medium text-foreground">{children}</h2>
 }
@@ -181,6 +183,32 @@ export default function MessagePage() {
             </Bubble>
           </MessageContent>
         </Message>
+      </div>
+
+      {/* Emoji reactions */}
+      <div className="flex max-w-md flex-col gap-4">
+        <SectionTitle>Emoji reactions (hover a message to react)</SectionTitle>
+        <div className="flex flex-col gap-3">
+          <Message>
+            <MessageAvatar className="group-has-data-[slot=bubble-reactions]/message:mb-4">
+              <Avatar className="size-8">
+                <AvatarFallback>SC</AvatarFallback>
+              </Avatar>
+            </MessageAvatar>
+            <MessageContent>
+              <ReactableBubble variant="secondary">
+                The new onboarding flow is live in staging.
+              </ReactableBubble>
+            </MessageContent>
+          </Message>
+          <Message align="end">
+            <MessageContent>
+              <ReactableBubble defaultReactions={["👍", "👍", "🎉"]}>
+                Nice — I&apos;ll run through it after lunch.
+              </ReactableBubble>
+            </MessageContent>
+          </Message>
+        </div>
       </div>
 
       {/* Bubble variants */}
