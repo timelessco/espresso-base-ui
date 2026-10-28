@@ -488,8 +488,9 @@ export const editorVariants = cva(
         // the text alone; nothing may clip the floating bar
         ghost: "overflow-visible",
         // a raised white card, its bar on the card with no rule above it
-        // (espresso 2.0's chat composer)
-        card: "bg-background shadow-[0px_0px_1px_0px_rgba(0,0,0,0.45),0px_1px_2px_0px_rgba(0,0,0,0.1)] not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)]",
+        // (espresso 2.0's chat composer); in the dark, a black shadow can't
+        // show on the page, so it takes the Input's themed outline
+        card: "bg-background shadow-[0px_0px_1px_0px_rgba(0,0,0,0.45),0px_1px_2px_0px_rgba(0,0,0,0.1)] not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)] dark:shadow-default dark:not-data-disabled:hover:shadow-raised dark:not-data-disabled:focus-within:ring-ring",
       },
     },
     defaultVariants: { variant: "outline" },
