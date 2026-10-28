@@ -601,6 +601,9 @@ export function Editor({
           tabKeys: false,
           placeholder: { placeholder },
           limit,
+          // sized to its text, it has no room for an empty line after a
+          // code block or list
+          ...(grow && { trailingNode: false as const }),
         }),
       ]}
       content={content}

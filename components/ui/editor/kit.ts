@@ -99,6 +99,9 @@ export interface RichTextKitOptions {
   tabKeys?: false
   /** the most characters the document holds */
   limit?: number | false
+  /** the empty line kept after a closing block (a code block, a list), to
+   * type on past it; off, the arrow down or a third Enter leaves the block */
+  trailingNode?: false
 }
 
 export const RichTextKit = Extension.create<RichTextKitOptions>({
@@ -117,6 +120,7 @@ export const RichTextKit = Extension.create<RichTextKitOptions>({
         // the branch's own paste plugin links a selection in place of
         // tiptap's, which would swap the words for the pasted address
         link: { openOnClick: false, linkOnPaste: false },
+        ...(options.trailingNode === false && { trailingNode: false }),
       }),
       TextStyle,
     ]
