@@ -168,8 +168,10 @@ function Sidebar({
     return (
       <div
         data-slot="sidebar"
+        data-side={side}
         className={cn(
-          "flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground",
+          // the same edge as the collapsible sidebar's, on the side it faces
+          "flex h-full w-(--sidebar-width) flex-col border-border-soft bg-sidebar text-sidebar-foreground data-[side=left]:border-r data-[side=right]:border-l",
           className
         )}
         {...props}
