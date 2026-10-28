@@ -684,6 +684,27 @@ function EditorField({
   const [height, setHeight] = React.useState<number | null>(null)
   const boxRef = React.useRef<HTMLDivElement>(null)
 
+  // growing, the text's box eases to each new height: measured from the
+  // text (an auto height can't be animated), up to maxHeight, past which it
+  // scrolls
+  const bodyRef = React.useRef<HTMLDivElement>(null)
+  const [fit, setFit] = React.useState<{ height: number; scrolls: boolean } | null>(null)
+  React.useEffect(() => {
+    const body = bodyRef.current
+    const doc = body?.querySelector<HTMLElement>(".ProseMirror")
+    if (!grow || !body || !doc) return
+    const measure = () => {
+      const style = getComputedStyle(body)
+      const natural = doc.offsetHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+      const height = Math.min(natural, maxHeight)
+      setFit((now) => (now?.height === height ? now : { height, scrolls: natural > maxHeight }))
+    }
+    measure()
+    const watch = new ResizeObserver(measure)
+    watch.observe(doc)
+    return () => watch.disconnect()
+  }, [editor, grow, maxHeight])
+
   React.useEffect(() => {
     if (!editor) return
     const track = () => setLength(editor.state.doc.textContent.length)
@@ -782,9 +803,14 @@ function EditorField({
       )}
 
       <div
-        style={grow ? { maxHeight } : undefined}
+        ref={bodyRef}
+        style={grow ? { maxHeight, height: fit?.height } : undefined}
         className={cn(
           "min-h-0 flex-1 cursor-text overflow-y-auto px-3 py-2",
+          // the text at its own height, to measure; the box eases between
+          // heights, clipping (not scrolling) the text while it does
+          grow && "flex-none [&_.ProseMirror]:min-h-0 transition-[height] duration-150 ease-out motion-reduce:transition-none",
+          grow && fit && !fit.scrolls && "overflow-y-hidden",
           // growing, it opens two lines tall; a card, one line with 32px
           // down to its bar
           grow && (card ? "px-2.5 pt-2.5 pb-8" : "min-h-[58px]"),
@@ -795,7 +821,7 @@ function EditorField({
         )}
         onMouseDown={focusEnd}
       >
-        <EditorContent editor={editor} className={cn("h-full", docClassName)} />
+        <EditorContent editor={editor} className={cn(!grow && "h-full", docClassName)} />
       </div>
 
       {toolbar === "top" && (
