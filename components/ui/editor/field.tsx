@@ -487,6 +487,9 @@ export const editorVariants = cva(
           "bg-secondary not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] not-data-disabled:focus-within:bg-background not-data-disabled:focus-within:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)] dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
         // the text alone; nothing may clip the floating bar
         ghost: "overflow-visible",
+        // a raised white card, its bar on the card with no rule above it
+        // (espresso 2.0's chat composer)
+        card: "bg-background shadow-[0px_0px_1px_0px_rgba(0,0,0,0.45),0px_1px_2px_0px_rgba(0,0,0,0.1)] not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)]",
       },
     },
     defaultVariants: { variant: "outline" },
@@ -507,7 +510,7 @@ const docClassName = cn(
 const MIN_HEIGHT = 180
 
 export interface EditorProps {
-  variant?: "outline" | "subtle" | "ghost"
+  variant?: "outline" | "subtle" | "ghost" | "card"
   toolbar?: "top" | "bottom" | "none"
   disabled?: boolean
   /** what it opens with */
@@ -538,6 +541,10 @@ export interface EditorProps {
   onImage?: (file: File) => void
   /** the people "@" offers for what's typed after it; none, no "@" list */
   mentions?: (query: string) => SuggestItem[]
+  /** the bottom bar's own tools, in place of its formatting controls */
+  tools?: React.ReactNode | ((editor: TiptapEditor) => React.ReactNode)
+  /** with `tools`, the formatting controls on a bar above the text */
+  formatting?: boolean
 }
 
 export function Editor({
@@ -561,6 +568,8 @@ export function Editor({
   controls,
   onImage,
   mentions,
+  tools,
+  formatting = false,
 }: EditorProps) {
   // read when "@" is typed, so a new list needn't remake the editor
   const people = React.useRef(mentions)
@@ -618,6 +627,8 @@ export function Editor({
           onReady={onReady}
           controls={controls}
           onImage={onImage}
+          tools={tools}
+          formatting={formatting}
         />
       )}
     </EditorProvider>
@@ -642,9 +653,11 @@ function EditorField({
   onReady,
   controls,
   onImage,
+  tools,
+  formatting,
 }: {
   editor: TiptapEditor | null
-  variant: "outline" | "subtle" | "ghost"
+  variant: "outline" | "subtle" | "ghost" | "card"
   toolbar: "top" | "bottom" | "none"
   disabled: boolean
   limit: number
@@ -660,7 +673,10 @@ function EditorField({
   onReady?: EditorProps["onReady"]
   controls?: EditorProps["controls"]
   onImage?: EditorProps["onImage"]
+  tools?: EditorProps["tools"]
+  formatting: boolean
 }) {
+  const card = variant === "card"
   const [length, setLength] = React.useState(0)
   const [height, setHeight] = React.useState<number | null>(null)
   const boxRef = React.useRef<HTMLDivElement>(null)
@@ -751,6 +767,11 @@ function EditorField({
       )}
       style={height !== null ? { height } : undefined}
     >
+      {editor && toolbar === "bottom" && tools !== undefined && formatting && (
+        <div className={cn("flex shrink-0 items-center px-1 pt-1 [&>[data-slot=editor-toolbar]]:p-0", !card && "border-b border-border-soft pb-1")}>
+          <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+        </div>
+      )}
       {editor && toolbar === "top" && (
         <div className="flex h-[31px] shrink-0 items-start border-b border-border-soft in-data-[variant=subtle]:border-border px-1 pt-[3px] [&>[data-slot=editor-toolbar]]:p-0">
           <EditorToolbar editor={editor} kind={controls ?? "full"} disabled={disabled} onImage={onImage} />
@@ -761,8 +782,9 @@ function EditorField({
         style={grow ? { maxHeight } : undefined}
         className={cn(
           "min-h-0 flex-1 cursor-text overflow-y-auto px-3 py-2",
-          // growing, it opens two lines tall
-          grow && "min-h-[58px]",
+          // growing, it opens two lines tall; a card, one line with 32px
+          // down to its bar
+          grow && (card ? "px-2.5 pt-2.5 pb-8" : "min-h-[58px]"),
           disabled && "cursor-default",
           variant === "ghost" && "overflow-visible",
           variant === "ghost" &&
@@ -795,8 +817,17 @@ function EditorField({
       )}
 
       {editor && toolbar === "bottom" && (
-        <div className="flex h-10 shrink-0 items-center justify-between border-t border-border-soft in-data-[variant=subtle]:border-border py-1 pr-2 pl-1">
-          <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+        <div
+          className={cn(
+            "flex shrink-0 items-center justify-between",
+            card ? "px-2.5 pb-2.5" : "h-10 border-t border-border-soft in-data-[variant=subtle]:border-border py-1 pr-2 pl-1"
+          )}
+        >
+          {tools !== undefined ? (
+            <div className="flex min-w-0 items-center">{typeof tools === "function" ? tools(editor) : tools}</div>
+          ) : (
+            <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+          )}
           {actions !== undefined ? (
             <div className="flex items-center gap-1.5">
               {typeof actions === "function" ? actions(editor) : actions}
