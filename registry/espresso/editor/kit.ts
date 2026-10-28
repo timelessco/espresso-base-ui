@@ -62,6 +62,7 @@ import {
   PEOPLE,
   SlashCommands,
   suggestionPopup,
+  type SuggestItem,
   TableCellColor,
   TableSelectionOverlay,
 } from "./extensions"
@@ -87,7 +88,9 @@ export interface RichTextKitOptions {
   embed?: false
   /** the YouTube video node */
   video?: false
-  mention?: false
+  /** the "@" list; by default the branch's people, or the caller's for a
+   * query */
+  mention?: false | { items: (query: string) => SuggestItem[] }
   slashCommands?: false
   subscript?: false
   superscript?: false
@@ -350,9 +353,11 @@ export const RichTextKit = Extension.create<RichTextKitOptions>({
           renderText: ({ node }) => `@${node.attrs.label ?? node.attrs.id}`,
           suggestion: {
             items: ({ query }) =>
-              PEOPLE.filter((person) =>
-                person.label.toLowerCase().startsWith(query.toLowerCase())
-              ),
+              options.mention
+                ? options.mention.items(query)
+                : PEOPLE.filter((person) =>
+                    person.label.toLowerCase().startsWith(query.toLowerCase())
+                  ),
             command: ({ editor, range, props }) =>
               editor
                 .chain()

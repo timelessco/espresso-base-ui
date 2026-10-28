@@ -50,7 +50,7 @@ import {
 
 import { EditorContent, EditorProvider } from "./core"
 import { RichTextKit } from "./kit"
-import { highlightValue, hue, PALETTE, textValue } from "./extensions"
+import { highlightValue, hue, PALETTE, textValue, type SuggestItem } from "./extensions"
 
 const nameOf = (value: string | undefined, of: (name: string) => string) =>
   PALETTE.find((n) => of(n) === value) ?? null
@@ -458,6 +458,20 @@ function SwatchPopover({
 
 /* --------------------------------- editor --------------------------------- */
 
+/** whether a suggestion list ("@" or "/") is open, by its plugin's state */
+function suggesting(state: TiptapEditor["state"]) {
+  return state.plugins.some((plugin) => {
+    const value: unknown = plugin.getState(state)
+    return (
+      typeof value === "object" &&
+      value !== null &&
+      "active" in value &&
+      "query" in value &&
+      value.active === true
+    )
+  })
+}
+
 export const editorVariants = cva(
   "relative flex w-full flex-col overflow-hidden rounded-xl transition-[background-color,border-color,box-shadow] duration-150",
   {
@@ -522,6 +536,8 @@ export interface EditorProps {
   controls?: "full" | "comment"
   /** a picked image goes here, in place of into the text */
   onImage?: (file: File) => void
+  /** the people "@" offers for what's typed after it; none, no "@" list */
+  mentions?: (query: string) => SuggestItem[]
 }
 
 export function Editor({
@@ -544,7 +560,14 @@ export function Editor({
   onReady,
   controls,
   onImage,
+  mentions,
 }: EditorProps) {
+  // read when "@" is typed, so a new list needn't remake the editor
+  const people = React.useRef(mentions)
+  React.useEffect(() => {
+    people.current = mentions
+  })
+  const hasMentions = !!mentions
   return (
     <EditorProvider
       extensions={[
@@ -559,7 +582,7 @@ export function Editor({
           audio: false,
           embed: false,
           video: false,
-          mention: false,
+          mention: hasMentions && { items: (query) => people.current?.(query) ?? [] },
           slashCommands: false,
           fontFamily: false,
           fontSize: false,
@@ -574,7 +597,7 @@ export function Editor({
       content={content}
       editable={!disabled}
       onUpdate={onChange}
-      deps={[limit, placeholder]}
+      deps={[limit, placeholder, hasMentions]}
     >
       {(editor) => (
         <EditorField
@@ -669,7 +692,9 @@ function EditorField({
           ...(editor.options.editorProps.attributes as Record<string, string>),
           ...(label && { "aria-label": label }),
         },
-        handleKeyDown: (_view, event) =>
+        // an open "@" or "/" list has the keys (Enter picks, Escape shuts)
+        handleKeyDown: (view, event) =>
+          !suggesting(view.state) &&
           handlers.current.onKeyDown?.(event, editor) === true,
       },
     })
