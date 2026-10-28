@@ -215,10 +215,12 @@ function EditorToolbar({
   editor,
   kind,
   disabled,
+  onImage,
 }: {
   editor: TiptapEditor
   kind: "full" | "comment"
   disabled?: boolean
+  onImage?: (file: File) => void
 }) {
   const active = useEditorState({
     editor,
@@ -255,6 +257,7 @@ function EditorToolbar({
   const fileRef = React.useRef<HTMLInputElement>(null)
   const insertImage = (file: File | undefined) => {
     if (!file) return
+    if (onImage) return onImage(file)
     const reader = new FileReader()
     reader.onload = () =>
       chain().setImage({ src: reader.result as string }).run()
@@ -502,6 +505,23 @@ export interface EditorProps {
   onChange?: (html: string) => void
   onComment?: (html: string) => void
   onDiscard?: () => void
+  /** the bottom bar's buttons, in place of Discard and Comment */
+  actions?: React.ReactNode | ((editor: TiptapEditor) => React.ReactNode)
+  /** sizes to its text, up to `maxHeight`, in place of the fixed 180px */
+  grow?: boolean
+  /** with `grow`, the tallest it gets before it scrolls */
+  maxHeight?: number
+  /** a key pressed in the text; true takes it from the editor (Enter to send, say) */
+  onKeyDown?: (event: KeyboardEvent, editor: TiptapEditor) => boolean | void
+  onBlur?: () => void
+  /** the text's accessible name */
+  label?: string
+  /** the editor once it's made, and null when it goes */
+  onReady?: (editor: TiptapEditor | null) => void
+  /** the bar's buttons: every control, or the comment bar's few; by default, full on top and few at the bottom */
+  controls?: "full" | "comment"
+  /** a picked image goes here, in place of into the text */
+  onImage?: (file: File) => void
 }
 
 export function Editor({
@@ -515,6 +535,15 @@ export function Editor({
   onChange,
   onComment,
   onDiscard,
+  actions,
+  grow = false,
+  maxHeight = 240,
+  onKeyDown,
+  onBlur,
+  label,
+  onReady,
+  controls,
+  onImage,
 }: EditorProps) {
   return (
     <EditorProvider
@@ -557,6 +586,15 @@ export function Editor({
           className={className}
           onComment={onComment}
           onDiscard={onDiscard}
+          actions={actions}
+          grow={grow}
+          maxHeight={maxHeight}
+          onKeyDown={onKeyDown}
+          onBlur={onBlur}
+          label={label}
+          onReady={onReady}
+          controls={controls}
+          onImage={onImage}
         />
       )}
     </EditorProvider>
@@ -572,6 +610,15 @@ function EditorField({
   className,
   onComment,
   onDiscard,
+  actions,
+  grow,
+  maxHeight,
+  onKeyDown,
+  onBlur,
+  label,
+  onReady,
+  controls,
+  onImage,
 }: {
   editor: TiptapEditor | null
   variant: "outline" | "subtle" | "ghost"
@@ -581,6 +628,15 @@ function EditorField({
   className?: string
   onComment?: (html: string) => void
   onDiscard?: () => void
+  actions?: EditorProps["actions"]
+  grow: boolean
+  maxHeight: number
+  onKeyDown?: EditorProps["onKeyDown"]
+  onBlur?: () => void
+  label?: string
+  onReady?: EditorProps["onReady"]
+  controls?: EditorProps["controls"]
+  onImage?: EditorProps["onImage"]
 }) {
   const [length, setLength] = React.useState(0)
   const [height, setHeight] = React.useState<number | null>(null)
@@ -597,6 +653,38 @@ function EditorField({
   }, [editor])
 
   const remaining = Math.max(0, limit - length)
+
+  // the caller's keys, blur and name, read fresh on each key so they may
+  // close over the caller's latest state
+  const handlers = React.useRef({ onKeyDown, onBlur })
+  React.useEffect(() => {
+    handlers.current = { onKeyDown, onBlur }
+  })
+  React.useEffect(() => {
+    if (!editor) return
+    editor.setOptions({
+      editorProps: {
+        ...editor.options.editorProps,
+        attributes: {
+          ...(editor.options.editorProps.attributes as Record<string, string>),
+          ...(label && { "aria-label": label }),
+        },
+        handleKeyDown: (_view, event) =>
+          handlers.current.onKeyDown?.(event, editor) === true,
+      },
+    })
+    const blur = () => handlers.current.onBlur?.()
+    editor.on("blur", blur)
+    return () => {
+      editor.off("blur", blur)
+    }
+  }, [editor, label])
+
+  React.useEffect(() => {
+    onReady?.(editor)
+    return () => onReady?.(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor])
 
   // the resizer: dragged, the editor grows or shrinks, never under 180
   const resize = (event: React.PointerEvent) => {
@@ -632,7 +720,7 @@ function EditorField({
       {...(disabled && { "data-disabled": "" })}
       className={cn(
         editorVariants({ variant }),
-        toolbar !== "none" && variant !== "ghost" && height === null && "h-[180px]",
+        toolbar !== "none" && variant !== "ghost" && !grow && height === null && "h-[180px]",
         disabled && "opacity-50",
         className
       )}
@@ -640,13 +728,16 @@ function EditorField({
     >
       {editor && toolbar === "top" && (
         <div className="flex h-[31px] shrink-0 items-start border-b border-border-soft in-data-[variant=subtle]:border-border px-1 pt-[3px] [&>[data-slot=editor-toolbar]]:p-0">
-          <EditorToolbar editor={editor} kind="full" disabled={disabled} />
+          <EditorToolbar editor={editor} kind={controls ?? "full"} disabled={disabled} onImage={onImage} />
         </div>
       )}
 
       <div
+        style={grow ? { maxHeight } : undefined}
         className={cn(
           "min-h-0 flex-1 cursor-text overflow-y-auto px-3 py-2",
+          // growing, it opens two lines tall
+          grow && "min-h-[58px]",
           disabled && "cursor-default",
           variant === "ghost" && "overflow-visible",
           variant === "ghost" &&
@@ -680,31 +771,37 @@ function EditorField({
 
       {editor && toolbar === "bottom" && (
         <div className="flex h-10 shrink-0 items-center justify-between border-t border-border-soft in-data-[variant=subtle]:border-border py-1 pr-2 pl-1">
-          <EditorToolbar editor={editor} kind="comment" disabled={disabled} />
-          <div className="flex items-center gap-1.5">
-            <Button
-              size="xs"
-              variant="ghost"
-              disabled={disabled}
-              onClick={() => {
-                editor.commands.clearContent(true)
-                onDiscard?.()
-              }}
-            >
-              Discard
-            </Button>
-            <Button
-              size="xs"
-              disabled={disabled}
-              onClick={() => {
-                if (editor.isEmpty) return
-                onComment?.(editor.getHTML())
-                editor.commands.clearContent(true)
-              }}
-            >
-              Comment
-            </Button>
-          </div>
+          <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+          {actions !== undefined ? (
+            <div className="flex items-center gap-1.5">
+              {typeof actions === "function" ? actions(editor) : actions}
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <Button
+                size="xs"
+                variant="ghost"
+                disabled={disabled}
+                onClick={() => {
+                  editor.commands.clearContent(true)
+                  onDiscard?.()
+                }}
+              >
+                Discard
+              </Button>
+              <Button
+                size="xs"
+                disabled={disabled}
+                onClick={() => {
+                  if (editor.isEmpty) return
+                  onComment?.(editor.getHTML())
+                  editor.commands.clearContent(true)
+                }}
+              >
+                Comment
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
