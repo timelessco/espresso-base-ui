@@ -67,8 +67,8 @@ function FileAttachment({
     <Attachment
       className={
         inverted
-          ? "w-64 rounded-xl bg-white/12 text-primary-foreground *:data-[slot=attachment-media]:bg-white/15 *:data-[slot=attachment-media]:text-primary-foreground [&_[data-slot=attachment-action]]:text-primary-foreground [&_[data-slot=attachment-action]]:hover:bg-white/15 [&_[data-slot=attachment-description]]:text-primary-foreground/70"
-          : "w-64 rounded-xl bg-background"
+          ? "w-64 bg-white/12 text-primary-foreground *:data-[slot=attachment-media]:bg-white/15 *:data-[slot=attachment-media]:text-primary-foreground [&_[data-slot=attachment-action]]:text-primary-foreground [&_[data-slot=attachment-action]]:hover:bg-white/15 [&_[data-slot=attachment-description]]:text-primary-foreground/70"
+          : "w-64 bg-background"
       }
     >
       <AttachmentMedia>
@@ -267,12 +267,8 @@ export default function MessagePage() {
             </MessageAvatar>
             <MessageContent>
               <Bubble variant="secondary">
-                <BubbleContent className="w-min p-1">
-                  <Attachment
-                    size="lg"
-                    orientation="vertical"
-                    className="rounded-xl"
-                  >
+                <BubbleContent>
+                  <Attachment size="lg" orientation="vertical">
                     <AttachmentMedia variant="image">
                       {/* biome-ignore lint/performance/noImgElement: showcase only */}
                       <img
@@ -281,7 +277,7 @@ export default function MessagePage() {
                       />
                     </AttachmentMedia>
                   </Attachment>
-                  <p className="px-1.5 pt-1.5 pb-0.5">
+                  <p>
                     Here&apos;s the new desk setup — finally got the second
                     monitor.
                   </p>
@@ -294,7 +290,7 @@ export default function MessagePage() {
           <Message align="end">
             <MessageContent>
               <Bubble align="end">
-                <BubbleContent className="p-1">
+                <BubbleContent>
                   <Attachment className="w-64">
                     <AttachmentMedia variant="audio">
                       <audio src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
@@ -317,8 +313,8 @@ export default function MessagePage() {
             </MessageAvatar>
             <MessageContent>
               <Bubble variant="secondary">
-                <BubbleContent className="w-min p-1">
-                  <Attachment orientation="vertical" className="rounded-xl">
+                <BubbleContent>
+                  <Attachment orientation="vertical">
                     <AttachmentMedia variant="video">
                       {/* biome-ignore lint/a11y/useMediaCaption: showcase only */}
                       <video
@@ -328,7 +324,7 @@ export default function MessagePage() {
                       />
                     </AttachmentMedia>
                   </Attachment>
-                  <p className="px-1.5 pt-1.5 pb-0.5">
+                  <p>
                     Draft of the intro animation for the launch video. Thoughts
                     on the pacing?
                   </p>
@@ -346,8 +342,7 @@ export default function MessagePage() {
             </MessageAvatar>
             <MessageContent>
               <Bubble variant="secondary">
-                {/* overflow-visible keeps the fanned cards' shadows */}
-                <BubbleContent className="w-min overflow-visible p-2">
+                <BubbleContent>
                   <AttachmentGroup>
                     {STACK_IMAGES.map((file) => (
                       <Attachment
@@ -362,7 +357,7 @@ export default function MessagePage() {
                       </Attachment>
                     ))}
                   </AttachmentGroup>
-                  <p className="px-0.5 pt-1.5 pb-0.5">
+                  <p>
                     A few photos from the offsite. The rest are in the shared
                     album.
                   </p>
@@ -380,11 +375,8 @@ export default function MessagePage() {
             </MessageAvatar>
             <MessageContent>
               <Bubble variant="secondary">
-                <BubbleContent className="w-min p-1">
-                  <Attachment
-                    orientation="vertical"
-                    className="rounded-xl bg-background"
-                  >
+                <BubbleContent>
+                  <Attachment orientation="vertical" className="bg-background">
                     <AttachmentMedia variant="link">
                       {/* biome-ignore lint/performance/noImgElement: showcase only */}
                       <img
@@ -412,7 +404,7 @@ export default function MessagePage() {
                       }
                     />
                   </Attachment>
-                  <p className="px-1.5 pt-1.5 pb-0.5">
+                  <p>
                     Signed up for this —{" "}
                     <a
                       href="https://luma.com/lc-blr-2026"
@@ -437,13 +429,13 @@ export default function MessagePage() {
             </MessageAvatar>
             <MessageContent>
               <Bubble variant="secondary">
-                <BubbleContent className="w-min p-1">
+                <BubbleContent>
                   <FileAttachment
                     icon={FileTextIcon}
                     name="offsite-agenda.pdf"
                     meta="PDF · 1.2 MB"
                   />
-                  <p className="px-1.5 pt-1.5 pb-0.5">
+                  <p>
                     Agenda for Thursday — please add your topics by Wednesday.
                   </p>
                 </BubbleContent>
@@ -455,7 +447,7 @@ export default function MessagePage() {
           <Message align="end">
             <MessageContent>
               <Bubble align="end">
-                <BubbleContent className="flex flex-col gap-1 p-1">
+                <BubbleContent>
                   <FileAttachment
                     icon={FileTextIcon}
                     name="meeting-notes.txt"
