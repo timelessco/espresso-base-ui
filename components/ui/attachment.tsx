@@ -202,7 +202,7 @@ function AttachmentMediaPlayer({
               if (el?.duration) el.currentTime = fraction * el.duration
             }}
           />
-          <MediaDurationDisplay className="pr-2 text-sm [--media-font-size:0.875rem] [--media-primary-color:var(--muted)]" />
+          <MediaDurationDisplay className="pr-2 text-sm [--media-font-size:0.875rem] [--media-primary-color:rgb(255_255_255/0.85)]" />
         </MediaControlBar>
       </MediaController>
     )
