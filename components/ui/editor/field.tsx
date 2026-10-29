@@ -546,6 +546,8 @@ export interface EditorProps {
   tools?: React.ReactNode | ((editor: TiptapEditor) => React.ReactNode)
   /** with `tools`, the formatting controls on a bar above the text */
   formatting?: boolean
+  /** files waiting to go with the text (a composer's), on a row above it */
+  attachments?: React.ReactNode
 }
 
 export function Editor({
@@ -571,6 +573,7 @@ export function Editor({
   mentions,
   tools,
   formatting = false,
+  attachments,
 }: EditorProps) {
   // read when "@" is typed, so a new list needn't remake the editor
   const people = React.useRef(mentions)
@@ -633,6 +636,7 @@ export function Editor({
           onImage={onImage}
           tools={tools}
           formatting={formatting}
+          attachments={attachments}
         />
       )}
     </EditorProvider>
@@ -659,6 +663,7 @@ function EditorField({
   onImage,
   tools,
   formatting,
+  attachments,
 }: {
   editor: TiptapEditor | null
   variant: "outline" | "subtle" | "ghost" | "card"
@@ -679,6 +684,7 @@ function EditorField({
   onImage?: EditorProps["onImage"]
   tools?: EditorProps["tools"]
   formatting: boolean
+  attachments?: React.ReactNode
 }) {
   const card = variant === "card"
   const [length, setLength] = React.useState(0)
@@ -802,6 +808,8 @@ function EditorField({
           <EditorToolbar editor={editor} kind={controls ?? "full"} disabled={disabled} onImage={onImage} />
         </div>
       )}
+
+      {attachments && <div className="shrink-0 px-2.5 pt-2.5">{attachments}</div>}
 
       <div
         ref={bodyRef}
