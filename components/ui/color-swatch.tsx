@@ -2,12 +2,14 @@
 
 import { cva, type VariantProps } from "class-variance-authority"
 import { Check } from "lucide-react"
-import { Slot as SlotPrimitive } from "radix-ui"
+import { mergeProps } from "@base-ui/react/merge-props"
+import { useRender } from "@base-ui/react/use-render"
 import * as React from "react"
+
 import { cn } from "@/lib/utils"
 
 const colorSwatchVariants = cva(
-  "relative flex items-center justify-center rounded-full bg-clip-padding outline-2 outline-transparent outline-offset-0 transition-[outline-color,outline-offset] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] data-disabled:pointer-events-none data-disabled:opacity-50 data-[selected=true]:outline-offset-2",
+  "relative flex items-center justify-center rounded-full bg-clip-padding outline-2 outline-offset-0 outline-transparent transition-[outline-color,outline-offset] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] data-[selected=true]:outline-offset-2 data-disabled:pointer-events-none data-disabled:opacity-50",
   {
     variants: {
       size: {
@@ -54,10 +56,9 @@ function getHasAlpha(v: string): boolean {
 
 interface ColorSwatchProps
   extends
-    React.ComponentProps<"div">,
+    useRender.ComponentProps<"div">,
     VariantProps<typeof colorSwatchVariants> {
   color?: string
-  asChild?: boolean
   disabled?: boolean
   selected?: boolean
   withoutTransparency?: boolean
@@ -66,7 +67,7 @@ interface ColorSwatchProps
 function ColorSwatch({
   color,
   size = "default",
-  asChild = false,
+  render,
   disabled = false,
   selected = false,
   withoutTransparency = false,
@@ -86,7 +87,7 @@ function ColorSwatch({
     if (!colorValue) {
       return {
         background:
-          "linear-gradient(to bottom right, transparent calc(50% - 1px), hsl(var(--destructive)) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) no-repeat",
+          "linear-gradient(to bottom right, transparent calc(50% - 1px), var(--destructive) calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px)) no-repeat",
       }
     }
 
@@ -107,37 +108,44 @@ function ColorSwatch({
     ? "No color selected"
     : `Color swatch: ${colorValue}`
 
-  const Primitive = asChild ? SlotPrimitive.Slot : "div"
-
-  return (
-    <Primitive
-      role="img"
-      aria-label={ariaLabel}
-      aria-disabled={disabled || undefined}
-      data-disabled={disabled ? "" : undefined}
-      data-selected={selected || undefined}
-      data-slot="color-swatch"
-      {...props}
-      className={cn(colorSwatchVariants({ size }), className)}
-      style={{
-        ...backgroundStyle,
-        forcedColorAdjust: "none",
-        ...(selected && colorValue ? { outlineColor: colorValue } : null),
-        ...style,
-      }}
-    >
-      {children ?? (
-        <Check
-          aria-hidden="true"
-          className={cn(
-            "size-1/2 text-white drop-shadow-sm transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
-            selected ? "scale-100 opacity-100" : "scale-50 opacity-0"
-          )}
-          strokeWidth={3}
-        />
-      )}
-    </Primitive>
-  )
+  return useRender({
+    defaultTagName: "div",
+    render,
+    props: mergeProps<"div">(
+      {
+        role: "img",
+        "aria-label": ariaLabel,
+        "aria-disabled": disabled || undefined,
+        // @ts-expect-error data attributes
+        "data-disabled": disabled ? "" : undefined,
+        "data-selected": selected || undefined,
+        "data-slot": "color-swatch",
+        className: cn(colorSwatchVariants({ size }), className),
+        style: {
+          ...backgroundStyle,
+          forcedColorAdjust: "none",
+          // A colour's ring is that colour; no colour's is the foreground.
+          ...(selected
+            ? { outlineColor: colorValue || "var(--foreground)" }
+            : null),
+          ...style,
+        },
+        children: children ?? (
+          <Check
+            aria-hidden="true"
+            className={cn(
+              "size-1/2 drop-shadow-sm transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]",
+              // White on a colour; on no colour, the foreground.
+              colorValue ? "text-white" : "text-foreground",
+              selected ? "scale-100 opacity-100" : "scale-50 opacity-0"
+            )}
+            strokeWidth={3}
+          />
+        ),
+      },
+      props
+    ),
+  })
 }
 
 export { ColorSwatch }

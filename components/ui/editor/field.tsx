@@ -50,7 +50,7 @@ import {
 
 import { EditorContent, EditorProvider } from "./core"
 import { RichTextKit } from "./kit"
-import { highlightValue, hue, PALETTE, textValue } from "./extensions"
+import { highlightValue, hue, PALETTE, textValue, type SuggestItem } from "./extensions"
 
 const nameOf = (value: string | undefined, of: (name: string) => string) =>
   PALETTE.find((n) => of(n) === value) ?? null
@@ -215,10 +215,12 @@ function EditorToolbar({
   editor,
   kind,
   disabled,
+  onImage,
 }: {
   editor: TiptapEditor
   kind: "full" | "comment"
   disabled?: boolean
+  onImage?: (file: File) => void
 }) {
   const active = useEditorState({
     editor,
@@ -255,6 +257,7 @@ function EditorToolbar({
   const fileRef = React.useRef<HTMLInputElement>(null)
   const insertImage = (file: File | undefined) => {
     if (!file) return
+    if (onImage) return onImage(file)
     const reader = new FileReader()
     reader.onload = () =>
       chain().setImage({ src: reader.result as string }).run()
@@ -455,6 +458,20 @@ function SwatchPopover({
 
 /* --------------------------------- editor --------------------------------- */
 
+/** whether a suggestion list ("@" or "/") is open, by its plugin's state */
+function suggesting(state: TiptapEditor["state"]) {
+  return state.plugins.some((plugin) => {
+    const value: unknown = plugin.getState(state)
+    return (
+      typeof value === "object" &&
+      value !== null &&
+      "active" in value &&
+      "query" in value &&
+      value.active === true
+    )
+  })
+}
+
 export const editorVariants = cva(
   "relative flex w-full flex-col overflow-hidden rounded-xl transition-[background-color,border-color,box-shadow] duration-150",
   {
@@ -470,6 +487,10 @@ export const editorVariants = cva(
           "bg-secondary not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),black_2%)] not-data-disabled:focus-within:bg-background not-data-disabled:focus-within:shadow-[0px_1px_1px_rgba(0,0,0,0.12),0px_0px_0px_1px_rgba(0,0,0,0.1)]! not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)] dark:not-data-disabled:hover:bg-[color-mix(in_oklch,var(--secondary),white_5%)]",
         // the text alone; nothing may clip the floating bar
         ghost: "overflow-visible",
+        // a raised white card, its bar on the card with no rule above it
+        // (espresso 2.0's chat composer); in the dark, a black shadow can't
+        // show on the page, so it takes the Input's themed outline
+        card: "bg-background shadow-[0px_0px_1px_0px_rgba(0,0,0,0.45),0px_1px_2px_0px_rgba(0,0,0,0.1)] not-data-disabled:focus-within:ring-2 not-data-disabled:focus-within:ring-[rgba(201,201,201,0.9)] dark:shadow-default dark:not-data-disabled:hover:shadow-raised dark:not-data-disabled:focus-within:ring-ring",
       },
     },
     defaultVariants: { variant: "outline" },
@@ -490,7 +511,7 @@ const docClassName = cn(
 const MIN_HEIGHT = 180
 
 export interface EditorProps {
-  variant?: "outline" | "subtle" | "ghost"
+  variant?: "outline" | "subtle" | "ghost" | "card"
   toolbar?: "top" | "bottom" | "none"
   disabled?: boolean
   /** what it opens with */
@@ -502,6 +523,31 @@ export interface EditorProps {
   onChange?: (html: string) => void
   onComment?: (html: string) => void
   onDiscard?: () => void
+  /** the bottom bar's buttons, in place of Discard and Comment */
+  actions?: React.ReactNode | ((editor: TiptapEditor) => React.ReactNode)
+  /** sizes to its text, up to `maxHeight`, in place of the fixed 180px */
+  grow?: boolean
+  /** with `grow`, the tallest it gets before it scrolls */
+  maxHeight?: number
+  /** a key pressed in the text; true takes it from the editor (Enter to send, say) */
+  onKeyDown?: (event: KeyboardEvent, editor: TiptapEditor) => boolean | void
+  onBlur?: () => void
+  /** the text's accessible name */
+  label?: string
+  /** the editor once it's made, and null when it goes */
+  onReady?: (editor: TiptapEditor | null) => void
+  /** the bar's buttons: every control, or the comment bar's few; by default, full on top and few at the bottom */
+  controls?: "full" | "comment"
+  /** a picked image goes here, in place of into the text */
+  onImage?: (file: File) => void
+  /** the people "@" offers for what's typed after it; none, no "@" list */
+  mentions?: (query: string) => SuggestItem[]
+  /** the bottom bar's own tools, in place of its formatting controls */
+  tools?: React.ReactNode | ((editor: TiptapEditor) => React.ReactNode)
+  /** with `tools`, the formatting controls on a bar above the text */
+  formatting?: boolean
+  /** files waiting to go with the text (a composer's), on a row above it */
+  attachments?: React.ReactNode
 }
 
 export function Editor({
@@ -515,7 +561,26 @@ export function Editor({
   onChange,
   onComment,
   onDiscard,
+  actions,
+  grow = false,
+  maxHeight = 240,
+  onKeyDown,
+  onBlur,
+  label,
+  onReady,
+  controls,
+  onImage,
+  mentions,
+  tools,
+  formatting = false,
+  attachments,
 }: EditorProps) {
+  // read when "@" is typed, so a new list needn't remake the editor
+  const people = React.useRef(mentions)
+  React.useEffect(() => {
+    people.current = mentions
+  })
+  const hasMentions = !!mentions
   return (
     <EditorProvider
       extensions={[
@@ -530,7 +595,7 @@ export function Editor({
           audio: false,
           embed: false,
           video: false,
-          mention: false,
+          mention: hasMentions && { items: (query) => people.current?.(query) ?? [] },
           slashCommands: false,
           fontFamily: false,
           fontSize: false,
@@ -540,12 +605,15 @@ export function Editor({
           tabKeys: false,
           placeholder: { placeholder },
           limit,
+          // sized to its text, it has no room for an empty line after a
+          // code block or list
+          ...(grow && { trailingNode: false as const }),
         }),
       ]}
       content={content}
       editable={!disabled}
       onUpdate={onChange}
-      deps={[limit, placeholder]}
+      deps={[limit, placeholder, hasMentions]}
     >
       {(editor) => (
         <EditorField
@@ -557,6 +625,18 @@ export function Editor({
           className={className}
           onComment={onComment}
           onDiscard={onDiscard}
+          actions={actions}
+          grow={grow}
+          maxHeight={maxHeight}
+          onKeyDown={onKeyDown}
+          onBlur={onBlur}
+          label={label}
+          onReady={onReady}
+          controls={controls}
+          onImage={onImage}
+          tools={tools}
+          formatting={formatting}
+          attachments={attachments}
         />
       )}
     </EditorProvider>
@@ -572,19 +652,65 @@ function EditorField({
   className,
   onComment,
   onDiscard,
+  actions,
+  grow,
+  maxHeight,
+  onKeyDown,
+  onBlur,
+  label,
+  onReady,
+  controls,
+  onImage,
+  tools,
+  formatting,
+  attachments,
 }: {
   editor: TiptapEditor | null
-  variant: "outline" | "subtle" | "ghost"
+  variant: "outline" | "subtle" | "ghost" | "card"
   toolbar: "top" | "bottom" | "none"
   disabled: boolean
   limit: number
   className?: string
   onComment?: (html: string) => void
   onDiscard?: () => void
+  actions?: EditorProps["actions"]
+  grow: boolean
+  maxHeight: number
+  onKeyDown?: EditorProps["onKeyDown"]
+  onBlur?: () => void
+  label?: string
+  onReady?: EditorProps["onReady"]
+  controls?: EditorProps["controls"]
+  onImage?: EditorProps["onImage"]
+  tools?: EditorProps["tools"]
+  formatting: boolean
+  attachments?: React.ReactNode
 }) {
+  const card = variant === "card"
   const [length, setLength] = React.useState(0)
   const [height, setHeight] = React.useState<number | null>(null)
   const boxRef = React.useRef<HTMLDivElement>(null)
+
+  // growing, the text's box eases to each new height: measured from the
+  // text (an auto height can't be animated), up to maxHeight, past which it
+  // scrolls
+  const bodyRef = React.useRef<HTMLDivElement>(null)
+  const [fit, setFit] = React.useState<{ height: number; scrolls: boolean } | null>(null)
+  React.useEffect(() => {
+    const body = bodyRef.current
+    const doc = body?.querySelector<HTMLElement>(".ProseMirror")
+    if (!grow || !body || !doc) return
+    const measure = () => {
+      const style = getComputedStyle(body)
+      const natural = doc.offsetHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+      const height = Math.min(natural, maxHeight)
+      setFit((now) => (now?.height === height ? now : { height, scrolls: natural > maxHeight }))
+    }
+    measure()
+    const watch = new ResizeObserver(measure)
+    watch.observe(doc)
+    return () => watch.disconnect()
+  }, [editor, grow, maxHeight])
 
   React.useEffect(() => {
     if (!editor) return
@@ -597,6 +723,40 @@ function EditorField({
   }, [editor])
 
   const remaining = Math.max(0, limit - length)
+
+  // the caller's keys, blur and name, read fresh on each key so they may
+  // close over the caller's latest state
+  const handlers = React.useRef({ onKeyDown, onBlur })
+  React.useEffect(() => {
+    handlers.current = { onKeyDown, onBlur }
+  })
+  React.useEffect(() => {
+    if (!editor) return
+    editor.setOptions({
+      editorProps: {
+        ...editor.options.editorProps,
+        attributes: {
+          ...(editor.options.editorProps.attributes as Record<string, string>),
+          ...(label && { "aria-label": label }),
+        },
+        // an open "@" or "/" list has the keys (Enter picks, Escape shuts)
+        handleKeyDown: (view, event) =>
+          !suggesting(view.state) &&
+          handlers.current.onKeyDown?.(event, editor) === true,
+      },
+    })
+    const blur = () => handlers.current.onBlur?.()
+    editor.on("blur", blur)
+    return () => {
+      editor.off("blur", blur)
+    }
+  }, [editor, label])
+
+  React.useEffect(() => {
+    onReady?.(editor)
+    return () => onReady?.(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor])
 
   // the resizer: dragged, the editor grows or shrinks, never under 180
   const resize = (event: React.PointerEvent) => {
@@ -632,21 +792,37 @@ function EditorField({
       {...(disabled && { "data-disabled": "" })}
       className={cn(
         editorVariants({ variant }),
-        toolbar !== "none" && variant !== "ghost" && height === null && "h-[180px]",
+        toolbar !== "none" && variant !== "ghost" && !grow && height === null && "h-[180px]",
         disabled && "opacity-50",
         className
       )}
       style={height !== null ? { height } : undefined}
     >
+      {editor && toolbar === "bottom" && tools !== undefined && formatting && (
+        <div className={cn("flex shrink-0 items-center px-1 pt-1 [&>[data-slot=editor-toolbar]]:p-0", !card && "border-b border-border-soft pb-1")}>
+          <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+        </div>
+      )}
       {editor && toolbar === "top" && (
         <div className="flex h-[31px] shrink-0 items-start border-b border-border-soft in-data-[variant=subtle]:border-border px-1 pt-[3px] [&>[data-slot=editor-toolbar]]:p-0">
-          <EditorToolbar editor={editor} kind="full" disabled={disabled} />
+          <EditorToolbar editor={editor} kind={controls ?? "full"} disabled={disabled} onImage={onImage} />
         </div>
       )}
 
+      {attachments && <div className="shrink-0 px-2.5 pt-2.5">{attachments}</div>}
+
       <div
+        ref={bodyRef}
+        style={grow ? { maxHeight, height: fit?.height } : undefined}
         className={cn(
           "min-h-0 flex-1 cursor-text overflow-y-auto px-3 py-2",
+          // the text at its own height, to measure; the box eases between
+          // heights, clipping (not scrolling) the text while it does
+          grow && "flex-none [&_.ProseMirror]:min-h-0 transition-[height] duration-150 ease-out motion-reduce:transition-none",
+          grow && fit && !fit.scrolls && "overflow-y-hidden",
+          // growing, it opens two lines tall; a card, one line with 32px
+          // down to its bar
+          grow && (card ? "px-2.5 pt-2.5 pb-8" : "min-h-[58px]"),
           disabled && "cursor-default",
           variant === "ghost" && "overflow-visible",
           variant === "ghost" &&
@@ -654,7 +830,7 @@ function EditorField({
         )}
         onMouseDown={focusEnd}
       >
-        <EditorContent editor={editor} className={cn("h-full", docClassName)} />
+        <EditorContent editor={editor} className={cn(!grow && "h-full", docClassName)} />
       </div>
 
       {toolbar === "top" && (
@@ -679,32 +855,47 @@ function EditorField({
       )}
 
       {editor && toolbar === "bottom" && (
-        <div className="flex h-10 shrink-0 items-center justify-between border-t border-border-soft in-data-[variant=subtle]:border-border py-1 pr-2 pl-1">
-          <EditorToolbar editor={editor} kind="comment" disabled={disabled} />
-          <div className="flex items-center gap-1.5">
-            <Button
-              size="xs"
-              variant="ghost"
-              disabled={disabled}
-              onClick={() => {
-                editor.commands.clearContent(true)
-                onDiscard?.()
-              }}
-            >
-              Discard
-            </Button>
-            <Button
-              size="xs"
-              disabled={disabled}
-              onClick={() => {
-                if (editor.isEmpty) return
-                onComment?.(editor.getHTML())
-                editor.commands.clearContent(true)
-              }}
-            >
-              Comment
-            </Button>
-          </div>
+        <div
+          className={cn(
+            "flex shrink-0 items-center justify-between",
+            card ? "px-2.5 pb-2.5" : "h-10 border-t border-border-soft in-data-[variant=subtle]:border-border py-1 pr-2 pl-1"
+          )}
+        >
+          {tools !== undefined ? (
+            <div className="flex min-w-0 items-center">{typeof tools === "function" ? tools(editor) : tools}</div>
+          ) : (
+            <EditorToolbar editor={editor} kind={controls ?? "comment"} disabled={disabled} onImage={onImage} />
+          )}
+          {actions !== undefined ? (
+            <div className="flex items-center gap-1.5">
+              {typeof actions === "function" ? actions(editor) : actions}
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5">
+              <Button
+                size="xs"
+                variant="ghost"
+                disabled={disabled}
+                onClick={() => {
+                  editor.commands.clearContent(true)
+                  onDiscard?.()
+                }}
+              >
+                Discard
+              </Button>
+              <Button
+                size="xs"
+                disabled={disabled}
+                onClick={() => {
+                  if (editor.isEmpty) return
+                  onComment?.(editor.getHTML())
+                  editor.commands.clearContent(true)
+                }}
+              >
+                Comment
+              </Button>
+            </div>
+          )}
         </div>
       )}
 

@@ -1540,14 +1540,17 @@ export const AtomSelection = Extension.create({
             lastKey = Date.now()
             return false
           },
-          createSelectionBetween(view, $anchor, $head) {
+          // the positions are in the document being read back from the DOM,
+          // which a change typed or pasted in has made other than the view's
+          createSelectionBetween(_view, $anchor, $head) {
+            const doc = $anchor.doc
             const from = Math.min($anchor.pos, $head.pos)
             const to = Math.max($anchor.pos, $head.pos)
-            const node = view.state.doc.nodeAt(from)
+            const node = doc.nodeAt(from)
             if (!node || !node.isAtom || !node.isBlock) return null
             if (from + node.nodeSize !== to) return null
             if (!NodeSelection.isSelectable(node)) return null
-            return NodeSelection.create(view.state.doc, from)
+            return NodeSelection.create(doc, from)
           },
         },
       }),
