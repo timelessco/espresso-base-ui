@@ -73,11 +73,6 @@ function BubbleContent({
       {
         className: cn(
           "w-fit max-w-full min-w-0 overflow-hidden rounded-3xl px-2.5 py-1.5 text-base leading-lg tracking-normal wrap-break-word group-data-[align=end]/bubble:self-end [button]:text-left [button,a]:transition-colors [button,a]:outline-none [button,a]:focus-visible:border-ring [button,a]:focus-visible:ring-3 [button,a]:focus-visible:ring-ring/50",
-          // Attachments in the bubble: a 4px frame round them (8px and no
-          // clipping for a fanned pile, whose cards lean out), the bubble as
-          // wide as the attachment so a caption <p> wraps beneath it, several
-          // attachments stacked 4px apart, and the caption inset to the text.
-          "has-[>[data-slot=attachment-group]]:w-min has-[>[data-slot=attachment-group]]:overflow-visible has-[>[data-slot=attachment-group]]:p-2 has-[>[data-slot=attachment]]:flex has-[>[data-slot=attachment]]:w-min has-[>[data-slot=attachment]]:flex-col has-[>[data-slot=attachment]]:gap-1 has-[>[data-slot=attachment]]:p-1 has-[>[data-slot=attachment-group]]:[&>p]:px-0.5 has-[>[data-slot=attachment-group]]:[&>p]:pt-1.5 has-[>[data-slot=attachment-group]]:[&>p]:pb-0.5 has-[>[data-slot=attachment]]:[&>p]:px-1.5 has-[>[data-slot=attachment]]:[&>p]:pt-0.5 has-[>[data-slot=attachment]]:[&>p]:pb-1.5",
           className
         ),
       },
