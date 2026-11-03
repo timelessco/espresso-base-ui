@@ -110,7 +110,7 @@ function MonthYearCalendar({
   if (pickerOpen) {
     return (
       <div
-        className="flex flex-col p-2 [--cell-size:1.5rem]"
+        className={cn("flex flex-col [--cell-size:1.5rem]", className)}
         style={panelSize ?? { width: 196, height: 226 }}
       >
         <div className="flex h-(--cell-size) shrink-0 items-center">
@@ -222,11 +222,13 @@ function MonthYearCalendar({
 function CalendarPopover({
   buttonContent,
   buttonClassName,
+  contentClassName,
   align = "start",
   children,
 }: {
   buttonContent: React.ReactNode
   buttonClassName?: string
+  contentClassName?: string
   align?: "start" | "center" | "end"
   children: (api: { close: () => void }) => React.ReactNode
 }) {
@@ -247,7 +249,11 @@ function CalendarPopover({
           </Button>
         }
       />
-      <PopoverContent className="w-auto p-0" align={align} sideOffset={4}>
+      <PopoverContent
+        className={cn("w-auto p-2", contentClassName)}
+        align={align}
+        sideOffset={4}
+      >
         {children({ close: () => setOpen(false) })}
       </PopoverContent>
     </Popover>
@@ -352,7 +358,7 @@ function DateTimePresetContent() {
           onSelect={setDate}
           month={month}
           onMonthChange={setMonth}
-          className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+          className="w-full border-0 p-2 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
         />
         <div className="flex items-center gap-1 border-t p-2">
           <Select value={hour} onValueChange={(v) => v && setHour(v)}>
@@ -488,7 +494,7 @@ function PresetsContent() {
         onSelect={setDate}
         month={month}
         onMonthChange={setMonth}
-        className="w-full border-0 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
+        className="w-full border-0 p-2 shadow-none [--cell-size:1.5rem] [&_tbody>tr]:mt-1.5"
       />
     </div>
   )
@@ -549,7 +555,7 @@ export default function CalendarPage() {
               </Button>
             }
           />
-          <PopoverContent className="w-auto p-0" align="start" sideOffset={4}>
+          <PopoverContent className="w-auto p-2" align="start" sideOffset={4}>
             <MonthYearCalendar
               mode="single"
               selected={singleDate}
@@ -610,7 +616,10 @@ export default function CalendarPage() {
       {/* Date Time Picker with Presets */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Date Time Picker with Presets</SectionTitle>
-        <CalendarPopover buttonContent="Pick date & time">
+        <CalendarPopover
+          buttonContent="Pick date & time"
+          contentClassName="p-0"
+        >
           {() => <DateTimePresetContent />}
         </CalendarPopover>
       </div>
@@ -618,7 +627,7 @@ export default function CalendarPage() {
       {/* Presets */}
       <div className="flex flex-col gap-4">
         <SectionTitle>Presets</SectionTitle>
-        <CalendarPopover buttonContent="Pick a date">
+        <CalendarPopover buttonContent="Pick a date" contentClassName="p-0">
           {() => <PresetsContent />}
         </CalendarPopover>
       </div>
@@ -631,6 +640,7 @@ export default function CalendarPage() {
             <FormattedRange range={dateRange} fallback="Pick a date range" />
           }
           buttonClassName="w-80"
+          contentClassName="p-0"
         >
           {({ close }) => (
             <DateRangeContent

@@ -18,7 +18,8 @@ export function EventTimeMarker({ date }: { date: Date | string }) {
   if (parseDate(date) !== parseDate(now)) return null
 
   const minuteHeight = config.hourHeight / 60
-  const top = (now.getHours() * 60 + now.getMinutes()) * minuteHeight
+  // whole pixels, like the week's hairline (--now-top), so the two share a centre
+  const top = Math.round((now.getHours() * 60 + now.getMinutes()) * minuteHeight)
 
   const hours = now.getHours()
   const twelve = hours % 12 || 12
