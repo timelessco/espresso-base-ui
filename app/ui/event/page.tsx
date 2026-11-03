@@ -144,7 +144,6 @@ const views = [
   { label: "Week", value: "Week", Icon: WeekIcon },
   { label: "Month", value: "Month", Icon: MonthIcon },
   { label: "Agenda", value: "Agenda", Icon: AgendaIcon },
-  { label: "Agenda V2", value: "AgendaV2", Icon: AgendaIcon },
 ]
 
 export default function EventPage() {
@@ -162,8 +161,6 @@ export default function EventPage() {
   const [draftTitle, setDraftTitle] = React.useState("")
   const [draftColour, setDraftColour] = React.useState("gray")
   const lastDragEnded = React.useRef(0)
-
-  const [agendaFlat, setAgendaFlat] = React.useState(false)
 
   /** The span being filled in, drawn on the grid while the panel is open. */
   const draftEvent = React.useMemo<CalendarEvent | null>(() => {
@@ -573,7 +570,7 @@ export default function EventPage() {
             ref={calendarEl}
             className={cn(
               "flex min-w-0 flex-1 flex-col",
-              agendaFlat && "ec-agenda-flat",
+              "ec-agenda-flat",
               heldLanding && "ec-landing"
             )}
           >
@@ -669,20 +666,15 @@ export default function EventPage() {
                       </div>
 
                       <Tabs
-                        value={
-                          activeView === "Agenda" && agendaFlat
-                            ? "AgendaV2"
-                            : activeView
-                        }
+                        value={activeView}
                         onValueChange={(v) => {
-                          const value = String(v)
-                          setAgendaFlat(value === "AgendaV2")
-                          updateActiveView(
-                            value === "AgendaV2"
-                              ? "Agenda"
-                              : (value as "Day" | "Week" | "Month" | "Agenda")
-                          )
-                          if (value.startsWith("Agenda")) parkAgenda()
+                          const value = String(v) as
+                            | "Day"
+                            | "Week"
+                            | "Month"
+                            | "Agenda"
+                          updateActiveView(value)
+                          if (value === "Agenda") parkAgenda()
                         }}
                       >
                         {/* The playground's switcher: 13px labels, 4 between
@@ -730,64 +722,56 @@ export default function EventPage() {
                 </>
               )}
               eventSuffix={
-                agendaFlat
-                  ? ({ calendarEvent, date }) => (
-                      <span className="agenda-lead flex items-center gap-2 pl-2">
-                        <span className="grid w-[52px] shrink-0 text-[13px] tabular-nums text-[color:var(--ec-ink-gray-6)]">
-                          <span className="agenda-when col-start-1 row-start-1">
-                            {startsAt(calendarEvent, date)}
-                          </span>
-                          <span className="agenda-lasts invisible col-start-1 row-start-1">
-                            {lasts(calendarEvent, date)}
-                          </span>
-                        </span>
-                        <DotIcon className="agenda-dot shrink-0 [color:var(--border)]" />
+                ({ calendarEvent, date }) => (
+                  <span className="agenda-lead flex items-center gap-2 pl-2">
+                    <span className="grid w-[52px] shrink-0 text-[13px] tabular-nums text-[color:var(--ec-ink-gray-6)]">
+                      <span className="agenda-when col-start-1 row-start-1">
+                        {startsAt(calendarEvent, date)}
                       </span>
-                    )
-                  : undefined
+                      <span className="agenda-lasts invisible col-start-1 row-start-1">
+                        {lasts(calendarEvent, date)}
+                      </span>
+                    </span>
+                    <DotIcon className="agenda-dot shrink-0 [color:var(--border)]" />
+                  </span>
+                )
               }
               eventDescription={
-                agendaFlat
-                  ? ({ calendarEvent, description }) =>
-                      noteOf(calendarEvent) || description ? (
-                        <>
-                          {noteOf(calendarEvent) ? (
-                            <span className="min-w-0 truncate">
-                              {noteOf(calendarEvent)}
-                            </span>
-                          ) : null}
-                          {noteOf(calendarEvent) && description ? (
-                            <span className="size-0.5 shrink-0 self-center rounded-full bg-current" />
-                          ) : null}
-                          {description ? (
-                            <span className="shrink-0">{description}</span>
-                          ) : null}
-                        </>
-                      ) : null
-                  : undefined
+                ({ calendarEvent, description }) =>
+                  noteOf(calendarEvent) || description ? (
+                    <>
+                      {noteOf(calendarEvent) ? (
+                        <span className="min-w-0 truncate">
+                          {noteOf(calendarEvent)}
+                        </span>
+                      ) : null}
+                      {noteOf(calendarEvent) && description ? (
+                        <span className="size-0.5 shrink-0 self-center rounded-full bg-current" />
+                      ) : null}
+                      {description ? (
+                        <span className="shrink-0">{description}</span>
+                      ) : null}
+                    </>
+                  ) : null
               }
               agendaDayLabel={
-                agendaFlat
-                  ? (date, isToday) => ({
-                      primary: `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()]} ${date.getDate()}`,
-                      secondary: isToday
-                        ? "Today"
-                        : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][date.getDay()],
-                    })
-                  : undefined
+                (date, isToday) => ({
+                  primary: `${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()]} ${date.getDate()}`,
+                  secondary: isToday
+                    ? "Today"
+                    : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][date.getDay()],
+                })
               }
               eventParticipant={
-                agendaFlat
-                  ? ({ calendarEvent }) =>
-                      namesOf(calendarEvent).length ? (
-                        <AvatarStack
-                          names={namesOf(calendarEvent)}
-                          size="sm"
-                          max={2}
-                          keep={1}
-                        />
-                      ) : null
-                  : undefined
+                ({ calendarEvent }) =>
+                  namesOf(calendarEvent).length ? (
+                    <AvatarStack
+                      names={namesOf(calendarEvent)}
+                      size="sm"
+                      max={2}
+                      keep={1}
+                    />
+                  ) : null
               }
             />
           </div>

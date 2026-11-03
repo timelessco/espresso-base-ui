@@ -246,6 +246,8 @@ export function EventAgenda({
   const spanKey = `${anchor.getFullYear()}-${anchor.getMonth()}|${jump ?? 0}`
   const positionKey = `${spanKey}|${isNarrow}`
   const positionedFor = React.useRef("")
+  // where the list was opened to, so the fade waits for the reader's own scroll
+  const openedAt = React.useRef<number | null>(null)
 
   const openMargin = isNarrow ? 16 : 0
 
@@ -258,6 +260,7 @@ export function EventAgenda({
     positionedFor.current = positionKey
     if (!anchoredOnThisMonth) {
       box.scrollTop = 0
+      openedAt.current = box.scrollTop
       return
     }
 
@@ -276,6 +279,7 @@ export function EventAgenda({
       top.getBoundingClientRect().top -
       box.getBoundingClientRect().top -
       openMargin
+    openedAt.current = box.scrollTop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weeks.length, listWidth, positionKey, anchoredOnThisMonth, openMargin])
 
@@ -290,11 +294,20 @@ export function EventAgenda({
     const list = scroller.current
     if (!list) return
     const top = list.getBoundingClientRect().top
+    const opened = list.scrollTop === openedAt.current
     for (const label of list.querySelectorAll<HTMLElement>(
       ".calendar-week-label"
     )) {
+      // stuck only once its week has slid up beneath it (a label resting at
+      // the top has nothing under it to fade), and not at the spot the list
+      // opened to, where today's earlier rows sit under the label unscrolled
       const r = label.getBoundingClientRect()
-      const stuck = r.top <= top + 0.5 && r.bottom > top
+      const week = label.parentElement?.getBoundingClientRect()
+      const stuck =
+        !opened &&
+        r.top <= top + 0.5 &&
+        r.bottom > top &&
+        (week?.top ?? top) < top - 0.5
       if (stuck) label.setAttribute("data-stuck", "")
       else label.removeAttribute("data-stuck")
     }
