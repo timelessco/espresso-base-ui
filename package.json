@@ -76,7 +76,7 @@
     "vinext": "^1.2.1"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "2.0.0-beta.v.2",
+    "@cloudflare/vite-plugin": "2.0.0-beta.v.13",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^25.1.0",
